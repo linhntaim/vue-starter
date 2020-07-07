@@ -1,12 +1,8 @@
+import app from '@dsquare-gbu/vue-app'
+import App from './views/App'
+import AppFailed from './views/AppFailed'
 import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-import store from './store'
 
 Vue.config.productionTip = false
 
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+app.create(App, AppFailed)
