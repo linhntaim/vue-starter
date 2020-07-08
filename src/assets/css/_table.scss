@@ -1,0 +1,23 @@
+.table {
+    th {
+        white-space: nowrap;
+    }
+}
+
+.table-responsive {
+    margin-bottom: 1rem;
+
+    table {
+        margin-bottom: 0;
+    }
+
+    .event-watcher-list {
+    	thead {
+        	tr {
+        		th:nth-child(2) {
+        			min-width : 250px;		
+        		}
+        	}
+        }
+    }
+}

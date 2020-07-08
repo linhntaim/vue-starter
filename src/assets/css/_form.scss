@@ -1,0 +1,56 @@
+@import "variables";
+
+select option[disabled] {
+    background-color: $disabledColor;
+}
+
+.form-text {
+    margin-top: .5rem;
+}
+
+label.required {
+    &:after {
+        color: $require-color;
+        content: " *";
+    }
+
+    &.separated {
+        &:after {
+            color: #d48800;
+        }
+    }
+}
+
+.lang-ja {
+    label.required {
+        &:after {
+            content: " ※";
+        }
+    }
+}
+
+.input-group-text.required {
+    color: $require-color;
+}
+
+.input-group-prepend .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+    &:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+}
+
+.input-group-prepend .form-control + .input-group-text {
+    margin-left: -1px;
+}
+
+.input-group-prepend .form-control + .form-control {
+    margin-left: -1px;
+}
+
+.input-group-prepend .input-group-text + .form-control {
+    margin-left: -1px;
+}

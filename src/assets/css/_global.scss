@@ -1,0 +1,152 @@
+@import "variables";
+
+/**
+ * Body
+ */
+body {
+    font-family: $font-family;
+
+    &.initializing {
+        background: #fff;
+    }
+}
+
+/**
+ * Role
+ */
+[role="button"] {
+    cursor: pointer;
+}
+
+/**
+ * Hide
+ */
+.hide, .hide-xl {
+    display: none !important;
+}
+
+@media (max-width: 575px) {
+    .hide-xs {
+        display: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .hide-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 991px) {
+    .hide-md {
+        display: none;
+    }
+}
+
+@media (min-width: 1199px) {
+    .hide-lg {
+        display: none;
+    }
+}
+
+/**
+ * Width
+ */
+.wp-50 {
+    width: 50px !important;
+}
+
+.wp-75 {
+    width: 75px !important;
+}
+
+.wp-80 {
+    width: 80px !important;
+}
+
+.wp-100 {
+    width: 100px !important;
+}
+
+.wp-120 {
+    width: 120px !important;
+}
+
+.wp-125 {
+    width: 125px !important;
+}
+
+.wp-150 {
+    width: 150px !important;;
+}
+
+.wp-175 {
+    width: 175px !important;;
+}
+
+.wp-180 {
+    width: 180px !important;;
+}
+
+.wp-200 {
+    width: 200px !important;;
+}
+
+/**
+ * Text
+ */
+.nowrap {
+    white-space: nowrap;
+}
+
+/**
+ * Box layout
+ */
+.has-control {
+    padding-bottom: .25rem;
+}
+
+/**
+ * Floating buttons
+ */
+.scroll-to-top {
+    z-index: 101;
+}
+
+.scroll-to-back {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    width: 2.75rem;
+    height: 2.75rem;
+    text-align: center;
+    color: #fff;
+    background: rgba(90, 92, 105, 0.5);
+    line-height: 46px;
+    z-index: 101;
+
+    &.has-top {
+        right: 4.75rem;
+    }
+
+    &:focus, &:hover {
+        color: white;
+    }
+
+    &:hover {
+        background: #5a5c69;
+    }
+
+    i {
+        font-weight: 800;
+    }
+}
+
+/**
+ * Auth screen
+ */
+.bg-login-image,
+.bg-register-image,
+.bg-password-image {
+    background: #3960CF;
+}
