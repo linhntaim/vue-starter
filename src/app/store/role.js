@@ -1,4 +1,4 @@
-import {roleAdminService} from '../../services/default/admin_role'
+import {roleAdminService} from '../services/default/admin_role'
 
 export default {
     namespaced: true,

@@ -27,7 +27,7 @@
 
 <script>
     import {log} from '../../app/utils'
-    import {mapActions, mapGetters} from 'vuex'
+    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
     import {LOCALE_MAPPING_FLAG_ICON_NAME_DEF} from '../../app/config'
 
     export default {

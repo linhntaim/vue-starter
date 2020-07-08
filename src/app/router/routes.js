@@ -17,6 +17,11 @@ export const routes = [
         },
         children: [
             {
+                path: '777',
+                name: 'connection_lost',
+                component: () => import('../../views/error/ConnectionLost'),
+            },
+            {
                 path: '400',
                 name: 'bad_request',
                 component: () => import('../../views/error/BadRequest'),

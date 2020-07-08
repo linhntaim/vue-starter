@@ -45,6 +45,10 @@ new AssetCopier().add(...[
         dst: 'public/vendor/bootstrap-datetimepicker',
     },
     {
+        src: 'node_modules/blueimp-canvas-to-blob/js',
+        dst: 'public/vendor/blueimp-canvas-to-blob',
+    },
+    {
         src: 'node_modules/moment/min',
         dst: 'public/vendor/moment',
     },

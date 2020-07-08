@@ -10,7 +10,7 @@ import {
     IntervalCaller,
     JqueryUi,
     LocalCacheHandler,
-    LocalizationCookieStore,
+    SettingsCookieStore,
     NumberFormatHelper,
     PassportCookieStore,
     PermissionChecker,
@@ -24,7 +24,7 @@ import {
     CLOCK_BLOCK_KEYS,
     CLOCK_BLOCK_RANGE,
     DEFAULT_DEVICE,
-    DEFAULT_LOCALIZATION,
+    DEFAULT_SETTINGS,
 } from '../config'
 import Select2Ui from './select2-ui'
 
@@ -32,9 +32,9 @@ export const log = new ConsoleLog(APP_DEBUG, APP_LOG_ONLY)
 export const cacheHandler = new LocalCacheHandler()
 export const crypto = new Crypto()
 export const cookieHandler = new JsCookieHandler(crypto, {
-    domain: APP_COOKIE.domain,
     expires: APP_COOKIE.expires,
     path: APP_COOKIE.path,
+    domain: APP_COOKIE.domain,
     secret: APP_COOKIE.secret,
 })
 export const passportCookieStore = new PassportCookieStore(cookieHandler, APP_COOKIE.names.default, {
@@ -43,7 +43,7 @@ export const passportCookieStore = new PassportCookieStore(cookieHandler, APP_CO
     refreshToken: null,
     tokenEndTime: 0,
 })
-export const localizationCookieStore = new LocalizationCookieStore(cookieHandler, APP_COOKIE.names.localization, DEFAULT_LOCALIZATION)
+export const settingsCookieStore = new SettingsCookieStore(cookieHandler, APP_COOKIE.names.settings, DEFAULT_SETTINGS)
 export const deviceCookieStore = new DeviceCookieStore(cookieHandler, APP_COOKIE.names.device, DEFAULT_DEVICE)
 export const ui = new Select2Ui(new JqueryUi())
 export const callbackWaiter = new CallbackWaiter()
@@ -51,10 +51,10 @@ export const timeoutCaller = new TimeoutCaller()
 export const intervalCaller = new IntervalCaller()
 export const serverClock = new ServerClock(CLOCK_BLOCK_KEYS, CLOCK_BLOCK_RANGE)
 
-export const numberFormatHelper = new NumberFormatHelper(DEFAULT_LOCALIZATION)
-export const dateTimeHelper = new DateTimeHelper(DEFAULT_LOCALIZATION)
+export const numberFormatHelper = new NumberFormatHelper(DEFAULT_SETTINGS)
+export const dateTimeHelper = new DateTimeHelper(DEFAULT_SETTINGS)
 
 export const permissionChecker = new PermissionChecker()
 
 export const googleApi = new GoogleApi()
-export const facebookSdk = new FacebookSdk(FACEBOOK_SERVICE)
+export const facebookSdk = new FacebookSdk('FACEBOOK_SERVICE')

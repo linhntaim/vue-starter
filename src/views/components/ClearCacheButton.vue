@@ -3,7 +3,7 @@
 </template>
 
 <script>
-    import {mapMutations} from 'vuex'
+    import {mapMutations} from '@dsquare-gbu/vue-uses'
 
     export default {
         name: 'ClearCacheButton',

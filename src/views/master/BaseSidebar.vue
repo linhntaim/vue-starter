@@ -31,10 +31,10 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapGetters} from '@dsquare-gbu/vue-uses'
     import {permissionChecker, timeoutCaller, ui} from '../../app/utils'
     import {APP_LOGO_URL, APP_NAME} from '../../app/config'
-    import {routePermission} from '../../app/router'
+    import {routePermissions} from '../../app/router'
 
     const defaultMenuItems = () => [
         {

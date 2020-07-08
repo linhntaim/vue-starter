@@ -4,7 +4,7 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
+    import {mapActions} from '@dsquare-gbu/vue-uses'
     import {session} from '@dsquare-gbu/vue-router'
 
     export default {

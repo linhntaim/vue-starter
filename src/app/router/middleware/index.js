@@ -4,6 +4,7 @@ import AuthMiddleware from './modules/auth-middleware'
 import LocaleMiddleware from './modules/locale-middleware'
 import PermissionMiddleware from './modules/permission-middleware'
 import ServerMiddleware from './modules/server-middleware'
+import StopMiddleware from './modules/stop-middleware'
 
 const authMiddleware = new AuthMiddleware()
 const commonMiddleware = new CommonMiddleware(
@@ -18,6 +19,7 @@ const commonMiddleware = new CommonMiddleware(
 const localeMiddleware = new LocaleMiddleware()
 const serverMiddleware = new ServerMiddleware()
 const permissionMiddleware = new PermissionMiddleware()
+const stopMiddleware = new StopMiddleware()
 
 export const all = {
     before: [
@@ -26,6 +28,7 @@ export const all = {
         authMiddleware,
         localeMiddleware,
         permissionMiddleware,
+        stopMiddleware,
     ],
     after: [
         commonMiddleware,
@@ -38,6 +41,7 @@ export const error = {
         commonMiddleware,
         authMiddleware,
         localeMiddleware,
+        stopMiddleware,
     ],
     after: [
         commonMiddleware,

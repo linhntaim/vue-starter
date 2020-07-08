@@ -45,7 +45,7 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters, mapMutations} from 'vuex'
+    import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
     import {Collection, DataPlot, Sorter, Searcher, ItemSelection, Paginator} from '@dsquare-gbu/vue-utils'
     import SorterComponent from '../../components/Sorter'
     import PaginatorComponent from '../../components/Paginator'

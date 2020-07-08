@@ -25,7 +25,7 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex'
+    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
     import {ui, timeoutCaller} from '../../../app/utils'
     import {Collection} from '@dsquare-gbu/vue-utils'
     import {TOAST_DEF} from '../../../app/config'

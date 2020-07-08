@@ -1,5 +1,4 @@
-import {crypto} from '../../utils/crypto'
-import {serverClock} from '../../utils/server_clock'
+import {crypto, serverClock} from '../../utils'
 import {APP_DEFAULT_SERVICE} from '../../config'
 import DefaultService from '../default_service'
 
@@ -28,7 +27,7 @@ class AuthService extends DefaultService {
             crypto.encryptJson({source: 'token'}, serverClock.blockKey()),
             doneCallback,
             errorCallback,
-            alwaysCallback
+            alwaysCallback,
         )
     }
 
@@ -38,7 +37,7 @@ class AuthService extends DefaultService {
             {},
             doneCallback,
             errorCallback,
-            alwaysCallback
+            alwaysCallback,
         )
     }
 
@@ -54,7 +53,7 @@ class AuthService extends DefaultService {
             },
             doneCallback,
             errorCallback,
-            alwaysCallback
+            alwaysCallback,
         )
     }
 
@@ -68,7 +67,7 @@ class AuthService extends DefaultService {
             },
             doneCallback,
             errorCallback,
-            alwaysCallback
+            alwaysCallback,
         )
     }
 
@@ -79,7 +78,7 @@ class AuthService extends DefaultService {
             params,
             doneCallback,
             errorCallback,
-            alwaysCallback
+            alwaysCallback,
         )
     }
 
@@ -90,7 +89,7 @@ class AuthService extends DefaultService {
             params,
             doneCallback,
             errorCallback,
-            alwaysCallback
+            alwaysCallback,
         )
     }
 }

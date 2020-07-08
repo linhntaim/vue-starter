@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
+    import {mapActions} from '@dsquare-gbu/vue-uses'
 
     export default {
         name: 'Base',

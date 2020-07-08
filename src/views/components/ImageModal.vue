@@ -206,8 +206,6 @@
                     }
                 }
 
-                this.uis.$.find('[data-toggle="tooltip"]').tooltip()
-
                 // if (!document.createElement('canvas').getContext) {
                 // }
 

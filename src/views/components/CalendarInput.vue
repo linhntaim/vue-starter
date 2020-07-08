@@ -15,8 +15,8 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
-    import {$ui} from '../../app/utils/ui'
+    import {mapGetters} from '@dsquare-gbu/vue-uses'
+    import {ui} from '../../app/utils'
     import moment from 'moment'
 
     const $uis = {}
@@ -44,7 +44,7 @@
             },
         },
         mounted() {
-            $uis._ = $ui(this.htmlId)
+            $uis._ = ui.query(this.htmlId).get()
             this.options.locale = this.currentUser.localization.locale
             if (this.content) {
                 this.options.userCurrent = false

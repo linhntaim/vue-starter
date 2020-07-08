@@ -1,51 +1,36 @@
-import {authService} from '../../services/default/auth'
-import {accountService} from '../../services/default/account'
-import {callbackWaiter} from '../../utils/callback_waiter'
-import {dateTimeHelper} from '../../utils/date_time_helper'
-import {localizer} from '../../utils/localizer'
-import {log} from '../../utils/log'
-import {numberFormatHelper} from '../../utils/number_format_helper'
-import {serviceFactory} from '../../services/service_factory'
-import {APP_DEFAULT_SERVICE, DEFAULT_LOCALIZATION} from '../../config'
-import helpers from '../../utils/helpers'
-import localizationCookieStore from '../../utils/cookie_store/localization_cookie_store'
-import passportCookieStore from '../../utils/cookie_store/passport_cookie_store'
+import {authService} from '../services/default/auth'
+import {accountService} from '../services/default/account'
+import {
+    callbackWaiter,
+    dateTimeHelper,
+    log,
+    numberFormatHelper,
+    passportCookieStore,
+    settingsCookieStore,
+} from '../utils'
+import {localeManager} from '../locales'
+import {serviceFactory} from '../services/service_factory'
+import {APP_DEFAULT_SERVICE, DEFAULT_SETTINGS} from '../config'
 
-const setDefaultServiceLocalizationHeader = localization => {
+const setDefaultServiceSettingsHeader = settings => {
     serviceFactory.modify(defaultService => {
-        defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.localization] = JSON.stringify(helpers.object.only(
-            [
-                '_from_app',
-                '_ts',
-                'locale',
-                'country',
-                'timezone',
-                'currency',
-                'number_format',
-                'first_day_of_week',
-                'long_date_format',
-                'long_time_format',
-                'short_date_format',
-                'short_time_format',
-            ],
-            localization,
-        ))
+        defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.settings] = JSON.stringify(settings)
     })
 }
 
-const localize = (localization, action, localeCallback = null) => {
+const applySettings = (settings, action, localeCallback = null) => {
     if (action === 'all' || action === 'store' || action === 'store_with_locale') {
-        setDefaultServiceLocalizationHeader(localization)
-        localizationCookieStore.store(localization)
+        setDefaultServiceSettingsHeader(settings)
+        settingsCookieStore.store(settings)
     }
     if (action === 'all' || action === 'store_with_locale') {
-        localizer.localize(localization).then(() => {
+        localeManager.set(settings.locale).then(() => {
             localeCallback && localeCallback()
         })
     }
     if (action === 'all') {
-        dateTimeHelper.localize(localization)
-        numberFormatHelper.localize(localization)
+        dateTimeHelper.localize(settings)
+        numberFormatHelper.localize(settings)
     }
 }
 
@@ -76,20 +61,18 @@ export default {
         },
     },
     mutations: {
-        setAuth(state, {accessToken, tokenType, refreshToken, tokenEndTime}) {
+        setAuth(state, passport) {
             state.isLoggedIn = true
             state.passport = {
-                accessToken: accessToken,
-                tokenType: tokenType,
-                refreshToken: refreshToken,
-                tokenEndTime: tokenEndTime,
+                accessToken: passport.access_token,
+                tokenType: passport.token_type,
+                refreshToken: passport.refresh_token,
+                tokenEndTime: (new Date).getTime() + passport.expires_in * 1000,
             }
 
-            let authorizationHeader = tokenType + ' ' + accessToken
             serviceFactory.modify(defaultService => {
-                defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.token_authorization] = authorizationHeader
+                defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.token_authorization] = state.passport.tokenType + ' ' + state.passport.accessToken
             })
-
             passportCookieStore.store(state.passport)
         },
 
@@ -105,52 +88,42 @@ export default {
             serviceFactory.modify(defaultService => {
                 defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.token_authorization] = null
             })
-
             passportCookieStore.remove()
         },
 
         setUser(state, {user, localeCallback}) {
             state.user = user
 
-            localize(state.user.localization, 'all', localeCallback)
+            applySettings(state.user.settings, 'all', localeCallback)
         },
 
         setLocale(state, {locale, callback}) {
-            if (locale != state.user.localization.locale) {
-                state.user.localization._ts = 0
-            }
-            state.user.localization.locale = locale
+            state.user.settings.locale = locale
 
-            localize(state.user.localization, 'store_with_locale', callback)
+            applySettings(state.user.settings, 'store_with_locale', callback)
         },
 
-        setLocalization(state, {localization, localeCallback}) {
-            for (let key in localization) {
-                if (key == 'locale' && localization.locale != state.user.localization.locale) {
-                    state.user.localization._ts = 0
-                }
-                state.user.localization[key] = localization[key]
+        setSettings(state, {settings, localeCallback}) {
+            for (const key in settings) {
+                state.user.settings[key] = settings[key]
             }
 
-            localize(state.user.localization, 'all', localeCallback)
+            applySettings(state.user.settings, 'all', localeCallback)
         },
 
         unsetUser(state) {
-            if (state.user && state.user.localization) {
+            if (state.user && state.user.settings) {
                 state.user = {
-                    localization: state.user.localization,
+                    settings: state.user.settings,
                 }
             } else {
-                let storedLocalization = localizationCookieStore.retrieve()
+                const storedLocalization = settingsCookieStore.retrieve()
                 state.user = {
-                    localization: storedLocalization ? storedLocalization : DEFAULT_LOCALIZATION,
+                    settings: storedLocalization ? storedLocalization : DEFAULT_SETTINGS,
                 }
             }
 
-            state.user.localization._from_app = true
-            state.user.localization._ts = 0
-
-            localize(state.user.localization, 'store')
+            applySettings(state.user.settings, 'store')
 
             callbackWaiter.remove('account_current')
         },
@@ -166,10 +139,10 @@ export default {
                 return
             }
 
-            let storedLocalization = localizationCookieStore.retrieve()
+            const storedLocalization = settingsCookieStore.retrieve()
             commit('setUser', {
                 user: {
-                    localization: storedLocalization ? storedLocalization : DEFAULT_LOCALIZATION,
+                    settings: storedLocalization ? storedLocalization : DEFAULT_SETTINGS,
                 },
                 localeCallback: callback,
             })
@@ -188,7 +161,7 @@ export default {
                 callbackWaiter.remove('account_current')
             }
             callbackWaiter.call('account_current', () => { // tricky cache
-                log.write('get account', 'store')
+                log.write('get current', 'store.account')
                 accountService().current(login, (data) => {
                     commit('setUser', {
                         user: data.model,
@@ -198,6 +171,58 @@ export default {
             }, 10, () => {
                 doneCallback({user: state.user})
             })
+        },
+
+        refreshToken({commit}, {refreshToken, doneCallback, errorCallback}) {
+            authService().refreshToken(refreshToken, (data) => {
+                commit('setAuth', data)
+                doneCallback()
+            }, errorCallback)
+        },
+
+        login({commit, dispatch}, {email, password, token, doneCallback, errorCallback}) {
+            const done = data => {
+                commit('setAuth', data)
+                dispatch('current', {
+                    login: true,
+                    doneCallback: doneCallback,
+                    errorCallback: errorCallback,
+                })
+            }
+            if (token) {
+                authService().loginWithToken(email, done, errorCallback)
+            } else {
+                authService().login(email, password, done, errorCallback)
+            }
+        },
+
+        logout({commit}, {alwaysCallback}) {
+            authService().logout(null, null, () => {
+                commit('unsetAuth')
+                commit('unsetUser')
+
+                alwaysCallback()
+            })
+        },
+
+        forgotPassword(store, {email, appResetPasswordPath, doneCallback, errorCallback}) {
+            authService().forgotPassword(email, appResetPasswordPath, doneCallback, errorCallback)
+        },
+
+        getResetPassword(store, {email, token, doneCallback, errorCallback}) {
+            authService().getResetPassword({
+                email: email,
+                token: token,
+            }, doneCallback, errorCallback)
+        },
+
+        resetPassword(store, {email, token, password, passwordConfirmation, doneCallback, errorCallback}) {
+            authService().resetPassword({
+                email: email,
+                token: token,
+                password: password,
+                password_confirmation: passwordConfirmation,
+            }, doneCallback, errorCallback)
         },
 
         updateLocale({commit}, {locale, doneCallback}) {
@@ -230,58 +255,6 @@ export default {
 
         updatePassword(store, {password, passwordConfirmation, currentPassword, doneCallback, errorCallback}) {
             accountService().updatePassword(password, passwordConfirmation, currentPassword, doneCallback, errorCallback)
-        },
-
-        refreshToken({commit}, {refreshToken, doneCallback, errorCallback}) {
-            authService().refreshToken(refreshToken, (data) => {
-                commit('setAuth', passportCookieStore.convert(data))
-                doneCallback()
-            }, errorCallback)
-        },
-
-        logout({commit}, {alwaysCallback}) {
-            authService().logout(null, null, () => {
-                commit('unsetAuth')
-                commit('unsetUser')
-
-                alwaysCallback()
-            })
-        },
-
-        login({commit, dispatch}, {email, password, token, doneCallback, errorCallback}) {
-            let done = (data) => {
-                commit('setAuth', passportCookieStore.convert(data))
-                dispatch('current', {
-                    login: true,
-                    doneCallback: doneCallback,
-                    errorCallback: errorCallback,
-                })
-            }
-            if (token) {
-                authService().loginWithToken(email, done, errorCallback)
-            } else {
-                authService().login(email, password, done, errorCallback)
-            }
-        },
-
-        forgotPassword(store, {email, appResetPasswordPath, doneCallback, errorCallback}) {
-            authService().forgotPassword(email, appResetPasswordPath, doneCallback, errorCallback)
-        },
-
-        getResetPassword(store, {email, token, doneCallback, errorCallback}) {
-            authService().getResetPassword({
-                email: email,
-                token: token,
-            }, doneCallback, errorCallback)
-        },
-
-        resetPassword(store, {email, token, password, passwordConfirmation, doneCallback, errorCallback}) {
-            authService().resetPassword({
-                email: email,
-                token: token,
-                password: password,
-                password_confirmation: passwordConfirmation,
-            }, doneCallback, errorCallback)
         },
     },
 }

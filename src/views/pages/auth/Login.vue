@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex'
+    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
     import {session} from '@dsquare-gbu/vue-router'
 
     export default {

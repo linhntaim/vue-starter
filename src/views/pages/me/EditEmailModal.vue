@@ -23,7 +23,7 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex'
+    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
     import ErrorBox from '../../components/ErrorBox'
     import {ui} from '../../../app/utils'
     import {ERROR_LEVEL_DEF, TOAST_DEF} from '../../../app/config'

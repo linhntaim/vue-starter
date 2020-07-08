@@ -4,7 +4,7 @@ export default class LocaleMiddleware extends Middleware {
     handle() {
         this.log('locale', 'middleware')
 
-        const query = this.middlewareManager.to.query
+        const query = this.to().query
         const locale = query.locale ? query.locale : (query.lang ? query.lang : null)
         if (locale) {
             this.store().dispatch('account/updateLocale', {

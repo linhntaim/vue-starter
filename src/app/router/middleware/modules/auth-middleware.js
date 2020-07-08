@@ -1,6 +1,6 @@
 import {passportCookieStore} from '../../../utils'
-import {APP_ROUTE} from '../../../config'
 import {Middleware} from '@dsquare-gbu/vue-uses'
+import {APP_ROUTE} from '../../../config'
 
 export default class AuthMiddleware extends Middleware {
     handle() {
@@ -39,7 +39,9 @@ export default class AuthMiddleware extends Middleware {
                 this.handleAuth()
             },
             errorCallback: () => {
-                this.redirect(this.router().getPathByName(APP_ROUTE.bad_request))
+                this.redirect({
+                    name: APP_ROUTE.bad_request,
+                })
             },
         })
     }
@@ -49,10 +51,10 @@ export default class AuthMiddleware extends Middleware {
 
         if (this.replaceRoutesIfNeeded()) return
 
-        const router = this.router()
-
-        if (this.middlewareManager.to.matched.some(record => record.meta.requireNotAuth)) {
-            this.redirect(router.getPathByName(APP_ROUTE.redirect_path_if_authenticated))
+        if (this.to().matched.some(record => record.meta.requireNotAuth)) {
+            this.redirect({
+                name: APP_ROUTE.redirect_path_if_authenticated,
+            })
             return
         }
 
@@ -60,9 +62,11 @@ export default class AuthMiddleware extends Middleware {
             doneCallback: () => {
                 super.handle()
             },
-            errorCallback: err => {
-                if (this.middlewareManager.to.matched.some(record => record.meta.requireAuth)) {
-                    this.redirect(router.getPathByName(APP_ROUTE.unauthenticated))
+            errorCallback: () => {
+                if (this.to().matched.some(record => record.meta.requireAuth)) {
+                    this.redirect({
+                        name: APP_ROUTE.unauthenticated,
+                    })
                     return
                 }
 
@@ -76,8 +80,10 @@ export default class AuthMiddleware extends Middleware {
 
         if (this.replaceRoutesIfNeeded(false)) return
 
-        if (this.middlewareManager.to.matched.some(record => record.meta.requireAuth)) {
-            this.redirect(this.router().getPathByName(APP_ROUTE.redirect_path_if_unauthenticated))
+        if (this.to().matched.some(record => record.meta.requireAuth)) {
+            this.redirect({
+                name: APP_ROUTE.redirect_path_if_unauthenticated,
+            })
             return
         }
 
@@ -91,7 +97,12 @@ export default class AuthMiddleware extends Middleware {
         if (auth ? router.switchToNotAuth() : router.switchToAuth()) {
             this.log('replaced', 'routes')
 
-            this.redirect(this.middlewareManager.to.path, this.middlewareManager.to.query, this.middlewareManager.to.hash)
+            const to = this.to()
+            this.redirect({
+                path: to.path,
+                query: to.query,
+                hash: to.hash,
+            })
             return true
         }
         return false

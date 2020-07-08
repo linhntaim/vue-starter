@@ -30,8 +30,7 @@ export const APP_DEFAULT_SERVICE = {
     client_id: process.env.VUE_APP_SERVICE_CLIENT_ID,
     client_secret: process.env.VUE_APP_SERVICE_CLIENT_SECRET,
     headers: {
-        application: process.env.VUE_APP_SERVICE_HEADER_APPLICATION_NAME,
-        localization: process.env.VUE_APP_SERVICE_HEADER_LOCALIZATION_NAME,
+        settings: process.env.VUE_APP_SERVICE_HEADER_SETTINGS_NAME,
         token_authorization: process.env.VUE_APP_SERVICE_HEADER_TOKEN_AUTHORIZATION_NAME,
         basic_authorization: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION_NAME,
     },
@@ -41,20 +40,22 @@ export const APP_COOKIE = {
     names: {
         default: process.env.VUE_APP_COOKIE_DEFAULT_NAME,
         device: process.env.VUE_APP_COOKIE_DEVICE_NAME,
-        localization: process.env.VUE_APP_COOKIE_LOCALIZATION_NAME,
+        settings: process.env.VUE_APP_COOKIE_SETTINGS_NAME,
     },
     disabled: {
         device: process.env.VUE_APP_COOKIE_DISABLE_DEVICE,
-        localization: process.env.VUE_APP_COOKIE_DISABLE_LOCALIZATION,
+        settings: process.env.VUE_APP_COOKIE_DISABLE_SETTINGS,
     },
     secret: process.env.VUE_APP_COOKIE_SECRET,
+    expires: 365,
+    path: '/',
     domain: (process.env.VUE_APP_COOKIE_INCLUDE_SUBDOMAINS === 'true' ? '.' : '')
-        + (process.env.VUE_APP_COOKIE_DOMAIN ? process.env.VUE_APP_COOKIE_DOMAIN : window.location.host),
+        + (process.env.VUE_APP_COOKIE_DOMAIN ? process.env.VUE_APP_COOKIE_DOMAIN : window.location.hostname),
 }
 export const DEFAULT_PREREQUISITE_LIFETIME = 31622400
-export const DEFAULT_LOCALIZATION = {
-    _from_app: true,
-    _ts: 0,
+export const DEFAULT_SETTINGS = {
+    app_name: APP_NAME,
+    app_url: APP_URL,
     locale: process.env.VUE_APP_LOCALE,
     country: process.env.VUE_APP_COUNTRY,
     timezone: process.env.VUE_APP_TIMEZONE,
@@ -120,6 +121,7 @@ export const APP_ROUTE = {
     redirect_path_after_register: 'home',
     maintenance: 'maintenance',
     bad_request: 'bad_request',
+    connection_lost: 'connection_lost',
     not_found: 'not_found',
     unauthenticated: 'unauthenticated',
     unauthorized: 'unauthorized',

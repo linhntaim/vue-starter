@@ -33,7 +33,7 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from 'vuex'
+    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
     import EditEmailModal from './EditEmailModal'
     import EditPasswordModal from './EditPasswordModal'
     import {TOAST_DEF} from '../../../app/config'

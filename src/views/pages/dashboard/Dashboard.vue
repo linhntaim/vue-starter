@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+    import {mapGetters} from '@dsquare-gbu/vue-uses'
     import LoadingDashBox from './boxes/LoadingDashBox'
     import ErrorDashBox from './boxes/ErrorDashBox'
 
