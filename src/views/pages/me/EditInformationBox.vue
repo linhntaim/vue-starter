@@ -52,7 +52,7 @@
         },
         computed: {
             ...mapGetters({
-                currentUser: 'account/user',
+                currentAdmin: 'account/admin',
             }),
         },
         created() {
@@ -64,9 +64,9 @@
                 accountUpdateInformation: 'account/updateInformation',
             }),
             initInformation() {
-                this.urlAvatar = this.currentUser.url_avatar
-                this.email = this.currentUser.email
-                this.displayName = this.currentUser.display_name
+                this.urlAvatar = this.currentAdmin.url_avatar
+                this.email = this.currentAdmin.user.email
+                this.displayName = this.currentAdmin.display_name
             },
             onInformationSubmitted() {
                 this.loading = true

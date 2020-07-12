@@ -77,82 +77,64 @@ export default class DefaultService extends Service {
         }
     }
 
+    handleRequest(request, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        return request.then(response => this.done(response, doneCallback))
+            .catch(error => this.error(error, errorCallback))
+            .then(() => this.always(alwaysCallback))
+    }
+
     wait(requests = [], doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        let request = this.service().all(requests).then((response) => {
-            this.done(response, doneCallback)
-        })
-        if (errorCallback) {
-            request.catch((error) => {
-                this.error(error, errorCallback)
-            })
-        }
-        if (alwaysCallback) {
-            request.then(() => {
-                this.always(alwaysCallback)
-            })
-        }
-        return request
+        return this.handleRequest(
+            this.service().all(requests),
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
     }
 
     get(path, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null, cancelToken = null) {
-        return this.service().get(this.path(path), {
-            params: this.params(params),
-            cancelToken: cancelToken,
-        })
-            .then((response) => {
-                this.done(response, doneCallback)
-            })
-            .catch((error) => {
-                this.error(error, errorCallback)
-            })
-            .then(() => {
-                this.always(alwaysCallback)
-            })
+        return this.handleRequest(
+            this.service().get(this.path(path), {
+                params: this.params(params),
+                cancelToken: cancelToken,
+            }),
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
     }
 
     post(path, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null, cancelToken = null) {
-        return this.service().post(this.path(path), this.params(params), {
-            cancelToken: cancelToken,
-        })
-            .then(response => {
-                this.done(response, doneCallback)
-            })
-            .catch(error => {
-                this.error(error, errorCallback)
-            })
-            .then(() => {
-                this.always(alwaysCallback)
-            })
+        return this.handleRequest(
+            this.service().post(this.path(path), this.params(params), {
+                cancelToken: cancelToken,
+            }),
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
     }
 
     put(path, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null, cancelToken = null) {
-        return this.service().put(this.path(path), this.params(params), {
-            cancelToken: cancelToken,
-        })
-            .then((response) => {
-                this.done(response, doneCallback)
-            })
-            .catch((error) => {
-                this.error(error, errorCallback)
-            })
-            .then(() => {
-                this.always(alwaysCallback)
-            })
+        return this.handleRequest(
+            this.service().put(this.path(path), this.params(params), {
+                cancelToken: cancelToken,
+            }),
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
     }
 
     delete(path, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null, cancelToken = null) {
-        return this.service().delete(this.path(path), {
-            params: this.params(params),
-            cancelToken: cancelToken,
-        })
-            .then((response) => {
-                this.done(response, doneCallback)
-            })
-            .catch((error) => {
-                this.error(error, errorCallback)
-            })
-            .then(() => {
-                this.always(alwaysCallback)
-            })
+        return this.handleRequest(
+            this.service().delete(this.path(path), {
+                params: this.params(params),
+                cancelToken: cancelToken,
+            }),
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
     }
 }

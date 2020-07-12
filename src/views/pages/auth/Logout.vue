@@ -27,7 +27,7 @@
                     alwaysCallback: () => {
                         this.loading = false
                         session.restart()
-                        this.$router.push('/auth/login')
+                        this.$router.push({name: 'login'})
                     },
                 })
             },

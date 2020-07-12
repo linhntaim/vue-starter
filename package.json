@@ -16,7 +16,7 @@
         "@dsquare-gbu/vue-bus": "^1.0.1",
         "@dsquare-gbu/vue-router": "^1.0.5",
         "@dsquare-gbu/vue-uses": "^1.0.9",
-        "@dsquare-gbu/vue-utils": "^1.0.10",
+        "@dsquare-gbu/vue-utils": "^1.0.12",
         "axios": "^0.19.2",
         "core-js": "^3.6.5",
         "cropperjs": "^1.5.7",

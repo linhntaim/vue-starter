@@ -54,19 +54,18 @@ export const APP_COOKIE = {
 }
 export const DEFAULT_PREREQUISITE_LIFETIME = 31622400
 export const DEFAULT_SETTINGS = {
-    app_name: APP_NAME,
-    app_url: APP_URL,
+    appName: APP_NAME,
+    appUrl: APP_URL,
     locale: process.env.VUE_APP_LOCALE,
     country: process.env.VUE_APP_COUNTRY,
     timezone: process.env.VUE_APP_TIMEZONE,
     currency: process.env.VUE_APP_CURRENCY,
-    number_format: process.env.VUE_APP_NUMBER_FORMAT,
-    first_day_of_week: 0,
-    long_date_format: 0,
-    short_date_format: 0,
-    long_time_format: 0,
-    short_time_format: 0,
-    time_offset: 0,
+    numberFormat: process.env.VUE_APP_NUMBER_FORMAT,
+    firstDayOfWeek: 0,
+    longDateFormat: 0,
+    shortDateFormat: 0,
+    longTimeFormat: 0,
+    shortTimeFormat: 0,
 }
 export const DEFAULT_DEVICE = {
     provider: 'browser',

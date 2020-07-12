@@ -36,7 +36,7 @@
         },
         computed: {
             ...mapGetters({
-                currentUser: 'account/user',
+                currentAdmin: 'account/admin',
                 accountPermissions: 'account/permissions',
             }),
             disabled() {
@@ -75,7 +75,7 @@
             afterLogin() {
                 session.restart()
 
-                this.$router.push('/')
+                this.$router.push({name: 'home'})
             },
         },
     }

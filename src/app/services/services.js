@@ -18,24 +18,4 @@ export const services = {
         instanceCallback: null,
         paramsCallback: {},
     },
-    facebook: {
-        instance: null,
-        instanceCallback: null,
-        paramsCallback: {},
-    },
-    google: {
-        instance: null,
-        instanceCallback: null,
-        paramsCallback: {},
-    },
-    msal: {
-        instance: null,
-        instanceCallback: null,
-        paramsCallback: {},
-    },
-    msgraph: {
-        instance: null,
-        instanceCallback: null,
-        paramsCallback: {},
-    },
 }

@@ -28,7 +28,6 @@ export const all = {
         authMiddleware,
         localeMiddleware,
         permissionMiddleware,
-        stopMiddleware,
     ],
     after: [
         commonMiddleware,

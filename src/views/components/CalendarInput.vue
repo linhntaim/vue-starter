@@ -37,7 +37,7 @@
         },
         computed: {
             ...mapGetters({
-                currentUser: 'account/user',
+                currentAdmin: 'account/admin',
             }),
             htmlId() {
                 return '#' + this.id
@@ -45,7 +45,7 @@
         },
         mounted() {
             $uis._ = ui.query(this.htmlId).get()
-            this.options.locale = this.currentUser.localization.locale
+            this.options.locale = this.currentAdmin.settings.locale
             if (this.content) {
                 this.options.userCurrent = false
                 if (this.options.timeOnly) {

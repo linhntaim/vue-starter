@@ -49,7 +49,7 @@
         },
         computed: {
             ...mapGetters({
-                currentUser: 'account/user',
+                currentAdmin: 'account/admin',
             }),
         },
         mounted() {

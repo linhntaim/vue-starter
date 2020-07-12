@@ -28,7 +28,7 @@ export default class AuthMiddleware extends Middleware {
         }
 
         if ((new Date).getTime() <= storedPassport.tokenEndTime) {
-            store.commit('account/setAuth', storedPassport)
+            store.commit('account/setAuthFromCookie', storedPassport)
             this.handleAuth()
             return
         }

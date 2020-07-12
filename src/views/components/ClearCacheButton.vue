@@ -13,14 +13,14 @@
         methods: {
             ...mapMutations({
                 accountUnsetAuth: 'account/unsetAuth',
-                accountUnsetUser: 'account/unsetUser',
+                accountUnsetAdmin: 'account/unsetAdmin',
             }),
             onClearCacheClicked() {
                 this.accountUnsetAuth()
-                this.accountUnsetUser()
+                this.accountUnsetAdmin()
 
-                this.$router.push('/auth/login')
-            }
-        }
+                this.$router.push({name: 'login'})
+            },
+        },
     }
 </script>

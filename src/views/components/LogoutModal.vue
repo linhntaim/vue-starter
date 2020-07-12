@@ -17,8 +17,8 @@
         name: 'LogoutModal',
         methods: {
             onLogoutClicked() {
-                this.$router.push('/auth/logout')
+                this.$router.push({name: 'logout'})
             },
-        }
+        },
     }
 </script>

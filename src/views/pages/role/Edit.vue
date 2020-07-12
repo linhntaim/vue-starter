@@ -47,7 +47,7 @@
             ...mapGetters({
                 metadata: 'prerequisite/metadata',
                 role: 'role/role',
-                accountRoles: 'account/roles',
+                accountRole: 'account/role',
             }),
         },
         mounted() {
@@ -112,7 +112,7 @@
                         description: this.description,
                     },
                     doneCallback: () => {
-                        if (this.accountRoles.indexOf(this.name) !== -1) {
+                        if (this.accountRole === this.name) {
                             ui.reloadPage()
                         }
 

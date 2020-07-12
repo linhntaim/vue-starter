@@ -45,7 +45,7 @@
         },
         computed: {
             ...mapGetters({
-                currentUser: 'account/user',
+                currentAdmin: 'account/admin',
             }),
         },
         mounted() {
@@ -58,7 +58,7 @@
             open() {
                 this.error = null
                 this.currentPassword = ''
-                this.email = this.currentUser.email
+                this.email = this.currentAdmin.user.email
 
                 $uis._.modal('show')
             },

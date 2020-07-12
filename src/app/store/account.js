@@ -44,13 +44,13 @@ export default {
             refreshToken: null,
             tokenEndTime: 0,
         },
-        user: null,
+        admin: null,
     },
     getters: {
         isLoggedIn: state => state.isLoggedIn,
-        user: state => state.user,
-        roles: state => state.user ? state.user.role_names : null,
-        permissions: state => state.user && state.user.permission_names ? state.user.permission_names : [],
+        admin: state => state.admin,
+        role: state => state.admin ? state.admin.role_name : null,
+        permissions: state => state.admin && state.admin.permission_names ? state.admin.permission_names : [],
         passport: state => {
             return {
                 accessToken: state.passport.accessToken,
@@ -76,6 +76,15 @@ export default {
             passportCookieStore.store(state.passport)
         },
 
+        setAuthFromCookie(state, passport) {
+            state.isLoggedIn = true
+            state.passport = passport
+
+            serviceFactory.modify(defaultService => {
+                defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.token_authorization] = state.passport.tokenType + ' ' + state.passport.accessToken
+            })
+        },
+
         unsetAuth(state) {
             state.isLoggedIn = false
             state.passport = {
@@ -91,39 +100,39 @@ export default {
             passportCookieStore.remove()
         },
 
-        setUser(state, {user, localeCallback}) {
-            state.user = user
+        setAdmin(state, {admin, localeCallback}) {
+            state.admin = admin
 
-            applySettings(state.user.settings, 'all', localeCallback)
+            applySettings(state.admin.settings, 'all', localeCallback)
         },
 
         setLocale(state, {locale, callback}) {
-            state.user.settings.locale = locale
+            state.admin.settings.locale = locale
 
-            applySettings(state.user.settings, 'store_with_locale', callback)
+            applySettings(state.admin.settings, 'store_with_locale', callback)
         },
 
         setSettings(state, {settings, localeCallback}) {
             for (const key in settings) {
-                state.user.settings[key] = settings[key]
+                state.admin.settings[key] = settings[key]
             }
 
-            applySettings(state.user.settings, 'all', localeCallback)
+            applySettings(state.admin.settings, 'all', localeCallback)
         },
 
-        unsetUser(state) {
-            if (state.user && state.user.settings) {
-                state.user = {
-                    settings: state.user.settings,
+        unsetAdmin(state) {
+            if (state.admin && state.admin.settings) {
+                state.admin = {
+                    settings: state.admin.settings,
                 }
             } else {
-                const storedLocalization = settingsCookieStore.retrieve()
-                state.user = {
-                    settings: storedLocalization ? storedLocalization : DEFAULT_SETTINGS,
+                const storedSettings = settingsCookieStore.retrieve()
+                state.admin = {
+                    settings: storedSettings ? storedSettings : DEFAULT_SETTINGS,
                 }
             }
 
-            applySettings(state.user.settings, 'store')
+            applySettings(state.admin.settings, 'store')
 
             callbackWaiter.remove('account_current')
         },
@@ -139,10 +148,10 @@ export default {
                 return
             }
 
-            const storedLocalization = settingsCookieStore.retrieve()
-            commit('setUser', {
-                user: {
-                    settings: storedLocalization ? storedLocalization : DEFAULT_SETTINGS,
+            const storedSettings = settingsCookieStore.retrieve()
+            commit('setAdmin', {
+                admin: {
+                    settings: storedSettings ? storedSettings : DEFAULT_SETTINGS,
                 },
                 localeCallback: callback,
             })
@@ -157,19 +166,19 @@ export default {
         },
 
         current({commit, state}, {login, doneCallback, errorCallback}) {
-            if (!state.user || !state.user.id || login) {
+            if (!state.admin || !state.admin.user_id || login) {
                 callbackWaiter.remove('account_current')
             }
             callbackWaiter.call('account_current', () => { // tricky cache
-                log.write('get current', 'store.account')
+                log.send('get current', 'store.account')
                 accountService().current(login, (data) => {
-                    commit('setUser', {
-                        user: data.model,
+                    commit('setAdmin', {
+                        admin: data.model,
                     })
                     doneCallback()
                 }, errorCallback)
             }, 10, () => {
-                doneCallback({user: state.user})
+                doneCallback({admin: state.admin})
             })
         },
 
@@ -199,7 +208,7 @@ export default {
         logout({commit}, {alwaysCallback}) {
             authService().logout(null, null, () => {
                 commit('unsetAuth')
-                commit('unsetUser')
+                commit('unsetAdmin')
 
                 alwaysCallback()
             })
@@ -234,21 +243,21 @@ export default {
 
         updateAvatar({state}, {image, doneCallback, errorCallback}) {
             accountService().updateAvatar(image, (data) => {
-                state.user.url_avatar = data.model.url_avatar
+                state.admin.url_avatar = data.model.url_avatar
                 doneCallback()
             }, errorCallback)
         },
 
         updateInformation({state}, {params, doneCallback, errorCallback}) {
             accountService().updateInformation(params, (data) => {
-                state.user.display_name = data.model.display_name
+                state.admin.display_name = data.model.display_name
                 doneCallback()
             }, errorCallback)
         },
 
         updateEmail({state}, {email, currentPassword, doneCallback, errorCallback}) {
             accountService().updateEmail(email, currentPassword, (data) => {
-                state.user.email = data.model.email
+                state.admin.email = data.model.email
                 doneCallback()
             }, errorCallback)
         },

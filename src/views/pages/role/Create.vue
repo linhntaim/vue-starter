@@ -89,7 +89,7 @@
                     doneCallback: () => {
                         this.loading = false
 
-                        this.$router.push('/role/')
+                        this.$router.push({name: 'role_index'})
 
                         this.$bus.emit('toast', {
                             title: this.$t('pages._role._create._'),

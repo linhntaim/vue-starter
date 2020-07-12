@@ -50,8 +50,9 @@
     import SorterComponent from '../../components/Sorter'
     import PaginatorComponent from '../../components/Paginator'
     import Search from './Search'
-    import {permissionChecker} from '../../../app/utils'
+    import {cacheHandler, permissionChecker} from '../../../app/utils'
     import helpers from '../../../app/utils/helpers'
+    import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
 
     const requiredPermissions = [
         'role-manage',
@@ -68,7 +69,7 @@
 
                 searcher: new Searcher(),
                 sorter: new Sorter(),
-                paginator: new Paginator(),
+                paginator: new Paginator(ITEMS_PER_PAGE_LIST, cacheHandler),
                 params: new DataPlot(),
 
                 requiredPermissions: {},
@@ -195,7 +196,7 @@
                 this.setRole({
                     role: role,
                 })
-                this.$router.push('/role/' + role.id + '/edit')
+                this.$router.push({name: 'role___edit', params: {id: role.id}})
             },
             onDeleteClicked(role) {
                 this.$bus.emit('confirm', {
