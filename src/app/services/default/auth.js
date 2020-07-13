@@ -1,6 +1,6 @@
 import {crypto, serverClock} from '../../utils'
 import {APP_DEFAULT_SERVICE} from '../../config'
-import DefaultService from '../default_service'
+import DefaultService from '../default-service'
 
 class AuthService extends DefaultService {
     login(email, password, doneCallback = null, errorCallback = null, alwaysCallback = null) {

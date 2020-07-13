@@ -1,7 +1,9 @@
 <template lang="pug">
     .pagination-group.form-inline
-        select.form-control(v-model="itemsPerPage" @change="onItemsPerPageChanged" :disabled="disabled")
-            option(v-for="size in itemsPerPageList" :value="size") {{size}} {{ $tc('components.pagination.item', size) }}
+        .form-group
+            label {{ $t('components.pagination.display_result') }}
+            select.form-control(v-model="itemsPerPage" @change="onItemsPerPageChanged" :disabled="disabled")
+                option(v-for="size in itemsPerPageList" :value="size") {{size}}
         ul.pagination
             li.page-item(:class="atFirst ? 'first disabled' : 'first'")
                 a.page-link(:class="{disabled: disabled}" @click.prevent="onPageClicked(first)" :title="'First page (' + first + ')'" href="#") «
@@ -13,7 +15,6 @@
                         formatted-number(:number="endOrder" :type="'int'")
                         | &nbsp;/&nbsp;
                     formatted-number(:number="totalItems" :type="'int'")
-                    | &nbsp;{{ $tc('components.pagination.item', totalItems) }}
             li.page-item(:class="atFirst ? 'prev disabled' : 'prev'")
                 a.page-link(:class="{disabled: disabled}" @click.prevent="onPageClicked(prev)" :title="'Previous page (' + prev + ')'" href="#") ‹
             li.page-item.page-item-direct(v-for="i in (end - start + 1)" :class="current == start - 1 + i ? 'page active' : 'page'")
@@ -26,9 +27,9 @@
 </template>
 
 <script>
-    import {Paginator} from '@dsquare-gbu/vue-utils'
-    import {ITEMS_PER_PAGE_LIST} from '../../app/config'
     import FormattedNumber from './FormattedNumber'
+    import {ITEMS_PER_PAGE_LIST} from '../../app/config'
+    import {Paginator} from '@dsquare-gbu/vue-utils'
 
     export default {
         name: 'Paginator',
@@ -100,32 +101,50 @@
     }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     .pagination-group {
         float: right;
+
+        .form-group {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            margin-right: 1rem;
+
+            label {
+                margin-right: .5rem;
+            }
+        }
     }
 
-    .pagination-group select {
-        margin-top: 0;
-        margin-bottom: 1rem;
-        margin-right: 1rem;
-    }
-
-    .page-item.active .page-link {
-        z-index: 0;
+    .page-item {
+        &.active {
+            .page-link {
+                z-index: 0;
+            }
+        }
     }
 
     @media (max-width: 575px) {
         .pagination-group {
             float: none;
+
+            .form-group {
+                margin-right: 0;
+
+                .form-control {
+                    display: inline-block;
+                    width: auto;
+                    vertical-align: middle;
+                }
+            }
         }
 
-        .pagination-group select {
-            margin-right: 0;
-        }
+        .pagination {
+            width: 100%;
 
-        .page-report {
-            display: none;
+            .page-report {
+                display: none;
+            }
         }
     }
 </style>

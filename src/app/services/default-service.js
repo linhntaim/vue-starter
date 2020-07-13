@@ -1,4 +1,4 @@
-import {serviceFactory} from './service_factory'
+import {serviceFactory} from './service-factory'
 import {Service, ServiceError} from './service'
 
 class DefaultServiceError extends ServiceError {

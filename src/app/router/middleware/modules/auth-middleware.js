@@ -1,4 +1,4 @@
-import {passportCookieStore, settingsCookieStore} from '../../../utils'
+import {passportCookieStore} from '../../../utils'
 import {Middleware} from '@dsquare-gbu/vue-uses'
 import {APP_ROUTE} from '../../../config'
 

@@ -1,8 +1,8 @@
-import DefaultService from '../default_service'
+import DefaultService from '../default-service'
 
-export class AccountCommandService extends DefaultService {
+export class AdminCommandService extends DefaultService {
     constructor() {
-        super('account/command')
+        super('admin/command')
     }
 
     run(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
@@ -16,4 +16,4 @@ export class AccountCommandService extends DefaultService {
     }
 }
 
-export const accountCommandService = () => new AccountCommandService()
+export const adminCommandService = () => new AdminCommandService()

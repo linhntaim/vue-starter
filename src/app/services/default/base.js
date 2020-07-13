@@ -1,4 +1,4 @@
-import DefaultService from '../default_service'
+import DefaultService from '../default-service'
 
 export default class BaseService extends DefaultService {
     index(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {

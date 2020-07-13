@@ -1,4 +1,4 @@
-import {all} from './middleware'
+import {all, error} from './middleware'
 
 export const routes = [
     {
@@ -6,14 +6,14 @@ export const routes = [
         name: 'maintenance',
         component: () => import('../../views/pages/Maintenance'),
         meta: {
-            middleware: all,
+            middleware: error,
         },
     },
     {
         path: '/error',
         component: () => import('../../views/master/Error'),
         meta: {
-            middleware: all,
+            middleware: error,
         },
         children: [
             {

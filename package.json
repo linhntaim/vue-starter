@@ -12,11 +12,11 @@
         "@compile": "node ./run/dist/compile.js"
     },
     "dependencies": {
-        "@dsquare-gbu/vue-app": "^1.0.5",
+        "@dsquare-gbu/vue-app": "^1.0.6",
         "@dsquare-gbu/vue-bus": "^1.0.1",
         "@dsquare-gbu/vue-router": "^1.0.5",
         "@dsquare-gbu/vue-uses": "^1.0.9",
-        "@dsquare-gbu/vue-utils": "^1.0.12",
+        "@dsquare-gbu/vue-utils": "^1.0.13",
         "axios": "^0.19.2",
         "core-js": "^3.6.5",
         "cropperjs": "^1.5.7",

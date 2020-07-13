@@ -1,13 +1,13 @@
 import {
+    AppOptions,
     CallbackWaiter,
     ConsoleLog,
     JsCookieHandler,
     Crypto,
     DateTimeHelper,
     DeviceCookieStore,
-    FacebookSdk,
-    GoogleApi,
     IntervalCaller,
+    IP,
     JqueryUi,
     LocalCacheHandler,
     SettingsCookieStore,
@@ -50,11 +50,11 @@ export const callbackWaiter = new CallbackWaiter()
 export const timeoutCaller = new TimeoutCaller()
 export const intervalCaller = new IntervalCaller()
 export const serverClock = new ServerClock(CLOCK_BLOCK_KEYS, CLOCK_BLOCK_RANGE)
+export const ip = new IP()
 
 export const numberFormatHelper = new NumberFormatHelper(DEFAULT_SETTINGS)
 export const dateTimeHelper = new DateTimeHelper(DEFAULT_SETTINGS)
 
 export const permissionChecker = new PermissionChecker()
 
-export const googleApi = new GoogleApi()
-export const facebookSdk = new FacebookSdk('FACEBOOK_SERVICE')
+export const appOptions = new AppOptions()

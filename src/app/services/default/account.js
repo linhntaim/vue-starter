@@ -1,4 +1,4 @@
-import DefaultService from '../default_service'
+import DefaultService from '../default-service'
 
 export class AccountService extends DefaultService {
     constructor() {

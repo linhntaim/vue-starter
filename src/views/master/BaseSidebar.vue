@@ -1,8 +1,6 @@
 <template lang="pug">
     ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion
         router-link.sidebar-brand.d-flex.align-items-center.justify-content-center(@click.native="onRouterClicked()" :to="{name: rootName}")
-            .sidebar-brand-icon
-                img(:src="logoUrl")
             .sidebar-brand-text.mx-2
                 | &nbsp;{{ appName }}
         li.nav-item(v-if="filteredMenuItems.length && !filteredMenuItems[0].heading")
@@ -12,14 +10,14 @@
             .item-heading(v-if="item.heading")
                 hr.sidebar-divider
                 .sidebar-heading {{ $t('master.base_sidebar.' + item.title) }}
-            div(v-else)
-                div(v-if="item.children")
+            template(v-else)
+                template(v-if="item.children")
                     a.nav-link(:class="{collapsed: !item.active}" href="#", data-toggle="collapse", :data-target="'#collapse' + itemIndex")
                         i(v-if="item.iconClass" :class="item.iconClass")
                         span &nbsp;{{ $t('master.base_sidebar.' + item.title) }}
                     .collapse(:id="'collapse' + itemIndex" :class="{show: item.active}" data-parent="#accordionSidebar")
                         .bg-white.py-2.collapse-inner.rounded
-                            div(v-for="childItem in item.children")
+                            template(v-for="childItem in item.children")
                                 h6.collapse-header(v-if="childItem.heading") {{ $t('master.base_sidebar.' + childItem.title) }}
                                 router-link.collapse-item(v-else @click.native="onRouterClicked()" :to="childItem.to" :class="{active: childItem.active}") {{ $t('master.base_sidebar.' + childItem.title) }}
                 router-link.nav-link(v-else @click.native="onRouterClicked()" :to="item.to")
@@ -33,16 +31,10 @@
 <script>
     import {mapGetters} from '@dsquare-gbu/vue-uses'
     import {permissionChecker, timeoutCaller, ui} from '../../app/utils'
-    import {APP_LOGO_URL, APP_NAME, APP_ROUTE} from '../../app/config'
+    import {APP_NAME, APP_ROUTE} from '../../app/config'
     import {routePermissions} from '../../app/router'
 
     const defaultMenuItems = () => [
-        {
-            heading: true,
-            title: 'account',
-            matches: [/^\/$/],
-            active: false,
-        },
         {
             title: 'dashboard',
             iconClass: 'fas fa-fw fa-tachometer-alt',
@@ -78,7 +70,6 @@
             return {
                 uis: {},
 
-                logoUrl: APP_LOGO_URL.white_s32,
                 appName: APP_NAME,
                 rootName: APP_ROUTE.home,
                 filteredMenuItems: [],

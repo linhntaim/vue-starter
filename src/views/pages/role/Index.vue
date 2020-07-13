@@ -38,21 +38,18 @@
                                     button.btn.btn-link.btn-sm(v-if="canEdit" :disabled="loading" @click.prevent="onEditClicked(role)") {{ $t('actions.edit') }}
                                     button.btn.btn-link.btn-sm(v-if="canDelete" :disabled="loading" @click.prevent="onDeleteClicked(role)") {{ $t('actions.delete') }}
                 .clearfix
-                    router-link.btn.btn-primary.btn-item.btn-item-left(:class="{disabled: loading}" :to="{name: 'role_create'}")
-                        i.fas.fa-plus
-                        | &nbsp;&nbsp;{{ $t('pages._role._create._') }}
                     paginator-component(:disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator()")
 </template>
 
 <script>
+    import {cacheHandler, permissionChecker} from '../../../app/utils'
     import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
     import {Collection, DataPlot, Sorter, Searcher, ItemSelection, Paginator} from '@dsquare-gbu/vue-utils'
-    import SorterComponent from '../../components/Sorter'
+    import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
+    import helpers from '../../../app/utils/helpers'
     import PaginatorComponent from '../../components/Paginator'
     import Search from './Search'
-    import {cacheHandler, permissionChecker} from '../../../app/utils'
-    import helpers from '../../../app/utils/helpers'
-    import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
+    import SorterComponent from '../../components/Sorter'
 
     const requiredPermissions = [
         'role-manage',
@@ -174,24 +171,6 @@
             onSyncClicked() {
                 this.search()
             },
-            onBulkDeleteClicked() {
-                this.$bus.emit('confirm', {
-                    message: this.$t('pages._role._index.want_delete_many'),
-                    confirmCallback: () => {
-                        this.loading = true
-                        this.roleDelete({
-                            ids: this.itemSelection.selected,
-                            doneCallback: () => {
-                                this.search()
-                            },
-                            errorCallback: err => {
-                                this.loading = false
-                                this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                            },
-                        })
-                    },
-                })
-            },
             onEditClicked(role) {
                 this.setRole({
                     role: role,
@@ -205,6 +184,24 @@
                         this.loading = true
                         this.roleDelete({
                             ids: [role.id],
+                            doneCallback: () => {
+                                this.search()
+                            },
+                            errorCallback: err => {
+                                this.loading = false
+                                this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                            },
+                        })
+                    },
+                })
+            },
+            onBulkDeleteClicked() {
+                this.$bus.emit('confirm', {
+                    message: this.$t('pages._role._index.want_delete_many'),
+                    confirmCallback: () => {
+                        this.loading = true
+                        this.roleDelete({
+                            ids: this.itemSelection.selected,
                             doneCallback: () => {
                                 this.search()
                             },

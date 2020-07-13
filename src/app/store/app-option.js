@@ -1,4 +1,4 @@
-import {appOptionAdminService} from '../services/default/admin_app_option'
+import {appOptionAdminService} from '../services/default/admin-app-option'
 
 export default {
     namespaced: true,

@@ -9,7 +9,7 @@ import {
     settingsCookieStore,
 } from '../utils'
 import {localeManager} from '../locales'
-import {serviceFactory} from '../services/service_factory'
+import {serviceFactory} from '../services/service-factory'
 import {APP_DEFAULT_SERVICE} from '../config'
 
 const setDefaultServiceSettingsHeader = settings => {
