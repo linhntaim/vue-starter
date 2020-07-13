@@ -17,10 +17,10 @@
                         | {{ $t('actions.logout') }}
             li.nav-item.dropdown.locale-dropdown.no-arrow
                 a.nav-link.dropdown-toggle.no-arrow(href="#" data-toggle="dropdown")
-                    span.flag-icon.d-inline-block(:class="'flag-icon-' + localeMappingFlagIconNameDefs[currentAdmin.settings.locale]")
-                    span.ml-2.text-gray-600 {{ currentAdmin.settings.locale.toUpperCase() }}
+                    span.flag-icon.d-inline-block(:class="'flag-icon-' + localeMappingFlagIconNameDefs[currentSettings.locale]")
+                    span.ml-2.text-gray-600 {{ currentSettings.locale.toUpperCase() }}
                 .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in
-                    a.dropdown-item.px-3(v-for="metaLocale in metadata.locales" @click.prevent="onLocaleClicked(metaLocale)" :class="{'active': metaLocale.code === currentAdmin.settings.locale}" href="#")
+                    a.dropdown-item.px-3(v-for="metaLocale in metadata.locales" @click.prevent="onLocaleClicked(metaLocale)" :class="{'active': metaLocale.code === currentSettings.locale}" href="#")
                         span.flag-icon.d-inline-block(:class="'flag-icon-' + localeMappingFlagIconNameDefs[metaLocale.code]")
                         span.ml-2 {{ metaLocale.name }}
 </template>
@@ -40,9 +40,10 @@
         },
         computed: {
             ...mapGetters({
+                metadata: 'prerequisite/metadata',
                 isLoggedIn: 'account/isLoggedIn',
                 currentAdmin: 'account/admin',
-                metadata: 'prerequisite/metadata',
+                currentSettings: 'account/settings',
             }),
             avatar() {
                 return this.currentAdmin && this.currentAdmin.url_avatar ?
@@ -69,7 +70,7 @@
                 })
             },
             onLocaleClicked(locale) {
-                if (locale.code === this.currentAdmin.settings.locale) return
+                if (locale.code === this.currentSettings.locale) return
 
                 this.loading = true
                 this.accountUpdateLocale({

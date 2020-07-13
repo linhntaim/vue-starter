@@ -1,4 +1,4 @@
-import {passportCookieStore} from '../../../utils'
+import {passportCookieStore, settingsCookieStore} from '../../../utils'
 import {Middleware} from '@dsquare-gbu/vue-uses'
 import {APP_ROUTE} from '../../../config'
 
@@ -14,7 +14,11 @@ export default class AuthMiddleware extends Middleware {
         const storedPassport = passportCookieStore.retrieve()
 
         if (store.getters['account/isLoggedIn']) {
-            if (!storedPassport.accessToken || !storedPassport.tokenType || !storedPassport.refreshToken || !storedPassport.tokenEndTime) {
+            if (!storedPassport
+                || !storedPassport.accessToken
+                || !storedPassport.tokenType
+                || !storedPassport.refreshToken
+                || !storedPassport.tokenEndTime) {
                 store.dispatch('account/storePassport')
             }
 
@@ -22,7 +26,11 @@ export default class AuthMiddleware extends Middleware {
             return
         }
 
-        if (!storedPassport.accessToken || !storedPassport.tokenType || !storedPassport.refreshToken || !storedPassport.tokenEndTime) {
+        if (!storedPassport
+            || !storedPassport.accessToken
+            || !storedPassport.tokenType
+            || !storedPassport.refreshToken
+            || !storedPassport.tokenEndTime) {
             this.handleNotAuth()
             return
         }
@@ -35,14 +43,10 @@ export default class AuthMiddleware extends Middleware {
 
         store.dispatch('account/refreshToken', {
             refreshToken: storedPassport.refreshToken,
-            doneCallback: () => {
-                this.handleAuth()
-            },
-            errorCallback: () => {
-                this.redirect({
-                    name: APP_ROUTE.bad_request,
-                })
-            },
+            doneCallback: () => this.handleAuth(),
+            errorCallback: () => this.redirect({
+                name: APP_ROUTE.bad_request,
+            }),
         })
     }
 
@@ -59,9 +63,7 @@ export default class AuthMiddleware extends Middleware {
         }
 
         this.store().dispatch('account/current', {
-            doneCallback: () => {
-                super.handle()
-            },
+            doneCallback: () => this.next(),
             errorCallback: () => {
                 if (this.to().matched.some(record => record.meta.requireAuth)) {
                     this.redirect({
@@ -87,9 +89,7 @@ export default class AuthMiddleware extends Middleware {
             return
         }
 
-        this.store().dispatch('account/anonymous', {
-            callback: () => this.next(),
-        })
+        this.next()
     }
 
     replaceRoutesIfNeeded(auth = true) {

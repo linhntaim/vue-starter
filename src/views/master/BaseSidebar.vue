@@ -1,6 +1,6 @@
 <template lang="pug">
     ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion
-        router-link.sidebar-brand.d-flex.align-items-center.justify-content-center(@click.native="onRouterClicked()" :to="{path: rootPath}")
+        router-link.sidebar-brand.d-flex.align-items-center.justify-content-center(@click.native="onRouterClicked()" :to="{name: rootName}")
             .sidebar-brand-icon
                 img(:src="logoUrl")
             .sidebar-brand-text.mx-2
@@ -33,7 +33,7 @@
 <script>
     import {mapGetters} from '@dsquare-gbu/vue-uses'
     import {permissionChecker, timeoutCaller, ui} from '../../app/utils'
-    import {APP_LOGO_URL, APP_NAME} from '../../app/config'
+    import {APP_LOGO_URL, APP_NAME, APP_ROUTE} from '../../app/config'
     import {routePermissions} from '../../app/router'
 
     const defaultMenuItems = () => [
@@ -51,23 +51,11 @@
             },
         },
         {
-            heading: true,
-            title: 'users',
-            matches: [/^\/user/, /^\/role/],
-            active: false,
-        },
-        {
-            title: 'user_management',
+            title: 'role_management',
             iconClass: 'fas fa-fw fa-users',
-            matches: [/^\/user/, /^\/role/],
+            matches: [/^\/role/],
             active: false,
             children: [
-                {
-                    heading: true,
-                    title: 'roles',
-                    matches: [/^\/role/],
-                    active: false,
-                },
                 {
                     title: 'create_a_role',
                     to: {
@@ -78,24 +66,6 @@
                     title: 'list_of_roles',
                     to: {
                         name: 'role_index',
-                    },
-                },
-                {
-                    heading: true,
-                    title: 'users',
-                    matches: [/^\/user/],
-                    active: false,
-                },
-                {
-                    title: 'create_an_user',
-                    to: {
-                        name: 'user_create',
-                    },
-                },
-                {
-                    title: 'list_of_users',
-                    to: {
-                        name: 'user_index',
                     },
                 },
             ],
@@ -110,7 +80,7 @@
 
                 logoUrl: APP_LOGO_URL.white_s32,
                 appName: APP_NAME,
-                rootPath: '/',
+                rootName: APP_ROUTE.home,
                 filteredMenuItems: [],
             }
         },
@@ -154,8 +124,8 @@
             },
 
             initRootPath() {
-                // if need to change root path
-                this.rootPath = '/'
+                // TODO: if need to change root path
+                this.rootName = APP_ROUTE.home
             },
 
             initMenuItems() {
@@ -229,7 +199,7 @@
             },
 
             onRouterClicked() {
-                //
+                // TODO: if need to add extra handle on menu navigation
             },
         },
     }

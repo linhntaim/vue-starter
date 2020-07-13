@@ -10,11 +10,24 @@ import {
 } from '../utils'
 import {localeManager} from '../locales'
 import {serviceFactory} from '../services/service_factory'
-import {APP_DEFAULT_SERVICE, DEFAULT_SETTINGS} from '../config'
+import {APP_DEFAULT_SERVICE} from '../config'
 
 const setDefaultServiceSettingsHeader = settings => {
     serviceFactory.modify(defaultService => {
-        defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.settings] = JSON.stringify(settings)
+        defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.settings] = JSON.stringify({
+            app_name: settings.appName,
+            app_url: settings.appUrl,
+            locale: settings.locale,
+            country: settings.country,
+            timezone: settings.timezone,
+            currency: settings.currency,
+            number_format: settings.numberFormat,
+            first_day_of_week: settings.firstDayOfWeek,
+            long_date_format: settings.longDateFormat,
+            short_date_format: settings.shortDateFormat,
+            long_time_format: settings.longTimeFormat,
+            short_time_format: settings.shortTimeFormat,
+        })
     })
 }
 
@@ -45,10 +58,12 @@ export default {
             tokenEndTime: 0,
         },
         admin: null,
+        settings: {},
     },
     getters: {
         isLoggedIn: state => state.isLoggedIn,
         admin: state => state.admin,
+        settings: state => state.settings,
         role: state => state.admin ? state.admin.role_name : null,
         permissions: state => state.admin && state.admin.permission_names ? state.admin.permission_names : [],
         passport: state => {
@@ -100,61 +115,50 @@ export default {
             passportCookieStore.remove()
         },
 
-        setAdmin(state, {admin, localeCallback}) {
+        setAdmin(state, {admin}) {
             state.admin = admin
-
-            applySettings(state.admin.settings, 'all', localeCallback)
-        },
-
-        setLocale(state, {locale, callback}) {
-            state.admin.settings.locale = locale
-
-            applySettings(state.admin.settings, 'store_with_locale', callback)
-        },
-
-        setSettings(state, {settings, localeCallback}) {
-            for (const key in settings) {
-                state.admin.settings[key] = settings[key]
-            }
-
-            applySettings(state.admin.settings, 'all', localeCallback)
         },
 
         unsetAdmin(state) {
-            if (state.admin && state.admin.settings) {
-                state.admin = {
-                    settings: state.admin.settings,
-                }
-            } else {
-                const storedSettings = settingsCookieStore.retrieve()
-                state.admin = {
-                    settings: storedSettings ? storedSettings : DEFAULT_SETTINGS,
-                }
-            }
-
-            applySettings(state.admin.settings, 'store')
+            state.admin = null
 
             callbackWaiter.remove('account_current')
+        },
+
+        setLocale(state, {locale, callback}) {
+            state.settings.locale = locale
+
+            applySettings(state.settings, 'store_with_locale', callback)
+        },
+
+        setSettings(state, {settings, localeCallback}) {
+            state.settings = {
+                appName: settings.app_name,
+                appUrl: settings.app_url,
+                locale: settings.locale,
+                country: settings.country,
+                timezone: settings.timezone,
+                currency: settings.currency,
+                numberFormat: settings.number_format,
+                firstDayOfWeek: settings.first_day_of_week,
+                longDateFormat: settings.long_date_format,
+                shortDateFormat: settings.short_date_format,
+                longTimeFormat: settings.long_time_format,
+                shortTimeFormat: settings.short_time_format,
+            }
+
+            applySettings(state.settings, 'all', localeCallback)
+        },
+
+        setSettingsFromCookie(state, {settings, localeCallback}) {
+            state.settings = settings
+
+            applySettings(state.settings, 'all', localeCallback)
         },
     },
     actions: {
         storePassport({state}) {
             passportCookieStore.store(state.passport)
-        },
-
-        anonymous({commit, state}, {callback}) {
-            if (state.isLoggedIn) {
-                callback && callback()
-                return
-            }
-
-            const storedSettings = settingsCookieStore.retrieve()
-            commit('setAdmin', {
-                admin: {
-                    settings: storedSettings ? storedSettings : DEFAULT_SETTINGS,
-                },
-                localeCallback: callback,
-            })
         },
 
         reload({dispatch}, {doneCallback, errorCallback}) {
@@ -172,8 +176,13 @@ export default {
             callbackWaiter.call('account_current', () => { // tricky cache
                 log.send('get current', 'store.account')
                 accountService().current(login, (data) => {
+                    const settings = data.model.settings
+                    delete data.model.settings
                     commit('setAdmin', {
                         admin: data.model,
+                    })
+                    commit('setSettings', {
+                        settings: settings,
                     })
                     doneCallback()
                 }, errorCallback)
