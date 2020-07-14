@@ -4,14 +4,14 @@ import {
     ConsoleLog,
     JsCookieHandler,
     Crypto,
-    DateTimeHelper,
+    DateTimer,
     DeviceCookieStore,
     IntervalCaller,
     IP,
     JqueryUi,
     LocalCacheHandler,
     SettingsCookieStore,
-    NumberFormatHelper,
+    NumberFormatter,
     PassportCookieStore,
     PermissionChecker,
     ServerClock,
@@ -52,8 +52,8 @@ export const intervalCaller = new IntervalCaller()
 export const serverClock = new ServerClock(CLOCK_BLOCK_KEYS, CLOCK_BLOCK_RANGE)
 export const ip = new IP()
 
-export const numberFormatHelper = new NumberFormatHelper(DEFAULT_SETTINGS)
-export const dateTimeHelper = new DateTimeHelper(DEFAULT_SETTINGS)
+export const numberFormatHelper = new NumberFormatter(DEFAULT_SETTINGS)
+export const dateTimeHelper = new DateTimer(DEFAULT_SETTINGS)
 
 export const permissionChecker = new PermissionChecker()
 

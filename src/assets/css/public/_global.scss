@@ -25,26 +25,54 @@ body {
     display: none !important;
 }
 
-@media (max-width: 575px) {
+.show, .show-xl {
+    display: inherit;
+}
+
+@media (max-width: $xs-max-width) {
     .hide-xs {
         display: none;
     }
 }
 
-@media (max-width: 767px) {
+@media (min-width: $sm-min-width) {
+    .show-xs {
+        display: none;
+    }
+}
+
+@media (max-width: $sm-max-width) {
     .hide-sm {
         display: none;
     }
 }
 
-@media (max-width: 991px) {
+@media (min-width: $md-min-width) {
+    .show-sm {
+        display: none;
+    }
+}
+
+@media (max-width: $md-max-width) {
     .hide-md {
         display: none;
     }
 }
 
-@media (min-width: 1199px) {
+@media (min-width: $lg-min-width) {
+    .show-md {
+        display: none;
+    }
+}
+
+@media (max-width: $lg-max-width) {
     .hide-lg {
+        display: none;
+    }
+}
+
+@media (min-width: $xl-min-width) {
+    .show-lg {
         display: none;
     }
 }

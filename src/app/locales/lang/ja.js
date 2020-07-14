@@ -164,6 +164,11 @@ export default {
         },
     },
     pages: {
+        description: '詳細',
+        display_name: 'ユーザー名',
+        name: '名',
+        no_items: '該当するデータが存在しません。',
+        permission: '許可 | 許可',
         _auth: {
             _forgot_password: {
                 _: 'パスワード再設定',

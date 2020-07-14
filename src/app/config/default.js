@@ -15,9 +15,6 @@ export const APP_ADMIN_URL = APP_ADMIN_HOST === APP_HOST_SUB ? window.location.o
 export const APP_HOME_HOST = process.env.VUE_APP_HOME_HOST
 export const APP_HOME_HOST_SUB_PATH = process.env.VUE_APP_HOME_HOST_SUB_PATH
 export const APP_HOME_URL = APP_HOME_HOST === APP_HOST_SUB ? window.location.origin + APP_HOME_HOST_SUB_PATH : process.env.VUE_APP_HOME_URL
-export const APP_STATIC_HOST = process.env.VUE_APP_STATIC_HOST
-export const APP_STATIC_HOST_SUB_PATH = process.env.VUE_APP_STATIC_HOST_SUB_PATH
-export const APP_STATIC_URL = APP_STATIC_HOST === APP_HOST_SUB ? window.location.origin + APP_STATIC_HOST_SUB_PATH : process.env.VUE_APP_STATIC_URL
 export const APP_SERVICE_HOST = process.env.VUE_APP_SERVICE_HOST
 export const APP_SERVICE_HOST_SUB_PATH = process.env.VUE_APP_SERVICE_HOST_SUB_PATH
 export const APP_SERVICE_URL = APP_SERVICE_HOST === APP_HOST_SUB ? window.location.origin + APP_SERVICE_HOST_SUB_PATH : process.env.VUE_APP_SERVICE_URL
@@ -126,23 +123,6 @@ export const APP_ROUTE = {
     unauthorized: 'unauthorized',
     reset_password: 'reset_password',
     verify_email: 'verify_email',
-}
-export const APP_LOGO_URL = {
-    original: APP_STATIC_URL + '/sites/logos/logo.png',
-    s32: APP_STATIC_URL + '/sites/logos/logo_32x32.png',
-    s128: APP_STATIC_URL + '/sites/logos/logo_128x128.png',
-    s256: APP_STATIC_URL + '/sites/logos/logo_256x256.png',
-    s512: APP_STATIC_URL + '/sites/logos/logo_512x512.png',
-    black_original: APP_STATIC_URL + '/sites/logos/logo_black.png',
-    black_s32: APP_STATIC_URL + '/sites/logos/logo_black_32x32.png',
-    black_s128: APP_STATIC_URL + '/sites/logos/logo_black_128x128.png',
-    black_s256: APP_STATIC_URL + '/sites/logos/logo_black_256x256.png',
-    black_s512: APP_STATIC_URL + '/sites/logos/logo_black_512x512.png',
-    white_original: APP_STATIC_URL + '/sites/logos/logo_white.png',
-    white_s32: APP_STATIC_URL + '/sites/logos/logo_white_32x32.png',
-    white_s128: APP_STATIC_URL + '/sites/logos/logo_white_128x128.png',
-    white_s256: APP_STATIC_URL + '/sites/logos/logo_white_256x256.png',
-    white_s512: APP_STATIC_URL + '/sites/logos/logo_white_512x512.png',
 }
 export const APP_OPTION = {
     yes: 1,

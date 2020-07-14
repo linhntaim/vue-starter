@@ -42,8 +42,8 @@ const applySettings = (settings, action, localeCallback = null) => {
         })
     }
     if (action === 'all') {
-        dateTimeHelper.localize(settings)
-        numberFormatHelper.localize(settings)
+        dateTimeHelper.apply(settings)
+        numberFormatHelper.apply(settings)
     }
 }
 

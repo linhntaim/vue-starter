@@ -8,18 +8,18 @@
                         thead
                             tr
                                 th.text-center #
-                                th.text-center
+                                th
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
-                                th.text-center
+                                th
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.display_name')" :sortBy="'display_name'")
-                                th.text-center {{ $tc('pages.permission', 2) }}
+                                th {{ $tc('pages.permission', 2) }}
                                 th.text-center(v-if="canAction") {{ $t('actions.actions') }}
                         tfoot
                             tr
                                 th.text-center #
-                                th.text-center
+                                th
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
-                                th.text-center
+                                th
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.display_name')" :sortBy="'display_name'")
                                 th {{ $tc('pages.permission', 2) }}
                                 th.text-center(v-if="canAction") {{ $t('actions.actions') }}
@@ -29,7 +29,7 @@
                                     span(v-if="!loading") {{ $t('pages.no_items') }}
                                     span(v-if="loading") {{ $t('actions.loading') }}
                             tr(v-for="(role, index) in roles")
-                                td.text-center {{ paginator.pagination.start_order + 1 + index }}
+                                td.text-center {{ paginator.pagination.items.from + index }}
                                 td {{ role.name }}
                                 td {{ role.display_name }}
                                 td

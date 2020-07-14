@@ -164,6 +164,11 @@ export default {
         },
     },
     pages: {
+        description: 'Description',
+        display_name: 'Display name',
+        name: 'Name',
+        no_items: 'There is no items',
+        permission: 'Permission | Permissions',
         _auth: {
             _forgot_password: {
                 _: 'Forgot password?',

@@ -1,6 +1,8 @@
 <template lang="pug">
     ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion
         router-link.sidebar-brand.d-flex.align-items-center.justify-content-center(@click.native="onRouterClicked()" :to="{name: rootName}")
+            .sidebar-brand-icon.show-sm
+                | {{ appName.charAt(0) }}
             .sidebar-brand-text.mx-2
                 | &nbsp;{{ appName }}
         li.nav-item(v-if="filteredMenuItems.length && !filteredMenuItems[0].heading")
