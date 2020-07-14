@@ -2,9 +2,9 @@ import {authService} from '../services/default/auth'
 import {accountService} from '../services/default/account'
 import {
     callbackWaiter,
-    dateTimeHelper,
+    dateTimer,
     log,
-    numberFormatHelper,
+    numberFormatter,
     passportCookieStore,
     settingsCookieStore,
 } from '../utils'
@@ -42,8 +42,8 @@ const applySettings = (settings, action, localeCallback = null) => {
         })
     }
     if (action === 'all') {
-        dateTimeHelper.apply(settings)
-        numberFormatHelper.apply(settings)
+        dateTimer.apply(settings)
+        numberFormatter.apply(settings)
     }
 }
 

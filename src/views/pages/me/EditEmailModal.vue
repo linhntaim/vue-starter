@@ -13,7 +13,7 @@
                             label.required(for="inputEmailEmail") {{ $t('pages.email_address') }}
                             input#inputEmailEmail.form-control(v-model="email" type="email" autocomplete="off" required)
                         .form-group
-                            label.required(for="inputEmailCurrentPassword") {{ $t('pages.confirm_password') }}
+                            label.required(for="inputEmailCurrentPassword") {{ $t('pages.current_password') }}
                             input#inputEmailCurrentPassword.form-control(v-model="currentPassword" type="password" autocomplete="off" required)
                     .modal-footer
                         button.btn.btn-secondary(:disabled="loading" type="button" data-dismiss="modal") {{ $t('actions.cancel') }}

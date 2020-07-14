@@ -164,10 +164,16 @@ export default {
         },
     },
     pages: {
+        confirm_new_password: 'Confirm new password',
+        confirm_password: 'Confirm password',
+        current_password: 'Current password',
         description: 'Description',
         display_name: 'Display name',
+        email_address: 'Email address',
         name: 'Name',
+        new_password: 'New password',
         no_items: 'There is no items',
+        password: 'Password',
         permission: 'Permission | Permissions',
         _auth: {
             _forgot_password: {

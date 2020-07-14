@@ -3,7 +3,7 @@
         .modal-dialog(role="document")
             .modal-content
                 .modal-header
-                    h5#exampleModalLabel.modal-title {{ $t('components.logout._') }}
+                    h5#exampleModalLabel.modal-title {{ $t('components.logout.title') }}
                     button.close(type="button" data-dismiss="modal" aria-label="Close")
                         span(aria-hidden="true") ×
                 .modal-body {{ $t('components.logout.desc') }}

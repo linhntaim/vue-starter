@@ -16,6 +16,10 @@
                 enabled: false,
             }
         },
+        destroyed() {
+            this.$bus.off('page.loading')
+            this.$bus.off('page.loaded')
+        },
         mounted() {
             const $body = ui.query('body').get()
             this.$bus.on('page.loading', () => {

@@ -20,6 +20,9 @@
                 toasts: []
             }
         },
+        destroyed() {
+            this.$bus.off('toast')
+        },
         mounted() {
             this.$bus.on('toast', ({content, title, time, type}) => {
                 this.add(content, title, time, type)

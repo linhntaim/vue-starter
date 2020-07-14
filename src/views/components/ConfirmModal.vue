@@ -9,8 +9,8 @@
                 .modal-body
                     div(v-html="message")
                 .modal-footer
-                    button.btn.btn-secondary(type="button" @click="onCancelClicked()") {{ $t('actions.cancel') }}
-                    button.btn.btn-primary(type="button" @click="onConfirmClicked()") {{ $t('actions.confirm') }}
+                    button.btn.btn-secondary(type="button" @click="onCancelClicked()") {{ cancelLabel }}
+                    button.btn.btn-primary(type="button" @click="onConfirmClicked()") {{ confirmLabel }}
 </template>
 
 <script>
@@ -19,28 +19,43 @@
     export default {
         name: 'ConfirmModal',
         data() {
+            const LABEL_TITLE = this.$t('actions.confirm')
+            const LABEL_CONFIRM = this.$t('actions.yes')
+            const LABEL_CANCEL = this.$t('actions.no')
+
             return {
                 uis: {},
 
-                title: this.$t('actions.confirm'),
+                LABEL_TITLE,
+                LABEL_CONFIRM,
+                LABEL_CANCEL,
+
+                title: LABEL_TITLE,
+                confirmLabel: LABEL_CONFIRM,
+                cancelLabel: LABEL_CANCEL,
                 message: '',
                 confirmCallback: null,
                 cancelCallback: null,
             }
         },
+        destroyed() {
+            this.$bus.off('confirm')
+        },
         mounted() {
             this.uis.$ = ui.query('#confirmModal').get()
 
-            this.$bus.on('confirm', ({title, message, confirmCallback, cancelCallback}) => {
-                this.show(title, message, confirmCallback, cancelCallback)
+            this.$bus.on('confirm', ({title, message, confirmCallback, cancelCallback, confirmLabel, cancelLabel}) => {
+                this.show(title, message, confirmCallback, cancelCallback, confirmLabel, cancelLabel)
             })
         },
         methods: {
-            show(title, message, confirmCallback, cancelCallback) {
-                this.title = title ? title : this.$t('actions.confirm')
+            show(title, message, confirmCallback, cancelCallback, confirmLabel, cancelLabel) {
+                this.title = title ? title : this.LABEL_TITLE
                 this.message = message
                 this.confirmCallback = confirmCallback ? confirmCallback : null
                 this.cancelCallback = cancelCallback ? cancelCallback : null
+                this.confirmLabel = confirmLabel ? confirmLabel : this.LABEL_CONFIRM
+                this.cancelLabel = cancelLabel ? cancelLabel : this.LABEL_CANCEL
 
                 this.uis.$.modal('show')
             },

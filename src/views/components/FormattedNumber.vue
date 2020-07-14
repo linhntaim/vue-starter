@@ -4,7 +4,7 @@
 </template>
 
 <script>
-    import {numberFormatHelper} from '../../app/utils'
+    import {numberFormatter} from '../../app/utils'
 
     export default {
         name: 'FormattedNumber',
@@ -14,7 +14,7 @@
         },
         computed: {
             formattedNumber() {
-                return this.type === 'int' ? numberFormatHelper.formatInt(this.number) : numberFormatHelper.formatNumber(this.number)
+                return this.type === 'int' ? numberFormatter.formatInt(this.number) : numberFormatter.formatNumber(this.number)
             },
         },
     }

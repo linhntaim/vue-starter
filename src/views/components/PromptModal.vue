@@ -11,8 +11,8 @@
                         label(for="inputPrompt") {{ message }}
                         input#inputPrompt.form-control(v-model="value" type="text")
                 .modal-footer
-                    button.btn.btn-secondary(type="button" @click="onCancelClicked()") {{ $t('actions.cancel') }}
-                    button.btn.btn-primary(:disabled="!value" type="button" @click="onOkClicked()") OK
+                    button.btn.btn-secondary(type="button" @click="onCancelClicked()") {{ cancelLabel }}
+                    button.btn.btn-primary(:disabled="!value" type="button" @click="onOkClicked()") {{ okLabel }}
 </template>
 
 <script>
@@ -21,30 +21,41 @@
     export default {
         name: 'PromptModal',
         data() {
+            const LABEL_TITLE = this.$t('actions.prompt')
+            const LABEL_OK = 'OK'
+            const LABEL_CANCEL = this.$t('actions.cancel')
             return {
                 uis: {},
 
-                title: this.$t('actions.prompt'),
+                LABEL_TITLE,
+                LABEL_OK,
+                LABEL_CANCEL,
+
+                title: LABEL_TITLE,
                 message: '',
                 value: '',
+                okLabel: LABEL_OK,
                 okCallback: null,
+                cancelLabel: LABEL_CANCEL,
                 cancelCallback: null,
             }
         },
         mounted() {
             this.uis.$ = ui.query('#promptModal').get()
 
-            this.$bus.on('prompt', ({title, message, okCallback, cancelCallback, defaultValue}) => {
-                this.show(title, message, okCallback, cancelCallback, defaultValue)
+            this.$bus.on('prompt', ({title, message, okCallback, cancelCallback, defaultValue, okLabel, cancelLabel}) => {
+                this.show(title, message, okCallback, cancelCallback, defaultValue, okLabel, cancelLabel)
             })
         },
         methods: {
-            show(title, message, okCallback, cancelCallback, defaultValue) {
-                this.title = title ? title : this.$t('actions.prompt')
+            show(title, message, okCallback, cancelCallback, defaultValue, okLabel, cancelLabel) {
+                this.title = title ? title : this.LABEL_TITLE
                 this.message = message
                 this.value = defaultValue ? defaultValue : ''
                 this.okCallback = okCallback ? okCallback : null
                 this.cancelCallback = cancelCallback ? cancelCallback : null
+                this.cancelLabel = cancelLabel ? cancelLabel : this.LABEL_CANCEL
+                this.okLabel = okLabel ? okLabel : this.LABEL_OK
 
                 this.uis.$.modal('show')
             },

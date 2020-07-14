@@ -10,84 +10,84 @@
                     .row
                         .col-md-6
                             label
-                                strong {{ $t('components.image.original_image') }}
+                                strong {{ $t('components.image.original_image') }} 
                             .img-container.img-container-item
-                                img(v-if="imageUrl" :src="imageUrl", alt="Picture")
+                                img(:class="{hide: !imageUrl}" :src="imageUrl", alt="Picture")
                             .img-upload-container.img-container-item
-                                label.btn.btn-info.btn-upload.btn-block(role="button" for="inputImage" :title="$t('components.image.upload_image')")
-                                    input#inputImage.sr-only(type="file" name="file" accept="image/*")
+                                label.btn.btn-info.btn-upload.btn-block
+                                    input#inputImageFile.sr-only(type="file" name="file" accept="image/*" @change="onImageFileChanged")
                                     span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.upload_image')")
                                         span.fa.fa-upload
                             .img-actions.img-container-item.text-center
                                 .btn-group
-                                    button.btn.btn-primary(type="button" data-method="zoom" data-option="0.1" title="Zoom In")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="zoom" data-option="0.1" title="Zoom In")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.zoom_in')")
                                             span.fa.fa-search-plus
-                                    button.btn.btn-primary(type="button" data-method="zoom" data-option="-0.1" title="Zoom Out")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="zoom" data-option="-0.1" title="Zoom Out")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.zoom_out')")
                                             span.fa.fa-search-minus
                                 .btn-group
-                                    button.btn.btn-primary(type="button" data-method="move" data-option="-10" data-second-option="0" title="Move Left")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="move" data-option="-10" data-second-option="0" title="Move Left")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.move_left')")
                                             span.fa.fa-arrow-left
-                                    button.btn.btn-primary(type="button" data-method="move" data-option="10" data-second-option="0" title="Move Right")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="move" data-option="10" data-second-option="0" title="Move Right")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.move_right')")
                                             span.fa.fa-arrow-right
-                                    button.btn.btn-primary(type="button" data-method="move" data-option="0" data-second-option="-10" title="Move Up")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="move" data-option="0" data-second-option="-10" title="Move Up")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.move_up')")
                                             span.fa.fa-arrow-up
-                                    button.btn.btn-primary(type="button" data-method="move" data-option="0" data-second-option="10" title="Move Down")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="move" data-option="0" data-second-option="10" title="Move Down")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.move_down')")
                                             span.fa.fa-arrow-down
                                 .btn-group(v-if="rotateEnabled")
-                                    button.btn.btn-primary(type="button" data-method="rotate" data-option="-45" title="Rotate Left")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="rotate" data-option="-45" title="Rotate Left")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.rotate_left')")
                                             span.fa.fa-undo-alt
-                                    button.btn.btn-primary(type="button" data-method="rotate" data-option="45" title="Rotate Right")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="rotate" data-option="45" title="Rotate Right")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.rotate_right')")
                                             span.fa.fa-redo-alt
                                 .btn-group
-                                    button.btn.btn-primary(type="button" data-method="flipH" title="Flip Horizontal")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="flipH" title="Flip Horizontal")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.flip_horizontal')")
                                             span.fa.fa-arrows-alt-h
-                                    button.btn.btn-primary(type="button" data-method="flipV" title="Flip Vertical")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="flipV" title="Flip Vertical")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.flip_vertical')")
                                             span.fa.fa-arrows-alt-v
                                 .btn-group(v-if="scaleEnabled")
-                                    button.btn.btn-primary(type="button" data-method="scaleX+" title="Scale X (+)")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="scaleX+" title="Scale X (+)")
                                         span.img-tooltip(data-toggle="tooltip" title="Scale X (+)")
                                             span.fa.fa-angle-double-right
-                                    button.btn.btn-primary(type="button" data-method="scaleX-" title="Scale X (-)")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="scaleX-" title="Scale X (-)")
                                         span.img-tooltip(data-toggle="tooltip" title="Scale X (-)")
                                             span.fa.fa-angle-double-left
-                                    button.btn.btn-primary(type="button" data-method="scaleY+" title="Scale Y (+)")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="scaleY+" title="Scale Y (+)")
                                         span.img-tooltip(data-toggle="tooltip" title="Scale Y (+)")
                                             span.fa.fa-angle-double-up
-                                    button.btn.btn-primary(type="button" data-method="scaleY-" title="Scale Y (-)")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="scaleY-" title="Scale Y (-)")
                                         span.img-tooltip(data-toggle="tooltip" title="Scale Y (-)")
                                             span.fa.fa-angle-double-down
                                 .btn-group(v-if="setEnabled")
-                                    button.btn.btn-primary(type="button" data-method="disable" title="Disable")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="disable" title="Disable")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.lock')")
                                             span.fa.fa-lock
-                                    button.btn.btn-primary(type="button" data-method="enable" title="Enable")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="enable" title="Enable")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.unlock')")
                                             span.fa.fa-unlock
                                 .btn-group(v-if="setEnabled")
-                                    button.btn.btn-primary(type="button" data-method="clear" title="Clear")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="clear" title="Clear")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.clear')")
                                             span.fa.fa-times
-                                    button.btn.btn-primary(type="button" data-method="crop" title="Crop")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="crop" title="Crop")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.crop')")
                                             span.fa.fa-check
                                 .btn-group
-                                    button.btn.btn-primary(type="button" data-method="reset" title="Reset")
+                                    button.btn.btn-primary(@click="onActionClicked" type="button" data-method="reset" title="Reset")
                                         span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.reset')")
                                             span.fa.fa-sync-alt
                         .col-md-6
                             label
                                 strong {{ $t('components.image.cropped_image') }}
-                            .img-preview-container.img-container-item
+                            .img-preview-container.img-container-item(:class="{hide: !imageUrl}")
                                 .img-preview
                     .image-data.row(v-if="informationEnabled")
                         .input-group.input-group-sm.col-sm-6
@@ -130,14 +130,13 @@
                                 span.input-group-text deg
                 .modal-footer
                     button.btn.btn-secondary(type="button" @click="onCancelClicked()") {{ $t('actions.cancel') }}
-                    button.btn.btn-primary(type="button" @click="onUploadClicked()") {{ $t('actions.upload') }}
+                    button.btn.btn-primary(type="button" @click="onUploadClicked()") {{ $t('actions.save') }}
 </template>
 
 <script>
     import Cropper from 'cropperjs'
     import helpers from '../../app/utils/helpers'
-    import {ui} from '../../app/utils'
-    import {timeoutCaller} from '../../app/utils'
+    import {timeoutCaller, ui} from '../../app/utils'
 
     export default {
         name: 'ImageModal',
@@ -157,6 +156,9 @@
                 imageUrl: null,
             }
         },
+        destroyed() {
+            this.$bus.off('image')
+        },
         mounted() {
             this.$bus.on('image', ({imageUrl, options, title, uploadCallback, cancelCallback}) => {
                 this.show(imageUrl, options, title, uploadCallback, cancelCallback)
@@ -172,8 +174,8 @@
                 })
 
                 this.uis.URL = window.URL || window.webkitURL
-                this.uis.container =
-                    this.uis.inputImage = document.getElementById('inputImage')
+                this.uis.inputImageFile = document.getElementById('inputImageFile')
+                this.uis.image = document.querySelector('.img-container').childNodes.item(0)
                 this.uis.actions = document.querySelector('.img-actions')
                 this.uis.dataX = document.getElementById('dataX')
                 this.uis.dataY = document.getElementById('dataY')
@@ -191,8 +193,8 @@
                     preview: '.img-preview',
                     viewMode: 3,
                     dragMode: 'none',
-                    crop: function (e) {
-                        let data = e.detail
+                    crop: e => {
+                        const data = e.detail
 
                         if (this.informationEnabled) {
                             this.uis.dataX.value = Math.round(data.x)
@@ -203,149 +205,140 @@
                             this.uis.dataScaleX.value = typeof data.scaleX !== 'undefined' ? data.scaleX : ''
                             this.uis.dataScaleY.value = typeof data.scaleY !== 'undefined' ? data.scaleY : ''
                         }
-                    }
+                    },
                 }
-
-                // if (!document.createElement('canvas').getContext) {
-                // }
 
                 if (typeof document.createElement('cropper').style.transition === 'undefined') {
                     this.uis.$.find('button[data-method="rotate"]').prop('disabled', true)
                     this.uis.$.find('button[data-method="scale"]').prop('disabled', true)
                 }
 
-                if (this.uis.URL) {
-                    this.uis.inputImage.onchange = function () {
-                        let files = this.files
-                        let file
+                if (!this.uis.URL) {
+                    this.uis.inputImageFile.disabled = true
+                    this.uis.inputImageFile.parentNode.className += ' disabled'
+                }
+            },
+            onImageFileChanged($event) {
+                const files = $event.target.files
 
-                        if (this.uis.cropper && files && files.length) {
-                            file = files[0]
+                if (files && files.length) {
+                    const file = files[0]
+                    if (/^image\/\w+/.test(file.type)) {
+                        this.uis.uploadedImageType = file.type
+                        this.uis.uploadedImageName = file.name
 
-                            if (/^image\/\w+/.test(file.type)) {
-                                this.uis.uploadedImageType = file.type
-                                this.uis.uploadedImageName = file.name
-
-                                if (this.uis.uploadedImageURL) {
-                                    this.uis.URL.revokeObjectURL(this.uis.uploadedImageURL)
-                                }
-
-                                this.uis.image.src = this.uis.uploadedImageURL = this.uis.URL.createObjectURL(file)
-                                this.uis.cropper.destroy()
-                                this.uis.cropper = new Cropper(this.uis.image, this.uis.options)
-                                this.uis.inputImage.value = null
-                            } else {
-                                window.alert('Please choose an image file.')
-                            }
+                        if (this.uis.uploadedImageURL) {
+                            this.uis.URL.revokeObjectURL(this.uis.uploadedImageURL)
                         }
+
+                        this.imageUrl = this.uis.image.src = this.uis.uploadedImageURL = this.uis.URL.createObjectURL(file)
+                        if (this.uis.cropper) {
+                            this.uis.cropper.destroy()
+                        }
+                        this.uis.cropper = new Cropper(this.uis.image, this.uis.options)
+                        this.uis.inputImageFile.value = null
                     }
-                } else {
-                    this.uis.inputImage.disabled = true
-                    this.uis.inputImage.parentNode.className += ' disabled'
+                }
+            },
+            onActionClicked($event) {
+                const e = $event
+
+                if (!this.uis.cropper) {
+                    return
                 }
 
-                this.uis.actions.onclick = function (event) {
-                    let e = event || window.event
-                    let target = e.target || e.srcElement
-                    let cropped
-                    let result
+                let target = e.target
+                while (target !== this) {
+                    if (target.getAttribute('data-method')) {
+                        break
+                    }
+
+                    target = target.parentNode
+                }
+
+                if (target === this || target.disabled || target.className.indexOf('disabled') > -1) {
+                    return
+                }
+
+                let data = {
+                    method: target.getAttribute('data-method'),
+                    target: target.getAttribute('data-target'),
+                    option: target.getAttribute('data-option') || undefined,
+                    secondOption: target.getAttribute('data-second-option') || undefined,
+                }
+
+                if (data.method) {
                     let input
-                    let data
+                    if (typeof data.target !== 'undefined') {
+                        input = document.querySelector(data.target)
 
-                    if (!this.uis.cropper) {
-                        return
-                    }
-
-                    while (target !== this) {
-                        if (target.getAttribute('data-method')) {
-                            break
-                        }
-
-                        target = target.parentNode
-                    }
-
-                    if (target === this || target.disabled || target.className.indexOf('disabled') > -1) {
-                        return
-                    }
-
-                    data = {
-                        method: target.getAttribute('data-method'),
-                        target: target.getAttribute('data-target'),
-                        option: target.getAttribute('data-option') || undefined,
-                        secondOption: target.getAttribute('data-second-option') || undefined
-                    }
-
-                    cropped = this.uis.cropper.cropped
-
-                    if (data.method) {
-                        if (typeof data.target !== 'undefined') {
-                            input = document.querySelector(data.target)
-
-                            if (!target.hasAttribute('data-option') && data.target && input) {
-                                try {
-                                    data.option = JSON.parse(input.value)
-                                } catch (e) {
-                                    console.log(e.message)
-                                }
-                            }
-                        }
-
-                        switch (data.method) {
-                            case 'rotate':
-                                if (cropped && this.uis.options.viewMode > 0) {
-                                    this.uis.cropper.clear()
-                                }
-                                break
-                            case 'scaleX+':
-                                data.option = this.uis.cropper.getData().scaleX + 0.1
-                                data.method = 'scaleX'
-                                break
-                            case 'scaleX-':
-                                data.option = this.uis.cropper.getData().scaleX - 0.1
-                                data.method = 'scaleX'
-                                break
-                            case 'scaleY+':
-                                data.option = this.uis.cropper.getData().scaleY + 0.1
-                                data.method = 'scaleY'
-                                break
-                            case 'scaleY-':
-                                data.option = this.uis.cropper.getData().scaleY - 0.1
-                                data.method = 'scaleY'
-                                break
-                            case 'flipH':
-                                data.option = -this.uis.cropper.getData().scaleX
-                                data.method = 'scaleX'
-                                break
-                            case 'flipV':
-                                data.option = -this.uis.cropper.getData().scaleY
-                                data.method = 'scaleY'
-                                break
-                        }
-
-                        result = this.uis.cropper[data.method](data.option, data.secondOption)
-
-                        switch (data.method) {
-                            case 'rotate':
-                                if (cropped && this.uis.options.viewMode > 0) {
-                                    this.uis.cropper.crop()
-                                }
-                                break
-                            case 'destroy':
-                                this.uis.cropper = null
-                                if (this.uis.uploadedImageURL) {
-                                    this.uis.URL.revokeObjectURL(this.uis.uploadedImageURL)
-                                    this.uis.uploadedImageURL = ''
-                                    this.uis.image.src = this.uis.originalImageURL
-                                }
-                                break
-                        }
-
-                        if (typeof result === 'object' && result !== this.uis.cropper && input) {
+                        if (!target.hasAttribute('data-option') && data.target && input) {
                             try {
-                                input.value = JSON.stringify(result)
+                                data.option = JSON.parse(input.value)
                             } catch (e) {
+                                // eslint-disable-next-line no-console
                                 console.log(e.message)
                             }
+                        }
+                    }
+
+                    const cropped = this.uis.cropper.cropped
+                    switch (data.method) {
+                        case 'rotate':
+                            if (cropped && this.uis.options.viewMode > 0) {
+                                this.uis.cropper.clear()
+                            }
+                            break
+                        case 'scaleX+':
+                            data.option = this.uis.cropper.getData().scaleX + 0.1
+                            data.method = 'scaleX'
+                            break
+                        case 'scaleX-':
+                            data.option = this.uis.cropper.getData().scaleX - 0.1
+                            data.method = 'scaleX'
+                            break
+                        case 'scaleY+':
+                            data.option = this.uis.cropper.getData().scaleY + 0.1
+                            data.method = 'scaleY'
+                            break
+                        case 'scaleY-':
+                            data.option = this.uis.cropper.getData().scaleY - 0.1
+                            data.method = 'scaleY'
+                            break
+                        case 'flipH':
+                            data.option = -this.uis.cropper.getData().scaleX
+                            data.method = 'scaleX'
+                            break
+                        case 'flipV':
+                            data.option = -this.uis.cropper.getData().scaleY
+                            data.method = 'scaleY'
+                            break
+                    }
+
+                    const result = this.uis.cropper[data.method](data.option, data.secondOption)
+
+                    switch (data.method) {
+                        case 'rotate':
+                            if (cropped && this.uis.options.viewMode > 0) {
+                                this.uis.cropper.crop()
+                            }
+                            break
+                        case 'destroy':
+                            this.uis.cropper = null
+                            if (this.uis.uploadedImageURL) {
+                                this.uis.URL.revokeObjectURL(this.uis.uploadedImageURL)
+                                this.uis.uploadedImageURL = ''
+                                this.uis.image.src = this.uis.originalImageURL
+                            }
+                            break
+                    }
+
+                    if (typeof result === 'object' && result !== this.uis.cropper && input) {
+                        try {
+                            input.value = JSON.stringify(result)
+                        } catch (e) {
+                            // eslint-disable-next-line no-console
+                            console.log(e.message)
                         }
                     }
                 }
@@ -371,7 +364,6 @@
 
                 if (this.imageUrl) {
                     timeoutCaller.register(() => {
-                        this.uis.image = document.querySelector('.img-container').childNodes.item(0)
                         this.uis.cropper = new Cropper(this.uis.image, this.uis.options)
                         this.uis.originalImageURL = this.uis.image.src
                     })
