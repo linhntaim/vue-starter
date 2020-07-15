@@ -1,4 +1,4 @@
-import {settingsCookieStore} from '../../../utils'
+import {dateTimer, settingsCookieStore} from '../../../utils'
 import {Middleware} from '@dsquare-gbu/vue-uses'
 import {DEFAULT_SETTINGS} from '../../../config'
 
@@ -17,6 +17,10 @@ export default class SettingsMiddleware extends Middleware {
 
         setTimeout(() => {
             if (this.hasI18NInstalled()) {
+                dateTimer.withCompiler((format, bags) => {
+                    return this.app().$t(format, bags)
+                })
+                console.log(dateTimer.getShortDateFormat())
                 const storedSettings = settingsCookieStore.retrieve()
                 this.store().commit('account/setSettingsFromCookie', {
                     settings: storedSettings ? storedSettings : DEFAULT_SETTINGS,
