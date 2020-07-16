@@ -20,7 +20,6 @@ export default class SettingsMiddleware extends Middleware {
                 dateTimer.withCompiler((format, bags) => {
                     return this.app().$t(format, bags)
                 })
-                console.log(dateTimer.getShortDateFormat())
                 const storedSettings = settingsCookieStore.retrieve()
                 this.store().commit('account/setSettingsFromCookie', {
                     settings: storedSettings ? storedSettings : DEFAULT_SETTINGS,
