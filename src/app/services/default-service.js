@@ -10,20 +10,22 @@ class DefaultServiceError extends ServiceError {
 
     getMessages(defaults = {}) {
         if (this.err.e) {
-            if (this.err.e.response) {
-                if (this.err.e.response.statusText) return [this.err.e.response.statusText]
-                switch (this.err.e.response.status) {
+            const err = this.err.e
+            if (err.response) {
+                const response = err.response
+                if (response.statusText) return [response.statusText]
+                switch (response.status) {
                     case 401:
                         return [defaults['401'] ? defaults['401'] : 'Unauthenticated!']
                     case 403:
                         return [defaults['403'] ? defaults['403'] : 'Forbidden error!']
                     case 404:
-                        return [defaults['403'] ? defaults['404'] : 'Not found!']
+                        return [defaults['404'] ? defaults['404'] : 'Not found!']
                     case 500:
                         return [defaults['500'] ? defaults['500'] : 'Application error!']
                 }
             }
-            if (this.err.e.message) return [this.err.e.message]
+            if (err.message) return [err.message]
             return [defaults['0'] ? defaults['0'] : 'Something went wrong!']
         }
         return this.err.m
