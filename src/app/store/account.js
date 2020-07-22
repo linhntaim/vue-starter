@@ -77,16 +77,11 @@ export default {
         isLoggedIn: state => state.isLoggedIn,
         admin: state => state.admin,
         settings: state => state.settings,
+        locale: state => state.settings.locale,
         role: state => state.admin ? state.admin.role_name : null,
         permissions: state => state.admin && state.admin.permission_names ? state.admin.permission_names : [],
-        passport: state => {
-            return {
-                accessToken: state.passport.accessToken,
-                tokenType: state.passport.tokenType,
-                refreshToken: state.passport.refreshToken,
-                tokenEndTime: state.passport.tokenEndTime,
-            }
-        },
+        passport: state => state.passport,
+        authorizationHeader: state => state.passport.tokenType + ' ' + state.passport.accessToken,
     },
     mutations: {
         setAuth(state, passport) {
