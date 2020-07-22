@@ -12,9 +12,11 @@ export const APP_HOST_SUB = 'sub'
 export const APP_ADMIN_HOST = process.env.VUE_APP_ADMIN_HOST
 export const APP_ADMIN_HOST_SUB_PATH = process.env.VUE_APP_ADMIN_HOST_SUB_PATH
 export const APP_ADMIN_URL = APP_ADMIN_HOST === APP_HOST_SUB ? window.location.origin + APP_ADMIN_HOST_SUB_PATH : process.env.VUE_APP_ADMIN_URL
+export const APP_ADMIN_PATH = APP_ADMIN_HOST === APP_HOST_SUB ? APP_ADMIN_HOST_SUB_PATH : ''
 export const APP_HOME_HOST = process.env.VUE_APP_HOME_HOST
 export const APP_HOME_HOST_SUB_PATH = process.env.VUE_APP_HOME_HOST_SUB_PATH
 export const APP_HOME_URL = APP_HOME_HOST === APP_HOST_SUB ? window.location.origin + APP_HOME_HOST_SUB_PATH : process.env.VUE_APP_HOME_URL
+export const APP_HOME_PATH = APP_HOME_HOST === APP_HOST_SUB ? APP_HOME_HOST_SUB_PATH : ''
 export const APP_SERVICE_HOST = process.env.VUE_APP_SERVICE_HOST
 export const APP_SERVICE_HOST_SUB_PATH = process.env.VUE_APP_SERVICE_HOST_SUB_PATH
 export const APP_SERVICE_URL = APP_SERVICE_HOST === APP_HOST_SUB ? window.location.origin + APP_SERVICE_HOST_SUB_PATH : process.env.VUE_APP_SERVICE_URL
