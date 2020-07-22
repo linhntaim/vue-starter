@@ -31,12 +31,18 @@ const setDefaultServiceSettingsHeader = settings => {
     })
 }
 
-const applySettings = (settings, action, localeCallback = null) => {
-    if (action === 'all' || action === 'store' || action === 'store_with_locale') {
+const setDefaultServiceTokenAuthorizationHeader = token => {
+    serviceFactory.modify(defaultService => {
+        defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.tokenAuthorization] = token
+    })
+}
+
+const applySettings = (settings, action = 'all', localeCallback = null) => {
+    if (action === 'all' || action === 'apply' || action === 'apply_with_locale') {
         setDefaultServiceSettingsHeader(settings)
         settingsCookieStore.store(settings)
     }
-    if (action === 'all' || action === 'store_with_locale') {
+    if (action === 'all' || action === 'apply_with_locale') {
         localeManager.set(settings.locale).then(() => {
             localeCallback && localeCallback()
         })
@@ -44,6 +50,13 @@ const applySettings = (settings, action, localeCallback = null) => {
     if (action === 'all') {
         dateTimer.apply(settings)
         numberFormatter.apply(settings)
+    }
+}
+
+const applyPassport = (passport = null, action = 'all') => {
+    setDefaultServiceTokenAuthorizationHeader(passport ? passport.tokenType + ' ' + passport.accessToken : null)
+    if (action !== 'apply_no_cookie') {
+        passport ? passportCookieStore.store(passport) : passportCookieStore.remove()
     }
 }
 
@@ -85,19 +98,14 @@ export default {
                 tokenEndTime: (new Date).getTime() + passport.expires_in * 1000,
             }
 
-            serviceFactory.modify(defaultService => {
-                defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.token_authorization] = state.passport.tokenType + ' ' + state.passport.accessToken
-            })
-            passportCookieStore.store(state.passport)
+            applyPassport(state.passport)
         },
 
         setAuthFromCookie(state, passport) {
             state.isLoggedIn = true
             state.passport = passport
 
-            serviceFactory.modify(defaultService => {
-                defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.token_authorization] = state.passport.tokenType + ' ' + state.passport.accessToken
-            })
+            applyPassport(state.passport, 'apply_no_cookie')
         },
 
         unsetAuth(state) {
@@ -109,10 +117,7 @@ export default {
                 tokenEndTime: 0,
             }
 
-            serviceFactory.modify(defaultService => {
-                defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.token_authorization] = null
-            })
-            passportCookieStore.remove()
+            applyPassport()
         },
 
         setAdmin(state, {admin}) {
@@ -128,7 +133,7 @@ export default {
         setLocale(state, {locale, callback}) {
             state.settings.locale = locale
 
-            applySettings(state.settings, 'store_with_locale', callback)
+            applySettings(state.settings, 'apply_with_locale', callback)
         },
 
         setSettings(state, {settings, localeCallback}) {

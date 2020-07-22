@@ -22,16 +22,19 @@ export const APP_TYPE = process.env.VUE_APP_TYPE ? process.env.VUE_APP_TYPE : AP
 export const APP_URL = APP_TYPE === APP_TYPE_ADMIN ? APP_ADMIN_URL : APP_HOME_URL
 export const APP_HOST = APP_TYPE === APP_TYPE_ADMIN ? APP_ADMIN_HOST : APP_HOME_HOST
 export const APP_HOST_SUB_PATH = APP_TYPE === APP_TYPE_ADMIN ? APP_ADMIN_HOST_SUB_PATH : APP_HOME_HOST_SUB_PATH
+const basicAuthException = process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION_EXCEPTION
+const hasBasicAuth = process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION
+    && (!basicAuthException || basicAuthException.split(',').every(regex => !(new RegExp(regex)).test(window.location.hostname)))
 export const APP_DEFAULT_SERVICE = {
-    base_url: APP_SERVICE_URL,
-    client_id: process.env.VUE_APP_SERVICE_CLIENT_ID,
-    client_secret: process.env.VUE_APP_SERVICE_CLIENT_SECRET,
+    baseUrl: APP_SERVICE_URL,
+    clientId: process.env.VUE_APP_SERVICE_CLIENT_ID,
+    clientSecret: process.env.VUE_APP_SERVICE_CLIENT_SECRET,
     headers: {
         settings: process.env.VUE_APP_SERVICE_HEADER_SETTINGS_NAME,
-        token_authorization: process.env.VUE_APP_SERVICE_HEADER_TOKEN_AUTHORIZATION_NAME,
-        basic_authorization: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION_NAME,
+        tokenAuthorization: hasBasicAuth ? process.env.VUE_APP_SERVICE_HEADER_TOKEN_AUTHORIZATION_NAME : 'Authorization',
     },
-    basic_auth: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION,
+    basicAuth: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION,
+    hasBasicAuth: hasBasicAuth,
 }
 export const APP_COOKIE = {
     names: {

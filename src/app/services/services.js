@@ -6,11 +6,11 @@ export const defaultService = 'axios'
 export const services = {
     axios: {
         instance: axios.create({
-            baseURL: APP_DEFAULT_SERVICE.base_url,
+            baseURL: APP_DEFAULT_SERVICE.baseUrl,
             headers: (() => {
                 const headers = {}
-                if (APP_DEFAULT_SERVICE.basic_auth) {
-                    headers[APP_DEFAULT_SERVICE.headers.basic_authorization] = 'Basic ' + btoa(APP_DEFAULT_SERVICE.basic_auth)
+                if (APP_DEFAULT_SERVICE.hasBasicAuth) {
+                    headers['Authorization'] = 'Basic ' + btoa(APP_DEFAULT_SERVICE.basicAuth)
                 }
                 return headers
             })(),

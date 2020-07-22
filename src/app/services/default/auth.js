@@ -8,8 +8,8 @@ class AuthService extends DefaultService {
             'auth/login',
             {
                 grant_type: 'password',
-                client_id: APP_DEFAULT_SERVICE.client_id,
-                client_secret: APP_DEFAULT_SERVICE.client_secret,
+                client_id: APP_DEFAULT_SERVICE.clientId,
+                client_secret: APP_DEFAULT_SERVICE.clientSecret,
                 username: email,
                 password: password,
                 scope: '*',
@@ -46,8 +46,8 @@ class AuthService extends DefaultService {
             'oauth/token',
             {
                 'grant_type': 'refresh_token',
-                'client_id': APP_DEFAULT_SERVICE.client_id,
-                'client_secret': APP_DEFAULT_SERVICE.client_secret,
+                'client_id': APP_DEFAULT_SERVICE.clientId,
+                'client_secret': APP_DEFAULT_SERVICE.clientSecret,
                 'refresh_token': refreshToken,
                 'scope': '*',
             },
