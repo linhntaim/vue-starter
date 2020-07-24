@@ -1,9 +1,7 @@
 <template lang="pug">
     .alert(v-if="error" :class="alertHtmlClass")
         div(v-for="(message, index) in messages")
-            span(v-if="index === 0 && messageLevel")
-                label.badge.badge-danger {{ messageLevel }}
-                | &nbsp;&nbsp;
+            label.badge.badge-danger.mr-2(v-if="index === 0 && messageLevel") {{ messageLevel }}
             span(v-html="message")
 </template>
 

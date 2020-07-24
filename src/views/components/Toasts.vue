@@ -17,7 +17,7 @@
         data() {
             return {
                 increment: 0,
-                toasts: []
+                toasts: [],
             }
         },
         destroyed() {
@@ -35,7 +35,7 @@
                     id: id,
                     title: title,
                     content: content,
-                    time: time ? time : this.$t('pages.just_now_lc'),
+                    time: time ? time : '',
                     htmlClass: type ? 'toast-' + type : 'default',
                 })
 

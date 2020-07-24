@@ -8,9 +8,7 @@
                         span(aria-hidden="true") ×
                 .modal-body
                     div(v-for="(message, index) in messages")
-                        span(v-if="index === 0 && messageLevel")
-                            label.badge.badge-danger {{ messageLevel }}
-                            template(v-html="'&nbsp;&nbsp'")
+                        label.badge.badge-danger.mr-2(v-if="index === 0 && messageLevel") {{ messageLevel }}
                         span(v-html="message")
                 .modal-footer
                     button.btn(:class="okHtmlClass" type="button" data-dismiss="modal") {{ okLabel }}

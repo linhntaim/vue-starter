@@ -2,12 +2,12 @@ import DefaultService from '../default-service'
 
 export class AccountService extends DefaultService {
     constructor() {
-        super('account')
+        super('account/admin')
     }
 
     current(login = false, doneCallback = null, errorCallback = null, alwaysCallback = null) {
         this.get(
-            'admin',
+            '',
             login ? {_login: 1} : {},
             doneCallback,
             errorCallback,
