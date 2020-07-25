@@ -5,7 +5,7 @@
                 .card-body
                     .text-center
                         .form-group
-                            img.rounded-circle.w-25(v-if="urlAvatar" :src="urlAvatar")
+                            img.rounded-circle.w-25(v-if="avatarUrl" :src="avatarUrl")
                         button.btn.btn-primary(@click="onChangePictureClicked()" type="button") {{ $t('pages._me._edit_information.change_picture') }}
                     hr
                     .row
@@ -45,7 +45,7 @@
             return {
                 loading: false,
 
-                urlAvatar: '',
+                avatarUrl: '',
                 email: '',
                 displayName: '',
             }
@@ -64,7 +64,7 @@
                 accountUpdateInformation: 'account/updateInformation',
             }),
             initInformation() {
-                this.urlAvatar = this.currentAdmin.url_avatar
+                this.avatarUrl = this.currentAdmin.avatar_url
                 this.email = this.currentAdmin.user.email
                 this.displayName = this.currentAdmin.display_name
             },
@@ -98,7 +98,7 @@
             onChangePictureClicked() {
                 this.$bus.emit('image', {
                     title: this.$t('pages._me._edit_information.change_picture'),
-                    imageUrl: this.urlAvatar,
+                    imageUrl: this.avatarUrl,
                     options: {
                         aspectRatio: 1
                     },
@@ -108,6 +108,8 @@
                             image: image,
                             doneCallback: () => {
                                 this.loading = false
+
+                                this.avatarUrl = this.currentAdmin.avatar_url
 
                                 this.$bus.emit('toast', {
                                     title: this.$t('pages._me._edit_information.change_picture'),

@@ -252,7 +252,7 @@ export default {
 
         updateAvatar({state}, {image, doneCallback, errorCallback}) {
             accountService().updateAvatar(image, (data) => {
-                state.admin.url_avatar = data.model.url_avatar
+                state.admin.avatar_url = data.model.avatar_url
                 doneCallback()
             }, errorCallback)
         },

@@ -46,8 +46,8 @@
                 currentSettings: 'account/settings',
             }),
             avatar() {
-                return this.currentAdmin && this.currentAdmin.url_avatar ?
-                    this.currentAdmin.url_avatar : null
+                return this.currentAdmin && this.currentAdmin.avatar_url ?
+                    this.currentAdmin.avatar_url : null
             },
         },
         mounted() {
