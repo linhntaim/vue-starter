@@ -117,6 +117,10 @@ export default {
         pagination: {
             display_result: '表示件数',
         },
+        upload_description: {
+            extensions: '許可されるファイル形式: {extensions}. ',
+            size: '最大アップロードファイルサイズ: {size}.',
+        },
     },
     error: {
         bad_request: {

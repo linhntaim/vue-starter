@@ -15,9 +15,10 @@
                                 img(:class="{hide: !imageUrl}" :src="imageUrl", alt="Picture")
                             .img-upload-container.img-container-item
                                 label.btn.btn-info.btn-upload.btn-block
-                                    input#inputImageFile.sr-only(type="file" name="file" accept="image/*" @change="onImageFileChanged")
+                                    input#inputImageFile.sr-only(type="file" name="file" :accept="joinedAllowedExtensions" @change="onImageFileChanged")
                                     span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.upload_image')")
                                         span.fa.fa-upload
+                            upload-description.mb-3(:extensions="joinedAllowedExtensions" :sizeHidden="true")
                             .img-actions.img-container-item.text-center
                                 .btn-group
                                     button.btn.btn-primary(@click="onActionClicked" type="button" data-method="zoom" data-option="0.1" title="Zoom In")
@@ -134,12 +135,14 @@
 </template>
 
 <script>
-    import Cropper from 'cropperjs'
-    import helpers from '../../app/utils/helpers'
     import {timeoutCaller, ui} from '../../app/utils'
+    import helpers from '../../app/utils/helpers'
+    import Cropper from 'cropperjs'
+    import UploadDescription from './UploadDescription'
 
     export default {
         name: 'ImageModal',
+        components: {UploadDescription},
         props: {
             informationEnabled: Boolean,
             scaleEnabled: Boolean,
@@ -154,7 +157,14 @@
                 uploadCallback: null,
                 cancelCallback: null,
                 imageUrl: null,
+
+                allowedExtensions: ['jpg', 'jpeg', 'png'],
             }
+        },
+        computed: {
+            joinedAllowedExtensions() {
+                return this.allowedExtensions.map(extension => '.' + extension).join(', ')
+            },
         },
         destroyed() {
             this.$bus.off('image')
@@ -376,7 +386,7 @@
             onUploadClicked() {
                 if (this.uploadCallback && this.uis.cropper) {
                     this.uis.cropper.getCroppedCanvas().toBlob(blob => {
-                        this.uploadCallback(blob)
+                        this.uploadCallback(blob, this.uis.uploadedImageName)
                     })
                 }
 

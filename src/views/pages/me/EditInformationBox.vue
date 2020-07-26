@@ -6,7 +6,12 @@
                     .text-center
                         .form-group
                             img.rounded-circle.w-25(v-if="avatarUrl" :src="avatarUrl")
-                        button.btn.btn-primary(@click="onChangePictureClicked()" type="button") {{ $t('pages._me._edit_information.change_picture') }}
+                            .d-flex.justify-content-center.align-items-center.rounded-circle.mx-auto.wp-180.hp-180.bg-light(v-else)
+                                | {{ displayName.charAt(0) }}
+                        .form-group(v-for="file in files")
+                            .progress(v-if="!file.progress.completed")
+                                .progress-bar.progress-bar-striped.progress-bar-animated.bg-base-dark(:style="{width: file.progress.percentage + '%'}" role="progressbar")
+                        button.btn.btn-primary(:disabled="loading" @click="onChangePictureClicked()" type="button") {{ $t('pages._me._edit_information.change_picture') }}
                     hr
                     .row
                         .col-md-6
@@ -34,9 +39,12 @@
 
 <script>
     import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
+    import {FilesUploader} from '@dsquare-gbu/vue-utils'
     import EditEmailModal from './EditEmailModal'
     import EditPasswordModal from './EditPasswordModal'
     import {TOAST_DEF} from '../../../app/config'
+    import {timeoutCaller, ui} from '../../../app/utils'
+    import {handledFileAdminService} from '../../../app/services/default/admin-handled-file'
 
     export default {
         name: 'EditInformationBox',
@@ -48,12 +56,20 @@
                 avatarUrl: '',
                 email: '',
                 displayName: '',
+
+                filesUploader: new FilesUploader(ui, this.$server.max_upload_file_size, 1024 * 1024),
             }
         },
         computed: {
             ...mapGetters({
                 currentAdmin: 'account/admin',
             }),
+            files() {
+                return this.filesUploader.files
+            },
+            progress() {
+                return this.filesUploader.progress
+            },
         },
         created() {
             this.initInformation()
@@ -61,6 +77,7 @@
         methods: {
             ...mapActions({
                 accountUpdateAvatar: 'account/updateAvatar',
+                accountUpdateAvatarByHandledFile: 'account/updateAvatarByHandledFile',
                 accountUpdateInformation: 'account/updateInformation',
             }),
             initInformation() {
@@ -100,29 +117,107 @@
                     title: this.$t('pages._me._edit_information.change_picture'),
                     imageUrl: this.avatarUrl,
                     options: {
-                        aspectRatio: 1
+                        aspectRatio: 1,
                     },
                     uploadCallback: image => {
-                        this.loading = true
-                        this.accountUpdateAvatar({
-                            image: image,
-                            doneCallback: () => {
-                                this.loading = false
+                        // this.updateAvatarNormally(image)
+                        this.updateAvatarBySplittingImageIntoChunks(image)
+                    },
+                })
+            },
+            updateAvatarNormally(image) {
+                this.loading = true
+                this.accountUpdateAvatar({
+                    image: image,
+                    doneCallback: () => {
+                        this.loading = false
 
-                                this.avatarUrl = this.currentAdmin.avatar_url
+                        this.avatarUrl = this.currentAdmin.avatar_url
 
-                                this.$bus.emit('toast', {
-                                    title: this.$t('pages._me._edit_information.change_picture'),
-                                    content: this.$t('pages._me._edit_information.change_picture_succeed'),
-                                    type: TOAST_DEF.success,
-                                })
-                            },
-                            errorCallback: err => {
-                                this.loading = false
-                                this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                            },
+                        this.$bus.emit('toast', {
+                            title: this.$t('pages._me._edit_information.change_picture'),
+                            content: this.$t('pages._me._edit_information.change_picture_succeed'),
+                            type: TOAST_DEF.success,
                         })
-                    }
+                    },
+                    errorCallback: err => {
+                        this.loading = false
+                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                    },
+                })
+            },
+            updateAvatarBySplittingImageIntoChunks(image) {
+                this.loading = true
+                const service = handledFileAdminService()
+                let i = 0, timeoutToSendChunks = 400
+                this.filesUploader.processFiles([image]).then(() => {
+                    this.filesUploader.processChunks(
+                        (chunkData, chunkIndex, chunksTotal, doneCallback, errorCallback, file, data) => {
+                            timeoutCaller.register(() => {
+                                service.chunkUpload(
+                                    data, // chunksId
+                                    chunksTotal,
+                                    chunkData, // chunkFile
+                                    chunkIndex,
+                                    data => {
+                                        doneCallback()
+                                        if (data.model.joined) {
+                                            service.chunkComplete(
+                                                data.model.chunks_id,
+                                                {public: 1},
+                                                data => this.updateAvatarByHandledFile(data.model.id),
+                                            )
+                                        }
+                                    },
+                                    err => {
+                                        errorCallback()
+                                        this.loading = false
+                                        this.$bus.emit('error', {
+                                            messages: err.getMessages(),
+                                            extra: err.getExtra(),
+                                        })
+                                    },
+                                )
+                            }, timeoutToSendChunks * i++)
+                        },
+                        null,
+                        null,
+                        () => new Promise((resolve, reject) => {
+                            service.chunkUploadInit(data => {
+                                resolve(data.model.chunks_id)
+                            }, err => {
+                                this.loading = false
+                                this.$bus.emit('error', {
+                                    messages: err.getMessages(),
+                                    extra: err.getExtra(),
+                                })
+                                reject(err)
+                            })
+                        }))
+                })
+            },
+            updateAvatarByHandledFile(fileId) {
+                this.loading = true
+                this.accountUpdateAvatarByHandledFile({
+                    fileId: fileId,
+                    doneCallback: () => {
+                        this.loading = false
+
+                        this.avatarUrl = this.currentAdmin.avatar_url
+
+                        this.$bus.emit('toast', {
+                            title: this.$t('pages._me._edit_information.change_picture'),
+                            content: this.$t('pages._me._edit_information.change_picture_succeed'),
+                            type: TOAST_DEF.success,
+                        })
+                    },
+                    errorCallback: err => {
+                        this.loading = false
+                        this.$bus.emit('error', {
+                            messages: err.getMessages(),
+                            extra: err.getExtra(),
+                        })
+                    },
                 })
             },
         },

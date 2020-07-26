@@ -257,6 +257,13 @@ export default {
             }, errorCallback)
         },
 
+        updateAvatarByHandledFile({state}, {fileId, doneCallback, errorCallback}) {
+            accountService().updateAvatarByHandledFile(fileId, (data) => {
+                state.admin.avatar_url = data.model.avatar_url
+                doneCallback()
+            }, errorCallback)
+        },
+
         updateInformation({state}, {params, doneCallback, errorCallback}) {
             accountService().updateInformation(params, (data) => {
                 state.admin.display_name = data.model.display_name

@@ -6,6 +6,7 @@ import {
     Crypto,
     DateTimer,
     DeviceCookieStore,
+    FileHelper,
     IntervalCaller,
     IP,
     JqueryUi,
@@ -54,6 +55,8 @@ export const ip = new IP()
 
 export const numberFormatter = new NumberFormatter(DEFAULT_SETTINGS)
 export const dateTimer = new DateTimer(DEFAULT_SETTINGS)
+
+export const fileHelper = new FileHelper(numberFormatter)
 
 export const permissionChecker = new PermissionChecker()
 

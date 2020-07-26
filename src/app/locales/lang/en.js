@@ -117,6 +117,10 @@ export default {
         pagination: {
             display_result: 'Display result',
         },
+        upload_description: {
+            extensions: 'File extensions allowed: {extensions}. ',
+            size: 'Max upload file size: {size}.',
+        },
     },
     error: {
         bad_request: {

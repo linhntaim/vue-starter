@@ -14,6 +14,8 @@ export default class ServerMiddleware extends Middleware {
             doneCallback: () => {
                 Vue.prototype.$server = store.getters['prerequisite/metadata'].server
 
+                this.app().$bus.emit('server')
+
                 this.handleClock()
 
                 this.handleIp()
