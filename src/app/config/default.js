@@ -141,3 +141,5 @@ export const LOCALE_MAPPING_MOMENT_DEF = {
     en: 'en-gb',
     ja: 'ja',
 }
+const maxChunkUploadSize = parseInt(process.env.VUE_APP_MAX_CHUNK_UPLOAD_SIZE) | 0
+export const MAX_CHUNK_UPLOAD_SIZE = maxChunkUploadSize ? maxChunkUploadSize : 1024 * 1024 // 1 MB, default

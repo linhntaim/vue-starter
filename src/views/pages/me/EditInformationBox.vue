@@ -42,7 +42,7 @@
     import {FilesUploader} from '@dsquare-gbu/vue-utils'
     import EditEmailModal from './EditEmailModal'
     import EditPasswordModal from './EditPasswordModal'
-    import {TOAST_DEF} from '../../../app/config'
+    import {MAX_CHUNK_UPLOAD_SIZE, TOAST_DEF} from '../../../app/config'
     import {timeoutCaller, ui} from '../../../app/utils'
     import {handledFileAdminService} from '../../../app/services/default/admin-handled-file'
 
@@ -57,7 +57,7 @@
                 email: '',
                 displayName: '',
 
-                filesUploader: new FilesUploader(ui, this.$server.max_upload_file_size, 1024 * 1024),
+                filesUploader: new FilesUploader(ui, this.$server.max_upload_file_size, MAX_CHUNK_UPLOAD_SIZE),
             }
         },
         computed: {
