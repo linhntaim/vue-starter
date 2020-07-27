@@ -17,7 +17,7 @@ export const routes = [
         },
         children: [
             {
-                path: '777',
+                path: '503',
                 name: 'connection_lost',
                 component: () => import('../../views/error/ConnectionLost'),
             },
