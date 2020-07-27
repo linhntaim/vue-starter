@@ -153,7 +153,7 @@
                 this.filesUploader.processFiles([image]).then(() => {
                     this.filesUploader.processChunks(
                         (chunkData, chunkIndex, chunksTotal, doneCallback, errorCallback, file, data) => {
-                            timeoutCaller.register(() => {
+                            timeoutCaller.register(() => { // trick, prevent failing on Windows OS
                                 service.chunkUpload(
                                     data, // chunksId
                                     chunksTotal,
