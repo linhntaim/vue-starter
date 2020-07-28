@@ -148,52 +148,53 @@
             },
             updateAvatarBySplittingImageIntoChunks(image) {
                 this.loading = true
-                const service = handledFileAdminService()
-                let i = 0, timeoutToSendChunks = 400
-                this.filesUploader.processFiles([image]).then(() => {
-                    this.filesUploader.processChunks(
-                        (chunkData, chunkIndex, chunksTotal, doneCallback, errorCallback, file, data) => {
-                            timeoutCaller.register(() => { // trick, prevent failing on Windows OS
-                                service.chunkUpload(
-                                    data, // chunksId
-                                    chunksTotal,
-                                    chunkData, // chunkFile
-                                    chunkIndex,
-                                    data => {
-                                        doneCallback()
-                                        if (data.model.joined) {
-                                            service.chunkComplete(
-                                                data.model.chunks_id,
-                                                {public: 1},
-                                                data => this.updateAvatarByHandledFile(data.model.id),
-                                            )
-                                        }
-                                    },
-                                    err => {
-                                        errorCallback()
-                                        this.loading = false
-                                        this.$bus.emit('error', {
-                                            messages: err.getMessages(),
-                                            extra: err.getExtra(),
-                                        })
-                                    },
-                                )
-                            }, timeoutToSendChunks * i++)
-                        },
-                        null,
-                        null,
-                        () => new Promise((resolve, reject) => {
-                            service.chunkUploadInit(data => {
-                                resolve(data.model.chunks_id)
-                            }, err => {
-                                this.loading = false
-                                this.$bus.emit('error', {
-                                    messages: err.getMessages(),
-                                    extra: err.getExtra(),
-                                })
-                                reject(err)
+                const service = handledFileAdminService(), timeoutToSendChunks = 400
+                let i = 0
+                this.filesUploader.quickProcessFilesWithChunks({
+                    files: [image],
+                }, {
+                    everyChunkCallback: (chunkData, chunkIndex, chunksTotal, doneCallback, errorCallback, file, data) => {
+                        timeoutCaller.register(() => { // trick, prevent failing on Windows OS
+                            service.chunkUpload(
+                                data, // chunksId
+                                chunksTotal,
+                                chunkData, // chunkFile
+                                chunkIndex,
+                                data => {
+                                    doneCallback()
+                                    if (data.model.joined) {
+                                        service.chunkComplete(
+                                            data.model.chunks_id,
+                                            {public: 1},
+                                            data => this.updateAvatarByHandledFile(data.model.id),
+                                        )
+                                    }
+                                },
+                                err => {
+                                    errorCallback()
+                                    this.loading = false
+                                    this.$bus.emit('error', {
+                                        messages: err.getMessages(),
+                                        extra: err.getExtra(),
+                                    })
+                                },
+                            )
+                        }, timeoutToSendChunks * i++)
+                    },
+                    everyDoneCallback: null,
+                    everyErrorCallback: null,
+                    everyPromisedBeforeCallback: () => new Promise((resolve, reject) => {
+                        service.chunkUploadInit(data => {
+                            resolve(data.model.chunks_id)
+                        }, err => {
+                            this.loading = false
+                            this.$bus.emit('error', {
+                                messages: err.getMessages(),
+                                extra: err.getExtra(),
                             })
-                        }))
+                            reject(err)
+                        })
+                    }),
                 })
             },
             updateAvatarByHandledFile(fileId) {

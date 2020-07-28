@@ -41,6 +41,16 @@ export class HandledFileAdminService extends AdminService {
             alwaysCallback,
         )
     }
+
+    handlePostProcessed(id, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        return this.post(
+            id,
+            params,
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
 }
 
 export const handledFileAdminService = () => new HandledFileAdminService()
