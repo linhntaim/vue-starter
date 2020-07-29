@@ -46,7 +46,7 @@ export const passportCookieStore = new PassportCookieStore(cookieHandler, APP_CO
 })
 export const settingsCookieStore = new SettingsCookieStore(cookieHandler, APP_COOKIE.names.settings, DEFAULT_SETTINGS)
 export const deviceCookieStore = new DeviceCookieStore(cookieHandler, APP_COOKIE.names.device, DEFAULT_DEVICE)
-export const ui = new Select2Ui(new JqueryUi())
+export const ui = new JqueryUi()
 export const callbackWaiter = new CallbackWaiter()
 export const timeoutCaller = new TimeoutCaller()
 export const intervalCaller = new IntervalCaller()

@@ -12,9 +12,15 @@
                     input#inputDisplayName.form-control(v-model="displayName" type="text" required)
                 .form-group
                     label.required(for="inputPermissions") {{ $tc('pages.permission', 2) }}
-                    select#inputPermissions.form-control(multiple required)
-                        option(disabled value="") {{ $tc('actions.select_what', {what: $tc('pages.permission', 2)}) }}
-                        option(v-for="metaPermission in metadata.permissions" :value="metaPermission.id") {{ metaPermission.display_name }}
+                    multiple-select2-input(
+                        v-if="!localeChange.changed && select2Ready"
+                        :id="'inputPermissions'"
+                        v-model="permissions"
+                        :items="metadata.permissions"
+                        :itemValue="'id'"
+                        :itemText="'display_name'"
+                        :required="true"
+                        :options="permissionOptions")
                 .form-group
                     label(for="inputDescription") {{ $t('pages.description') }}
                     textarea#inputDescription.form-control(v-model="description" cols="10" rows="2")
@@ -26,19 +32,28 @@
 
 <script>
     import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {ui} from '../../../app/utils'
+    import {localeChange} from '../../../app/utils'
     import {TOAST_DEF} from '../../../app/config'
+    import MultipleSelect2Input from '../../components/MultipleSelect2Input'
 
     export default {
         name: 'Create',
+        components: {MultipleSelect2Input},
         data() {
             return {
                 loading: false,
 
                 name: '',
                 displayName: '',
-                permissions: [],
                 description: '',
+
+                permissions: [],
+                permissionOptions: {
+                    placeholder: this.$tc('actions.select_what', {what: this.$tc('pages.permission', 2)}),
+                },
+
+                select2Ready: false,
+                localeChange: localeChange.reset(),
             }
         },
         computed: {
@@ -47,7 +62,11 @@
                 role: 'role/role',
             }),
         },
+        destroyed() {
+            this.localeChange.off()
+        },
         mounted() {
+            this.localeChange.on()
             this.init()
         },
         methods: {
@@ -60,9 +79,7 @@
                 this.require({
                     names: ['permissions'],
                     doneCallback: () => {
-                        this.$forceUpdate() // render dynamic options
-
-                        this.initUi()
+                        this.select2Ready = true
 
                         this.loading = false
                     },
@@ -70,11 +87,6 @@
                         this.loading = false
                         this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
                     },
-                })
-            },
-            initUi() {
-                ui.select2(ui.query('#inputPermissions').get(), selected => {
-                    this.permissions = selected
                 })
             },
             onSubmitted() {

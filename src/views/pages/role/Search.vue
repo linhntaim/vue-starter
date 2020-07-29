@@ -10,9 +10,15 @@
                     input#searchDisplayName.form-control(v-model="searcher.params.display_name" :placeholder="$t('pages.display_name')" type="text")
                 .form-group.col-md-4.col-lg-3
                     label(for="searchPermissions") {{ $tc('pages.permission', 2) }}
-                    select#searchPermissions.form-control(multiple :data-placeholder="$tc('pages.permission', 2)")
-                        option(value="") {{ $tc('actions.select_what', {what: $tc('pages.permission', 2)}) }}
-                        option(v-for="metaPermission in metadata.permissions" :value="metaPermission.id" :selected="searcher.params.permissions.indexOf(metaPermission.id.toString())!==-1") {{ metaPermission.display_name }}
+                    multiple-select2-input(
+                        v-if="!localeChange.changed && select2Ready"
+                        :id="'searchPermissions'"
+                        v-model="searcher.params.permissions"
+                        :items="metadata.permissions"
+                        :itemValue="'id'"
+                        :itemText="'display_name'"
+                        :required="true"
+                        :options="permissionOptions")
                 .col.nowrap
                     button.btn.btn-primary.btn-item.btn-item-left(:disabled="disabled || loading" type="submit")
                         i.fas.fa-search
@@ -22,20 +28,29 @@
 
 <script>
     import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {ui, timeoutCaller} from '../../../app/utils'
+    import {ui, localeChange} from '../../../app/utils'
     import {Searcher} from '@dsquare-gbu/vue-utils'
-
-    const $uis = {}
+    import MultipleSelect2Input from '../../components/MultipleSelect2Input'
 
     export default {
         name: 'Search',
+        components: {MultipleSelect2Input},
         props: {
             disabled: Boolean,
             searcher: Searcher,
         },
         data() {
             return {
+                uis: {},
+
                 loading: false,
+
+                permissionOptions: {
+                    placeholder: this.$tc('actions.select_what', {what: this.$tc('pages.permission', 2)}),
+                },
+
+                select2Ready: false,
+                localeChange: localeChange.reset(),
             }
         },
         computed: {
@@ -53,9 +68,13 @@
                 permissions: [],
             })
         },
+        destroyed() {
+            this.localeChange.off()
+        },
         mounted() {
-            $uis._ = ui.query('#searchModal').get()
-            $uis.searchPermissions = ui.query('#searchPermissions').get()
+            this.localeChange.on()
+            this.uis.$ = ui.query('#searchModal').get()
+            this.uis.$searchPermissions = ui.query('#searchPermissions').get()
         },
         methods: {
             ...mapActions({
@@ -68,8 +87,7 @@
                     doneCallback: () => {
                         this.initSearcher()
 
-                        this.initUi()
-
+                        this.select2Ready = true
                         this.loading = false
                     },
                     errorCallback: err => {
@@ -81,26 +99,17 @@
             initSearcher() {
                 this.searcher.parseQuery(this.$route.query)
 
-                this.$forceUpdate()
-
                 this.$emit('searcherInitialized')
-            },
-            initUi() {
-                timeoutCaller.register(() => {
-                    ui.select2($uis.searchPermissions, selected => {
-                        this.searcher.params.permissions = selected
-                    })
-                })
             },
             onClearSearchClicked() {
                 this.searcher.clear()
 
-                $uis.searchPermissions.val([]).trigger('change')
+                this.uis.$searchPermissions.val([]).trigger('change')
 
                 this.onSubmitted()
             },
             onSubmitted() {
-                $uis._.modal('hide')
+                this.uis.$.modal('hide')
 
                 this.$emit('searched')
             },

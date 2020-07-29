@@ -12,9 +12,15 @@
                     input#inputDisplayName.form-control(v-model="displayName" type="text" required)
                 .form-group
                     label.required(for="inputPermissions") {{ $tc('pages.permission', 2) }}
-                    select#inputPermissions.form-control(v-model="permissions" multiple required)
-                        option(disabled value="") {{ $tc('actions.select_what', {what: $tc('pages.permission', 2)}) }}
-                        option(v-for="metaPermission in metadata.permissions" :value="metaPermission.id" :selected="permissions.indexOf(metaPermission.id)!==-1") {{ metaPermission.display_name }}
+                    multiple-select2-input(
+                        v-if="!localeChange.changed && select2Ready"
+                        :id="'inputPermissions'"
+                        v-model="permissions"
+                        :items="metadata.permissions"
+                        :itemValue="'id'"
+                        :itemText="'display_name'"
+                        :required="true"
+                        :options="permissionOptions")
                 .form-group
                     label(for="inputDescription") {{ $t('pages.description') }}
                     textarea#inputDescription.form-control(v-model="description" cols="10" rows="2")
@@ -26,12 +32,14 @@
 
 <script>
     import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {ui, timeoutCaller} from '../../../app/utils'
+    import {ui, localeChange} from '../../../app/utils'
     import {Collection} from '@dsquare-gbu/vue-utils'
     import {TOAST_DEF} from '../../../app/config'
+    import MultipleSelect2Input from '../../components/MultipleSelect2Input'
 
     export default {
         name: 'Edit',
+        components: {MultipleSelect2Input},
         data() {
             return {
                 loading: false,
@@ -39,8 +47,15 @@
                 id: parseInt(this.$route.params.id),
                 name: '',
                 displayName: '',
-                permissions: [],
                 description: '',
+
+                permissions: [],
+                permissionOptions: {
+                    placeholder: this.$tc('actions.select_what', {what: this.$tc('pages.permission', 2)}),
+                },
+
+                select2Ready: false,
+                localeChange: localeChange.reset(),
             }
         },
         computed: {
@@ -50,7 +65,11 @@
                 accountRole: 'account/role',
             }),
         },
+        destroyed() {
+            this.localeChange.off()
+        },
         mounted() {
+            this.localeChange.on()
             this.init()
         },
         methods: {
@@ -80,25 +99,16 @@
                         this.name = this.role.name
                         this.displayName = this.role.display_name
                         this.description = this.role.description
+
                         this.permissions = (new Collection(this.role.permissions)).pluck('id')
 
-                        this.$forceUpdate() // render dynamic options
-
-                        this.initUi()
-
+                        this.select2Ready = true
                         this.loading = false
                     },
                     errorCallback: err => {
                         this.loading = false
                         this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
                     },
-                })
-            },
-            initUi() {
-                timeoutCaller.register(() => {
-                    ui.select2(ui.query('#inputPermissions').get(), selected => {
-                        this.permissions = selected
-                    })
                 })
             },
             onSubmitted() {
