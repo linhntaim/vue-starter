@@ -177,7 +177,7 @@ export default {
             }
             callbackWaiter.call('account_current', () => { // tricky cache
                 log.send('get current', 'store.account')
-                accountService().current(login, (data) => {
+                accountService().current(login, data => {
                     const settings = data.model.settings
                     delete data.model.settings
                     commit('setAdmin', {
@@ -194,7 +194,7 @@ export default {
         },
 
         refreshToken({commit}, {refreshToken, doneCallback, errorCallback}) {
-            authService().refreshToken(refreshToken, (data) => {
+            authService().refreshToken(refreshToken, data => {
                 commit('setAuth', data)
                 doneCallback()
             }, errorCallback)
@@ -253,28 +253,28 @@ export default {
         },
 
         updateAvatar({state}, {image, doneCallback, errorCallback}) {
-            accountService().updateAvatar(image, (data) => {
+            accountService().updateAvatar(image, data => {
                 state.admin.avatar_url = data.model.avatar_url
                 doneCallback()
             }, errorCallback)
         },
 
         updateAvatarByHandledFile({state}, {fileId, doneCallback, errorCallback}) {
-            accountService().updateAvatarByHandledFile(fileId, (data) => {
+            accountService().updateAvatarByHandledFile(fileId, data => {
                 state.admin.avatar_url = data.model.avatar_url
                 doneCallback()
             }, errorCallback)
         },
 
         updateInformation({state}, {params, doneCallback, errorCallback}) {
-            accountService().updateInformation(params, (data) => {
+            accountService().updateInformation(params, data => {
                 state.admin.display_name = data.model.display_name
                 doneCallback()
             }, errorCallback)
         },
 
         updateEmail({state}, {email, currentPassword, doneCallback, errorCallback}) {
-            accountService().updateEmail(email, currentPassword, (data) => {
+            accountService().updateEmail(email, currentPassword, data => {
                 state.admin.email = data.model.email
                 doneCallback()
             }, errorCallback)

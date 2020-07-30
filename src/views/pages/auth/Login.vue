@@ -16,8 +16,9 @@
 </template>
 
 <script>
-    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
+    import {mapActions} from '@dsquare-gbu/vue-uses'
     import {session} from '@dsquare-gbu/vue-router'
+    import {APP_ROUTE} from '../../../app/config'
 
     export default {
         name: 'Login',
@@ -32,12 +33,8 @@
             }
         },
         computed: {
-            ...mapGetters({
-                currentAdmin: 'account/admin',
-                accountPermissions: 'account/permissions',
-            }),
             disabled() {
-                return !this.token && (this.email == '' || this.password == '')
+                return !this.token && (!this.email || !this.password)
             },
         },
         created() {
@@ -50,7 +47,6 @@
             ...mapActions({
                 accountLogin: 'account/login',
             }),
-
             onLoginSubmitted() {
                 this.loading = true
                 this.accountLogin({
@@ -68,11 +64,10 @@
                     },
                 })
             },
-
             afterLogin() {
                 session.restart()
 
-                this.$router.push({name: 'home'})
+                this.$router.push({name: APP_ROUTE.home})
             },
         },
     }
