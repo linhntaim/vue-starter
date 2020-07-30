@@ -2,7 +2,7 @@ import DefaultService from '../default-service'
 
 export default class BaseService extends DefaultService {
     index(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.get(
+        return this.get(
             '',
             params,
             doneCallback,
@@ -12,7 +12,7 @@ export default class BaseService extends DefaultService {
     }
 
     store(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.post(
+        return this.post(
             '',
             params,
             doneCallback,
@@ -22,7 +22,7 @@ export default class BaseService extends DefaultService {
     }
 
     show(id, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.get(
+        return this.get(
             id,
             {},
             doneCallback,
@@ -32,7 +32,7 @@ export default class BaseService extends DefaultService {
     }
 
     update(id, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.post(
+        return this.post(
             id,
             params,
             doneCallback,
@@ -42,11 +42,12 @@ export default class BaseService extends DefaultService {
     }
 
     bulkDestroy(ids, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        params._delete = 1
-        params.ids = ids
-        this.post(
+        return this.post(
             '',
-            params,
+            this.appendParams(params, {
+                _delete: 1,
+                ids: ids,
+            }),
             doneCallback,
             errorCallback,
             alwaysCallback,
@@ -54,10 +55,11 @@ export default class BaseService extends DefaultService {
     }
 
     destroy(id, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        params._delete = 1
-        this.post(
+        return this.post(
             id,
-            params,
+            this.appendParams(params, {
+                _delete: 1,
+            }),
             doneCallback,
             errorCallback,
             alwaysCallback,

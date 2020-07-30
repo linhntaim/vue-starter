@@ -6,13 +6,14 @@ export class PrerequisiteService extends DefaultService {
     }
 
     require(names = [], doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        const builtParams = {}
-        names.forEach((param) => {
-            builtParams[param] = 1
-        })
-        this.get(
+        return this.get(
             '',
-            builtParams,
+            (() => {
+                const builtParams = {}
+                names.forEach((param) => {
+                    builtParams[param] = 1
+                })
+            })(),
             doneCallback,
             errorCallback,
             alwaysCallback,

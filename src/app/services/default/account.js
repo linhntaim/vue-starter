@@ -6,7 +6,7 @@ export class AccountService extends DefaultService {
     }
 
     current(login = false, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.get(
+        return this.get(
             '',
             login ? {_login: 1} : {},
             doneCallback,
@@ -16,7 +16,7 @@ export class AccountService extends DefaultService {
     }
 
     update(params, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.post(
+        return this.post(
             '',
             params,
             doneCallback,
@@ -26,7 +26,7 @@ export class AccountService extends DefaultService {
     }
 
     updateEmail(email, currentPassword, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.post(
+        return this.post(
             '',
             {
                 _email: 1,
@@ -40,7 +40,7 @@ export class AccountService extends DefaultService {
     }
 
     updatePassword(password, passwordConfirmation, currentPassword, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.post(
+        return this.post(
             '',
             {
                 _password: 1,
@@ -55,10 +55,11 @@ export class AccountService extends DefaultService {
     }
 
     updateInformation(params, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        params._information = 1
-        this.post(
+        return this.post(
             '',
-            params,
+            this.appendParams(params, {
+                _information: 1,
+            }),
             doneCallback,
             errorCallback,
             alwaysCallback,
@@ -66,10 +67,10 @@ export class AccountService extends DefaultService {
     }
 
     updateAvatar(imageBlob, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        let formData = new FormData
+        const formData = new FormData
         formData.append('_avatar', '1')
         formData.append('image', imageBlob)
-        this.post(
+        return this.post(
             '',
             formData,
             doneCallback,
@@ -79,7 +80,7 @@ export class AccountService extends DefaultService {
     }
 
     updateAvatarByHandledFile(fileId, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.post(
+        return this.post(
             '',
             {
                 _avatar_by_handled_file: 1,

@@ -7,7 +7,7 @@
                 a#userDropdown.nav-link.dropdown-toggle(href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
                     span.mr-2.d-none.d-lg-inline.text-gray-600.small {{ currentAdmin.display_name }}
                     img.img-profile.rounded-circle(v-if="avatar" :src="avatar")
-                    .d-flex.justify-content-center.align-items-center.rounded-circle.mx-auto.wp-32.hp-32.bg-light(v-else)
+                    .d-flex.justify-content-center.align-items-center.rounded-circle.mx-auto.wp-32.hp-32.bg-light.text-profile(v-else)
                         | {{ displayName.charAt(0) }}
                 .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby="userDropdown")
                     router-link.dropdown-item(:to="{path: '/me'}")
@@ -93,6 +93,10 @@
 </script>
 
 <style lang="scss" scoped>
+    .text-profile {
+        font-size: .75rem;
+    }
+
     .locale-dropdown {
         .flag-icon {
             width: 1.45em;

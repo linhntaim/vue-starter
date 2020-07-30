@@ -6,7 +6,7 @@
                     .text-center
                         .form-group
                             img.rounded-circle.w-25(v-if="avatarUrl" :src="avatarUrl")
-                            .d-flex.justify-content-center.align-items-center.rounded-circle.mx-auto.wp-180.hp-180.bg-light(v-else)
+                            .d-flex.justify-content-center.align-items-center.rounded-circle.mx-auto.wp-180.hp-180.bg-light.text-profile(v-else)
                                 | {{ displayName.charAt(0) }}
                         .form-group(v-for="file in files")
                             .progress(v-if="!file.progress.completed")
@@ -224,3 +224,9 @@
         },
     }
 </script>
+
+<style lang="scss" scoped>
+    .text-profile {
+        font-size: 4rem;
+    }
+</style>

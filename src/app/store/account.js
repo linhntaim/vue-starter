@@ -14,7 +14,6 @@ import {APP_DEFAULT_SERVICE} from '../config'
 
 const setDefaultServiceSettingsHeader = settings => {
     serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('settings', instance => {
-        console.log(instance)
         instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.settings] = JSON.stringify({
             app_name: settings.appName,
             app_url: settings.appUrl,
@@ -35,7 +34,6 @@ const setDefaultServiceSettingsHeader = settings => {
 
 const setDefaultServiceTokenAuthorizationHeader = token => {
     serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('authorization', instance => {
-        console.log(instance)
         instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.tokenAuthorization] = token
         return instance
     }))

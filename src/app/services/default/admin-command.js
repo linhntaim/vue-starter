@@ -6,7 +6,7 @@ export class AdminCommandService extends DefaultService {
     }
 
     run(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.post(
+        return this.post(
             '',
             params,
             doneCallback,

@@ -15,10 +15,11 @@ export class HandledFileAdminService extends AdminService {
     }
 
     chunkComplete(chunksId, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        params._chunk_complete = 1
-        params.chunks_id = chunksId
         return this.store(
-            params,
+            this.appendParams(params, {
+                _chunk_complete: 1,
+                chunks_id: chunksId,
+            }),
             doneCallback,
             errorCallback,
             alwaysCallback,

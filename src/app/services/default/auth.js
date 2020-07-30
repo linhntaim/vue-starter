@@ -4,7 +4,7 @@ import DefaultService from '../default-service'
 
 class AuthService extends DefaultService {
     login(email, password, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.post(
+        return this.post(
             'auth/login',
             {
                 grant_type: 'password',
@@ -22,7 +22,7 @@ class AuthService extends DefaultService {
 
     loginWithToken(email, doneCallback = null, errorCallback = null, alwaysCallback = null) {
         this.e()
-        this.login(
+        return this.login(
             crypto.encrypt(email, serverClock.blockKey()),
             crypto.encryptJson({source: 'token'}, serverClock.blockKey()),
             doneCallback,
@@ -32,7 +32,7 @@ class AuthService extends DefaultService {
     }
 
     logout(doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.post(
+        return this.post(
             'auth/logout',
             {},
             doneCallback,
@@ -42,7 +42,7 @@ class AuthService extends DefaultService {
     }
 
     refreshToken(refreshToken, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.post(
+        return this.post(
             'oauth/token',
             {
                 'grant_type': 'refresh_token',
@@ -58,7 +58,7 @@ class AuthService extends DefaultService {
     }
 
     forgotPassword(email, appResetPasswordPath, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.post(
+        return this.post(
             'auth/password',
             {
                 _forgot: 1,
@@ -72,10 +72,11 @@ class AuthService extends DefaultService {
     }
 
     getResetPassword(params, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        params._reset = 1
-        this.get(
+        return this.get(
             'auth/password',
-            params,
+            this.appendParams(params, {
+                _reset: 1,
+            }),
             doneCallback,
             errorCallback,
             alwaysCallback,
@@ -83,10 +84,11 @@ class AuthService extends DefaultService {
     }
 
     resetPassword(params, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        params._reset = 1
-        this.post(
+        return this.post(
             'auth/password',
-            params,
+            this.appendParams(params, {
+                _reset: 1,
+            }),
             doneCallback,
             errorCallback,
             alwaysCallback,

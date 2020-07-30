@@ -6,11 +6,11 @@ export class AppOptionAdminService extends AdminService {
     }
 
     save(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.store(params, doneCallback, errorCallback, alwaysCallback)
+        return this.store(params, doneCallback, errorCallback, alwaysCallback)
     }
 
     saveMany(options = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        this.store(
+        return this.store(
             {
                 _many: 1,
                 options: options,
