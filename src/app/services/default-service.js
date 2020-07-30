@@ -1,5 +1,5 @@
-import {serviceFactory} from './service-factory'
-import {Service, ServiceError} from './service'
+import {serviceFactory} from './index'
+import {ServiceError, AxiosService} from '@dsquare-gbu/vue-services'
 
 class DefaultServiceError extends ServiceError {
     constructor(err, extra) {
@@ -36,37 +36,36 @@ class DefaultServiceError extends ServiceError {
     }
 }
 
-export default class DefaultService extends Service {
+/**
+ * @property {ServiceInstance} serviceInstance
+ */
+export default class DefaultService extends AxiosService {
     constructor(basePath = null) {
         super(serviceFactory.factory(), basePath)
     }
 
     e() {
-        this.s.paramsCallback.e = params => {
-            params._e = 1
-            return params
-        }
+        this.serviceInstance.addParamsCallback('e', params => this.appendParam(params, '_e', 1))
     }
 
     es() {
-        this.s.paramsCallback.es = params => {
-            params._es = 1
-            return params
-        }
+        this.serviceInstance.addParamsCallback('es', params => this.appendParam(params, '_es', 1))
     }
 
     d() {
-        if ('e' in this.s.paramsCallback) delete this.s.paramsCallback.e
-        if ('es' in this.s.paramsCallback) delete this.s.paramsCallback.es
+        this.serviceInstance.removeParamsCallback('e')
+            .removeParamsCallback('es')
     }
 
-    done(response, doneCallback = null) {
-        this.d()
-        if (doneCallback) doneCallback(response.data._data, response.data._extra)
+    done(response, doneCallback = null, errorCallback = null) {
+        if (!response.data._status) {
+            this.error({response: response}, errorCallback)
+            return
+        }
+        doneCallback && doneCallback(response.data._data, response.data._extra)
     }
 
     error(error, errorCallback = null) {
-        this.d()
         if (errorCallback) {
             if (error.response && error.response.data) {
                 errorCallback(new DefaultServiceError({
@@ -79,64 +78,8 @@ export default class DefaultService extends Service {
         }
     }
 
-    handleRequest(request, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        return request.then(response => this.done(response, doneCallback))
-            .catch(error => this.error(error, errorCallback))
-            .then(() => this.always(alwaysCallback))
-    }
-
-    wait(requests = [], doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        return this.handleRequest(
-            this.service().all(requests),
-            doneCallback,
-            errorCallback,
-            alwaysCallback,
-        )
-    }
-
-    get(path, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null, cancelToken = null) {
-        return this.handleRequest(
-            this.service().get(this.path(path), {
-                params: this.params(params),
-                cancelToken: cancelToken,
-            }),
-            doneCallback,
-            errorCallback,
-            alwaysCallback,
-        )
-    }
-
-    post(path, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null, cancelToken = null) {
-        return this.handleRequest(
-            this.service().post(this.path(path), this.params(params), {
-                cancelToken: cancelToken,
-            }),
-            doneCallback,
-            errorCallback,
-            alwaysCallback,
-        )
-    }
-
-    put(path, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null, cancelToken = null) {
-        return this.handleRequest(
-            this.service().put(this.path(path), this.params(params), {
-                cancelToken: cancelToken,
-            }),
-            doneCallback,
-            errorCallback,
-            alwaysCallback,
-        )
-    }
-
-    delete(path, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null, cancelToken = null) {
-        return this.handleRequest(
-            this.service().delete(this.path(path), {
-                params: this.params(params),
-                cancelToken: cancelToken,
-            }),
-            doneCallback,
-            errorCallback,
-            alwaysCallback,
-        )
+    always(alwaysCallback = null) {
+        this.d()
+        super.always(alwaysCallback)
     }
 }

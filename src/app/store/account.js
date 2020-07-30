@@ -9,12 +9,13 @@ import {
     settingsCookieStore,
 } from '../utils'
 import {localeManager} from '../locales'
-import {serviceFactory} from '../services/service-factory'
+import {serviceFactory} from '../services'
 import {APP_DEFAULT_SERVICE} from '../config'
 
 const setDefaultServiceSettingsHeader = settings => {
-    serviceFactory.modify(defaultService => {
-        defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.settings] = JSON.stringify({
+    serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('settings', instance => {
+        console.log(instance)
+        instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.settings] = JSON.stringify({
             app_name: settings.appName,
             app_url: settings.appUrl,
             locale: settings.locale,
@@ -28,13 +29,16 @@ const setDefaultServiceSettingsHeader = settings => {
             long_time_format: settings.longTimeFormat,
             short_time_format: settings.shortTimeFormat,
         })
-    })
+        return instance
+    }))
 }
 
 const setDefaultServiceTokenAuthorizationHeader = token => {
-    serviceFactory.modify(defaultService => {
-        defaultService.instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.tokenAuthorization] = token
-    })
+    serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('authorization', instance => {
+        console.log(instance)
+        instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.tokenAuthorization] = token
+        return instance
+    }))
 }
 
 const applySettings = (settings, action = 'all', localeCallback = null) => {
