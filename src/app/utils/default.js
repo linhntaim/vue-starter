@@ -27,7 +27,6 @@ import {
     DEFAULT_DEVICE,
     DEFAULT_SETTINGS,
 } from '../config'
-import Select2Ui from './select2-ui'
 
 export const log = new ConsoleLog(APP_DEBUG, APP_LOG_ONLY)
 export const cacheHandler = new LocalCacheHandler()

@@ -1,5 +1,6 @@
 <template lang="pug">
     select.form-control(:id="id" :required="required")
+        option(:disabled="required" selected value="") &nbsp;
         option(v-for="item in items" :key="item[itemValue]" :value="item[itemValue]") {{ item[itemText] }}
 </template>
 
