@@ -10,14 +10,14 @@
 </template>
 
 <script>
-    import {ui} from '../../app/utils'
+    import {APP_ROUTE} from '../../app/config'
 
     export default {
         name: 'ConnectionLost',
         methods: {
             onRefreshClicked() {
-                ui.reloadPage()
-            }
-        }
+                this.$router.push({name: APP_ROUTE.home})
+            },
+        },
     }
 </script>

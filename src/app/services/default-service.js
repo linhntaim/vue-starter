@@ -1,8 +1,8 @@
 import {serviceFactory} from './index'
-import {ServiceError, AxiosService} from '@dsquare-gbu/vue-services'
+import {AxiosService, ServiceError} from '@dsquare-gbu/vue-services'
 
 class DefaultServiceError extends ServiceError {
-    constructor(err, extra) {
+    constructor(err, extra = null) {
         super(err)
 
         this.extra = extra
@@ -23,6 +23,8 @@ class DefaultServiceError extends ServiceError {
                         return [defaults['404'] ? defaults['404'] : 'Not found!']
                     case 500:
                         return [defaults['500'] ? defaults['500'] : 'Application error!']
+                    case 503:
+                        return [defaults['503'] ? defaults['503'] : 'Service unavailable!']
                 }
             }
             if (err.message) return [err.message]
@@ -36,9 +38,6 @@ class DefaultServiceError extends ServiceError {
     }
 }
 
-/**
- * @property {ServiceInstance} serviceInstance
- */
 export default class DefaultService extends AxiosService {
     constructor(basePath = null) {
         super(serviceFactory.factory(), basePath)
@@ -68,10 +67,14 @@ export default class DefaultService extends AxiosService {
     error(error, errorCallback = null) {
         if (errorCallback) {
             if (error.response && error.response.data) {
-                errorCallback(new DefaultServiceError({
-                    d: error.response.data._data,
-                    m: error.response.data._messages,
-                }, error.response.data._extra))
+                errorCallback(
+                    new DefaultServiceError({
+                            d: error.response.data._data,
+                            m: error.response.data._messages,
+                        },
+                        error.response.data._extra,
+                    ),
+                )
             } else {
                 errorCallback(new DefaultServiceError({e: error}))
             }

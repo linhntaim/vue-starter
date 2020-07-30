@@ -13,6 +13,7 @@ export class PrerequisiteService extends DefaultService {
                 names.forEach((param) => {
                     builtParams[param] = 1
                 })
+                return builtParams
             })(),
             doneCallback,
             errorCallback,
