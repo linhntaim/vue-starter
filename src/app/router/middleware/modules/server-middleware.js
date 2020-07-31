@@ -9,6 +9,9 @@ export default class ServerMiddleware extends Middleware {
         this.log('server', 'middleware')
 
         const store = this.store()
+        store.dispatch('prerequisite/reset', {
+            name: 'server',
+        })
         store.dispatch('prerequisite/require', {
             names: ['server'],
             doneCallback: () => {

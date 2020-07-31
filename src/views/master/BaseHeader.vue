@@ -8,7 +8,7 @@
                     span.mr-2.d-none.d-lg-inline.text-gray-600.small {{ currentAdmin.display_name }}
                     img.img-profile.rounded-circle(v-if="avatar" :src="avatar")
                     .d-flex.justify-content-center.align-items-center.rounded-circle.mx-auto.wp-32.hp-32.bg-light.text-profile(v-else)
-                        | {{ displayName.charAt(0) }}
+                        | {{ displayName.charAt(0).toUpperCase() }}
                 .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby="userDropdown")
                     router-link.dropdown-item(:to="{path: '/me'}")
                         i.fas.fa-user.fa-sm.fa-fw.mr-2.text-gray-400

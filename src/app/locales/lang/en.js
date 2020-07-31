@@ -190,8 +190,8 @@ export default {
             },
             _login: {
                 _: 'Login',
-                welcome_back: 'Welcome Back!',
                 forgot_password: 'Forgot password?',
+                welcome_back: 'Welcome Back!',
             },
             _reset_password: {
                 _: 'Reset password',

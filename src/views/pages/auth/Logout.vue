@@ -6,6 +6,7 @@
 <script>
     import {mapActions} from '@dsquare-gbu/vue-uses'
     import {session} from '@dsquare-gbu/vue-router'
+    import {APP_ROUTE} from '../../../app/config'
 
     export default {
         name: 'Logout',
@@ -26,10 +27,13 @@
                 this.accountLogout({
                     alwaysCallback: () => {
                         this.loading = false
-                        session.restart()
-                        this.$router.push({name: 'login'})
+                        this.afterLogout()
                     },
                 })
+            },
+            afterLogout() {
+                session.restart()
+                this.$router.push({name: APP_ROUTE.redirect_path_if_unauthenticated})
             },
         },
     }

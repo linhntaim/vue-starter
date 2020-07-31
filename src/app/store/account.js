@@ -275,13 +275,16 @@ export default {
 
         updateEmail({state}, {email, currentPassword, doneCallback, errorCallback}) {
             accountService().updateEmail(email, currentPassword, data => {
-                state.admin.email = data.model.email
+                state.admin.user.email = data.model.email
                 doneCallback()
             }, errorCallback)
         },
 
-        updatePassword(store, {password, passwordConfirmation, currentPassword, doneCallback, errorCallback}) {
-            accountService().updatePassword(password, passwordConfirmation, currentPassword, doneCallback, errorCallback)
+        updatePassword({state}, {password, passwordConfirmation, currentPassword, doneCallback, errorCallback}) {
+            accountService().updatePassword(password, passwordConfirmation, currentPassword, data => {
+                state.admin.user.has_password = data.model.has_password
+                doneCallback()
+            }, errorCallback)
         },
     },
 }

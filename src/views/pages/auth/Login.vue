@@ -1,6 +1,6 @@
 <template lang="pug">
     .row.justify-content-center
-        .col-xl-6.col-lg-12.col-md-9
+        .col-lg-6.col-md-8.col-sm-10
             .card.o-hidden.border-0.shadow-lg.my-5
                 .card-body.p-5
                     .text-center

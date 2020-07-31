@@ -54,3 +54,7 @@ label.required {
 .input-group-prepend .input-group-text + .form-control {
     margin-left: -1px;
 }
+
+.form-group-set .form-group:last-child {
+    margin-bottom: 0;
+}

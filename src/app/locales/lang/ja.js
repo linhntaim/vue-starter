@@ -190,8 +190,8 @@ export default {
             },
             _login: {
                 _: 'ログイン',
-                welcome_back: 'ログイン',
                 forgot_password: 'パスワードを忘れた方はこちら？',
+                welcome_back: 'ログイン',
             },
             _reset_password: {
                 _: 'パスワード再設定',
