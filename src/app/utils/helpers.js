@@ -81,6 +81,17 @@ export default {
             chars = chars.replace(' ', '\\s')
             return s.replace(new RegExp('^[' + chars + ']|[' + chars + ']$', 'g'), '')
         },
+        splitByLine(s) {
+            return s.split('\n').map(i => {
+                i = this.trim(i)
+                if (i) return i
+            }).filter(i => {
+                return i
+            })
+        },
+        ucFirst(s) {
+            return s.charAt(0).toUpperCase() + s.substr(1)
+        },
     },
     array: {
         range(start, end, step = 1) {

@@ -28,8 +28,12 @@
         },
         methods: {
             init() {
-                // if (this.accountPermissions.indexOf('be-owner') !== -1) {
-                // }
+                if (this.accountPermissions.indexOf('be-super-admin') !== -1) {
+                    this.addDashBox(-1, 'GenerateLoginToken')
+                    this.addDashBox(-2, 'SystemLog')
+                    this.addDashBox(-3, 'MaintenanceMode')
+                    this.addDashBox(-4, 'IpLimitation')
+                }
             },
             addDashBox(id, name) {
                 this.dashBoxes.push({
@@ -38,13 +42,13 @@
                         loading: LoadingDashBox,
                         error: ErrorDashBox,
                         delay: 0,
-                        timeout: 3000
+                        timeout: 3000,
                     }),
                     props: {
                         id: id,
                     },
                 })
-            }
+            },
         },
     }
 </script>
