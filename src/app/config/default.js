@@ -120,6 +120,7 @@ export const CLOCK_BLOCK_KEYS = [
 ]
 export const APP_ROUTE = {
     home: 'home',
+    login: 'login',
     redirect_path_if_authenticated: 'home',
     redirect_path_if_unauthenticated: 'login',
     redirect_path_after_login: 'home',

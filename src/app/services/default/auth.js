@@ -56,44 +56,6 @@ export class AuthService extends DefaultService {
             alwaysCallback,
         )
     }
-
-    forgotPassword(email, appResetPasswordPath, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        return this.post(
-            'auth/password',
-            {
-                _forgot: 1,
-                email: email,
-                app_reset_password_path: appResetPasswordPath,
-            },
-            doneCallback,
-            errorCallback,
-            alwaysCallback,
-        )
-    }
-
-    getResetPassword(params, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        return this.get(
-            'auth/password',
-            this.appendParams(params, {
-                _reset: 1,
-            }),
-            doneCallback,
-            errorCallback,
-            alwaysCallback,
-        )
-    }
-
-    resetPassword(params, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        return this.post(
-            'auth/password',
-            this.appendParams(params, {
-                _reset: 1,
-            }),
-            doneCallback,
-            errorCallback,
-            alwaysCallback,
-        )
-    }
 }
 
 export const authService = () => new AuthService()

@@ -11,6 +11,7 @@ import {
 import {localeManager} from '../locales'
 import {serviceFactory} from '../services'
 import {APP_DEFAULT_SERVICE} from '../config'
+import {passwordAdminService} from '../services/default/admin-password'
 
 const setDefaultServiceSettingsHeader = settings => {
     serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('settings', instance => {
@@ -230,18 +231,17 @@ export default {
         },
 
         forgotPassword(store, {email, appResetPasswordPath, doneCallback, errorCallback}) {
-            authService().forgotPassword(email, appResetPasswordPath, doneCallback, errorCallback)
+            passwordAdminService().forgot(email, appResetPasswordPath, doneCallback, errorCallback)
         },
 
-        getResetPassword(store, {email, token, doneCallback, errorCallback}) {
-            authService().getResetPassword({
-                email: email,
+        getResetPassword(store, {token, doneCallback, errorCallback}) {
+            passwordAdminService().getReset({
                 token: token,
             }, doneCallback, errorCallback)
         },
 
         resetPassword(store, {email, token, password, passwordConfirmation, doneCallback, errorCallback}) {
-            authService().resetPassword({
+            passwordAdminService().reset({
                 email: email,
                 token: token,
                 password: password,

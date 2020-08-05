@@ -13,6 +13,11 @@
                         button.btn.btn-primary.btn-user.btn-block(:disabled="loading || disabled" type="submit")
                             i.fas.fa-circle-notch.fa-spin(v-if="loading")
                             span(v-else) {{ $t('actions.login') }}
+                    template(v-if="extraShown")
+                        hr
+                        .text-center
+                            router-link.small(v-if="forgotPasswordEnabled" :to="{name: 'forgot_password'}")
+                                | {{ $t('pages._auth._login.forgot_password') }}
 </template>
 
 <script>
@@ -30,11 +35,18 @@
 
                 email: '',
                 password: '',
+
             }
         },
         computed: {
             disabled() {
                 return !this.token && (!this.email || !this.password)
+            },
+            extraShown() {
+                return this.forgotPasswordEnabled
+            },
+            forgotPasswordEnabled() {
+                return this.$server.forgot_password_enabled.admin
             },
         },
         created() {

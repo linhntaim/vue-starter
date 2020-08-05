@@ -38,6 +38,11 @@
                 return !this.email
             },
         },
+        created() {
+            if (!this.$server.forgot_password_enabled.admin) {
+                this.$router.push({name: APP_ROUTE.not_found})
+            }
+        },
         methods: {
             ...mapActions({
                 accountForgotPassword: 'account/forgotPassword',

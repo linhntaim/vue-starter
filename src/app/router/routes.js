@@ -71,6 +71,18 @@ export const routes = [
                 component: () => import('../../views/pages/auth/ForgotPassword'),
             },
             {
+                path: 'reset-password',
+                name: 'reset_password',
+            },
+            {
+                path: 'reset-password/:token',
+                name: 'reset_password_complete',
+                meta: {
+                    requireNotAuth: true,
+                },
+                component: () => import('../../views/pages/auth/ResetPassword'),
+            },
+            {
                 path: 'logout',
                 name: 'logout',
                 meta: {
