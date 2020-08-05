@@ -3,9 +3,13 @@ import {APP_DEFAULT_SERVICE} from '../../config'
 import DefaultService from '../default-service'
 
 export class AuthService extends DefaultService {
+    constructor() {
+        super('auth')
+    }
+
     login(email, password, doneCallback = null, errorCallback = null, alwaysCallback = null) {
         return this.post(
-            'auth/login',
+            'login',
             {
                 grant_type: 'password',
                 client_id: APP_DEFAULT_SERVICE.clientId,
@@ -33,7 +37,7 @@ export class AuthService extends DefaultService {
 
     logout(doneCallback = null, errorCallback = null, alwaysCallback = null) {
         return this.post(
-            'auth/logout',
+            'logout',
             {},
             doneCallback,
             errorCallback,
@@ -43,7 +47,7 @@ export class AuthService extends DefaultService {
 
     refreshToken(refreshToken, doneCallback = null, errorCallback = null, alwaysCallback = null) {
         return this.post(
-            'oauth/token',
+            'login',
             {
                 'grant_type': 'refresh_token',
                 'client_id': APP_DEFAULT_SERVICE.clientId,
