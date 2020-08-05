@@ -37,6 +37,11 @@ export const APP_DEFAULT_SERVICE = {
     },
     basicAuth: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION,
     hasBasicAuth: hasBasicAuth,
+    requestParams: {
+        tokenType: '_x_token_type',
+        accessToken: '_x_access_token',
+        authorization: '_x_authorization',
+    },
 }
 export const APP_COOKIE = {
     names: {

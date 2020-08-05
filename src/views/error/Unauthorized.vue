@@ -2,7 +2,7 @@
     .card.shadow.error-block
         .card-body
             .text-center
-                .error.mx-auto(data-text="403") 403
+                .error.mx-auto 403
                 p.lead.text-gray-800.mb-5 {{ $t('error.unauthorized._') }}
                 p.text-gray-500.mb-0 {{ $t('error.unauthorized.desc') }}
                 div(:class="{'mb-2': enabled}")

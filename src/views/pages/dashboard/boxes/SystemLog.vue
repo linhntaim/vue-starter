@@ -5,7 +5,7 @@
         form(@submit.prevent="onSubmitted()")
             .card-body
                 div(v-for="systemLog in systemLogs")
-                    a(:href="systemLog.url" target="_blank") {{ systemLog.name }}
+                    a(:href="systemLog.url + '?' + accountAuthorizationQueryString" target="_blank") {{ systemLog.name }}
             .card-footer.text-right
                 button.btn.btn-primary(:disabled="loading" type="submit")
                     i.fas.fa-circle-notch.fa-spin(v-if="loading")
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+    import {mapGetters} from '@dsquare-gbu/vue-uses'
     import {systemLogAdminService} from '../../../../app/services/default/admin-system-log'
 
     export default {
@@ -26,6 +27,11 @@
 
                 systemLogs: [],
             }
+        },
+        computed: {
+            ...mapGetters({
+                accountAuthorizationQueryString: 'account/authorizationQueryString',
+            }),
         },
         mounted() {
             this.init()

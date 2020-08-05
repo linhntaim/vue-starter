@@ -7,7 +7,7 @@
                         h1.h4.text-gray-900.mb-4(v-html="$t('pages._auth._login.welcome_back')")
                     form.user(@submit.prevent="onLoginSubmitted()")
                         .form-group
-                            input#inputEmail.form-control.form-control-user(v-model="email" type="text" aria-describedby="emailHelp" :placeholder="$t('pages.email_address')" required)
+                            input#inputEmail.form-control.form-control-user(v-model="email" type="text" aria-describedby="emailHelp" :placeholder="$t('pages.email_address')" :disabled="token" required)
                         .form-group
                             input#inputPassword.form-control.form-control-user(v-model="password" type="password" :placeholder="$t('pages.password')" :required="!token" :disabled="token")
                         button.btn.btn-primary.btn-user.btn-block(:disabled="loading || disabled" type="submit")

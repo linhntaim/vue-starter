@@ -11,7 +11,7 @@
                     label Token
                     pre
                         code {{output}}
-                    router-link(:to="{name: 'login', params: {token: output}}") {{ $t('actions.go', {where: $t('pages._auth._login._')}) }}
+                    router-link(:to="{name: 'login', query: {token: output}}") {{ $t('actions.go', {where: $t('pages._auth._login._')}) }}
             .card-footer.text-right
                 button.btn.btn-primary(:disabled="loading" type="submit")
                     i.fas.fa-circle-notch.fa-spin(v-if="loading")
@@ -49,7 +49,7 @@
                     },
                     data => {
                         this.loading = false
-                        this.showOutput(data.output)
+                        this.showOutput(data.model.output)
                     },
                     err => {
                         this.loading = false

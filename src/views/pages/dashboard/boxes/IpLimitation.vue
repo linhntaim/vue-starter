@@ -20,9 +20,9 @@
                 button.btn(:class="{'btn-danger': hasLimitation, 'btn-primary': !hasLimitation}" :disabled="loading" type="submit")
                     i.fas.fa-circle-notch.fa-spin(v-if="loading")
                     span(v-else) {{ $t('actions.save') }}
-                button.btn.btn-warning.ml-2(v-if="hasLimitation" :disabled="loading" @click="onCancelClicked" type="button")
+                button.btn.btn-warning.float-left(v-if="hasLimitation" :disabled="loading" @click="onCancelClicked" type="button")
                     i.fas.fa-circle-notch.fa-spin(v-if="loading")
-                    span(v-else) {{ $t('actions.cancel') }}
+                    span(v-else) {{ $t('actions.delete') }}
 </template>
 
 <script>
@@ -43,7 +43,7 @@
                 hasLimitation: false,
                 allowedIps: '',
                 deniedIps: '',
-                onlyAdmin: false,
+                onlyAdmin: true,
             }
         },
         computed: {

@@ -3,7 +3,7 @@
         .card-body
             .text-center
                 .text-center
-                    .error.mx-auto(data-text="401") 401
+                    .error.mx-auto 401
                     p.lead.text-gray-800.mb-5 {{ $t('error.unauthenticated._') }}
                     p.text-gray-500.mb-0 {{ $t('error.unauthenticated.desc') }}
                     div(:class="{'mb-2': enabled}")

@@ -10,12 +10,12 @@
                     .small.form-text.text-muted {{ $t('pages._dashboard._boxes._maintenance_mode.allowed_ips_help') }}
             .card-footer.text-right
                 div(v-if="inMaintenance")
-                    button.btn.btn-danger.mr-2(:disabled="loading" @click="apply" type="button")
+                    button.btn.btn-danger(:disabled="loading" @click="apply" type="button")
                         i.fas.fa-circle-notch.fa-spin(v-if="loading")
                         span(v-else) {{ $t('actions.save') }}
-                    button.btn.btn-warning(:disabled="loading" type="submit")
+                    button.btn.btn-warning.float-left(:disabled="loading" type="submit")
                         i.fas.fa-circle-notch.fa-spin(v-if="loading")
-                        span(v-else) {{ $t('actions.cancel') }}
+                        span(v-else) {{ $t('actions.delete') }}
                 button.btn.btn-danger(v-else :disabled="loading" type="submit")
                     i.fas.fa-circle-notch.fa-spin(v-if="loading")
                     span(v-else) {{ $t('actions.apply') }}

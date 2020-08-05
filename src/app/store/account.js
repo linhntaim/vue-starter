@@ -84,6 +84,10 @@ export default {
         permissions: state => state.admin && state.admin.permission_names ? state.admin.permission_names : [],
         passport: state => state.passport,
         authorizationHeader: state => state.passport.tokenType + ' ' + state.passport.accessToken,
+        authorizationQueryString: state => [
+            APP_DEFAULT_SERVICE.requestParams.tokenType + '=' + state.passport.tokenType,
+            APP_DEFAULT_SERVICE.requestParams.accessToken + '=' + state.passport.accessToken,
+        ].join('&'),
     },
     mutations: {
         setAuth(state, passport) {
