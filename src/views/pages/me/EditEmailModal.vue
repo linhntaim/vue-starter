@@ -77,6 +77,8 @@
                             content: this.$t('pages._me.change_email_address_succeed'),
                             type: TOAST_DEF.success,
                         })
+
+                        this.$emit('edited', this.email)
                     },
                     errorCallback: err => {
                         this.loading = false
@@ -88,6 +90,6 @@
                     },
                 })
             },
-        }
+        },
     }
 </script>

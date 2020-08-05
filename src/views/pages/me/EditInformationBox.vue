@@ -33,7 +33,7 @@
                     button.btn.btn-primary.float-right(:disabled="loading" type="submit")
                         i.fas.fa-circle-notch.fa-spin(v-if="loading")
                         span(v-else) {{ $t('actions.save') }}
-        edit-email-modal(ref="editEmailModal")
+        edit-email-modal(ref="editEmailModal" @edited="onEmailEdited")
         edit-password-modal(ref="editPasswordModal")
 </template>
 
@@ -108,6 +108,9 @@
             },
             onChangeEmailClicked() {
                 this.$refs.editEmailModal.open()
+            },
+            onEmailEdited(email) {
+                this.email = email
             },
             onChangePasswordClicked() {
                 this.$refs.editPasswordModal.open()
