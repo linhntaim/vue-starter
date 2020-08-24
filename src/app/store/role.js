@@ -2,12 +2,10 @@ import {roleAdminService} from '../services/default/admin-role'
 
 export default {
     namespaced: true,
-    state() {
-        return {
-            roles: [],
-            role: {},
-        }
-    },
+    state: () => ({
+        roles: [],
+        role: {},
+    }),
     getters: {
         roles: state => state.roles,
         role: state => state.role,
@@ -57,6 +55,6 @@ export default {
         destruct({state}) {
             state.roles = []
             state.role = {}
-        }
+        },
     },
 }

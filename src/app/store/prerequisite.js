@@ -5,12 +5,10 @@ const expiredTime = () => (new Date()).getTime() + DEFAULT_PREREQUISITE_LIFETIME
 
 export default {
     namespaced: true,
-    state() {
-        return {
-            metadata: {},
-            expired: {},
-        }
-    },
+    state: () => ({
+        metadata: {},
+        expired: {},
+    }),
     getters: {
         metadata: state => state.metadata,
     },

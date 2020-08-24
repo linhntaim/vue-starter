@@ -2,7 +2,7 @@ import {appOptionAdminService} from '../services/default/admin-app-option'
 
 export default {
     namespaced: true,
-    state: {},
+    state: () => ({}),
     getters: {},
     mutations: {},
     actions: {

@@ -65,7 +65,7 @@ const applyPassport = (passport = null, action = 'all') => {
 
 export default {
     namespaced: true,
-    state: {
+    state: () => ({
         isLoggedIn: false,
         passport: {
             accessToken: null,
@@ -75,7 +75,7 @@ export default {
         },
         admin: null,
         settings: {},
-    },
+    }),
     getters: {
         isLoggedIn: state => state.isLoggedIn,
         admin: state => state.admin,

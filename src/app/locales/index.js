@@ -1,4 +1,4 @@
-import {LocaleManager} from '@dsquare-gbu/vue-uses/dist/uses/i18n'
+import {LocaleManager} from '@dsquare-gbu/vue-uses'
 import {settingsCookieStore} from '../utils'
 import app from '@dsquare-gbu/vue-app'
 
