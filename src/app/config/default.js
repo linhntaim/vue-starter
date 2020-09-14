@@ -33,6 +33,7 @@ export const APP_DEFAULT_SERVICE = {
     clientSecret: process.env.VUE_APP_SERVICE_CLIENT_SECRET,
     headers: {
         settings: process.env.VUE_APP_SERVICE_HEADER_SETTINGS_NAME,
+        device: process.env.VUE_APP_SERVICE_HEADER_DEVICE_NAME,
         tokenAuthorization: hasBasicAuth ? process.env.VUE_APP_SERVICE_HEADER_TOKEN_AUTHORIZATION_NAME : 'Authorization',
     },
     basicAuth: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION,
