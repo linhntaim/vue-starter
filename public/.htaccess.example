@@ -1,3 +1,50 @@
+# AuthType Basic
+# AuthName "Protected Area"
+# AuthUserFile /path/to/.htpasswd
+# <RequireAny>
+#    Require ip 113.161.68.31
+#    Require ip 113.161.68.89
+#    Require expr %{REQUEST_URI} =~ m#^.+\.(jpg|jpeg|png|gif|svg|ico)$#
+#    Require valid-user
+# </RequireAny>
+
+DirectoryIndex index.htm index.html
+
+AddDefaultCharset utf-8
+
+AddType application/json .json
+AddType font/woff .woff
+AddType font/woff2 .woff2
+AddType text/csv .csv
+AddType text/plain .txt
+AddType video/mp4 .mp4
+
+AddHandler server-parsed .html
+
+<IfModule mod_headers.c>
+    Header add Access-Control-Allow-Origin "*"
+    Header add Access-Control-Allow-Headers "Accept, Authorization, Content-Type, Device, Origin, Referer, User-Agent, X-Authorization, X-Device, X-Settings, X-Requested-With"
+    Header add Access-Control-Allow-Methods "OPTIONS, GET, POST, PUT, DELETE"
+    Header add Access-Control-Max-Age 86400
+
+    Header add Strict-Transport-Security "max-age=86400; includeSubDomains"
+    Header add X-Content-Type-Options "nosniff"
+    Header add X-Download-Options "noopen"
+    Header add X-Frame-Options "sameorigin"
+    Header add X-XSS-Protection "1; mode=block"
+    Header add Content-Security-Policy "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: fonts.googleapis.com fonts.gstatic.com *.googletagmanager.com"
+    Header add X-Content-Security-Policy "allow 'self' 'unsafe-inline' 'unsafe-eval' data: blob: fonts.googleapis.com fonts.gstatic.com *.googletagmanager.com"
+    Header add X-WebKit-CSP "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: fonts.googleapis.com fonts.gstatic.com *.googletagmanager.com"
+
+    Header unset Cache-Control
+    Header add Cache-Control "no-cache, no-store, private"
+    Header add Pragma "no-cache"
+    <FilesMatch ".(html|jpg|jpeg|png|gif|svg|ico|css|js|json|woff|woff2|mp4)$">
+        Header unset Cache-Control
+        Header set Cache-Control "max-age=84600, public"
+    </FilesMatch>
+</IfModule>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes

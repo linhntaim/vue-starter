@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <!--
+    <configSections>
+        <section name="httpAuthModule" type="System.Configuration.NameValueFileSectionHandler" />
+    </configSections>
+	<httpAuthModule>
+		<add key="AuthMode" value="Basic" />
+		<add key="Realm" value="SecureZone" />
+		<add key="Credentials" value="hakuhodo_base:Base@190708" />
+		<add key="DigestNonceValidDuration" value="120" />
+		<add key="IgnoreIPAddresses" value="113.161.68.31;113.161.68.89"/>
+		<add key="IgnorePathRegex" value="^.+\.(jpg|jpeg|png|gif|svg|ico)$"/>
+	</httpAuthModule>
+	-->
+	<system.web>
+        <globalization
+            fileEncoding="utf-8"
+            responseEncoding="utf-8"
+        />
+    </system.web>
+	<system.webServer>
+        <!--
+        <modules>
+            <add type="HttpAuthModule.HttpAuthModule" name="HttpAuthModule" />
+        </modules>
+        -->
+        <defaultDocument enabled="true">
+            <files>
+                <add value="index.htm" />
+                <add value="index.html" />
+            </files>
+        </defaultDocument>
+        <handlers>
+            <add name="SSINC-html"
+                 path="*.html"
+                 verb="*"
+                 modules="ServerSideIncludeModule"
+                 resourceType="File"
+                 requireAccess="Script" />
+        </handlers>
+		<staticContent>
+	        <remove fileExtension=".json" />
+	        <remove fileExtension=".woff" />
+            <remove fileExtension=".woff2" />
+            <remove fileExtension=".csv" />
+            <remove fileExtension=".txt" />
+            <remove fileExtension=".mp4" />
+            <mimeMap fileExtension=".json" mimeType="application/json" />
+            <mimeMap fileExtension=".woff" mimeType="application/x-font-woff" />
+            <mimeMap fileExtension=".woff2" mimeType="font/woff2" />
+            <mimeMap fileExtension=".csv" mimeType="text/csv" />
+            <mimeMap fileExtension=".txt" mimeType="text/plain" />
+            <mimeMap fileExtension=".mp4" mimeType="video/mp4" />
+        </staticContent>
+		<httpProtocol>
+			<customHeaders>
+				<add name="Access-Control-Allow-Origin" value="*" />
+				<add name="Access-Control-Allow-Headers" value="Accept, Authorization, Content-Type, Device, Origin, Referer, User-Agent, X-Authorization, X-Settings, X-Requested-With" />
+				<add name="Access-Control-Allow-Methods" value="OPTIONS, GET, POST, PUT, DELETE" />
+				<add name="Access-Control-Max-Age" value="86400" />
+
+				<add name="Strict-Transport-Security" value="max-age=86400; includeSubDomains" />
+                <add name="X-Content-Type-Options" value="nosniff" />
+                <add name="X-Download-Options" value="noopen" />
+                <add name="X-Frame-Options" value="sameorigin" />
+                <add name="X-XSS-Protection" value="1; mode=block" />
+                <add name="Content-Security-Policy" value="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: fonts.googleapis.com fonts.gstatic.com *.googletagmanager.com" />
+                <add name="X-Content-Security-Policy" value="allow 'self' 'unsafe-inline' 'unsafe-eval' data: blob: fonts.googleapis.com fonts.gstatic.com *.googletagmanager.com" />
+                <add name="X-WebKit-CSP" value="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: fonts.googleapis.com fonts.gstatic.com *.googletagmanager.com" />
+
+                <remove name="Cache-Control" />
+                <add name="Cache-Control" value="no-cache, no-store, private" />
+                <add name="Pragma" value="no-cache" />
+			</customHeaders>
+		</httpProtocol>
+		<rewrite>
+            <outboundRules>
+                <rule name="cache_control_on_files">
+                    <match serverVariable="RESPONSE_Cache_Control" pattern=".*" />
+                    <conditions>
+                        <add input="{REQUEST_FILENAME}" pattern="\.(html|jpg|jpeg|png|gif|svg|ico|css|js|json|woff|woff2|mp4)$" />
+                    </conditions>
+                    <action type="Rewrite" value="max-age=84600, public"/>
+                </rule>
+            </outboundRules>
+			<rules>
+				<rule name="Front" stopProcessing="true">
+					<match url="^" ignoreCase="false" />
+					<conditions logicalGrouping="MatchAll">
+						<add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
+						<add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+					</conditions>
+					<action type="Rewrite" url="index.html" appendQueryString="true" />
+				</rule>
+			</rules>
+		</rewrite>
+	</system.webServer>
+</configuration>

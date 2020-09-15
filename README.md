@@ -174,7 +174,6 @@ Settings for cookies.
 - **`VUE_APP_COOKIE_SETTINGS_NAME`**:
     - Name of the cookie which contains localization settings.
     - Default value is taken from `APP_ID` appended by `_settings`.
-    
 - **`VUE_APP_COOKIE_DOMAIN`**:
     - The domain of all cookies.
     - Leave empty for use current domain.
