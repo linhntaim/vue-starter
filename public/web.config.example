@@ -36,7 +36,6 @@
             <files>
                 <add value="index.htm" />
                 <add value="index.html" />
-                <add value="index.php" />
             </files>
         </defaultDocument>
         <!-- Set mime for some specific file extension -->
