@@ -1,7 +1,7 @@
 <template lang="pug">
     .card.shadow.mb-4
         .card-header.py-3
-            h6.m-0.text-primary {{ $t('pages._dashboard._boxes._generate_login_token._') }}
+            h6.m-0.text-primary {{ $t('pages._dashboard._boxes._impersonate._') }}
         form(@submit.prevent="onSubmitted()")
             .card-body
                 .form-group
@@ -11,7 +11,7 @@
                     label Token
                     pre
                         code {{output}}
-                    router-link(:to="{name: 'login', query: {token: output}}") {{ $t('actions.go', {where: $t('pages._auth._login._')}) }}
+                    router-link(:to="{name: 'login', query: {impersonate_token: output}}") {{ $t('actions.go', {where: $t('pages._auth._login._')}) }}
             .card-footer.text-right
                 button.btn.btn-primary(:disabled="loading" type="submit")
                     i.fas.fa-circle-notch.fa-spin(v-if="loading")
@@ -20,9 +20,10 @@
 
 <script>
     import {commandAdminService} from '../../../../app/services/default/admin-command'
+    import {mapGetters} from '@dsquare-gbu/vue-uses'
 
     export default {
-        name: 'GenerateLoginToken',
+        name: 'Impersonate',
         props: {
             id: Number,
         },
@@ -36,15 +37,21 @@
                 output: '',
             }
         },
+        computed: {
+            ...mapGetters({
+                currentAdmin: 'account/admin',
+            }),
+        },
         methods: {
             onSubmitted() {
                 this.loading = true
                 this.hideOutput()
                 commandAdminService().run(
                     {
-                        cmd: 'generate:login_token',
+                        cmd: 'impersonate',
                         params: {
                             user: this.user,
+                            admin_id: this.currentAdmin.user_id,
                         },
                     },
                     data => {
@@ -54,7 +61,7 @@
                     err => {
                         this.loading = false
                         this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    }
+                    },
                 )
             },
 
@@ -67,7 +74,7 @@
                 this.show = false
                 this.output = ''
             },
-        }
+        },
     }
 </script>
 

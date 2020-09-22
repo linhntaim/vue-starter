@@ -29,10 +29,12 @@
         methods: {
             init() {
                 if (this.accountPermissions.indexOf('be-super-admin') !== -1) {
-                    this.addDashBox(-1, 'GenerateLoginToken')
-                    this.addDashBox(-2, 'SystemLog')
-                    this.addDashBox(-3, 'MaintenanceMode')
-                    this.addDashBox(-4, 'IpLimitation')
+                    this.addDashBox(-1, 'SystemLog')
+                    this.addDashBox(-2, 'MaintenanceMode')
+                    this.addDashBox(-3, 'IpLimitation')
+                }
+                if (this.accountPermissions.indexOf('impersonate') !== -1) {
+                    this.addDashBox(-4, 'Impersonate')
                 }
             },
             addDashBox(id, name) {

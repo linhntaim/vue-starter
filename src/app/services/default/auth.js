@@ -7,31 +7,34 @@ export class AuthService extends DefaultService {
         super('auth')
     }
 
-    login(email, password, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+    login(email, password, doneCallback = null, errorCallback = null, alwaysCallback = null, extraParams = {}) {
         return this.post(
             'login',
-            {
+            this.appendParams({
                 grant_type: 'password',
                 client_id: APP_DEFAULT_SERVICE.clientId,
                 client_secret: APP_DEFAULT_SERVICE.clientSecret,
                 username: email,
                 password: password,
                 scope: '*',
-            },
+            }, extraParams),
             doneCallback,
             errorCallback,
             alwaysCallback,
         )
     }
 
-    loginWithToken(email, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+    loginWithImpersonate(email, impersonateToken, doneCallback = null, errorCallback = null, alwaysCallback = null) {
         this.e()
         return this.login(
             crypto.encrypt(email, serverClock.blockKey()),
-            crypto.encryptJson({source: 'token'}, serverClock.blockKey()),
+            crypto.encryptJson({source: 'impersonate'}, serverClock.blockKey()),
             doneCallback,
             errorCallback,
             alwaysCallback,
+            {
+                impersonate_token: impersonateToken,
+            },
         )
     }
 

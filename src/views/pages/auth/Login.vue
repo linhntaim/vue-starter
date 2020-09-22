@@ -7,9 +7,9 @@
                         h1.h4.text-gray-900.mb-4(v-html="$t('pages._auth._login.welcome_back')")
                     form.user(@submit.prevent="onLoginSubmitted()")
                         .form-group
-                            input#inputEmail.form-control.form-control-user(v-model="email" type="text" aria-describedby="emailHelp" :placeholder="$t('pages.email_address')" :disabled="token" required)
+                            input#inputEmail.form-control.form-control-user(v-model="email" type="text" aria-describedby="emailHelp" :placeholder="$t('pages.email_address')" :disabled="!!impersonateToken" required)
                         .form-group
-                            input#inputPassword.form-control.form-control-user(v-model="password" type="password" :placeholder="$t('pages.password')" :required="!token" :disabled="token")
+                            input#inputPassword.form-control.form-control-user(v-model="password" type="password" :placeholder="$t('pages.password')" :required="!impersonateToken" :disabled="!!impersonateToken")
                         button.btn.btn-primary.btn-user.btn-block(:disabled="loading || disabled" type="submit")
                             i.fas.fa-circle-notch.fa-spin(v-if="loading")
                             span(v-else) {{ $t('actions.login') }}
@@ -31,16 +31,15 @@
             return {
                 loading: false,
 
-                token: false,
+                impersonateToken: null,
 
                 email: '',
                 password: '',
-
             }
         },
         computed: {
             disabled() {
-                return !this.token && (!this.email || !this.password)
+                return !this.impersonateToken && (!this.email || !this.password)
             },
             extraShown() {
                 return this.forgotPasswordEnabled
@@ -50,9 +49,9 @@
             },
         },
         created() {
-            if (this.$route.query.token) {
-                this.email = this.$route.query.token
-                this.token = true
+            if (this.$route.query.impersonate_token) {
+                this.email = this.$route.query.impersonate_token
+                this.impersonateToken = JSON.parse(this.email).impersonate_token
             }
         },
         methods: {
@@ -64,7 +63,7 @@
                 this.accountLogin({
                     email: this.email,
                     password: this.password,
-                    token: this.token,
+                    impersonateToken: this.impersonateToken,
                     doneCallback: () => {
                         this.loading = false
 

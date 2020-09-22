@@ -203,8 +203,8 @@ export default {
         _dashboard: {
             _: 'ダッシュボード',
             _boxes: {
-                _generate_login_token: {
-                    _: 'Generate login token',
+                _impersonate: {
+                    _: 'Impersonate',
                 },
                 _ip_limitation: {
                     _: 'IP limitation',

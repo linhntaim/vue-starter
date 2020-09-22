@@ -74,11 +74,15 @@ export default {
             tokenEndTime: 0,
         },
         admin: null,
+        impersonator: null,
+        impersonated: false,
         settings: {},
     }),
     getters: {
         isLoggedIn: state => state.isLoggedIn,
         admin: state => state.admin,
+        impersonator: state => state.impersonator,
+        impersonated: state => state.impersonated,
         settings: state => state.settings,
         locale: state => state.settings.locale,
         role: state => state.admin ? state.admin.role_name : null,
@@ -132,10 +136,9 @@ export default {
             callbackWaiter.remove('account_current')
         },
 
-        setLocale(state, {locale, callback}) {
-            state.settings.locale = locale
-
-            applySettings(state.settings, 'apply_with_locale', callback)
+        setImpersonator(state, {impersonator}) {
+            state.impersonator = impersonator
+            state.impersonated = true
         },
 
         setSettings(state, {settings, localeCallback}) {
@@ -161,6 +164,12 @@ export default {
             state.settings = settings
 
             applySettings(state.settings, 'all', localeCallback)
+        },
+
+        setLocale(state, {locale, callback}) {
+            state.settings.locale = locale
+
+            applySettings(state.settings, 'apply_with_locale', callback)
         },
     },
     actions: {
@@ -191,6 +200,11 @@ export default {
                     commit('setSettings', {
                         settings: settings,
                     })
+                    if (data.impersonator) {
+                        commit('setImpersonator', {
+                            impersonator: data.impersonator,
+                        })
+                    }
                     doneCallback()
                 }, errorCallback)
             }, 10, () => {
@@ -205,7 +219,7 @@ export default {
             }, errorCallback)
         },
 
-        login({commit, dispatch}, {email, password, token, doneCallback, errorCallback}) {
+        login({commit, dispatch}, {email, password, impersonateToken, doneCallback, errorCallback}) {
             const done = data => {
                 commit('setAuth', data)
                 dispatch('current', {
@@ -214,8 +228,8 @@ export default {
                     errorCallback: errorCallback,
                 })
             }
-            if (token) {
-                authService().loginWithToken(email, done, errorCallback)
+            if (impersonateToken) {
+                authService().loginWithImpersonate(email, impersonateToken, done, errorCallback)
             } else {
                 authService().login(email, password, done, errorCallback)
             }

@@ -10,6 +10,10 @@
                     .d-flex.justify-content-center.align-items-center.rounded-circle.mx-auto.wp-32.hp-32.bg-light.text-profile(v-else)
                         | {{ displayName.charAt(0).toUpperCase() }}
                 .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby="userDropdown")
+                    .dropdown-item(v-if="currentImpersonated")
+                        .small.text-gray-400 Impersonator
+                        strong {{ currentImpersonator.display_name }}
+                    .dropdown-divider
                     router-link.dropdown-item(:to="{path: '/me'}")
                         i.fas.fa-user.fa-sm.fa-fw.mr-2.text-gray-400
                         | {{ $t('pages._me._') }}
@@ -45,6 +49,8 @@
                 metadata: 'prerequisite/metadata',
                 isLoggedIn: 'account/isLoggedIn',
                 currentAdmin: 'account/admin',
+                currentImpersonator: 'account/impersonator',
+                currentImpersonated: 'account/impersonated',
                 currentSettings: 'account/settings',
             }),
             avatar() {
