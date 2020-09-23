@@ -95,6 +95,9 @@ export default {
         yes: 'はい',
     },
     components: {
+        export: {
+            _: 'Export',
+        },
         image: {
             cropped_image: 'トリミングされた画像',
             flip_horizontal: '水平反転',
@@ -170,15 +173,19 @@ export default {
     pages: {
         confirm_new_password: '新しいパスワードを再入力',
         confirm_password: 'パスワードを確認',
+        created_at: 'Created at',
+        creator: 'Creator',
         current_password: '現在のパスワード',
         description: '詳細',
         display_name: 'ユーザー名',
         email_address: 'メールアドレス',
+        impersonator: 'なりすまし',
         name: '名',
         new_password: '新しいパスワード',
         no_items: '該当するデータが存在しません。',
         password: 'パスワード',
         permission: '許可 | 許可',
+        status: 'Status',
         _auth: {
             _forgot_password: {
                 _: 'パスワード再設定',

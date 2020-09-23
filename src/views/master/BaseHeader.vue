@@ -11,7 +11,7 @@
                         | {{ displayName.charAt(0).toUpperCase() }}
                 .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in(aria-labelledby="userDropdown")
                     .dropdown-item(v-if="currentImpersonated")
-                        .small.text-gray-400 Impersonator
+                        .small.text-gray-400 {{ $t('pages.impersonator') }}
                         strong {{ currentImpersonator.display_name }}
                     .dropdown-divider
                     router-link.dropdown-item(:to="{path: '/me'}")

@@ -11,6 +11,16 @@ export default class BaseService extends DefaultService {
         )
     }
 
+    export(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        params._export = 1
+        return this.index(
+            params,
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
+
     store(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
         return this.post(
             '',

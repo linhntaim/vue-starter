@@ -17,10 +17,10 @@ const applyDevice = device => {
 
 export default {
     namespaced: true,
-    state: {
+    state: () => ({
         device: null,
         failed: false,
-    },
+    }),
     getters: {
         device: state => state.device,
         existed: state => state.device != null,

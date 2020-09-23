@@ -3,6 +3,10 @@
         search(ref="searchModal" :searcher="searcher" :disabled="loading" @searched="searchBySearcher" @searcherInitialized="searchBySearcher")
         .card.shadow.mb-4
             .card-body.has-control
+                .clearfix
+                    button.btn.btn-success.btn-item.btn-item-left(v-if="canExport" :disabled="loading" @click="onExportClicked()")
+                        i.fas.fa-file-export
+                        | &nbsp;&nbsp;{{ $t('actions.export') }}
                 .table-responsive
                     table.table.table-bordered
                         thead
@@ -26,8 +30,8 @@
                         tbody
                             tr(v-if="roles.length <= 0")
                                 td.text-center.py-4.text-gray-500(:colspan="colspan")
-                                    span(v-if="!loading") {{ $t('pages.no_items') }}
                                     span(v-if="loading") {{ $t('actions.loading') }}
+                                    span(v-else) {{ $t('pages.no_items') }}
                             tr(v-for="(role, index) in roles")
                                 td.text-center {{ paginator.pagination.items.from + index }}
                                 td {{ role.name }}
@@ -80,6 +84,9 @@
             searching() {
                 return this.searcher.searching
             },
+            canExport() {
+                return this.requiredPermissions['role-manage']
+            },
             canView() {
                 return this.requiredPermissions['role-manage']
             },
@@ -119,6 +126,7 @@
             ...mapActions({
                 roleSearch: 'role/search',
                 roleDelete: 'role/delete',
+                roleExport: 'role/export',
             }),
             init() {
                 this.plotPaginator()
@@ -153,7 +161,7 @@
             },
             search() {
                 this.loading = true
-                let params = this.params.data()
+                const params = this.params.data()
                 this.$router.softReplace({query: helpers.object.clone(params)})
                 this.roleSearch({
                     params: params,
@@ -211,6 +219,16 @@
                             },
                         })
                     },
+                })
+            },
+            onExportClicked() {
+                this.$bus.emit('export', {
+                    name: 'role',
+                    exportCallback: (doneCallback, errorCallback) => this.roleExport({
+                        params: this.params.data(),
+                        doneCallback,
+                        errorCallback,
+                    }),
                 })
             },
         },

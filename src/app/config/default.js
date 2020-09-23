@@ -108,6 +108,11 @@ export const ERROR_MESSAGE_LEVEL = {
     3: {text: 'application_failed'},
     4: {text: 'unhandled_error'},
 }
+export const EXPORT_STATE_DEF = {
+    exporting: 1,
+    exported: 2,
+    failed: 3,
+}
 export const CLOCK_BLOCK_RANGE = 30
 export const CLOCK_BLOCK_KEYS = [
     'u&9zBJT4ztfLQM?Mp22r7ApPx$F3=jGkVMPGzhuxubrG^JawRe9haGpJrL^CaL8X',

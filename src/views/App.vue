@@ -6,6 +6,7 @@
         confirm-modal
         prompt-modal
         image-modal
+        export-modal
         page-loader
 </template>
 
@@ -13,6 +14,7 @@
     import {timeoutCaller, ui} from '../app/utils'
     import ConfirmModal from './components/ConfirmModal'
     import ErrorModal from './components/ErrorModal'
+    import ExportModal from './components/ExportModal'
     import ImageModal from './components/ImageModal'
     import PageLoader from './components/PageLoader'
     import PromptModal from './components/PromptModal'
@@ -21,6 +23,7 @@
     export default {
         name: 'App',
         components: {
+            ExportModal,
             PageLoader,
             PromptModal,
             Toasts,

@@ -23,6 +23,10 @@ export default {
             }, errorCallback, alwaysCallback)
         },
 
+        export(store, {params, doneCallback, errorCallback, alwaysCallback}) {
+            roleAdminService().export(params, doneCallback, errorCallback, alwaysCallback)
+        },
+
         create({state}, {params, doneCallback, errorCallback, alwaysCallback}) {
             roleAdminService().store(params, (data) => {
                 state.role = data.model

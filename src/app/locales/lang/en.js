@@ -95,6 +95,9 @@ export default {
         yes: 'Yes',
     },
     components: {
+        export: {
+            _: 'Export',
+        },
         image: {
             cropped_image: 'Cropped image',
             flip_horizontal: 'Flip horizontal',
@@ -170,15 +173,19 @@ export default {
     pages: {
         confirm_new_password: 'Confirm new password',
         confirm_password: 'Confirm password',
+        created_at: 'Created at',
+        creator: 'Creator',
         current_password: 'Current password',
         description: 'Description',
         display_name: 'Display name',
         email_address: 'Email address',
+        impersonator: 'Impersonator',
         name: 'Name',
         new_password: 'New password',
         no_items: 'There is no items',
         password: 'Password',
         permission: 'Permission | Permissions',
+        status: 'Status',
         _auth: {
             _forgot_password: {
                 _: 'Forgot password?',
