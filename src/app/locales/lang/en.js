@@ -80,7 +80,6 @@ export default {
         no: 'No',
         preview: 'Preview',
         prompt: 'Prompt',
-        recompile: 'Re-compile',
         refresh: 'Refresh',
         regenerate: 'Regenerate',
         resend: 'Resend',
@@ -95,31 +94,6 @@ export default {
         yes: 'Yes',
     },
     components: {
-        export: {
-            _: 'Export',
-        },
-        image: {
-            cropped_image: 'Cropped image',
-            flip_horizontal: 'Flip horizontal',
-            flip_vertical: 'Flip vertical',
-            move_left: 'Move left',
-            move_right: 'Move right',
-            move_up: 'Move up',
-            move_down: 'Move down',
-            original_image: 'Original image',
-            reset: 'Reset',
-            upload_image: 'Upload image',
-            zoom_in: 'Zoom in',
-            zoom_out: 'Zoom out',
-        },
-        logout: {
-            _: 'Logout',
-            desc: 'Select "Logout" below if you are ready to end your current session.',
-            title: 'Ready to Leave?',
-        },
-        pagination: {
-            display_result: 'Display result',
-        },
         upload_description: {
             extensions: 'File extensions allowed: {extensions}. ',
             size: 'Max upload file size: {size}.',
@@ -155,37 +129,8 @@ export default {
         back_to_root: '← Back to Root',
     },
     master: {
-        base: {
-            top: 'Go to top',
-            back: 'Back to previous page',
-        },
-        base_footer: {
-            copyright: 'Copyright &copy; {app_name} {year}',
-        },
-        base_sidebar: {
-            _: 'Menu',
-            dashboard: 'Dashboard',
-            create_a_role: 'Create role',
-            list_of_roles: 'List of roles',
-            role_management: 'Role management',
-        },
     },
     pages: {
-        confirm_new_password: 'Confirm new password',
-        confirm_password: 'Confirm password',
-        created_at: 'Created at',
-        creator: 'Creator',
-        current_password: 'Current password',
-        description: 'Description',
-        display_name: 'Display name',
-        email_address: 'Email address',
-        impersonator: 'Impersonator',
-        name: 'Name',
-        new_password: 'New password',
-        no_items: 'There is no items',
-        password: 'Password',
-        permission: 'Permission | Permissions',
-        status: 'Status',
         _auth: {
             _forgot_password: {
                 _: 'Forgot password?',
@@ -206,61 +151,6 @@ export default {
                 submit: 'Reset password',
                 succeed: 'Your password has been reset successfully',
             },
-        },
-        _dashboard: {
-            _: 'Dashboard',
-            _boxes: {
-                _impersonate: {
-                    _: 'Impersonate',
-                },
-                _ip_limitation: {
-                    _: 'IP limitation',
-                    allowed_ips: 'Allowed IPs',
-                    allowed_ips_help: 'Each IP should be typed on one line',
-                    denied_ips: 'Denied IPs',
-                    denied_ips_help: 'Each IP should be typed on one line',
-                    only_admin: 'Only admin',
-                },
-                _maintenance_mode: {
-                    _: 'Maintenance mode',
-                    allowed_ips: 'Allowed IPs',
-                    allowed_ips_help: 'Each IP should be typed on one line',
-                },
-                _system_log: {
-                    _: 'System logs',
-                },
-            },
-        },
-        _me: {
-            _: 'My account',
-            change_email_address: 'Change email address',
-            change_email_address_succeed: 'Email address was changed successfully!',
-            change_password: 'Change password',
-            change_password_succeed: 'Password was changed successfully!',
-            _edit_information: {
-                _: 'Information',
-                change_picture: 'Change picture',
-                change_picture_succeed: 'Picture was changed successfully!',
-                edit_information: 'Edit account information',
-                edit_information_succeed: 'Account information was edited successfully!',
-            },
-        },
-        _role: {
-            _: 'Roles',
-            _create: {
-                _: 'Create role',
-                succeed: 'Role has been created successfully!',
-            },
-            _edit: {
-                _: 'Edit role',
-                succeed: 'Role has been edited successfully!',
-            },
-            _index: {
-                _: 'List of roles',
-                want_delete: 'Are you sure to delete this role?',
-                want_delete_many: 'Are you sure to delete these roles?',
-            },
-            _search: 'Search roles',
         },
     },
 }

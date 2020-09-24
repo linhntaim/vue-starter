@@ -13,10 +13,7 @@
             }),
         },
         created() {
-            if (this.accountPermissions.indexOf('be-super-admin') !== -1) {
-                this.$router.push({name: 'dashboard'})
-            }
-            // TODO: Other redirection
+            // TODO: Make redirection or modify to render top-page content
         },
     }
 </script>
