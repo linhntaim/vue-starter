@@ -44,7 +44,7 @@
                 return '#' + this.id
             },
             icon() {
-                return 'icon' in options ? options.icon : 'fa-calendar'
+                return 'icon' in this.options ? this.options.icon : 'fa-calendar'
             },
         },
         mounted() {
