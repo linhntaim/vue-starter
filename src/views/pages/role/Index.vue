@@ -143,7 +143,7 @@
             plotPaginator() {
                 this.params.plot('paginator', {
                     page: this.paginator.pagination.current,
-                    items_per_page: this.paginator.pagination.items_per_page,
+                    items_per_page: this.paginator.pagination.itemsPerPage,
                 })
             },
             searchBySearcher() {

@@ -11,7 +11,7 @@
             autocomplete="off")
         .input-group-append(:data-target="htmlId" data-toggle="datetimepicker")
             .input-group-text
-                i.fa.fa-calendar
+                i.fa(:class="icon")
 </template>
 
 <script>
@@ -42,6 +42,9 @@
             }),
             htmlId() {
                 return '#' + this.id
+            },
+            icon() {
+                return 'icon' in options ? options.icon : 'fa-calendar'
             },
         },
         mounted() {

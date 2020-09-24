@@ -107,7 +107,7 @@
                     // Smooth scrolling using jQuery easing
                     const $anchor = ui.query(this).get()
                     $htmlBody.stop().animate({
-                        scrollTop: ui.query($anchor.attr('href').get()).get().offset().top,
+                        scrollTop: ui.query($anchor.attr('href')).get().offset().top,
                     }, 1000, 'easeInOutExpo')
                     e.preventDefault()
                 })
