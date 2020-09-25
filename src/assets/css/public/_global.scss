@@ -4,11 +4,7 @@
  * Body
  */
 body {
-    font-family: $font-family;
-
-    &.initializing {
-        background: #fff;
-    }
+    font-family: $font-noto-sans;
 }
 
 /**
@@ -183,49 +179,4 @@ body {
  */
 .has-control {
     padding-bottom: .25rem;
-}
-
-/**
- * Floating buttons
- */
-.scroll-to-top {
-    z-index: 101;
-}
-
-.scroll-to-back {
-    position: fixed;
-    right: 1rem;
-    bottom: 1rem;
-    width: 2.75rem;
-    height: 2.75rem;
-    text-align: center;
-    color: #fff;
-    background: rgba(90, 92, 105, 0.5);
-    line-height: 46px;
-    z-index: 101;
-
-    &.has-top {
-        right: 4.75rem;
-    }
-
-    &:focus, &:hover {
-        color: white;
-    }
-
-    &:hover {
-        background: #5a5c69;
-    }
-
-    i {
-        font-weight: 800;
-    }
-}
-
-/**
- * Auth screen
- */
-.bg-login-image,
-.bg-register-image,
-.bg-password-image {
-    background: #3960CF;
 }

@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {serviceFactory} from './index'
 import {AxiosService, ServiceError} from '@dsquare-gbu/vue-services'
 

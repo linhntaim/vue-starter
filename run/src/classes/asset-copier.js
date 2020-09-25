@@ -28,10 +28,16 @@ export default class AssetCopier {
     copy(removeBefore = true) {
         const matchedExtensions = this.getMatchedExtensions()
         const matchedExtensionsHierarchically = this.getMatchedExtensionsHierarchically()
-        this.assets.forEach(({src, dst}) => {
+        this.assets.forEach(({src, dst, notRecursive, exact}) => {
             removeBefore && fs.removeSync(dst)
-            cpx.copy(src + matchedExtensions, dst)
-            cpx.copy(src + matchedExtensionsHierarchically, dst)
+            if (exact) {
+                cpx.copy(src, dst)
+            } else {
+                cpx.copy(src + matchedExtensions, dst)
+                if (!notRecursive) {
+                    cpx.copy(src + matchedExtensionsHierarchically, dst)
+                }
+            }
         })
     }
 }

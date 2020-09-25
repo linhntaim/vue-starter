@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {authService} from '../services/default/auth'
 import {accountService} from '../services/default/account'
 import {
@@ -11,7 +15,6 @@ import {
 import {localeManager} from '../locales'
 import {serviceFactory} from '../services'
 import {APP_DEFAULT_SERVICE} from '../config'
-import {passwordAdminService} from '../services/default/admin-password'
 
 const setDefaultServiceSettingsHeader = settings => {
     serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('settings', instance => {
@@ -73,20 +76,19 @@ export default {
             refreshToken: null,
             tokenEndTime: 0,
         },
-        admin: null,
+        account: null,
         impersonator: null,
         impersonated: false,
         settings: {},
     }),
     getters: {
         isLoggedIn: state => state.isLoggedIn,
-        admin: state => state.admin,
+        account: state => state.account,
         impersonator: state => state.impersonator,
         impersonated: state => state.impersonated,
         settings: state => state.settings,
         locale: state => state.settings.locale,
-        role: state => state.admin ? state.admin.role_name : null,
-        permissions: state => state.admin && state.admin.permission_names ? state.admin.permission_names : [],
+        permissions: state => state.account && state.account.permission_names ? state.account.permission_names : [],
         passport: state => state.passport,
         authorizationHeader: state => state.passport.tokenType + ' ' + state.passport.accessToken,
         authorizationQueryString: state => [
@@ -126,12 +128,12 @@ export default {
             applyPassport()
         },
 
-        setAdmin(state, {admin}) {
-            state.admin = admin
+        setAccount(state, {account}) {
+            state.account = account
         },
 
-        unsetAdmin(state) {
-            state.admin = null
+        unsetAccount(state) {
+            state.account = null
 
             callbackWaiter.remove('account_current')
         },
@@ -186,7 +188,7 @@ export default {
         },
 
         current({commit, state}, {login, doneCallback, errorCallback}) {
-            if (!state.admin || !state.admin.user_id || login) {
+            if (!state.account || !state.account.user_id || login) {
                 callbackWaiter.remove('account_current')
             }
             callbackWaiter.call('account_current', () => { // tricky cache
@@ -194,8 +196,8 @@ export default {
                 accountService().current(login, data => {
                     const settings = data.model.settings
                     delete data.model.settings
-                    commit('setAdmin', {
-                        admin: data.model,
+                    commit('setAccount', {
+                        account: data.model,
                     })
                     commit('setSettings', {
                         settings: settings,
@@ -208,7 +210,7 @@ export default {
                     doneCallback()
                 }, errorCallback)
             }, 10, () => {
-                doneCallback({admin: state.admin})
+                doneCallback({account: state.account})
             })
         },
 
@@ -238,29 +240,10 @@ export default {
         logout({commit}, {alwaysCallback}) {
             authService().logout(null, null, () => {
                 commit('unsetAuth')
-                commit('unsetAdmin')
+                commit('unsetAccount')
 
                 alwaysCallback()
             })
-        },
-
-        forgotPassword(store, {email, appResetPasswordPath, doneCallback, errorCallback}) {
-            passwordAdminService().forgot(email, appResetPasswordPath, doneCallback, errorCallback)
-        },
-
-        getResetPassword(store, {token, doneCallback, errorCallback}) {
-            passwordAdminService().getReset({
-                token: token,
-            }, doneCallback, errorCallback)
-        },
-
-        resetPassword(store, {email, token, password, passwordConfirmation, doneCallback, errorCallback}) {
-            passwordAdminService().reset({
-                email: email,
-                token: token,
-                password: password,
-                password_confirmation: passwordConfirmation,
-            }, doneCallback, errorCallback)
         },
 
         updateLocale({commit}, {locale, doneCallback}) {
@@ -270,39 +253,23 @@ export default {
             })
         },
 
-        updateAvatar({state}, {image, doneCallback, errorCallback}) {
-            accountService().updateAvatar(image, data => {
-                state.admin.avatar_url = data.model.avatar_url
-                doneCallback()
-            }, errorCallback)
-        },
-
-        updateAvatarByHandledFile({state}, {fileId, doneCallback, errorCallback}) {
-            accountService().updateAvatarByHandledFile(fileId, data => {
-                state.admin.avatar_url = data.model.avatar_url
-                doneCallback()
-            }, errorCallback)
-        },
-
-        updateInformation({state}, {params, doneCallback, errorCallback}) {
-            accountService().updateInformation(params, data => {
-                state.admin.display_name = data.model.display_name
-                doneCallback()
-            }, errorCallback)
-        },
-
         updateEmail({state}, {email, currentPassword, doneCallback, errorCallback}) {
             accountService().updateEmail(email, currentPassword, data => {
-                state.admin.user.email = data.model.email
+                state.account.user.email = data.model.email
                 doneCallback()
             }, errorCallback)
         },
 
         updatePassword({state}, {password, passwordConfirmation, currentPassword, doneCallback, errorCallback}) {
             accountService().updatePassword(password, passwordConfirmation, currentPassword, data => {
-                state.admin.user.has_password = data.model.has_password
+                state.account.user.has_password = data.model.has_password
                 doneCallback()
             }, errorCallback)
         },
+
+        // TODO:
+        //  Implement extra actions
+
+        // TODO
     },
 }

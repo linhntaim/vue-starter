@@ -27,6 +27,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import FormattedNumber from './FormattedNumber'
     import {ITEMS_PER_PAGE_LIST} from '../../app/config'
     import {Paginator} from '@dsquare-gbu/vue-utils'

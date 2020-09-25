@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {permissionChecker} from '../../../utils'
 import {Middleware} from '@dsquare-gbu/vue-uses'
 import {APP_ROUTE} from '../../../config'

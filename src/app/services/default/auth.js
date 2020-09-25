@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {crypto, serverClock} from '../../utils'
 import {APP_DEFAULT_SERVICE} from '../../config'
 import DefaultService from '../default-service'

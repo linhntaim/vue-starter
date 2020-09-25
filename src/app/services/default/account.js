@@ -1,8 +1,12 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import DefaultService from '../default-service'
 
 export class AccountService extends DefaultService {
     constructor() {
-        super('account/admin')
+        super('account')
     }
 
     current(login = false, doneCallback = null, errorCallback = null, alwaysCallback = null) {
@@ -47,44 +51,6 @@ export class AccountService extends DefaultService {
                 password: password,
                 password_confirmation: passwordConfirmation,
                 current_password: currentPassword,
-            },
-            doneCallback,
-            errorCallback,
-            alwaysCallback,
-        )
-    }
-
-    updateInformation(params, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        return this.post(
-            '',
-            this.appendParams(params, {
-                _information: 1,
-            }),
-            doneCallback,
-            errorCallback,
-            alwaysCallback,
-        )
-    }
-
-    updateAvatar(imageBlob, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        const formData = new FormData
-        formData.append('_avatar', '1')
-        formData.append('image', imageBlob)
-        return this.post(
-            '',
-            formData,
-            doneCallback,
-            errorCallback,
-            alwaysCallback,
-        )
-    }
-
-    updateAvatarByHandledFile(fileId, doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        return this.post(
-            '',
-            {
-                _avatar_by_handled_file: 1,
-                file_id: fileId,
             },
             doneCallback,
             errorCallback,

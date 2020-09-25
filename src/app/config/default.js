@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 export const APP_ENV = process.env.VUE_APP_ENV
 export const APP_DEBUG = process.env.VUE_APP_DEBUG === 'true'
 export const APP_LOG_ONLY = process.env.VUE_APP_LOG_ONLY ? process.env.VUE_APP_LOG_ONLY.split(',') : []
@@ -125,19 +129,20 @@ export const CLOCK_BLOCK_KEYS = [
     'R^dANH-e^*?h6UK@uCR_a?dSX%aj7L%!^mM=#xzFY9E*=x3aF9uaLwvHBj4VHCVH',
 ]
 export const APP_ROUTE = {
-    home: 'home',
+    root: 'root',
     login: 'login',
-    redirect_path_if_authenticated: 'home',
-    redirect_path_if_unauthenticated: 'login',
-    redirect_path_after_login: 'home',
-    redirect_path_after_logout: 'home',
-    redirect_path_after_register: 'home',
+    redirect_path_if_authenticated: 'root',
+    redirect_path_if_unauthenticated: 'root',
+    redirect_path_after_login: 'root',
+    redirect_path_after_logout: 'root',
+    redirect_path_after_register: 'root',
     maintenance: 'maintenance',
     bad_request: 'bad_request',
-    connection_lost: 'connection_lost',
-    not_found: 'not_found',
     unauthenticated: 'unauthenticated',
     unauthorized: 'unauthorized',
+    not_found: 'not_found',
+    internal_server_error: 'internal_server_error',
+    service_unavailable: 'service_unavailable',
     reset_password: 'reset_password',
     verify_email: 'verify_email',
 }

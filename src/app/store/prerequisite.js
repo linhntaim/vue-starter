@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {prerequisiteService} from '../services/default/prerequisite'
 import {DEFAULT_PREREQUISITE_LIFETIME} from '../config'
 

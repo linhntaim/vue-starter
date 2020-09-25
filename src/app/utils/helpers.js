@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 export default {
     object: {
         same(v1, v2) {
@@ -17,7 +21,6 @@ export default {
 
             return v1 == v2
         },
-
         clone(v) {
             if (Array.isArray(v)) {
                 let v1 = []
@@ -31,7 +34,6 @@ export default {
             }
             return v
         },
-
         only(keys, v) {
             let v1 = {}
             keys.forEach(key => {
@@ -39,25 +41,25 @@ export default {
             })
             return v1
         },
-
         merge(v1, v2) {
             for (let i in v2) {
                 v1[i] = v2[i]
             }
             return v1
         },
-
         keyExisted(key, o) {
             return Object.keys(o).indexOf(key) !== -1
         },
-
         valueExisted(value, o) {
             return Object.values(o).indexOf(value) !== -1
         },
-
         isEmpty(o) {
             return o ? !Object.keys(o).length : true
         },
+        // TODO:
+        //  Object helpers
+
+        // TODO
     },
     string: {
         startWith(s, w) {
@@ -93,6 +95,10 @@ export default {
         ucFirst(s) {
             return s.charAt(0).toUpperCase() + s.substr(1)
         },
+        // TODO:
+        //  String helpers
+
+        // TODO
     },
     array: {
         range(start, end, step = 1) {
@@ -110,10 +116,22 @@ export default {
             }
             return r
         },
+        // TODO:
+        //  Array helpers
+
+        // TODO
     },
     int: {
         random(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min
         },
+        // TODO:
+        //  Int helpers
+
+        // TODO
     },
+    // TODO:
+    //  Other datatype's helpers
+
+    // TODO
 }

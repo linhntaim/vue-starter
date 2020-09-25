@@ -1,14 +1,18 @@
 <template lang="pug">
     #app
         .container
-            connection-lost
+            service-unavailable
 </template>
 
 <script>
-    import ConnectionLost from './error/ConnectionLost'
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
+    import ServiceUnavailable from './error/ServiceUnavailable'
 
     export default {
         name: 'AppFailed',
-        components: {ConnectionLost},
+        components: {ServiceUnavailable},
     }
 </script>

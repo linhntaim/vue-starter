@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {
     AppOptions,
     CallbackWaiter,
@@ -9,7 +13,6 @@ import {
     FileHelper,
     IntervalCaller,
     IP,
-    JqueryUi,
     LocalCacheHandler,
     SettingsCookieStore,
     NumberFormatter,
@@ -27,6 +30,7 @@ import {
     DEFAULT_DEVICE,
     DEFAULT_SETTINGS,
 } from '../config'
+import BootstrapUi from './bootstrap-ui'
 
 export const log = new ConsoleLog(APP_DEBUG, APP_LOG_ONLY)
 export const cacheHandler = new LocalCacheHandler()
@@ -45,7 +49,7 @@ export const passportCookieStore = new PassportCookieStore(cookieHandler, APP_CO
 })
 export const settingsCookieStore = new SettingsCookieStore(cookieHandler, APP_COOKIE.names.settings, DEFAULT_SETTINGS)
 export const deviceCookieStore = new DeviceCookieStore(cookieHandler, APP_COOKIE.names.device, DEFAULT_DEVICE)
-export const ui = new JqueryUi()
+export const ui = new BootstrapUi()
 export const callbackWaiter = new CallbackWaiter()
 export const timeoutCaller = new TimeoutCaller()
 export const intervalCaller = new IntervalCaller()

@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 export default {
     hello: 'こんにちは',
     def: {
@@ -46,6 +50,9 @@ export default {
             operator: '事務局ユーザー',
             viewer: '閲覧ユーザー',
         },
+        // TODO:
+
+        // TODO
     },
     actions: {
         actions: '操作',
@@ -80,7 +87,6 @@ export default {
         no: 'いいえ',
         preview: 'プレビュー',
         prompt: 'プロンプト',
-        recompile: '再コンパイル',
         refresh: 'リフレッシュ',
         regenerate: '再生成',
         resend: '再送信',
@@ -93,46 +99,27 @@ export default {
         verify: '検証',
         view: '表示',
         yes: 'はい',
+        // TODO:
+
+        // TODO
     },
     components: {
-        export: {
-            _: 'Export',
-        },
-        image: {
-            cropped_image: 'トリミングされた画像',
-            flip_horizontal: '水平反転',
-            flip_vertical: '垂直反転',
-            move_left: '左に移動',
-            move_right: '右に移動',
-            move_up: '上に移動',
-            move_down: '下に移動',
-            original_image: '元の画像',
-            reset: 'リセット',
-            upload_image: '写真アップロード',
-            zoom_in: 'ズームイン',
-            zoom_out: 'ズームアウト',
-        },
-        logout: {
-            _: 'ログアウト',
-            desc: '現在のセッションを終了する場合、以下の"ログアウト"を選択します。',
-            title: 'ログアウトしますか?',
-        },
-        pagination: {
-            display_result: '表示件数',
-        },
         upload_description: {
             extensions: '許可されるファイル形式: {extensions}. ',
             size: '最大アップロードファイルサイズ: {size}.',
         },
+        // TODO:
+
+        // TODO
     },
     error: {
         bad_request: {
             _: 'Bad Request',
             desc: 'リクエストが正常に処理されていないようです...',
         },
-        connection_lost: {
-            _: '接続切断',
-            desc: '接続できないようです...',
+        internal_server_error: {
+            _: '内部サーバーエラー',
+            desc: '問題が発生しました...',
         },
         maintenance: {
             _: 'ただいま、メンテナンス中です',
@@ -143,6 +130,10 @@ export default {
         not_found: {
             _: 'ページが見つかりません',
             desc: 'ページが見つからないようです...',
+        },
+        service_unavailable: {
+            _: '接続切断',
+            desc: '接続できないようです...',
         },
         unauthenticated: {
             _: '未認証',
@@ -155,37 +146,17 @@ export default {
         back_to_root: '← ルートに戻る',
     },
     master: {
-        base: {
-            top: 'トップへ戻る',
-            back: '前のページに戻る',
-        },
-        base_footer: {
-            copyright: 'Copyright &copy; {app_name} {year}',
-        },
-        base_sidebar: {
-            _: 'メニュー',
-            dashboard: 'Dashboard',
-            create_a_role: '役割の作成',
-            list_of_roles: '役割の一覧',
-            role_management: 'ユーザー管理',
-        },
+        // TODO:
+
+        // TODO
     },
     pages: {
-        confirm_new_password: '新しいパスワードを再入力',
-        confirm_password: 'パスワードを確認',
-        created_at: 'Created at',
-        creator: 'Creator',
-        current_password: '現在のパスワード',
-        description: '詳細',
-        display_name: 'ユーザー名',
         email_address: 'メールアドレス',
         impersonator: 'なりすまし',
-        name: '名',
-        new_password: '新しいパスワード',
-        no_items: '該当するデータが存在しません。',
         password: 'パスワード',
-        permission: '許可 | 許可',
-        status: 'Status',
+        // TODO:
+
+        // TODO
         _auth: {
             _forgot_password: {
                 _: 'パスワード再設定',
@@ -206,61 +177,12 @@ export default {
                 submit: '確定',
                 succeed: 'パスワードのリセットに成功しました。',
             },
+            // TODO:
+
+            // TODO
         },
-        _dashboard: {
-            _: 'ダッシュボード',
-            _boxes: {
-                _impersonate: {
-                    _: 'Impersonate',
-                },
-                _ip_limitation: {
-                    _: 'IP limitation',
-                    allowed_ips: 'Allowed IPs',
-                    allowed_ips_help: 'Each IP should be typed on one line',
-                    denied_ips: 'Denied IPs',
-                    denied_ips_help: 'Each IP should be typed on one line',
-                    only_admin: 'Only admin',
-                },
-                _maintenance_mode: {
-                    _: 'メンテナンスモード',
-                    allowed_ips: 'Allowed IPs',
-                    allowed_ips_help: 'Each IP should be typed on one line',
-                },
-                _system_log: {
-                    _: 'System logs',
-                },
-            },
-        },
-        _me: {
-            _: 'マイアカウント',
-            change_email_address: 'メールアドレスを変更',
-            change_email_address_succeed: 'メールアドレスの変更に成功しました。',
-            change_password: 'パスワードを変更',
-            change_password_succeed: 'パスワードの変更に成功しました。',
-            _edit_information: {
-                _: '情報',
-                edit_information: 'プロフィールを変更',
-                edit_information_succeed: 'プロフィールの変更に成功しました。',
-                change_picture: 'プロフィール写真を編集',
-                change_picture_succeed: 'プロフィール写真の編集に成功しました。',
-            },
-        },
-        _role: {
-            _: '役割',
-            _create: {
-                _: '役割作成',
-                succeed: '役割が正常に作成されました！',
-            },
-            _edit: {
-                _: '役割編集',
-                succeed: '役割が正常に編集されました！',
-            },
-            _index: {
-                _: '役割一覧',
-                want_delete: 'この役割を削除してもよろしいですか？?',
-                want_delete_many: 'これらの役割を削除してもよろしいですか？',
-            },
-            _search: '枠割検索',
-        },
+        // TODO:
+
+        // TODO
     },
 }

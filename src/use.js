@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {importLocale} from './app/locales'
 import {routes} from './app/router'
 import {store} from './app/store'
@@ -25,4 +29,8 @@ export default {
             appMiddleware,
         ],
     ),
+    // TODO:
+    //  Extra plugins
+
+    // TODO
 }

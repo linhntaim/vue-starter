@@ -16,6 +16,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {ui} from '../../app/utils'
 
     export default {
