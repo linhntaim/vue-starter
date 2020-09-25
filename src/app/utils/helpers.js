@@ -66,10 +66,11 @@ export default {
             return s.indexOf(w) === 0
         },
         repeat(s, times) {
+            let r = s
             for (let i = 1; i < times; ++i) {
-                s += s
+                r += s
             }
-            return s
+            return r
         },
         fill(text, length, char) {
             let textLength = text.length
