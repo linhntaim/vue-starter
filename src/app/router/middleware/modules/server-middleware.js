@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {appOptions, ip, serverClock} from '../../../utils'
 import {Middleware} from '@dsquare-gbu/vue-uses'
 import {APP_ROUTE, APP_TYPE, APP_TYPE_ADMIN} from '../../../config'
@@ -29,9 +33,9 @@ export default class ServerMiddleware extends Middleware {
                 this.next()
             },
             errorCallback: () => {
-                if (this.to().name !== APP_ROUTE.connection_lost) {
+                if (this.to().name !== APP_ROUTE.service_unavailable) {
                     this.redirect({
-                        name: APP_ROUTE.connection_lost,
+                        name: APP_ROUTE.service_unavailable,
                     })
                 } else {
                     this.next()
@@ -68,7 +72,7 @@ export default class ServerMiddleware extends Middleware {
             }
         } else if (!maintenanceMode && to.matched.some(record => record.name === APP_ROUTE.maintenance)) {
             this.redirect({
-                name: APP_ROUTE.home,
+                name: APP_ROUTE.root,
             })
             return true
         }

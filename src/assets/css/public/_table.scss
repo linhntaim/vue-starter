@@ -1,0 +1,13 @@
+.table {
+    th {
+        white-space: nowrap;
+    }
+}
+
+.table-responsive {
+    margin-bottom: 1rem;
+
+    table {
+        margin-bottom: 0;
+    }
+}

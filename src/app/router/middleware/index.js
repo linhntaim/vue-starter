@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {intervalCaller, timeoutCaller, ui} from '../../utils'
 import {CommonMiddleware} from '@dsquare-gbu/vue-uses'
 import AuthMiddleware from './modules/auth-middleware'

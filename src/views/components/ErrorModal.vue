@@ -15,6 +15,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {ui} from '../../app/utils'
     import {ERROR_LEVEL, ERROR_LEVEL_DEF, ERROR_MESSAGE_LEVEL} from '../../app/config'
 

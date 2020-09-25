@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {Middleware} from '@dsquare-gbu/vue-uses'
 
 export default class LocaleMiddleware extends Middleware {

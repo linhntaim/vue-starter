@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import app from '@dsquare-gbu/vue-app'
 import use from './use'
 import register from './register'

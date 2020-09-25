@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 export default {
     hello: 'Hello',
     def: {
@@ -46,6 +50,9 @@ export default {
             operator: 'Operator',
             viewer: 'Viewer',
         },
+        // TODO:
+
+        // TODO
     },
     actions: {
         actions: 'Actions',
@@ -92,21 +99,27 @@ export default {
         verify: 'Verify',
         view: 'View',
         yes: 'Yes',
+        // TODO:
+
+        // TODO
     },
     components: {
         upload_description: {
             extensions: 'File extensions allowed: {extensions}. ',
             size: 'Max upload file size: {size}.',
         },
+        // TODO:
+
+        // TODO
     },
     error: {
         bad_request: {
             _: 'Bad Request',
             desc: 'It looks like your request is not successfully handled...',
         },
-        connection_lost: {
-            _: 'Connection Lost',
-            desc: 'It looks like you cannot connect to our service...',
+        internal_server_error: {
+            _: 'Internal Server Error',
+            desc: 'Something went wrong ...',
         },
         maintenance: {
             _: 'Maintenance Mode',
@@ -117,6 +130,10 @@ export default {
         not_found: {
             _: 'Page Not Found',
             desc: 'It looks like you found a glitch in the matrix...',
+        },
+        service_unavailable: {
+            _: 'Service Unavailable',
+            desc: 'It looks like our service cannot be connected...',
         },
         unauthenticated: {
             _: 'Unauthenticated',
@@ -129,8 +146,17 @@ export default {
         back_to_root: '← Back to Root',
     },
     master: {
+        // TODO:
+
+        // TODO
     },
     pages: {
+        email_address: 'Email address',
+        impersonator: 'Impersonator',
+        password: 'Password',
+        // TODO:
+
+        // TODO
         _auth: {
             _forgot_password: {
                 _: 'Forgot password?',
@@ -151,6 +177,12 @@ export default {
                 submit: 'Reset password',
                 succeed: 'Your password has been reset successfully',
             },
+            // TODO:
+
+            // TODO
         },
+        // TODO:
+
+        // TODO
     },
 }

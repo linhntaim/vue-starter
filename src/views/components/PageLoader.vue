@@ -4,6 +4,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {ui} from '../../app/utils'
     import {log} from '../../app/utils'
     import Loader from './Loader'
@@ -13,7 +17,7 @@
         components: {Loader},
         data() {
             return {
-                enabled: false,
+                enabled: true,
             }
         },
         destroyed() {

@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 export default {
     hello: 'こんにちは',
     def: {
@@ -46,6 +50,9 @@ export default {
             operator: '事務局ユーザー',
             viewer: '閲覧ユーザー',
         },
+        // TODO:
+
+        // TODO
     },
     actions: {
         actions: '操作',
@@ -92,21 +99,27 @@ export default {
         verify: '検証',
         view: '表示',
         yes: 'はい',
+        // TODO:
+
+        // TODO
     },
     components: {
         upload_description: {
             extensions: '許可されるファイル形式: {extensions}. ',
             size: '最大アップロードファイルサイズ: {size}.',
         },
+        // TODO:
+
+        // TODO
     },
     error: {
         bad_request: {
             _: 'Bad Request',
             desc: 'リクエストが正常に処理されていないようです...',
         },
-        connection_lost: {
-            _: '接続切断',
-            desc: '接続できないようです...',
+        internal_server_error: {
+            _: '内部サーバーエラー',
+            desc: '問題が発生しました...',
         },
         maintenance: {
             _: 'ただいま、メンテナンス中です',
@@ -117,6 +130,10 @@ export default {
         not_found: {
             _: 'ページが見つかりません',
             desc: 'ページが見つからないようです...',
+        },
+        service_unavailable: {
+            _: '接続切断',
+            desc: '接続できないようです...',
         },
         unauthenticated: {
             _: '未認証',
@@ -129,8 +146,17 @@ export default {
         back_to_root: '← ルートに戻る',
     },
     master: {
+        // TODO:
+
+        // TODO
     },
     pages: {
+        email_address: 'メールアドレス',
+        impersonator: 'なりすまし',
+        password: 'パスワード',
+        // TODO:
+
+        // TODO
         _auth: {
             _forgot_password: {
                 _: 'パスワード再設定',
@@ -151,6 +177,12 @@ export default {
                 submit: '確定',
                 succeed: 'パスワードのリセットに成功しました。',
             },
+            // TODO:
+
+            // TODO
         },
+        // TODO:
+
+        // TODO
     },
 }
