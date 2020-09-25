@@ -10,6 +10,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {APP_ROUTE} from '../../app/config'
 
     export default {
