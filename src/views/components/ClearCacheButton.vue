@@ -7,7 +7,8 @@
      * Base - Any modification needs to be approved, except the space inside the block of TODO
      */
 
-    import {mapMutations} from '@dsquare-gbu/vue-uses'
+    import {mapActions, mapMutations} from '@dsquare-gbu/vue-uses'
+    import {APP_ROUTE} from '../../app/config'
 
     export default {
         name: 'ClearCacheButton',
@@ -19,11 +20,15 @@
                 accountUnsetAuth: 'account/unsetAuth',
                 accountUnsetAdmin: 'account/unsetAdmin',
             }),
+            ...mapActions({
+                accountLogout: 'account/logout',
+            }),
             onClearCacheClicked() {
-                this.accountUnsetAuth()
-                this.accountUnsetAdmin()
-
-                this.$router.push({name: 'login'})
+                this.accountLogout({
+                    alwaysCallback: () => {
+                        this.$router.push({name: APP_ROUTE.login})
+                    },
+                })
             },
         },
     }
