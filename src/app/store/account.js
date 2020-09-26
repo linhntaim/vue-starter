@@ -15,6 +15,7 @@ import {
 import {localeManager} from '../locales'
 import {serviceFactory} from '../services'
 import {APP_DEFAULT_SERVICE} from '../config'
+import {passwordAdminService} from '../services/default/admin-password'
 
 const setDefaultServiceSettingsHeader = settings => {
     serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('settings', instance => {
@@ -278,6 +279,47 @@ export default {
 
         // TODO:
         //  Implement extra actions
+        forgotPassword(store, {email, appResetPasswordPath, doneCallback, errorCallback}) {
+            passwordAdminService().forgot(email, appResetPasswordPath, doneCallback, errorCallback)
+        },
+
+        getResetPassword(store, {token, doneCallback, errorCallback}) {
+            passwordAdminService().getReset({
+                token: token,
+            }, doneCallback, errorCallback)
+        },
+
+        resetPassword(store, {email, token, password, passwordConfirmation, doneCallback, errorCallback}) {
+            passwordAdminService().reset({
+                email: email,
+                token: token,
+                password: password,
+                password_confirmation: passwordConfirmation,
+            }, doneCallback, errorCallback)
+        },
+
+        updateAvatar({state}, {image, doneCallback, errorCallback}) {
+            accountService().updateAvatar(image, data => {
+                state.admin.avatar_url = data.model.avatar_url
+                doneCallback()
+            }, errorCallback)
+        },
+
+        updateAvatarByHandledFile({state}, {fileId, doneCallback, errorCallback}) {
+            accountService().updateAvatarByHandledFile(fileId, data => {
+                state.admin.avatar_url = data.model.avatar_url
+                doneCallback()
+            }, errorCallback)
+        },
+
+        updateInformation({state}, {params, doneCallback, errorCallback}) {
+            accountService().updateInformation(params, data => {
+                state.admin.display_name = data.model.display_name
+                doneCallback()
+            }, errorCallback)
+        },
+        // TODO
+        // TODO:
 
         // TODO
     },

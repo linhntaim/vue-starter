@@ -5,6 +5,14 @@
 import prerequisite from './prerequisite'
 import device from './device'
 import account from './account'
+// TODO:
+import appOption from './app-option'
+import dataExport from './data-export'
+import role from './role'
+// TODO
+// TODO:
+
+// TODO
 
 export const store = {
     prerequisite,
@@ -12,6 +20,11 @@ export const store = {
     account,
     // TODO:
     //  Store modules
+    appOption,
+    dataExport,
+    role,
+    // TODO
+    // TODO:
 
     // TODO
 }
