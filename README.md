@@ -6,12 +6,6 @@
 npm install
 ```
 
-### Init the project
-
-```
-npm run init
-```
-
 ### Compiles and hot-reloads for development
 
 ```

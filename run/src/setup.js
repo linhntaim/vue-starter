@@ -5,23 +5,6 @@ parseEnv()
 
 new AssetCopier().add(...[
     {
-        src: 'node_modules/jquery/dist',
-        dst: 'public/vendor/jquery',
-    },
-    {
-        src: 'node_modules/bootstrap/dist',
-        dst: 'public/vendor/bootstrap',
-    },
-    {
-        src: 'node_modules/jquery.easing',
-        dst: 'public/vendor/jquery.easing',
-        notRecursive: true,
-    },
-    {
-        src: 'node_modules/@fortawesome/fontawesome-free',
-        dst: 'public/vendor/fontawesome-free',
-    },
-    {
         src: 'node_modules/animate.css',
         dst: 'public/vendor/animate.css',
     },
@@ -38,4 +21,40 @@ new AssetCopier().add(...[
         dst: 'public/vendor/blueimp-canvas-to-blob',
     },
     // TODO: Extra Assets
+    {
+        src: 'node_modules/startbootstrap-sb-admin-2/css',
+        dst: 'public/vendor/startbootstrap-sb-admin-2/css',
+    },
+    {
+        src: 'node_modules/startbootstrap-sb-admin-2/js',
+        dst: 'public/vendor/startbootstrap-sb-admin-2/js',
+    },
+    {
+        src: 'node_modules/startbootstrap-sb-admin-2/vendor',
+        dst: 'public/vendor/startbootstrap-sb-admin-2/vendor',
+    },
+    {
+        src: 'node_modules/select2/dist',
+        dst: 'public/vendor/select2',
+    },
+    {
+        src: 'node_modules/@ttskch/select2-bootstrap4-theme/dist',
+        dst: 'public/vendor/select2-bootstrap4-theme',
+    },
+    {
+        src: 'node_modules/select2/dist',
+        dst: 'public/vendor/select2',
+    },
+    {
+        src: 'node_modules/tempusdominus-bootstrap-4/build',
+        dst: 'public/vendor/bootstrap-datetimepicker',
+    },
+    {
+        src: 'node_modules/moment/min',
+        dst: 'public/vendor/moment',
+    },
+    {
+        src: 'node_modules/moment/locale',
+        dst: 'public/vendor/moment/locale',
+    },
 ]).copy()
