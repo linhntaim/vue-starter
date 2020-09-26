@@ -81,6 +81,28 @@ export const routes = [
             },
             // TODO:
             //  Extra Auth Routes
+            {
+                path: 'forgot-password',
+                name: 'forgot_password',
+                meta: {
+                    requireNotAuth: true,
+                },
+                component: () => import('../../views/pages/auth/ForgotPassword'),
+            },
+            {
+                path: 'reset-password',
+                name: 'reset_password',
+            },
+            {
+                path: 'reset-password/:token',
+                name: 'reset_password_complete',
+                meta: {
+                    requireNotAuth: true,
+                },
+                component: () => import('../../views/pages/auth/ResetPassword'),
+            },
+            // TODO
+            // TODO:
 
             // TODO
             {
@@ -114,6 +136,45 @@ export const routes = [
                 children: [
                     // TODO:
                     //  Extra Authenticated Routes
+                    {
+                        path: 'dashboard',
+                        name: 'dashboard',
+                        component: () => import('../../views/pages/dashboard/Dashboard'),
+                    },
+                    {
+                        path: 'role',
+                        component: () => import('../../views/pages/role/Base'),
+                        children: [
+                            {
+                                path: '',
+                                name: 'role_index',
+                                component: () => import('../../views/pages/role/Index'),
+                            },
+                            {
+                                path: 'create',
+                                name: 'role_create',
+                                component: () => import('../../views/pages/role/Create'),
+                            },
+                            {
+                                path: ':id/edit',
+                                name: 'role___edit',
+                                component: () => import('../../views/pages/role/Edit'),
+                            },
+                        ],
+                    },
+                    {
+                        path: 'me',
+                        component: () => import('../../views/pages/me/Base'),
+                        children: [
+                            {
+                                path: '',
+                                name: 'account',
+                                component: () => import('../../views/pages/me/Account'),
+                            },
+                        ],
+                    },
+                    // TODO
+                    // TODO:
 
                     // TODO
                 ],
