@@ -1,11 +1,11 @@
 <template lang="pug">
     .row.justify-content-center
         .col-lg-6.col-md-8.col-sm-10
-            .card.border-0.shadow-lg.my-5
+            .card.o-hidden.border-0.shadow-lg.my-5
                 .card-body.p-5
                     .text-center
-                        h1.h4.mb-4(v-html="$t('pages._auth._login.welcome_back')")
-                    form(@submit.prevent="onLoginSubmitted()")
+                        h1.h4.text-gray-900.mb-4(v-html="$t('pages._auth._login.welcome_back')")
+                    form.user(@submit.prevent="onLoginSubmitted()")
                         .form-group
                             input#inputEmail.form-control.form-control-user(v-model="email" type="text" aria-describedby="emailHelp" :placeholder="$t('pages.email_address')" :disabled="!!impersonateToken" required)
                         .form-group
@@ -13,6 +13,11 @@
                         button.btn.btn-primary.btn-user.btn-block(:disabled="loading || disabled" type="submit")
                             i.fas.fa-circle-notch.fa-spin(v-if="loading")
                             span(v-else) {{ $t('actions.login') }}
+                    template(v-if="extraShown")
+                        hr
+                        .text-center
+                            router-link.small(v-if="forgotPasswordEnabled" :to="{name: 'forgot_password'}")
+                                | {{ $t('pages._auth._login.forgot_password') }}
 </template>
 
 <script>
@@ -39,6 +44,12 @@
         computed: {
             disabled() {
                 return !this.impersonateToken && (!this.email || !this.password)
+            },
+            extraShown() {
+                return this.forgotPasswordEnabled
+            },
+            forgotPasswordEnabled() {
+                return this.$server.forgot_password_enabled.admin
             },
         },
         created() {
