@@ -76,6 +76,7 @@ export default {
             refreshToken: null,
             tokenEndTime: 0,
         },
+        accountMatched: false,
         account: null,
         impersonator: null,
         impersonated: false,
@@ -129,10 +130,12 @@ export default {
         },
 
         setAccount(state, {account}) {
+            state.accountMatched = true
             state.account = account
         },
 
         unsetAccount(state) {
+            state.accountMatched = false
             state.account = null
 
             callbackWaiter.remove('account_current')
@@ -141,6 +144,11 @@ export default {
         setImpersonator(state, {impersonator}) {
             state.impersonator = impersonator
             state.impersonated = true
+        },
+
+        unsetImpersonator(state) {
+            state.impersonator = null
+            state.impersonated = false
         },
 
         setSettings(state, {settings, localeCallback}) {
@@ -241,6 +249,7 @@ export default {
             authService().logout(null, null, () => {
                 commit('unsetAuth')
                 commit('unsetAccount')
+                commit('unsetImpersonator')
 
                 alwaysCallback()
             })
