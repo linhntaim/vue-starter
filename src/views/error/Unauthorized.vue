@@ -2,9 +2,9 @@
     .card.shadow.error-block
         .card-body
             .text-center
-                h1.error.mx-auto 403
-                p.lead.mb-5 {{ $t('error.unauthorized._') }}
-                p.mb-0 {{ $t('error.unauthorized.desc') }}
+                .error.mx-auto 403
+                p.lead.text-gray-800.mb-5 {{ $t('error.unauthorized._') }}
+                p.text-gray-500.mb-0 {{ $t('error.unauthorized.desc') }}
                 div(:class="{'mb-2': enabled}")
                     router-link(:to="{path: '/'}") {{ $t('error.back_to_root') }}
                 clear-cache-button(:enabled="enabled")
@@ -28,7 +28,7 @@
         watch: {
             '$route'() {
                 this.initUi()
-            }
+            },
         },
         mounted() {
             this.initUi()
@@ -38,7 +38,7 @@
                 if (this.$route.query.time) {
                     this.enabled = true
                 }
-            }
-        }
+            },
+        },
     }
 </script>
