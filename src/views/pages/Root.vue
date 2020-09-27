@@ -42,7 +42,7 @@
         methods: {
             loadComponent(componentPath) {
                 this.component = () => ({
-                    component: import(componentPath),
+                    component: import('' + componentPath), // trick to prevent Webpack from showing warning
                     delay: 0,
                     timeout: 3000,
                 })
