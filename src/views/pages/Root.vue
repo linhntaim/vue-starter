@@ -11,7 +11,7 @@
     import {APP_ROUTE} from '../../app/config'
 
     export default {
-        name: 'Home',
+        name: 'Root',
         data() {
             return {
                 component: null,
@@ -32,12 +32,7 @@
                 if (this.accountMatched) {
                     this.loadComponent('./home/IndexAuth')
                 } else {
-                    this.$router.push({
-                        name: APP_ROUTE.unauthenticated,
-                        query: {
-                            time: new Date().getTime(),
-                        },
-                    })
+                    this.redirect(APP_ROUTE.unauthenticated)
                 }
             } else {
                 this.loadComponent('./home/Index')
@@ -52,6 +47,14 @@
                     timeout: 3000,
                 })
                 this.hasComponent = true
+            },
+            redirect(routeName) {
+                this.$router.push({
+                    name: routeName,
+                    query: {
+                        time: new Date().getTime(),
+                    },
+                })
             },
         },
     }

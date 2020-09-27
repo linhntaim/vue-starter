@@ -85,6 +85,7 @@ export default {
     getters: {
         isLoggedIn: state => state.isLoggedIn,
         account: state => state.account,
+        accountMatched: state => state.accountMatched,
         impersonator: state => state.impersonator,
         impersonated: state => state.impersonated,
         settings: state => state.settings,
