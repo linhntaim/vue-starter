@@ -98,6 +98,7 @@ export default {
             APP_DEFAULT_SERVICE.requestParams.tokenType + '=' + state.passport.tokenType,
             APP_DEFAULT_SERVICE.requestParams.accessToken + '=' + state.passport.accessToken,
         ].join('&'),
+        role: state => state.account && state.account.role_name ? state.account.role_name : null,
     },
     mutations: {
         setAuth(state, passport) {
