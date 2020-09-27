@@ -120,12 +120,8 @@ export const routes = [
             },
             {
                 path: '*',
-                component: () => import('../../views/error/NotFound'),
+                component: () => import('../../views/pages/NotFoundAll'),
             },
         ],
-    },
-    {
-        path: '*',
-        component: () => import('../../views/error/NotFound'),
     },
 ]
