@@ -215,6 +215,12 @@ export default {
 
         // TODO
         _auth: {
+            _login: {
+                _: 'ログイン',
+                forgot_password: 'パスワードを忘れた方はこちら？',
+                welcome_back: 'ログイン',
+            },
+            // TODO:
             _forgot_password: {
                 _: 'パスワード再設定',
                 back_login: 'ログイン画面へ戻る',
@@ -223,17 +229,13 @@ export default {
                 succeed: 'メールを送信しました。メールに記載されたリンクをクリックするとパスワードをリセットできます。<br>' +
                     'メールが届かない場合、迷惑メールやスパムフォルダーなどもご確認ください。',
             },
-            _login: {
-                _: 'ログイン',
-                forgot_password: 'パスワードを忘れた方はこちら？',
-                welcome_back: 'ログイン',
-            },
             _reset_password: {
                 _: 'パスワード再設定',
                 back_login: 'ログインページへ戻る',
                 submit: '確定',
                 succeed: 'パスワードのリセットに成功しました。',
             },
+            // TODO
             // TODO:
 
             // TODO

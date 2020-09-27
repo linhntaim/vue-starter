@@ -6,6 +6,14 @@
 npm install
 ```
 
+### Init the project
+
+Setup and compile assets files to public folder:
+
+```
+npm run init
+```
+
 ### Compiles and hot-reloads for development
 
 ```
@@ -22,12 +30,6 @@ npm run build
 
 ```
 npm run lint
-```
-
-### Setup and compile assets files to public folder
-
-```
-npm run @run
 ```
 
 #### Setup asset files
