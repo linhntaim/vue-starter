@@ -27,7 +27,7 @@
         },
         created() {
             // TODO:
-            //  Make loading component based on condition
+            //  Make loading component or redirection based on condition
             if (this.accountIsLoggedIn) {
                 if (this.accountMatched) {
                     this.redirect('dashboard')
