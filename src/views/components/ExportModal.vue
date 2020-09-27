@@ -149,7 +149,6 @@
                 this.dataExportSearch({
                     params: params,
                     doneCallback: (pagination) => {
-                        console.log(this.dataExports)
                         this.paginator.parsePagination(pagination)
                         this.loading = false
                     },
