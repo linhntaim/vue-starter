@@ -5,8 +5,8 @@
 import DefaultService from '../default-service'
 
 export class AccountService extends DefaultService {
-    constructor() {
-        super('account')
+    constructor(basePath = null) {
+        super(basePath ? 'account/' + basePath : 'account')
     }
 
     current(login = false, doneCallback = null, errorCallback = null, alwaysCallback = null) {
