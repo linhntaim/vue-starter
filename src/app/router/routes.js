@@ -112,6 +112,11 @@ export const routes = [
                     requireAuth: true,
                 },
                 children: [
+                    {
+                        path: '404',
+                        name: 'base_auth_not_found',
+                        component: () => import('../../views/error/NotFound'),
+                    },
                     // TODO:
                     //  Extra Authenticated Routes
 
@@ -120,7 +125,7 @@ export const routes = [
             },
             {
                 path: '*',
-                component: () => import('../../views/pages/NotFoundAll'),
+                component: () => import('../../views/pages/BaseNotFound'),
             },
         ],
     },

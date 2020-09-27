@@ -1,8 +1,5 @@
 <template lang="pug">
-    div
-        not-found(v-if="accountIsLoggedIn")
-        .container(v-else)
-            not-found
+    not-found
 </template>
 
 <script>
@@ -10,8 +7,8 @@
      * Base - Any modification needs to be approved, except the space inside the block of TODO
      */
 
-    import NotFound from '../error/NotFound'
     import {mapGetters} from '@dsquare-gbu/vue-uses'
+    import NotFound from '../error/NotFound'
 
     export default {
         name: 'NotFoundAll',
@@ -20,6 +17,13 @@
             ...mapGetters({
                 accountIsLoggedIn: 'account/isLoggedIn',
             }),
+        },
+        created() {
+            if (this.accountIsLoggedIn) {
+                this.$router.push({
+                    name: 'base_auth_not_found',
+                })
+            }
         },
     }
 </script>
