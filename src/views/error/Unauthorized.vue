@@ -28,7 +28,7 @@
         watch: {
             '$route'() {
                 this.initUi()
-            }
+            },
         },
         mounted() {
             this.initUi()
@@ -38,7 +38,7 @@
                 if (this.$route.query.time) {
                     this.enabled = true
                 }
-            }
-        }
+            },
+        },
     }
 </script>

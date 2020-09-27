@@ -158,24 +158,10 @@ export default {
 
         // TODO
         _auth: {
-            _forgot_password: {
-                _: 'Forgot password?',
-                back_login: 'Back to Login',
-                desc: 'We get it, stuff happens. Just enter your email address below and we\'ll send you a link to reset your password!',
-                submit: 'Reset password',
-                succeed: 'We sent an e-mail to you. You can reset your password by clicking on the link in the email.<br>' +
-                    'If you do not see the e-mail, please check it in your spam folder.',
-            },
             _login: {
                 _: 'Login',
                 forgot_password: 'Forgot password?',
                 welcome_back: 'Welcome Back!',
-            },
-            _reset_password: {
-                _: 'Reset password',
-                back_login: 'Back to Login',
-                submit: 'Reset password',
-                succeed: 'Your password has been reset successfully',
             },
             // TODO:
 

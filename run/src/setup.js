@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {parseEnv} from 'dotenv-packed'
 import AssetCopier from './classes/asset-copier'
 
@@ -38,4 +42,6 @@ new AssetCopier().add(...[
         dst: 'public/vendor/blueimp-canvas-to-blob',
     },
     // TODO: Extra Assets
+
+    // TODO
 ]).copy()
