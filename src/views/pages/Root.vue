@@ -27,14 +27,10 @@
         },
         created() {
             // TODO:
-            //  Make loading component based on condition
+            //  Make loading component or redirection based on condition
             if (this.accountIsLoggedIn) {
                 if (this.accountMatched) {
-                    this.component = () => ({
-                        component: import('./home/IndexAuth'),
-                        delay: 0,
-                        timeout: 3000,
-                    })
+                    this.loadComponent('./home/IndexAuth')
                 } else {
                     this.$router.push({
                         name: APP_ROUTE.unauthenticated,
@@ -44,14 +40,19 @@
                     })
                 }
             } else {
+                this.loadComponent('./home/Index')
+            }
+            // TODO
+        },
+        methods: {
+            loadComponent(componentPath) {
                 this.component = () => ({
-                    component: import('./home/Index'),
+                    component: import(componentPath),
                     delay: 0,
                     timeout: 3000,
                 })
-            }
-            // TODO
-            this.hasComponent = true
+                this.hasComponent = true
+            },
         },
     }
 </script>
