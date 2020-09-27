@@ -4,6 +4,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {mapGetters} from '@dsquare-gbu/vue-uses'
     import {ui} from '../../app/utils'
 

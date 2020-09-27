@@ -135,6 +135,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {timeoutCaller, ui} from '../../app/utils'
     import helpers from '../../app/utils/helpers'
     import Cropper from 'cropperjs'

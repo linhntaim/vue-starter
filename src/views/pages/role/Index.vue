@@ -46,9 +46,13 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {cacheHandler, permissionChecker} from '../../../app/utils'
     import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
-    import {Collection, DataPlot, Sorter, Searcher, ItemSelection, Paginator} from '@dsquare-gbu/vue-utils'
+    import {Collection, DataPlot, ItemSelection, Searcher, Sorter, Paginator} from '@dsquare-gbu/vue-utils'
     import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
     import helpers from '../../../app/utils/helpers'
     import PaginatorComponent from '../../components/Paginator'

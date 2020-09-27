@@ -38,17 +38,21 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {FilesUploader} from '@dsquare-gbu/vue-utils'
-    import EditEmailModal from './EditEmailModal'
-    import EditPasswordModal from './EditPasswordModal'
-    import {MAX_CHUNK_UPLOAD_SIZE, TOAST_DEF} from '../../../app/config'
     import {timeoutCaller, ui} from '../../../app/utils'
     import {handledFileAdminService} from '../../../app/services/default/admin-handled-file'
+    import {FilesUploader} from '@dsquare-gbu/vue-utils'
+    import {MAX_CHUNK_UPLOAD_SIZE, TOAST_DEF} from '../../../app/config'
+    import EditEmailModal from './EditEmailModal'
+    import EditPasswordModal from './EditPasswordModal'
 
     export default {
         name: 'EditInformationBox',
-        components: {EditPasswordModal, EditEmailModal},
+        components: {EditEmailModal, EditPasswordModal},
         data() {
             return {
                 loading: false,
@@ -62,7 +66,7 @@
         },
         computed: {
             ...mapGetters({
-                currentAdmin: 'account/admin',
+                currentAccount: 'account/account',
             }),
             files() {
                 return this.filesUploader.files
@@ -81,9 +85,9 @@
                 accountUpdateInformation: 'account/updateInformation',
             }),
             initInformation() {
-                this.avatarUrl = this.currentAdmin.avatar_url
-                this.email = this.currentAdmin.user.email
-                this.displayName = this.currentAdmin.display_name
+                this.avatarUrl = this.currentAccount.avatar_url
+                this.email = this.currentAccount.user.email
+                this.displayName = this.currentAccount.display_name
             },
             onInformationSubmitted() {
                 this.loading = true
@@ -135,7 +139,7 @@
                     doneCallback: () => {
                         this.loading = false
 
-                        this.avatarUrl = this.currentAdmin.avatar_url
+                        this.avatarUrl = this.currentAccount.avatar_url
 
                         this.$bus.emit('toast', {
                             title: this.$t('pages._me._edit_information.change_picture'),
@@ -207,7 +211,7 @@
                     doneCallback: () => {
                         this.loading = false
 
-                        this.avatarUrl = this.currentAdmin.avatar_url
+                        this.avatarUrl = this.currentAccount.avatar_url
 
                         this.$bus.emit('toast', {
                             title: this.$t('pages._me._edit_information.change_picture'),

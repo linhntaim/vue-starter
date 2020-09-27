@@ -26,13 +26,17 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {commandAdminService} from '../../../../app/services/default/admin-command'
     import {ui} from '../../../../app/utils'
     import app from '@dsquare-gbu/vue-app'
     import helpers from '../../../../app/utils/helpers'
 
     export default {
-        name: 'MaintenanceMode',
+        name: 'IpLimitation',
         props: {
             id: Number,
         },

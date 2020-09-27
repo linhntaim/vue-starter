@@ -24,6 +24,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {mapActions} from '@dsquare-gbu/vue-uses'
     import {intervalCaller, timeoutCaller} from '../../../app/utils'
     import {APP_ROUTE} from '../../../app/config'
@@ -48,6 +52,11 @@
             disabled() {
                 return !this.password || !this.passwordConfirmation
             },
+        },
+        created() {
+            if (!this.$server.forgot_password_enabled.admin) {
+                this.$router.push({name: APP_ROUTE.not_found})
+            }
         },
         mounted() {
             this.init()
@@ -107,9 +116,3 @@
         },
     }
 </script>
-
-<style scoped>
-    .btn-user {
-        margin: 0 5px;
-    }
-</style>

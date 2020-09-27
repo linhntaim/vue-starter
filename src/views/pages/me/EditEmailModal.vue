@@ -23,18 +23,22 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import ErrorBox from '../../components/ErrorBox'
     import {ui} from '../../../app/utils'
     import {ERROR_LEVEL_DEF, TOAST_DEF} from '../../../app/config'
-
-    let $uis = {}
+    import ErrorBox from '../../components/ErrorBox'
 
     export default {
         name: 'EditEmailModal',
         components: {ErrorBox},
         data() {
             return {
+                uis: {},
+
                 loading: false,
 
                 error: null,
@@ -45,11 +49,11 @@
         },
         computed: {
             ...mapGetters({
-                currentAdmin: 'account/admin',
+                currentAccount: 'account/account',
             }),
         },
         mounted() {
-            $uis._ = ui.query('#editEmailModal').get()
+            this.uis.$ = ui.query('#editEmailModal').get()
         },
         methods: {
             ...mapActions({
@@ -58,9 +62,9 @@
             open() {
                 this.error = null
                 this.currentPassword = ''
-                this.email = this.currentAdmin.user.email
+                this.email = this.currentAccount.user.email
 
-                $uis._.modal('show')
+                this.uis.$.modal('show')
             },
             onSubmitted() {
                 this.loading = true
@@ -71,7 +75,7 @@
                     doneCallback: () => {
                         this.loading = false
 
-                        $uis._.modal('hide')
+                        this.uis.$.modal('hide')
                         this.$bus.emit('toast', {
                             title: this.$t('pages._me.change_email_address'),
                             content: this.$t('pages._me.change_email_address_succeed'),

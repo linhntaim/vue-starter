@@ -3,7 +3,7 @@
  */
 
 import {authService} from '../services/default/auth'
-import {accountService} from '../services/default/account'
+import {adminAccountService as accountService} from '../services/default/account-admin'
 import {
     callbackWaiter,
     dateTimer,
@@ -86,6 +86,7 @@ export default {
     getters: {
         isLoggedIn: state => state.isLoggedIn,
         account: state => state.account,
+        accountMatched: state => state.accountMatched,
         impersonator: state => state.impersonator,
         impersonated: state => state.impersonated,
         settings: state => state.settings,

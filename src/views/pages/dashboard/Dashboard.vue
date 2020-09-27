@@ -7,6 +7,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {mapGetters} from '@dsquare-gbu/vue-uses'
     import LoadingDashBox from './boxes/LoadingDashBox'
     import ErrorDashBox from './boxes/ErrorDashBox'

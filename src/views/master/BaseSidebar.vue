@@ -31,6 +31,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {mapGetters} from '@dsquare-gbu/vue-uses'
     import {permissionChecker, timeoutCaller, ui} from '../../app/utils'
     import {APP_NAME, APP_ROUTE} from '../../app/config'
@@ -64,6 +68,9 @@
                 },
             ],
         },
+        // TODO: Extra menu items
+
+        // TODO
     ]
 
     export default {
@@ -111,16 +118,12 @@
                     }
                 }
             },
-
             destroyUi() {
                 this.uis.$body.removeClass('sidebar-toggled')
             },
-
             initRootPath() {
-                // TODO: if need to change root path
-                this.rootName = APP_ROUTE.home
+                this.rootName = APP_ROUTE.root
             },
-
             initMenuItems() {
                 this.filteredMenuItems = defaultMenuItems()
                 this.filterMenuItems(this.filteredMenuItems)
@@ -129,9 +132,8 @@
                     this.initUi()
                 })
             },
-
             filterMenuItems(menuItems, level = 0) {
-                let removingItemIndices = []
+                const removingItemIndices = []
 
                 let itemIndex = 0
                 menuItems.forEach((menuItem) => {
@@ -173,7 +175,6 @@
                     this.pruneMenuItems(menuItems)
                 }
             },
-
             pruneMenuItems(menuItems) {
                 for (let i = menuItems.length - 1; i >= 0; --i) {
                     if ('children' in menuItems[i]) {
@@ -190,7 +191,6 @@
                     }
                 }
             },
-
             onRouterClicked() {
                 // TODO: if need to add extra handle on menu navigation
             },

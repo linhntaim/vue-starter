@@ -26,18 +26,22 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import ErrorBox from '../../components/ErrorBox'
     import {ui} from '../../../app/utils'
     import {ERROR_LEVEL_DEF, TOAST_DEF} from '../../../app/config'
-
-    let $uis = {}
+    import ErrorBox from '../../components/ErrorBox'
 
     export default {
         name: 'EditPasswordModal',
         components: {ErrorBox},
         data() {
             return {
+                uis: {},
+
                 loading: false,
 
                 error: null,
@@ -49,11 +53,11 @@
         },
         computed: {
             ...mapGetters({
-                currentAdmin: 'account/admin',
+                currentAccount: 'account/account',
             }),
         },
         mounted() {
-            $uis._ = ui.query('#editPasswordModal').get()
+            this.uis.$ = ui.query('#editPasswordModal').get()
         },
         methods: {
             ...mapActions({
@@ -65,7 +69,7 @@
                 this.password = ''
                 this.passwordConfirmation = ''
 
-                $uis._.modal('show')
+                this.uis.$.modal('show')
             },
             onSubmitted() {
                 this.loading = true
@@ -77,7 +81,7 @@
                     doneCallback: () => {
                         this.loading = false
 
-                        $uis._.modal('hide')
+                        this.uis.$.modal('hide')
 
                         this.$bus.emit('toast', {
                             title: this.$t('pages._me.change_password'),
@@ -95,6 +99,6 @@
                     },
                 })
             },
-        }
+        },
     }
 </script>

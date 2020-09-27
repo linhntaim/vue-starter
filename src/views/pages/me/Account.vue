@@ -5,10 +5,14 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import EditInformationBox from './EditInformationBox'
 
     export default {
-        name: 'MyAccount',
+        name: 'Account',
         components: {EditInformationBox},
     }
 </script>

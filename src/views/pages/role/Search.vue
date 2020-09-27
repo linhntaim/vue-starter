@@ -27,8 +27,12 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
+    import {localeChange, ui} from '../../../app/utils'
     import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {ui, localeChange} from '../../../app/utils'
     import {Searcher} from '@dsquare-gbu/vue-utils'
     import MultipleSelect2Input from '../../components/MultipleSelect2Input'
 

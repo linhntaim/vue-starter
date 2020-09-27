@@ -5,7 +5,7 @@
         ul.navbar-nav.ml-auto
             li.nav-item.dropdown.no-arrow(v-if="isLoggedIn")
                 a#userDropdown.nav-link.dropdown-toggle(href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
-                    span.mr-2.d-none.d-lg-inline.text-gray-600.small {{ currentAdmin.display_name }}
+                    span.mr-2.d-none.d-lg-inline.text-gray-600.small {{ currentAccount.display_name }}
                     img.img-profile.rounded-circle(v-if="avatar" :src="avatar")
                     .d-flex.justify-content-center.align-items-center.rounded-circle.mx-auto.wp-32.hp-32.bg-light.text-profile(v-else)
                         | {{ displayName.charAt(0).toUpperCase() }}
@@ -32,6 +32,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
     import {LOCALE_MAPPING_FLAG_ICON_NAME_DEF} from '../../app/config'
 
@@ -48,18 +52,18 @@
             ...mapGetters({
                 metadata: 'prerequisite/metadata',
                 isLoggedIn: 'account/isLoggedIn',
-                currentAdmin: 'account/admin',
+                currentAccount: 'account/account',
                 currentImpersonator: 'account/impersonator',
                 currentImpersonated: 'account/impersonated',
                 currentSettings: 'account/settings',
             }),
             avatar() {
-                return this.currentAdmin && this.currentAdmin.avatar_url ?
-                    this.currentAdmin.avatar_url : null
+                return this.currentAccount && this.currentAccount.avatar_url ?
+                    this.currentAccount.avatar_url : null
             },
             displayName() {
-                return this.currentAdmin && this.currentAdmin.display_name ?
-                    this.currentAdmin.display_name : null
+                return this.currentAccount && this.currentAccount.display_name ?
+                    this.currentAccount.display_name : null
             },
         },
         mounted() {

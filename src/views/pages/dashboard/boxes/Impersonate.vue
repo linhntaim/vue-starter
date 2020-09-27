@@ -19,6 +19,10 @@
 </template>
 
 <script>
+    /**
+     * Base - Any modification needs to be approved, except the space inside the block of TODO
+     */
+
     import {commandAdminService} from '../../../../app/services/default/admin-command'
     import {mapGetters} from '@dsquare-gbu/vue-uses'
 
@@ -39,7 +43,7 @@
         },
         computed: {
             ...mapGetters({
-                currentAdmin: 'account/admin',
+                currentAccount: 'account/account',
             }),
         },
         methods: {
@@ -51,7 +55,7 @@
                         cmd: 'impersonate',
                         params: {
                             user: this.user,
-                            admin_id: this.currentAdmin.user_id,
+                            admin_id: this.currentAccount.user_id,
                         },
                     },
                     data => {

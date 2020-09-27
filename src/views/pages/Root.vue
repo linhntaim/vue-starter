@@ -11,7 +11,7 @@
     import {APP_ROUTE} from '../../app/config'
 
     export default {
-        name: 'Home',
+        name: 'Root',
         data() {
             return {
                 component: null,
@@ -30,28 +30,32 @@
             //  Make loading component based on condition
             if (this.accountIsLoggedIn) {
                 if (this.accountMatched) {
-                    this.component = () => ({
-                        component: import('./home/IndexAuth'),
-                        delay: 0,
-                        timeout: 3000,
-                    })
+                    this.redirect('dashboard')
                 } else {
-                    this.$router.push({
-                        name: APP_ROUTE.unauthenticated,
-                        query: {
-                            time: new Date().getTime(),
-                        },
-                    })
+                    this.redirect(APP_ROUTE.unauthenticated)
                 }
             } else {
+                this.redirect(APP_ROUTE.login)
+            }
+            // TODO
+        },
+        methods: {
+            loadComponent(componentPath) {
                 this.component = () => ({
-                    component: import('./home/Index'),
+                    component: import(componentPath),
                     delay: 0,
                     timeout: 3000,
                 })
-            }
-            // TODO
-            this.hasComponent = true
+                this.hasComponent = true
+            },
+            redirect(routeName) {
+                this.$router.push({
+                    name: routeName,
+                    query: {
+                        time: new Date().getTime(),
+                    },
+                })
+            },
         },
     }
 </script>
