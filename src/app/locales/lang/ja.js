@@ -220,6 +220,9 @@ export default {
                 forgot_password: 'パスワードを忘れた方はこちら？',
                 welcome_back: 'ログイン',
             },
+            logout: {
+                _: 'ログアウト',
+            }
             // TODO:
             _forgot_password: {
                 _: 'パスワード再設定',

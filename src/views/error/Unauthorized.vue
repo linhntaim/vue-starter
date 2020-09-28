@@ -34,7 +34,7 @@
         head: {
             title() {
                 return {
-                    inner: headTitle('403 - Unauthorized'),
+                    inner: headTitle(this.$t('error.unauthorized._')),
                 }
             },
         },

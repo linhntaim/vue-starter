@@ -220,6 +220,9 @@ export default {
                 forgot_password: 'Forgot password?',
                 welcome_back: 'Welcome Back!',
             },
+            logout: {
+                _: 'Logout',
+            }
             // TODO:
             _forgot_password: {
                 _: 'Forgot password?',

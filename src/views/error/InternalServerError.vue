@@ -20,7 +20,7 @@
         head: {
             title() {
                 return {
-                    inner: headTitle('500 - Internal server error'),
+                    inner: headTitle(this.$t('error.internal_server_error._')),
                 }
             },
         },

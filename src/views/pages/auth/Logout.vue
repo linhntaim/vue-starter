@@ -23,7 +23,7 @@
         head: {
             title() {
                 return {
-                    inner: headTitle('Logout'),
+                    inner: headTitle(this.$t('pages._auth._logout._')),
                 }
             },
         },

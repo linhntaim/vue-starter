@@ -17,7 +17,7 @@
         head: {
             title() {
                 return {
-                    inner: headTitle('Maintenance'),
+                    inner: headTitle(this.$t('error.maintenance._')),
                 }
             },
         },

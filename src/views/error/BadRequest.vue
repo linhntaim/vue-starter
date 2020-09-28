@@ -20,7 +20,7 @@
         head: {
             title() {
                 return {
-                    inner: headTitle('503 - Bad request'),
+                    inner: headTitle(this.$t('error.bad_request._')),
                 }
             },
         },
