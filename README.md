@@ -32,6 +32,12 @@ npm run build
 npm run lint
 ```
 
+#### Build and run assets feature
+
+```
+npm run @assets
+```
+
 #### Setup asset files
 
 Setup required asset files to `public` folder:

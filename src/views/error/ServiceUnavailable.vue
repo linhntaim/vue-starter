@@ -14,10 +14,18 @@
      * Base - Any modification needs to be approved, except the space inside the block of TODO
      */
 
+    import {headTitle} from '../../app/utils'
     import {APP_ROUTE} from '../../app/config'
 
     export default {
         name: 'ServiceUnavailable',
+        head: {
+            title() {
+                return {
+                    inner: headTitle('503 - Service unavailable'),
+                }
+            },
+        },
         methods: {
             onRefreshClicked() {
                 this.$router.push({name: APP_ROUTE.root})

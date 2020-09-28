@@ -3,10 +3,11 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
+        "init": "npm run @assets",
         "serve": "npm run init && vue-cli-service serve",
         "build": "npm run init && vue-cli-service build",
         "lint": "npm run init && vue-cli-service lint",
-        "init": "npm run @build && npm run @setup && npm run @compile",
+        "@assets": "npm run @build && npm run @setup && npm run @compile",
         "@build": "babel ./run/src --out-dir ./run/dist --config-file ./babel.run-config.js --delete-dir-on-start --minified --source-maps",
         "@setup": "node ./run/dist/setup.js",
         "@compile": "node ./run/dist/compile.js"
@@ -16,7 +17,7 @@
         "@dsquare-gbu/vue-bus": "^1.0.3",
         "@dsquare-gbu/vue-router": "^1.0.7",
         "@dsquare-gbu/vue-services": "^1.0.9",
-        "@dsquare-gbu/vue-uses": "^1.0.11",
+        "@dsquare-gbu/vue-uses": "^1.0.12",
         "@dsquare-gbu/vue-utils": "^1.0.30",
         "core-js": "^3.6.5",
         "cropperjs": "^1.5.7",

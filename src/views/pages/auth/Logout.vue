@@ -8,6 +8,7 @@
      * Base - Any modification needs to be approved, except the space inside the block of TODO
      */
 
+    import {headTitle} from '../../../app/utils'
     import {mapActions} from '@dsquare-gbu/vue-uses'
     import {session} from '@dsquare-gbu/vue-router'
     import {APP_ROUTE} from '../../../app/config'
@@ -22,7 +23,7 @@
         head: {
             title() {
                 return {
-                    inner: 'Logout',
+                    inner: headTitle('Logout'),
                 }
             },
         },
