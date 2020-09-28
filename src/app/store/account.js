@@ -2,8 +2,8 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {authService} from '../services/default/auth'
 import {accountService} from '../services/default/account'
+import {authService} from '../services/default/auth'
 import {
     callbackWaiter,
     dateTimer,
@@ -197,7 +197,7 @@ export default {
         },
 
         current({commit, state}, {login, doneCallback, errorCallback}) {
-            if (!state.account || !state.account.user_id || login) {
+            if (!state.account || (!state.account.id && !state.account.user_id) || login) {
                 callbackWaiter.remove('account_current')
             }
             callbackWaiter.call('account_current', () => { // tricky cache
@@ -230,6 +230,16 @@ export default {
             }, errorCallback)
         },
 
+        logout({commit}, {alwaysCallback}) {
+            authService().logout(null, null, () => {
+                commit('unsetAuth')
+                commit('unsetAccount')
+                commit('unsetImpersonator')
+
+                alwaysCallback()
+            })
+        },
+
         login({commit, dispatch}, {email, password, impersonateToken, doneCallback, errorCallback}) {
             const done = data => {
                 commit('setAuth', data)
@@ -244,16 +254,6 @@ export default {
             } else {
                 authService().login(email, password, done, errorCallback)
             }
-        },
-
-        logout({commit}, {alwaysCallback}) {
-            authService().logout(null, null, () => {
-                commit('unsetAuth')
-                commit('unsetAccount')
-                commit('unsetImpersonator')
-
-                alwaysCallback()
-            })
         },
 
         updateLocale({commit}, {locale, doneCallback}) {

@@ -1,10 +1,10 @@
-import {deviceService} from '../services/default/device'
-import {deviceCookieStore} from '../utils'
-import {serviceFactory} from '../services'
 /**
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
+import {deviceService} from '../services/default/device'
+import {deviceCookieStore} from '../utils'
+import {serviceFactory} from '../services'
 import {APP_DEFAULT_SERVICE} from '../config'
 
 const setDefaultServiceDeviceHeader = device => {
