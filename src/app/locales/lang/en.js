@@ -222,7 +222,7 @@ export default {
             },
             logout: {
                 _: 'Logout',
-            }
+            },
             // TODO:
             _forgot_password: {
                 _: 'Forgot password?',

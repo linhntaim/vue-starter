@@ -222,7 +222,7 @@ export default {
             },
             logout: {
                 _: 'ログアウト',
-            }
+            },
             // TODO:
             _forgot_password: {
                 _: 'パスワード再設定',
