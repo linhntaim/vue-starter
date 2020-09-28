@@ -7,6 +7,7 @@
      * Base - Any modification needs to be approved, except the space inside the block of TODO
      */
 
+    import {headTitle} from '../../app/utils'
     import {mapGetters} from '@dsquare-gbu/vue-uses'
     import {APP_ROUTE} from '../../app/config'
     import ComponentLoader from '../ComponentLoader'
@@ -24,7 +25,7 @@
         head: {
             title() {
                 return {
-                    inner: 'Vue Starter',
+                    inner: headTitle('Vue Starter'),
                     complement: 'DSquare - GBU',
                 }
             },

@@ -14,10 +14,17 @@
      * Base - Any modification needs to be approved, except the space inside the block of TODO
      */
 
-    import {ui} from '../../app/utils'
+    import {headTitle, ui} from '../../app/utils'
 
     export default {
         name: 'Maintenance',
+        head: {
+            title() {
+                return {
+                    inner: headTitle('503 - Maintenance'),
+                }
+            },
+        },
         methods: {
             onRefreshClicked() {
                 ui.reloadPage()

@@ -6,6 +6,7 @@ export const APP_ENV = process.env.VUE_APP_ENV
 export const APP_DEBUG = process.env.VUE_APP_DEBUG === 'true'
 export const APP_LOG_ONLY = process.env.VUE_APP_LOG_ONLY ? process.env.VUE_APP_LOG_ONLY.split(',') : []
 export const APP_NAME = process.env.VUE_APP_NAME
+export const APP_TITLE_SEPARATOR = process.env.APP_TITLE_SEPARATOR ? process.env.APP_TITLE_SEPARATOR : '|'
 export const APP_AUTHOR = process.env.VUE_APP_AUTHOR
 export const APP_DESCRIPTION = process.env.VUE_APP_DESCRIPTION
 export const APP_EMAIL = process.env.VUE_APP_EMAIL

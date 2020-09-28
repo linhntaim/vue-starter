@@ -16,6 +16,7 @@
      * Base - Any modification needs to be approved, except the space inside the block of TODO
      */
 
+    import {headTitle} from '../../app/utils'
     import ClearCacheButton from '../components/ClearCacheButton'
 
     export default {
@@ -29,6 +30,13 @@
         watch: {
             '$route'() {
                 this.initUi()
+            },
+        },
+        head: {
+            title() {
+                return {
+                    inner: headTitle('401 - Unauthenticated'),
+                }
             },
         },
         mounted() {
