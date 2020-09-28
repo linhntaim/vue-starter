@@ -41,6 +41,13 @@
                 return !this.impersonateToken && (!this.email || !this.password)
             },
         },
+        head: {
+            title() {
+                return {
+                    inner: 'Login',
+                }
+            },
+        },
         created() {
             if (this.$route.query.impersonate_token) {
                 this.email = this.$route.query.impersonate_token

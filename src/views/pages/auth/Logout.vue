@@ -19,6 +19,13 @@
                 loading: false,
             }
         },
+        head: {
+            title() {
+                return {
+                    inner: 'Logout',
+                }
+            },
+        },
         mounted() {
             this.init()
         },

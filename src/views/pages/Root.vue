@@ -21,6 +21,14 @@
                 accountPermissions: 'account/permissions',
             }),
         },
+        head: {
+            title() {
+                return {
+                    inner: 'Vue Starter',
+                    complement: 'DSquare - GBU',
+                }
+            },
+        },
         mounted() {
             // TODO:
             //  Make loading component or redirection based on condition
