@@ -35,8 +35,8 @@
      * Base - Any modification needs to be approved, except the space inside the block of TODO
      */
 
+    import {headTitle, localeChange} from '../../../app/utils'
     import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {localeChange} from '../../../app/utils'
     import {TOAST_DEF} from '../../../app/config'
     import MultipleSelect2Input from '../../components/MultipleSelect2Input'
 
@@ -65,6 +65,13 @@
                 metadata: 'prerequisite/metadata',
                 role: 'role/role',
             }),
+        },
+        head: {
+            title() {
+                return {
+                    inner: headTitle(this.$t('pages._role._create._')),
+                }
+            },
         },
         destroyed() {
             this.localeChange.off()

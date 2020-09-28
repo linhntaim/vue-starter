@@ -11,6 +11,7 @@
 
     import {mapGetters} from '@dsquare-gbu/vue-uses'
     import ComponentLoader from '../../ComponentLoader'
+    import {headTitle} from '../../../app/utils'
 
     export default {
         name: 'Dashboard',
@@ -19,6 +20,13 @@
             ...mapGetters({
                 accountPermissions: 'account/permissions',
             }),
+        },
+        head: {
+            title() {
+                return {
+                    inner: headTitle(this.$t('pages._dashboard._')),
+                }
+            },
         },
         mounted() {
             this.init()

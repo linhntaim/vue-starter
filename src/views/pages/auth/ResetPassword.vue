@@ -29,7 +29,7 @@
      */
 
     import {mapActions} from '@dsquare-gbu/vue-uses'
-    import {intervalCaller, timeoutCaller} from '../../../app/utils'
+    import {headTitle, intervalCaller, timeoutCaller} from '../../../app/utils'
     import {APP_ROUTE} from '../../../app/config'
 
     export default {
@@ -51,6 +51,13 @@
         computed: {
             disabled() {
                 return !this.password || !this.passwordConfirmation
+            },
+        },
+        head: {
+            title() {
+                return {
+                    inner: headTitle(this.$t('pages._auth._reset_password._')),
+                }
             },
         },
         created() {

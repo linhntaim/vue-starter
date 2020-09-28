@@ -50,7 +50,7 @@
      * Base - Any modification needs to be approved, except the space inside the block of TODO
      */
 
-    import {cacheHandler, permissionChecker} from '../../../app/utils'
+    import {cacheHandler, headTitle, permissionChecker} from '../../../app/utils'
     import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
     import {Collection, DataPlot, ItemSelection, Searcher, Sorter, Paginator} from '@dsquare-gbu/vue-utils'
     import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
@@ -113,6 +113,13 @@
                 let colspan = 5
                 if (!this.canAction) --colspan
                 return colspan
+            },
+        },
+        head: {
+            title() {
+                return {
+                    inner: headTitle(this.$t('pages._role._index._')),
+                }
             },
         },
         created() {

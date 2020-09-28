@@ -35,7 +35,7 @@
      * Base - Any modification needs to be approved, except the space inside the block of TODO
      */
 
-    import {localeChange, ui} from '../../../app/utils'
+    import {headTitle, localeChange, ui} from '../../../app/utils'
     import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
     import {Collection} from '@dsquare-gbu/vue-utils'
     import {TOAST_DEF} from '../../../app/config'
@@ -68,6 +68,13 @@
                 role: 'role/role',
                 accountRole: 'account/role',
             }),
+        },
+        head: {
+            title() {
+                return {
+                    inner: headTitle(this.$t('pages._role._edit._')),
+                }
+            },
         },
         destroyed() {
             this.localeChange.off()

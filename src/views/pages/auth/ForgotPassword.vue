@@ -24,6 +24,7 @@
      * Base - Any modification needs to be approved, except the space inside the block of TODO
      */
 
+    import {headTitle} from '../../../app/utils'
     import {mapActions} from '@dsquare-gbu/vue-uses'
     import {APP_ROUTE} from '../../../app/config'
 
@@ -40,6 +41,13 @@
         computed: {
             disabled() {
                 return !this.email
+            },
+        },
+        head: {
+            title() {
+                return {
+                    inner: headTitle(this.$t('pages._auth._forgot_password._')),
+                }
             },
         },
         created() {
