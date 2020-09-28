@@ -11,6 +11,32 @@ export class AuthService extends DefaultService {
         super('auth')
     }
 
+    refreshToken(refreshToken, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        return this.post(
+            'login',
+            {
+                'grant_type': 'refresh_token',
+                'client_id': APP_DEFAULT_SERVICE.clientId,
+                'client_secret': APP_DEFAULT_SERVICE.clientSecret,
+                'refresh_token': refreshToken,
+                'scope': '*',
+            },
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
+
+    logout(doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        return this.post(
+            'logout',
+            {},
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
+
     login(email, password, doneCallback = null, errorCallback = null, alwaysCallback = null, extraParams = {}) {
         return this.post(
             'login',
@@ -42,26 +68,34 @@ export class AuthService extends DefaultService {
         )
     }
 
-    logout(doneCallback = null, errorCallback = null, alwaysCallback = null) {
-        return this.post(
-            'logout',
-            {},
+    loginSocially(provider, providerId, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        this.e()
+        return this.login(
+            crypto.encryptJson({provider: provider, provider_id: providerId}, serverClock.blockKey()),
+            crypto.encryptJson({source: 'social'}, serverClock.blockKey()),
             doneCallback,
             errorCallback,
             alwaysCallback,
         )
     }
 
-    refreshToken(refreshToken, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+    register(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
         return this.post(
-            'login',
-            {
-                'grant_type': 'refresh_token',
-                'client_id': APP_DEFAULT_SERVICE.clientId,
-                'client_secret': APP_DEFAULT_SERVICE.clientSecret,
-                'refresh_token': refreshToken,
-                'scope': '*',
-            },
+            'register',
+            params,
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
+
+    registerSocially(provider, providerId, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        return this.register(
+            this.appendParams(params, {
+                _social: 1,
+                provider: provider,
+                provider_id: providerId,
+            }),
             doneCallback,
             errorCallback,
             alwaysCallback,
