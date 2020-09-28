@@ -45,7 +45,7 @@
         head: {
             title() {
                 return {
-                    inner: headTitle('Login'),
+                    inner: headTitle(this.$t('pages._auth._login._')),
                 }
             },
         },

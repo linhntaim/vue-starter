@@ -22,7 +22,7 @@
         head: {
             title() {
                 return {
-                    inner: headTitle('503 - Service unavailable'),
+                    inner: headTitle(this.$t('error.service_unavailable._')),
                 }
             },
         },

@@ -160,9 +160,11 @@ export default {
         _auth: {
             _login: {
                 _: 'ログイン',
-                forgot_password: 'パスワードを忘れた方はこちら？',
                 welcome_back: 'ログイン',
             },
+            logout: {
+                _: 'ログアウト',
+            }
             // TODO:
 
             // TODO

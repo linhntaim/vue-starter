@@ -22,7 +22,7 @@
         head: {
             title() {
                 return {
-                    inner: headTitle('Not found'),
+                    inner: headTitle(this.$t('error.not_found._')),
                 }
             },
         },

@@ -20,7 +20,7 @@
         head: {
             title() {
                 return {
-                    inner: headTitle('404 - Not found'),
+                    inner: headTitle(this.$t('error.not_found._')),
                 }
             },
         },

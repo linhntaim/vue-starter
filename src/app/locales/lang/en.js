@@ -160,9 +160,11 @@ export default {
         _auth: {
             _login: {
                 _: 'Login',
-                forgot_password: 'Forgot password?',
                 welcome_back: 'Welcome Back!',
             },
+            logout: {
+                _: 'Logout',
+            }
             // TODO:
 
             // TODO
