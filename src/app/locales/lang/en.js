@@ -164,7 +164,7 @@ export default {
             },
             logout: {
                 _: 'Logout',
-            }
+            },
             // TODO:
 
             // TODO
