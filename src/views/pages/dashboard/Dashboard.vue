@@ -27,7 +27,11 @@
             init() {
                 if (this.accountPermissions.includes('be-super-admin')) {
                     this.$refs.component.load('./pages/dashboard/SuperAdminDashboard')
+                    return
                 }
+                // TODO: Other dashboard
+
+                // TODO
             },
         },
     }
