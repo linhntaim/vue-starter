@@ -67,6 +67,40 @@ export class AuthService extends DefaultService {
             },
         )
     }
+
+    loginSocially(provider, providerId, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        this.e()
+        return this.login(
+            crypto.encryptJson({provider: provider, provider_id: providerId}, serverClock.blockKey()),
+            crypto.encryptJson({source: 'social'}, serverClock.blockKey()),
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
+
+    register(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        return this.post(
+            'register',
+            params,
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
+
+    registerSocially(provider, providerId, params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        return this.register(
+            this.appendParams(params, {
+                _social: 1,
+                provider: provider,
+                provider_id: providerId,
+            }),
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
 }
 
 export const authService = () => new AuthService()

@@ -2,8 +2,8 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {authService} from '../services/default/auth'
 import {accountService} from '../services/default/account'
+import {authService} from '../services/default/auth'
 import {
     callbackWaiter,
     dateTimer,
