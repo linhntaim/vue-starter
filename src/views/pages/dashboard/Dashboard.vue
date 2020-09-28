@@ -1,9 +1,7 @@
 <template lang="pug">
     div
         h1.h3.mb-3.text-gray-800 {{ $t('pages._dashboard._') }}
-        .row
-            .col-md-6.col-lg-4.dash-box(v-for="dashBox in dashBoxes")
-                component(:is="dashBox.component" v-bind="dashBox.props")
+        component-loader(ref="component")
 </template>
 
 <script>
@@ -12,16 +10,11 @@
      */
 
     import {mapGetters} from '@dsquare-gbu/vue-uses'
-    import LoadingDashBox from './boxes/LoadingDashBox'
-    import ErrorDashBox from './boxes/ErrorDashBox'
+    import ComponentLoader from '../../ComponentLoader'
 
     export default {
         name: 'Dashboard',
-        data() {
-            return {
-                dashBoxes: [],
-            }
-        },
+        components: {ComponentLoader},
         computed: {
             ...mapGetters({
                 accountPermissions: 'account/permissions',
@@ -32,28 +25,9 @@
         },
         methods: {
             init() {
-                if (this.accountPermissions.indexOf('be-super-admin') !== -1) {
-                    this.addDashBox(-1, 'SystemLog')
-                    this.addDashBox(-2, 'MaintenanceMode')
-                    this.addDashBox(-3, 'IpLimitation')
+                if (this.accountPermissions.includes('be-super-admin')) {
+                    this.$refs.component.load('./pages/dashboard/SuperAdminDashboard')
                 }
-                if (this.accountPermissions.indexOf('impersonate') !== -1) {
-                    this.addDashBox(-4, 'Impersonate')
-                }
-            },
-            addDashBox(id, name) {
-                this.dashBoxes.push({
-                    component: () => ({
-                        component: import('./boxes/' + name),
-                        loading: LoadingDashBox,
-                        error: ErrorDashBox,
-                        delay: 0,
-                        timeout: 3000,
-                    }),
-                    props: {
-                        id: id,
-                    },
-                })
             },
         },
     }
