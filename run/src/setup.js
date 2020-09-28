@@ -46,10 +46,6 @@ new AssetCopier().add(...[
         dst: 'public/vendor/select2-bootstrap4-theme',
     },
     {
-        src: 'node_modules/select2/dist',
-        dst: 'public/vendor/select2',
-    },
-    {
         src: 'node_modules/tempusdominus-bootstrap-4/build',
         dst: 'public/vendor/bootstrap-datetimepicker',
     },
