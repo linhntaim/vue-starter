@@ -1,5 +1,5 @@
 <template lang="pug">
-    component(v-if="hasComponent" :is="component")
+    component-loader(ref="component")
 </template>
 
 <script>
@@ -9,15 +9,11 @@
 
     import {mapGetters} from '@dsquare-gbu/vue-uses'
     import {APP_ROUTE} from '../../app/config'
+    import ComponentLoader from '../ComponentLoader'
 
     export default {
         name: 'Root',
-        data() {
-            return {
-                component: null,
-                hasComponent: false,
-            }
-        },
+        components: {ComponentLoader},
         computed: {
             ...mapGetters({
                 accountIsLoggedIn: 'account/isLoggedIn',
@@ -25,29 +21,21 @@
                 accountPermissions: 'account/permissions',
             }),
         },
-        created() {
+        mounted() {
             // TODO:
             //  Make loading component or redirection based on condition
             if (this.accountIsLoggedIn) {
                 if (this.accountMatched) {
-                    this.loadComponent('./home/IndexAuth')
+                    this.$refs.component.load('./pages/home/IndexAuth')
                 } else {
                     this.redirect(APP_ROUTE.unauthenticated)
                 }
             } else {
-                this.loadComponent('./home/Index')
+                this.$refs.component.load('./pages/home/Index')
             }
             // TODO
         },
         methods: {
-            loadComponent(componentPath) {
-                this.component = () => ({
-                    component: import('' + componentPath), // trick to prevent Webpack from showing warning
-                    delay: 0,
-                    timeout: 3000,
-                })
-                this.hasComponent = true
-            },
             redirect(routeName) {
                 this.$router.push({
                     name: routeName,
