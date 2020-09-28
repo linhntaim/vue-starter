@@ -9,5 +9,12 @@
 
     export default {
         name: 'Blank',
+        head: {
+            title() {
+                return {
+                    inner: 'Blank',
+                }
+            },
+        },
     }
 </script>

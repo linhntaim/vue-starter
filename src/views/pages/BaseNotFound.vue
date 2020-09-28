@@ -18,6 +18,13 @@
                 accountIsLoggedIn: 'account/isLoggedIn',
             }),
         },
+        head: {
+            title() {
+                return {
+                    inner: 'Not found',
+                }
+            },
+        },
         created() {
             if (this.accountIsLoggedIn) {
                 this.$router.push({

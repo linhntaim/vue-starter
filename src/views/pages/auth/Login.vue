@@ -52,6 +52,13 @@
                 return this.$server.forgot_password_enabled.admin
             },
         },
+        head: {
+            title() {
+                return {
+                    inner: 'Login',
+                }
+            },
+        },
         created() {
             if (this.$route.query.impersonate_token) {
                 this.email = this.$route.query.impersonate_token

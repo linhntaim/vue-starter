@@ -14,6 +14,13 @@
     export default {
         name: 'Maintenance',
         components: {MaintenanceError},
+        head: {
+            title() {
+                return {
+                    inner: 'Maintenance',
+                }
+            },
+        },
         mounted() {
             ui.query('body').get().attr('class', 'bg-gradient-primary')
         },
