@@ -284,6 +284,16 @@ export default {
                 edit_information: 'Edit account information',
                 edit_information_succeed: 'Account information was edited successfully!',
             },
+            _notification: {
+                title: 'Title',
+                content: 'Content',
+                mark_as_read: 'Mark as read',
+                notified_at: 'Notified at',
+                read_at: 'Read at',
+                _index: {
+                    _: 'My notifications',
+                },
+            },
         },
         _role: {
             _: 'Roles',

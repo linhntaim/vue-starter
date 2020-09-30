@@ -284,6 +284,16 @@ export default {
                 change_picture: 'プロフィール写真を編集',
                 change_picture_succeed: 'プロフィール写真の編集に成功しました。',
             },
+            _notification: {
+                title: 'Title',
+                content: 'Content',
+                mark_as_read: 'Mark as read',
+                notified_at: 'Notified at',
+                read_at: 'Read at',
+                _index: {
+                    _: 'My notifications',
+                },
+            },
         },
         _role: {
             _: '役割',

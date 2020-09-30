@@ -7,6 +7,7 @@ import device from './device'
 import account from './account'
 // TODO:
 //  Import modules
+import accountNotification from './account-notification'
 import appOption from './app-option'
 import dataExport from './data-export'
 import role from './role'
@@ -21,6 +22,7 @@ export const store = {
     account,
     // TODO:
     //  Store modules
+    accountNotification,
     appOption,
     dataExport,
     role,

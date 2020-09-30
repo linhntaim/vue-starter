@@ -173,8 +173,19 @@ export const routes = [
                         children: [
                             {
                                 path: '',
-                                name: 'account',
+                                name: 'my_account',
                                 component: () => import('../../views/pages/me/Account'),
+                            },
+                            {
+                                path: 'notification',
+                                component: () => import('../../views/pages/me/notification/Base'),
+                                children: [
+                                    {
+                                        path: '',
+                                        name: 'my_notification_index',
+                                        component: () => import('../../views/pages/me/notification/Index'),
+                                    },
+                                ],
                             },
                         ],
                     },

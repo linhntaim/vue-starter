@@ -15,9 +15,12 @@
                             .small.text-gray-400 {{ $t('pages.impersonator') }}
                             strong {{ currentImpersonator.display_name }}
                         .dropdown-divider
-                    router-link.dropdown-item(:to="{path: '/me'}")
+                    router-link.dropdown-item(:to="{name: 'my_account'}")
                         i.fas.fa-user.fa-sm.fa-fw.mr-2.text-gray-400
                         | {{ $t('pages._me._') }}
+                    router-link.dropdown-item(v-if="notificationEnabled" :to="{name: 'my_notification_index'}")
+                        i.fas.fa-bell.fa-sm.fa-fw.mr-2.text-gray-400
+                        | {{ $t('pages._me._notification._index._') }}
                     .dropdown-divider
                     a.dropdown-item(href="#" data-toggle="modal" data-target="#logoutModal")
                         i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray-400
@@ -33,85 +36,88 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {LOCALE_MAPPING_FLAG_ICON_NAME_DEF} from '../../app/config'
+import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
+import {LOCALE_MAPPING_FLAG_ICON_NAME_DEF} from '../../app/config'
 
-    export default {
-        name: 'BaseHeader',
-        data() {
-            return {
-                loading: false,
+export default {
+    name: 'BaseHeader',
+    data() {
+        return {
+            loading: false,
 
-                localeMappingFlagIconNameDefs: LOCALE_MAPPING_FLAG_ICON_NAME_DEF,
-            }
+            localeMappingFlagIconNameDefs: LOCALE_MAPPING_FLAG_ICON_NAME_DEF,
+        }
+    },
+    computed: {
+        ...mapGetters({
+            metadata: 'prerequisite/metadata',
+            isLoggedIn: 'account/isLoggedIn',
+            currentAccount: 'account/account',
+            currentImpersonator: 'account/impersonator',
+            currentImpersonated: 'account/impersonated',
+            currentSettings: 'account/settings',
+        }),
+        avatar() {
+            return this.currentAccount && this.currentAccount.avatar_url ?
+                this.currentAccount.avatar_url : null
         },
-        computed: {
-            ...mapGetters({
-                metadata: 'prerequisite/metadata',
-                isLoggedIn: 'account/isLoggedIn',
-                currentAccount: 'account/account',
-                currentImpersonator: 'account/impersonator',
-                currentImpersonated: 'account/impersonated',
-                currentSettings: 'account/settings',
-            }),
-            avatar() {
-                return this.currentAccount && this.currentAccount.avatar_url ?
-                    this.currentAccount.avatar_url : null
-            },
-            displayName() {
-                return this.currentAccount && this.currentAccount.display_name ?
-                    this.currentAccount.display_name : null
-            },
+        displayName() {
+            return this.currentAccount && this.currentAccount.display_name ?
+                this.currentAccount.display_name : null
         },
-        mounted() {
-            this.init()
+        notificationEnabled() {
+            return this.$server.notification_via_database
         },
-        methods: {
-            ...mapActions({
-                require: 'prerequisite/require',
-                accountUpdateLocale: 'account/updateLocale',
-            }),
-            init() {
-                this.loading = true
-                this.require({
-                    names: ['locales'],
-                    doneCallback: () => {
-                        this.loading = false
+    },
+    mounted() {
+        this.init()
+    },
+    methods: {
+        ...mapActions({
+            require: 'prerequisite/require',
+            accountUpdateLocale: 'account/updateLocale',
+        }),
+        init() {
+            this.loading = true
+            this.require({
+                names: ['locales'],
+                doneCallback: () => {
+                    this.loading = false
 
-                        this.$forceUpdate()
-                    },
-                })
-            },
-            onLocaleClicked(locale) {
-                if (locale.code === this.currentSettings.locale) return
-
-                this.loading = true
-                this.accountUpdateLocale({
-                    locale: locale.code,
-                    doneCallback: () => {
-                        this.loading = false
-
-                        this.$bus.emit('localeChanged')
-                    },
-                })
-            },
+                    this.$forceUpdate()
+                },
+            })
         },
-    }
+        onLocaleClicked(locale) {
+            if (locale.code === this.currentSettings.locale) return
+
+            this.loading = true
+            this.accountUpdateLocale({
+                locale: locale.code,
+                doneCallback: () => {
+                    this.loading = false
+
+                    this.$bus.emit('localeChanged')
+                },
+            })
+        },
+    },
+}
 </script>
 
 <style lang="scss" scoped>
-    .text-profile {
-        font-size: .75rem;
-    }
+.text-profile {
+    font-size: .75rem;
+}
 
-    .locale-dropdown {
-        .flag-icon {
-            width: 1.45em;
-            border: 1px solid rgba(0, 0, 0, .12);
-        }
+.locale-dropdown {
+    .flag-icon {
+        width: 1.45em;
+        border: 1px solid rgba(0, 0, 0, .12);
     }
+}
 </style>
