@@ -8,6 +8,7 @@ export default {
     //  Example:
     //  route_name_01: 'perm-01|perm-02|...',
     //  route_name_02: 'perm-03|perm-04|...',
+    activity_log_index: 'activity-log-manage',
     role_index: 'role-manage',
     role_create: 'role-manage',
     role___edit: 'role-manage',

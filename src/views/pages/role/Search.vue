@@ -77,7 +77,6 @@
         },
         mounted() {
             this.localeChange.on()
-            this.uis.$ = ui.query('#searchModal').get()
             this.uis.$searchPermissions = ui.query('#searchPermissions').get()
         },
         methods: {
@@ -113,8 +112,6 @@
                 this.onSubmitted()
             },
             onSubmitted() {
-                this.uis.$.modal('hide')
-
                 this.$emit('searched')
             },
         },

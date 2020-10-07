@@ -49,6 +49,13 @@
             },
         },
         {
+            title: 'list_of_activity_logs',
+            iconClass: 'fas fa-fw fa-clipboard-list',
+            to: {
+                name: 'activity_log_index',
+            },
+        },
+        {
             title: 'role_management',
             iconClass: 'fas fa-fw fa-users',
             matches: [/^\/role/],

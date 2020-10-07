@@ -185,6 +185,7 @@ export default {
             _: 'Menu',
             dashboard: 'Dashboard',
             create_a_role: 'Create role',
+            list_of_activity_logs: 'List of activity logs',
             list_of_roles: 'List of roles',
             role_management: 'Role management',
             // TODO:
@@ -204,6 +205,10 @@ export default {
         confirm_new_password: 'Confirm new password',
         confirm_password: 'Confirm password',
         created_at: 'Created at',
+        created_date_from: 'Created date from',
+        created_date_to: 'Created date to',
+        created_time_from: 'Created time from',
+        created_time_to: 'Created time to',
         creator: 'Creator',
         current_password: 'Current password',
         description: 'Description',
@@ -295,6 +300,18 @@ export default {
                 },
             },
         },
+        _activity_log: {
+            _: 'Activity logs',
+            acted_by: 'Acted by',
+            action: 'Action',
+            client_ip: 'Client IP',
+            client_agent: 'Client agent',
+            device: 'Device',
+            screen: 'Screen',
+            _index: {
+                _: 'Activity logs',
+            },
+        },
         _role: {
             _: 'Roles',
             _create: {
@@ -310,7 +327,6 @@ export default {
                 want_delete: 'Are you sure to delete this role?',
                 want_delete_many: 'Are you sure to delete these roles?',
             },
-            _search: 'Search roles',
         },
         // TODO
         // TODO:

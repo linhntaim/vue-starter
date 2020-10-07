@@ -147,6 +147,17 @@ export const routes = [
                         component: () => import('../../views/pages/dashboard/Dashboard'),
                     },
                     {
+                        path: 'activity-log',
+                        component: () => import('../../views/pages/activity-log/Base'),
+                        children: [
+                            {
+                                path: '/activity-log',
+                                name: 'activity_log_index',
+                                component: () => import('../../views/pages/activity-log/Index'),
+                            },
+                        ],
+                    },
+                    {
                         path: 'role',
                         component: () => import('../../views/pages/role/Base'),
                         children: [

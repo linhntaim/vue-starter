@@ -10,6 +10,7 @@ import account from './account'
 import accountNotification from './account-notification'
 import appOption from './app-option'
 import dataExport from './data-export'
+import activityLog from './activity-log'
 import role from './role'
 // TODO
 // TODO:
@@ -25,6 +26,7 @@ export const store = {
     accountNotification,
     appOption,
     dataExport,
+    activityLog,
     role,
     // TODO
     // TODO:

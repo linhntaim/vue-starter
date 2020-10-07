@@ -185,6 +185,7 @@ export default {
             _: 'メニュー',
             dashboard: 'Dashboard',
             create_a_role: '役割の作成',
+            list_of_activity_logs: 'List of activity logs',
             list_of_roles: '役割の一覧',
             role_management: 'ユーザー管理',
             // TODO:
@@ -204,6 +205,10 @@ export default {
         confirm_new_password: '新しいパスワードを再入力',
         confirm_password: 'パスワードを確認',
         created_at: 'Created at',
+        created_date_from: 'Created date from',
+        created_date_to: 'Created date to',
+        created_time_from: 'Created time from',
+        created_time_to: 'Created time to',
         creator: 'Creator',
         current_password: '現在のパスワード',
         description: '詳細',
@@ -295,6 +300,18 @@ export default {
                 },
             },
         },
+        _activity_log: {
+            _: 'Activity logs',
+            acted_by: 'Acted by',
+            action: 'Action',
+            client_ip: 'Client IP',
+            client_agent: 'Client agent',
+            device: 'Device',
+            screen: 'Screen',
+            _index: {
+                _: 'Activity logs',
+            },
+        },
         _role: {
             _: '役割',
             _create: {
@@ -310,7 +327,6 @@ export default {
                 want_delete: 'この役割を削除してもよろしいですか？?',
                 want_delete_many: 'これらの役割を削除してもよろしいですか？',
             },
-            _search: '枠割検索',
         },
         // TODO
         // TODO:
