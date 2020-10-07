@@ -119,7 +119,7 @@ export const routes = [
         },
         children: [
             {
-                path: '',
+                path: '/',
                 name: 'root',
                 component: () => import('../../views/pages/Root'),
             },
@@ -151,7 +151,7 @@ export const routes = [
                         component: () => import('../../views/pages/role/Base'),
                         children: [
                             {
-                                path: '',
+                                path: '/role',
                                 name: 'role_index',
                                 component: () => import('../../views/pages/role/Index'),
                             },
@@ -172,7 +172,7 @@ export const routes = [
                         component: () => import('../../views/pages/me/Base'),
                         children: [
                             {
-                                path: '',
+                                path: '/me',
                                 name: 'my_account',
                                 component: () => import('../../views/pages/me/Account'),
                             },

@@ -8,6 +8,7 @@ import AuthMiddleware from './modules/auth-middleware'
 import DeviceMiddleware from './modules/device-middleware'
 import LocaleMiddleware from './modules/locale-middleware'
 import PermissionMiddleware from './modules/permission-middleware'
+import ScreenMiddleware from './modules/screen-middleware'
 import ServerMiddleware from './modules/server-middleware'
 import SettingsMiddleware from './modules/settings-middleware'
 
@@ -26,9 +27,11 @@ const commonMiddleware = new CommonMiddleware(
 const localeMiddleware = new LocaleMiddleware()
 const serverMiddleware = new ServerMiddleware()
 const permissionMiddleware = new PermissionMiddleware()
+const screenMiddleware = new ScreenMiddleware()
 
 export const all = {
     before: [
+        screenMiddleware,
         settingsMiddleware,
         serverMiddleware,
         deviceMiddleware,
@@ -44,6 +47,7 @@ export const all = {
 
 export const error = {
     before: [
+        screenMiddleware,
         settingsMiddleware,
         serverMiddleware,
         commonMiddleware,

@@ -5,12 +5,14 @@
 import {timeoutCaller} from './default'
 import {LocaleChange} from './locale-change'
 import {APP_TITLE_SEPARATOR} from '../config'
+import {Screen} from '@/app/utils/screen'
 
 export function headTitle(...titles) {
     return titles.join(' ' + APP_TITLE_SEPARATOR + ' ')
 }
 
 export const localeChange = new LocaleChange(timeoutCaller)
+export const currentScreen = new Screen()
 
 // TODO:
 //  Define global utils
