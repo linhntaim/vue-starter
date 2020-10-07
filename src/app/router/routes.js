@@ -97,7 +97,7 @@ export const routes = [
         },
         children: [
             {
-                path: '',
+                path: '/',
                 name: 'root',
                 component: () => import('../../views/pages/Root'),
             },
