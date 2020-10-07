@@ -4,8 +4,8 @@
 
 import {timeoutCaller} from './default'
 import {LocaleChange} from './locale-change'
+import {Screen} from './screen'
 import {APP_TITLE_SEPARATOR} from '../config'
-import {Screen} from '@/app/utils/screen'
 
 export function headTitle(...titles) {
     return titles.join(' ' + APP_TITLE_SEPARATOR + ' ')
