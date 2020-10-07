@@ -80,10 +80,10 @@
                 return this.paginator.pagination.atLast
             },
             itemsFrom() {
-                return this.paginator.pagination.items.from
+                return this.paginator.pagination.items.from | 0
             },
             itemsTo() {
-                return this.paginator.pagination.items.to
+                return this.paginator.pagination.items.to | 0
             },
         },
         methods: {
