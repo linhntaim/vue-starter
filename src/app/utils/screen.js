@@ -2,8 +2,8 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {serviceFactory} from '@/app/services'
-import {APP_DEFAULT_SERVICE} from '@/app/config'
+import {serviceFactory} from '../services'
+import {APP_DEFAULT_SERVICE, APP_TYPE} from '../config'
 
 export class Screen {
     constructor() {
@@ -41,6 +41,7 @@ export class Screen {
 
     get() {
         return {
+            client: APP_TYPE,
             name: this.name,
             path: this.path,
             original_path: this.originalPath,
