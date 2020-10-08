@@ -21,8 +21,8 @@
                             strong {{ $t('pages._activity_log.action') }}
                             .form-control-plaintext {{ activityLog.action }}
                         .form-group.col-12
-                            strong Payload
-                            .form-control-plaintext {{ activityLog.payload }}
+                            strong {{ $t('pages._activity_log.log') }}
+                            .form-control-plaintext(v-html="activityLog.log")
                         .form-group.col-6
                             strong {{ $t('pages._activity_log.client_ip') }}
                             .form-control-plaintext(v-for="clientIp in activityLog.device.client_ips") {{ clientIp }}

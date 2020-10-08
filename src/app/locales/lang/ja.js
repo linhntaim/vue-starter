@@ -5,6 +5,15 @@
 export default {
     hello: 'こんにちは',
     def: {
+        activity_action: {
+            login: 'Login',
+            logout: 'Logout',
+            model_create: 'Create',
+            model_delete: 'Delete',
+            model_edit: 'Edit',
+            model_export: 'Export',
+            model_list: 'List',
+        },
         datetime: {
             short_date_0: '{yyyy}-{mm}-{dd}',
             short_date_1: '{mm}/{dd}/{yyyy}',
@@ -49,6 +58,13 @@ export default {
             admin: '管理者',
             operator: '事務局ユーザー',
             viewer: '閲覧ユーザー',
+        },
+        screen: {
+            login: 'Login',
+            logout: 'Logout',
+            role_index: 'Role - List',
+            role_create: 'Role - Create',
+            role___edit: 'Role - Edit',
         },
         // TODO:
 

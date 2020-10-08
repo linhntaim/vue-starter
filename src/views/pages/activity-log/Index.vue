@@ -15,7 +15,7 @@
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages._activity_log.screen')" :sortBy="'screen'")
                                 th
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages._activity_log.action')" :sortBy="'action'")
-                                th {{ $t('pages._activity_log.device') }}
+                                th.text-center {{ $t('pages._activity_log.device') }}
                                 th.text-center(v-if="canAction") {{ $t('actions.actions') }}
                         tfoot
                             tr
@@ -27,7 +27,7 @@
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages._activity_log.screen')" :sortBy="'screen'")
                                 th
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages._activity_log.action')" :sortBy="'action'")
-                                th {{ $t('pages._activity_log.device') }}
+                                th.text-center {{ $t('pages._activity_log.device') }}
                                 th.text-center(v-if="canAction") {{ $t('actions.actions') }}
                         tbody
                             tr(v-if="activityLogs.length <= 0")
@@ -38,9 +38,9 @@
                                 td.text-center {{ paginator.pagination.items.from + index }}
                                 td.text-center {{ activityLog.sd_st_created_at }}
                                 td {{ activityLog.admin.display_name }}
-                                td {{ activityLog.screen }}
-                                td {{ activityLog.action }}
-                                td
+                                td {{ $t('def.screen.' + activityLog.screen) }}
+                                td {{ $t('def.activity_action.' + activityLog.action) }}
+                                td.text-center
                                     .badge.badge-primary(v-for="clientIp in activityLog.device.client_ips") {{ clientIp }}
                                 td.text-center(v-if="canAction")
                                     button.btn.btn-link.btn-sm(v-if="canView" :disabled="loading" @click.prevent="onViewClicked(activityLog)") {{ $t('actions.view') }}

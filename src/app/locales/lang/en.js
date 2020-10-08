@@ -5,6 +5,15 @@
 export default {
     hello: 'Hello',
     def: {
+        activity_action: {
+            login: 'Login',
+            logout: 'Logout',
+            model_create: 'Create',
+            model_delete: 'Delete',
+            model_edit: 'Edit',
+            model_export: 'Export',
+            model_list: 'List',
+        },
         datetime: {
             short_date_0: '{yyyy}-{mm}-{dd}',
             short_date_1: '{mm}/{dd}/{yyyy}',
@@ -49,6 +58,13 @@ export default {
             admin: 'Admin',
             operator: 'Operator',
             viewer: 'Viewer',
+        },
+        screen: {
+            login: 'Login',
+            logout: 'Logout',
+            role_index: 'Role - List',
+            role_create: 'Role - Create',
+            role___edit: 'Role - Edit',
         },
         // TODO:
 
@@ -307,6 +323,7 @@ export default {
             client_ip: 'Client IP',
             client_agent: 'Client agent',
             device: 'Device',
+            log: 'Log',
             screen: 'Screen',
             _index: {
                 _: 'Activity logs',
