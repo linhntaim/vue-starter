@@ -162,7 +162,7 @@ export default {
                 _: 'ログイン',
                 welcome_back: 'ログイン',
             },
-            logout: {
+            _logout: {
                 _: 'ログアウト',
             },
             // TODO:
