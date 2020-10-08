@@ -323,6 +323,7 @@ export default {
             client_ip: 'Client IP',
             client_agent: 'Client agent',
             device: 'Device',
+            log: 'Log',
             screen: 'Screen',
             _index: {
                 _: 'Activity logs',
