@@ -244,7 +244,7 @@ export default {
                 forgot_password: 'パスワードを忘れた方はこちら？',
                 welcome_back: 'ログイン',
             },
-            logout: {
+            _logout: {
                 _: 'ログアウト',
             },
             // TODO:

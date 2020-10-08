@@ -244,7 +244,7 @@ export default {
                 forgot_password: 'Forgot password?',
                 welcome_back: 'Welcome Back!',
             },
-            logout: {
+            _logout: {
                 _: 'Logout',
             },
             // TODO:
