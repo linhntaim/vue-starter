@@ -45,7 +45,10 @@ export default {
                 device.secret,
                 data => {
                     commit('setDevice', {
-                        device: data.model,
+                        device: {
+                            provider: data.model.provider,
+                            secret: data.model.secret,
+                        },
                     })
                     doneCallback(data)
                 },
