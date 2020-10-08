@@ -17,7 +17,7 @@
                         :items="metadata.permissions"
                         :itemValue="'id'"
                         :itemText="'display_name'"
-                        :required="true"
+                        :required="false"
                         :options="permissionOptions")
                 .col.nowrap
                     button.btn.btn-primary.btn-item.btn-item-left(:disabled="disabled || loading" type="submit")

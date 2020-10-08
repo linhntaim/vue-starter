@@ -16,10 +16,10 @@
                             div.form-control-plaintext {{ activityLog.sd_st_created_at }}
                         .form-group.col-6
                             strong {{ $t('pages._activity_log.screen') }}
-                            .form-control-plaintext {{ activityLog.screen }}
+                            .form-control-plaintext {{ $t('def.screen.' + activityLog.screen) }}
                         .form-group.col-6
                             strong {{ $t('pages._activity_log.action') }}
-                            .form-control-plaintext {{ activityLog.action }}
+                            .form-control-plaintext {{ $t('def.activity_action.' + activityLog.action) }}
                         .form-group.col-12
                             strong {{ $t('pages._activity_log.log') }}
                             .form-control-plaintext(v-html="activityLog.log")
