@@ -31,10 +31,10 @@ const screenMiddleware = new ScreenMiddleware()
 
 export const all = {
     before: [
-        screenMiddleware,
         settingsMiddleware,
         serverMiddleware,
         deviceMiddleware,
+        screenMiddleware,
         commonMiddleware,
         authMiddleware,
         localeMiddleware,
@@ -47,9 +47,10 @@ export const all = {
 
 export const error = {
     before: [
-        screenMiddleware,
         settingsMiddleware,
         serverMiddleware,
+        deviceMiddleware,
+        screenMiddleware,
         commonMiddleware,
         authMiddleware,
         localeMiddleware,
