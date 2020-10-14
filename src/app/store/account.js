@@ -256,6 +256,18 @@ export default {
             }
         },
 
+        loginOther({commit, dispatch}, {params, doneCallback, errorCallback}) {
+            const done = data => {
+                commit('setAuth', data)
+                dispatch('current', {
+                    login: true,
+                    doneCallback: doneCallback,
+                    errorCallback: errorCallback,
+                })
+            }
+            authService().loginOther(params, done, errorCallback)
+        },
+
         updateLocale({commit}, {locale, doneCallback}) {
             commit('setLocale', {
                 locale: locale,
