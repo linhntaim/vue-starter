@@ -79,6 +79,17 @@ export class AuthService extends DefaultService {
         )
     }
 
+    loginOther(params, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        this.e()
+        return this.login(
+            crypto.encryptJson(params, serverClock.blockKey()),
+            crypto.encryptJson({source: 'other'}, serverClock.blockKey()),
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
+
     register(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
         return this.post(
             'register',
