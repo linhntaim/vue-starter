@@ -3,33 +3,33 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {mapActions, mapMutations} from '@dsquare-gbu/vue-uses'
-    import {APP_ROUTE} from '../../app/config'
+import {mapActions, mapMutations} from '@dsquare-gbu/vue-uses'
+import {APP_ROUTE} from '../../app/config'
 
-    export default {
-        name: 'ClearCacheButton',
-        props: {
-            enabled: Boolean,
+export default {
+    name: 'ClearCacheButton',
+    props: {
+        enabled: Boolean,
+    },
+    methods: {
+        ...mapMutations({
+            accountUnsetAuth: 'account/unsetAuth',
+            accountUnsetAdmin: 'account/unsetAdmin',
+        }),
+        ...mapActions({
+            accountLogout: 'account/logout',
+        }),
+        onClearCacheClicked() {
+            this.accountLogout({
+                alwaysCallback: () => {
+                    this.$router.push({name: APP_ROUTE.login})
+                },
+            })
         },
-        methods: {
-            ...mapMutations({
-                accountUnsetAuth: 'account/unsetAuth',
-                accountUnsetAdmin: 'account/unsetAdmin',
-            }),
-            ...mapActions({
-                accountLogout: 'account/logout',
-            }),
-            onClearCacheClicked() {
-                this.accountLogout({
-                    alwaysCallback: () => {
-                        this.$router.push({name: APP_ROUTE.login})
-                    },
-                })
-            },
-        },
-    }
+    },
+}
 </script>

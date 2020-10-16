@@ -54,134 +54,134 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {cacheHandler, ui} from '../../app/utils'
-    import {DataPlot, Paginator, Sorter} from '@dsquare-gbu/vue-utils'
-    import {ERROR_LEVEL_DEF, EXPORT_STATE_DEF, ITEMS_PER_PAGE_LIST} from '../../app/config'
-    import ErrorBox from './ErrorBox'
-    import PaginatorComponent from './Paginator'
+import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
+import {cacheHandler, ui} from '../../app/utils'
+import {DataPlot, Paginator, Sorter} from '@dsquare-gbu/vue-utils'
+import {ERROR_LEVEL_DEF, EXPORT_STATE_DEF, ITEMS_PER_PAGE_LIST} from '../../app/config'
+import ErrorBox from './ErrorBox'
+import PaginatorComponent from './Paginator'
 
-    export default {
-        name: 'ExportModal',
-        components: {PaginatorComponent, ErrorBox},
-        data() {
-            const LABEL_TITLE = this.$t('components.export._')
+export default {
+    name: 'ExportModal',
+    components: {PaginatorComponent, ErrorBox},
+    data() {
+        const LABEL_TITLE = this.$t('components.export._')
 
-            return {
-                uis: {},
+        return {
+            uis: {},
 
-                LABEL_TITLE,
+            LABEL_TITLE,
 
-                loading: false,
+            loading: false,
 
-                title: LABEL_TITLE,
+            title: LABEL_TITLE,
 
-                error: null,
+            error: null,
 
-                sorter: new Sorter(),
-                paginator: new Paginator(ITEMS_PER_PAGE_LIST, cacheHandler),
-                params: new DataPlot(),
+            sorter: new Sorter(),
+            paginator: new Paginator(ITEMS_PER_PAGE_LIST, cacheHandler),
+            params: new DataPlot(),
 
-                exportCallback: null,
+            exportCallback: null,
 
-                exportStateDefs: EXPORT_STATE_DEF,
-            }
+            exportStateDefs: EXPORT_STATE_DEF,
+        }
+    },
+    computed: {
+        ...mapGetters({
+            dataExports: 'dataExport/dataExports',
+            accountAuthorizationQueryString: 'account/authorizationQueryString',
+        }),
+    },
+    created() {
+        this.sorter.parseQuery({}, 'created_at', 'desc')
+    },
+    mounted() {
+        this.uis.$ = ui.query('#exportModal').get()
+
+        this.$bus.on('export', ({title, name, exportCallback}) => {
+            this.show(title, name, exportCallback)
+        })
+    },
+    methods: {
+        ...mapActions({
+            dataExportSearch: 'dataExport/search',
+        }),
+        show(title, name, exportCallback) {
+            this.title = title ? title : this.LABEL_TITLE
+
+            this.params.plot('default', {
+                names: [name],
+            })
+
+            this.exportCallback = exportCallback
+
+            this.plotPaginator()
+            this.plotSorter()
+            this.search()
+
+            this.uis.$.modal('show')
         },
-        computed: {
-            ...mapGetters({
-                dataExports: 'dataExport/dataExports',
-                accountAuthorizationQueryString: 'account/authorizationQueryString',
-            }),
-        },
-        created() {
-            this.sorter.parseQuery({}, 'created_at', 'desc')
-        },
-        mounted() {
-            this.uis.$ = ui.query('#exportModal').get()
-
-            this.$bus.on('export', ({title, name, exportCallback}) => {
-                this.show(title, name, exportCallback)
+        plotSorter() {
+            this.params.plot('sorter', {
+                sort_by: this.sorter.by,
+                sort_order: this.sorter.order,
             })
         },
-        methods: {
-            ...mapActions({
-                dataExportSearch: 'dataExport/search',
-            }),
-            show(title, name, exportCallback) {
-                this.title = title ? title : this.LABEL_TITLE
-
-                this.params.plot('default', {
-                    names: [name],
-                })
-
-                this.exportCallback = exportCallback
-
-                this.plotPaginator()
-                this.plotSorter()
-                this.search()
-
-                this.uis.$.modal('show')
-            },
-            plotSorter() {
-                this.params.plot('sorter', {
-                    sort_by: this.sorter.by,
-                    sort_order: this.sorter.order,
-                })
-            },
-            plotPaginator() {
-                this.params.plot('paginator', {
-                    page: this.paginator.pagination.current,
-                    items_per_page: this.paginator.pagination.items_per_page,
-                })
-            },
-            searchByPaginator() {
-                this.plotPaginator()
-                this.search()
-            },
-            search() {
-                this.loading = true
-                this.error = null
-                const params = this.params.data()
-                this.dataExportSearch({
-                    params: params,
-                    doneCallback: (pagination) => {
-                        this.paginator.parsePagination(pagination)
-                        this.loading = false
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.error = {
-                            messages: err.getMessages(),
-                            extra: err.getExtra(),
-                            level: ERROR_LEVEL_DEF.error,
-                        }
-                    },
-                })
-            },
-            onSyncClicked() {
-                this.search()
-            },
-            onExportClicked() {
-                this.loading = true
-                this.error = null
-                this.exportCallback && this.exportCallback(
-                    () => {
-                        this.search()
-                    },
-                    err => {
-                        this.loading = false
-                        this.error = {
-                            messages: err.getMessages(),
-                            extra: err.getExtra(),
-                            level: ERROR_LEVEL_DEF.error,
-                        }
-                    },
-                )
-            },
+        plotPaginator() {
+            this.params.plot('paginator', {
+                page: this.paginator.pagination.current,
+                items_per_page: this.paginator.pagination.items_per_page,
+            })
         },
-    }
+        searchByPaginator() {
+            this.plotPaginator()
+            this.search()
+        },
+        search() {
+            this.loading = true
+            this.error = null
+            const params = this.params.data()
+            this.dataExportSearch({
+                params: params,
+                doneCallback: (pagination) => {
+                    this.paginator.parsePagination(pagination)
+                    this.loading = false
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.error = {
+                        messages: err.getMessages(),
+                        extra: err.getExtra(),
+                        level: ERROR_LEVEL_DEF.error,
+                    }
+                },
+            })
+        },
+        onSyncClicked() {
+            this.search()
+        },
+        onExportClicked() {
+            this.loading = true
+            this.error = null
+            this.exportCallback && this.exportCallback(
+                () => {
+                    this.search()
+                },
+                err => {
+                    this.loading = false
+                    this.error = {
+                        messages: err.getMessages(),
+                        extra: err.getExtra(),
+                        level: ERROR_LEVEL_DEF.error,
+                    }
+                },
+            )
+        },
+    },
+}
 </script>

@@ -13,16 +13,16 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    export default {
-        name: 'LogoutModal',
-        methods: {
-            onLogoutClicked() {
-                this.$router.push({name: 'logout'})
-            },
+export default {
+    name: 'LogoutModal',
+    methods: {
+        onLogoutClicked() {
+            this.$router.push({name: 'logout'})
         },
-    }
+    },
+}
 </script>

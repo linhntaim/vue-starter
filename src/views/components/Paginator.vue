@@ -27,127 +27,127 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import FormattedNumber from './FormattedNumber'
-    import {ITEMS_PER_PAGE_LIST} from '../../app/config'
-    import {Paginator} from '@dsquare-gbu/vue-utils'
+import FormattedNumber from './FormattedNumber'
+import {ITEMS_PER_PAGE_LIST} from '../../app/config'
+import {Paginator} from '@dsquare-gbu/vue-utils'
 
-    export default {
-        name: 'Paginator',
-        components: {FormattedNumber},
-        props: {
-            disabled: Boolean,
-            paginator: Paginator,
+export default {
+    name: 'Paginator',
+    components: {FormattedNumber},
+    props: {
+        disabled: Boolean,
+        paginator: Paginator,
+    },
+    data() {
+        return {
+            itemsPerPage: this.paginator.pagination.itemsPerPage,
+            itemsPerPageList: ITEMS_PER_PAGE_LIST,
+        }
+    },
+    computed: {
+        totalItems() {
+            return this.paginator.pagination.totalItems
         },
-        data() {
-            return {
-                itemsPerPage: this.paginator.pagination.itemsPerPage,
-                itemsPerPageList: ITEMS_PER_PAGE_LIST,
-            }
+        current() {
+            return this.paginator.pagination.current
         },
-        computed: {
-            totalItems() {
-                return this.paginator.pagination.totalItems
-            },
-            current() {
-                return this.paginator.pagination.current
-            },
-            pagesFrom() {
-                return this.paginator.pagination.pages.from
-            },
-            pagesTo() {
-                return this.paginator.pagination.pages.to
-            },
-            first() {
-                return this.paginator.pagination.first
-            },
-            last() {
-                return this.paginator.pagination.last
-            },
-            prev() {
-                return this.paginator.pagination.prev
-            },
-            next() {
-                return this.paginator.pagination.next
-            },
-            atFirst() {
-                return this.paginator.pagination.atFirst
-            },
-            atLast() {
-                return this.paginator.pagination.atLast
-            },
-            itemsFrom() {
-                return this.paginator.pagination.items.from | 0
-            },
-            itemsTo() {
-                return this.paginator.pagination.items.to | 0
-            },
+        pagesFrom() {
+            return this.paginator.pagination.pages.from
         },
-        methods: {
-            onPageClicked(page) {
-                if (this.disabled) return
-                this.paginator.setPage(page)
-                this.pageChanged()
-            },
-            onItemsPerPageChanged() {
-                if (this.disabled) return
-                this.paginator.setItemsPerPage(this.itemsPerPage)
-                this.pageChanged()
-            },
-            pageChanged() {
-                this.$emit('pageChanged', this.paginator.pagination.current, this.paginator.pagination.items_per_page)
-            },
+        pagesTo() {
+            return this.paginator.pagination.pages.to
         },
-    }
+        first() {
+            return this.paginator.pagination.first
+        },
+        last() {
+            return this.paginator.pagination.last
+        },
+        prev() {
+            return this.paginator.pagination.prev
+        },
+        next() {
+            return this.paginator.pagination.next
+        },
+        atFirst() {
+            return this.paginator.pagination.atFirst
+        },
+        atLast() {
+            return this.paginator.pagination.atLast
+        },
+        itemsFrom() {
+            return this.paginator.pagination.items.from | 0
+        },
+        itemsTo() {
+            return this.paginator.pagination.items.to | 0
+        },
+    },
+    methods: {
+        onPageClicked(page) {
+            if (this.disabled) return
+            this.paginator.setPage(page)
+            this.pageChanged()
+        },
+        onItemsPerPageChanged() {
+            if (this.disabled) return
+            this.paginator.setItemsPerPage(this.itemsPerPage)
+            this.pageChanged()
+        },
+        pageChanged() {
+            this.$emit('pageChanged', this.paginator.pagination.current, this.paginator.pagination.items_per_page)
+        },
+    },
+}
 </script>
 
 <style lang="scss" scoped>
+.pagination-group {
+    float: right;
+
+    .form-group {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        margin-right: 1rem;
+
+        label {
+            margin-right: .5rem;
+        }
+    }
+}
+
+.page-item {
+    &.active {
+        .page-link {
+            z-index: 0;
+        }
+    }
+}
+
+@media (max-width: 575px) {
     .pagination-group {
-        float: right;
+        float: none;
 
         .form-group {
-            margin-top: 0;
-            margin-bottom: 1rem;
-            margin-right: 1rem;
+            margin-right: 0;
 
-            label {
-                margin-right: .5rem;
+            .form-control {
+                display: inline-block;
+                width: auto;
+                vertical-align: middle;
             }
         }
     }
 
-    .page-item {
-        &.active {
-            .page-link {
-                z-index: 0;
-            }
+    .pagination {
+        width: 100%;
+
+        .page-report {
+            display: none;
         }
     }
-
-    @media (max-width: 575px) {
-        .pagination-group {
-            float: none;
-
-            .form-group {
-                margin-right: 0;
-
-                .form-control {
-                    display: inline-block;
-                    width: auto;
-                    vertical-align: middle;
-                }
-            }
-        }
-
-        .pagination {
-            width: 100%;
-
-            .page-report {
-                display: none;
-            }
-        }
-    }
+}
 </style>

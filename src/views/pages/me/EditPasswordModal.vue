@@ -26,79 +26,79 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {ui} from '../../../app/utils'
-    import {ERROR_LEVEL_DEF, TOAST_DEF} from '../../../app/config'
-    import ErrorBox from '../../components/ErrorBox'
+import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
+import {ui} from '../../../app/utils'
+import {ERROR_LEVEL_DEF, TOAST_DEF} from '../../../app/config'
+import ErrorBox from '../../components/ErrorBox'
 
-    export default {
-        name: 'EditPasswordModal',
-        components: {ErrorBox},
-        data() {
-            return {
-                uis: {},
+export default {
+    name: 'EditPasswordModal',
+    components: {ErrorBox},
+    data() {
+        return {
+            uis: {},
 
-                loading: false,
+            loading: false,
 
-                error: null,
+            error: null,
 
-                currentPassword: '',
-                password: '',
-                passwordConfirmation: '',
-            }
+            currentPassword: '',
+            password: '',
+            passwordConfirmation: '',
+        }
+    },
+    computed: {
+        ...mapGetters({
+            currentAccount: 'account/account',
+        }),
+    },
+    mounted() {
+        this.uis.$ = ui.query('#editPasswordModal').get()
+    },
+    methods: {
+        ...mapActions({
+            accountUpdatePassword: 'account/updatePassword',
+        }),
+        open() {
+            this.error = null
+            this.currentPassword = ''
+            this.password = ''
+            this.passwordConfirmation = ''
+
+            this.uis.$.modal('show')
         },
-        computed: {
-            ...mapGetters({
-                currentAccount: 'account/account',
-            }),
-        },
-        mounted() {
-            this.uis.$ = ui.query('#editPasswordModal').get()
-        },
-        methods: {
-            ...mapActions({
-                accountUpdatePassword: 'account/updatePassword',
-            }),
-            open() {
-                this.error = null
-                this.currentPassword = ''
-                this.password = ''
-                this.passwordConfirmation = ''
+        onSubmitted() {
+            this.loading = true
+            this.error = null
+            this.accountUpdatePassword({
+                currentPassword: this.currentPassword,
+                passwordConfirmation: this.passwordConfirmation,
+                password: this.password,
+                doneCallback: () => {
+                    this.loading = false
 
-                this.uis.$.modal('show')
-            },
-            onSubmitted() {
-                this.loading = true
-                this.error = null
-                this.accountUpdatePassword({
-                    currentPassword: this.currentPassword,
-                    passwordConfirmation: this.passwordConfirmation,
-                    password: this.password,
-                    doneCallback: () => {
-                        this.loading = false
+                    this.uis.$.modal('hide')
 
-                        this.uis.$.modal('hide')
-
-                        this.$bus.emit('toast', {
-                            title: this.$t('pages._me.change_password'),
-                            content: this.$t('pages._me.change_password_succeed'),
-                            type: TOAST_DEF.success,
-                        })
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.error = {
-                            messages: err.getMessages(),
-                            extra: err.getExtra(),
-                            level: ERROR_LEVEL_DEF.error,
-                        }
-                    },
-                })
-            },
+                    this.$bus.emit('toast', {
+                        title: this.$t('pages._me.change_password'),
+                        content: this.$t('pages._me.change_password_succeed'),
+                        type: TOAST_DEF.success,
+                    })
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.error = {
+                        messages: err.getMessages(),
+                        extra: err.getExtra(),
+                        level: ERROR_LEVEL_DEF.error,
+                    }
+                },
+            })
         },
-    }
+    },
+}
 </script>

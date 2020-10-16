@@ -19,80 +19,80 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {commandAdminService} from '../../../../app/services/default/admin-command'
-    import {mapGetters} from '@dsquare-gbu/vue-uses'
+import {commandAdminService} from '../../../../app/services/default/admin-command'
+import {mapGetters} from '@dsquare-gbu/vue-uses'
 
-    export default {
-        name: 'Impersonate',
-        props: {
-            id: Number,
-        },
-        data() {
-            return {
-                loading: false,
+export default {
+    name: 'Impersonate',
+    props: {
+        id: Number,
+    },
+    data() {
+        return {
+            loading: false,
 
-                user: '',
+            user: '',
 
-                show: false,
-                output: '',
-            }
-        },
-        computed: {
-            ...mapGetters({
-                currentAccount: 'account/account',
-            }),
-        },
-        methods: {
-            onSubmitted() {
-                this.loading = true
-                this.hideOutput()
-                commandAdminService().run(
-                    {
-                        cmd: 'impersonate',
-                        params: {
-                            user: this.user,
-                            admin_id: this.currentAccount.user_id,
-                        },
+            show: false,
+            output: '',
+        }
+    },
+    computed: {
+        ...mapGetters({
+            currentAccount: 'account/account',
+        }),
+    },
+    methods: {
+        onSubmitted() {
+            this.loading = true
+            this.hideOutput()
+            commandAdminService().run(
+                {
+                    cmd: 'impersonate',
+                    params: {
+                        user: this.user,
+                        admin_id: this.currentAccount.user_id,
                     },
-                    data => {
-                        this.loading = false
-                        this.showOutput(data.model.output)
-                    },
-                    err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                )
-            },
-
-            showOutput(output) {
-                this.show = true
-                this.output = output
-            },
-
-            hideOutput() {
-                this.show = false
-                this.output = ''
-            },
+                },
+                data => {
+                    this.loading = false
+                    this.showOutput(data.model.output)
+                },
+                err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            )
         },
-    }
+
+        showOutput(output) {
+            this.show = true
+            this.output = output
+        },
+
+        hideOutput() {
+            this.show = false
+            this.output = ''
+        },
+    },
+}
 </script>
 
 <style lang="scss" scoped>
-    pre {
-        padding: .375rem .75rem;
-        border-radius: .35rem;
-        word-break: break-all;
-        word-wrap: break-word;
-        background-color: #f5f5f5;
-        border: 1px solid #ccc;
+pre {
+    padding: .375rem .75rem;
+    border-radius: .35rem;
+    word-break: break-all;
+    word-wrap: break-word;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
 
-        code {
-            white-space: pre-wrap;
-        }
+    code {
+        white-space: pre-wrap;
     }
+}
 </style>

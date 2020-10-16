@@ -5,14 +5,14 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import ServiceUnavailable from './error/ServiceUnavailable'
+import ServiceUnavailable from './error/ServiceUnavailable'
 
-    export default {
-        name: 'AppFailed',
-        components: {ServiceUnavailable},
-    }
+export default {
+    name: 'AppFailed',
+    components: {ServiceUnavailable},
+}
 </script>

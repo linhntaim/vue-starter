@@ -27,93 +27,95 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {localeChange, ui} from '../../../app/utils'
-    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {Searcher} from '@dsquare-gbu/vue-utils'
-    import MultipleSelect2Input from '../../components/MultipleSelect2Input'
+import {localeChange, ui} from '../../../app/utils'
+import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
+import {Searcher} from '@dsquare-gbu/vue-utils'
+import MultipleSelect2Input from '../../components/MultipleSelect2Input'
 
-    export default {
-        name: 'Search',
-        components: {MultipleSelect2Input},
-        props: {
-            disabled: Boolean,
-            searcher: Searcher,
-        },
-        data() {
-            return {
-                uis: {},
+export default {
+    name: 'Search',
+    components: {MultipleSelect2Input},
+    props: {
+        disabled: Boolean,
+        searcher: Searcher,
+    },
+    data() {
+        return {
+            uis: {},
 
-                loading: false,
+            loading: false,
 
-                permissionOptions: {
-                    placeholder: this.$tc('actions.select_what', {what: this.$tc('pages.permission', 2)}),
-                },
-
-                select2Ready: false,
-                localeChange: localeChange.reset(),
-            }
-        },
-        computed: {
-            ...mapGetters({
-                metadata: 'prerequisite/metadata',
-            }),
-            searching() {
-                return this.searcher.searching
+            permissionOptions: {
+                placeholder: this.$tc('actions.select_what', {what: this.$tc('pages.permission', 2)}),
             },
+
+            select2Ready: false,
+
+            localeChange: localeChange.reset(),
+            localeChangeHandlerId: null,
+        }
+    },
+    computed: {
+        ...mapGetters({
+            metadata: 'prerequisite/metadata',
+        }),
+        searching() {
+            return this.searcher.searching
         },
-        created() {
-            this.searcher.setParams({
-                name: '',
-                display_name: '',
-                permissions: [],
+    },
+    created() {
+        this.searcher.setParams({
+            name: '',
+            display_name: '',
+            permissions: [],
+        })
+    },
+    destroyed() {
+        this.localeChange.off(this.localeChangeHandlerId)
+    },
+    mounted() {
+        this.localeChangeHandlerId = this.localeChange.on()
+        this.uis.$searchPermissions = ui.query('#searchPermissions').get()
+    },
+    methods: {
+        ...mapActions({
+            require: 'prerequisite/require',
+        }),
+        init() {
+            this.loading = true
+            this.require({
+                names: ['permissions'],
+                doneCallback: () => {
+                    this.initSearcher()
+
+                    this.select2Ready = true
+                    this.loading = false
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
             })
         },
-        destroyed() {
-            this.localeChange.off()
+        initSearcher() {
+            this.searcher.parseQuery(this.$route.query)
+
+            this.$emit('searcherInitialized')
         },
-        mounted() {
-            this.localeChange.on()
-            this.uis.$searchPermissions = ui.query('#searchPermissions').get()
+        onClearSearchClicked() {
+            this.searcher.clear()
+
+            this.uis.$searchPermissions.val([]).trigger('change')
+
+            this.onSubmitted()
         },
-        methods: {
-            ...mapActions({
-                require: 'prerequisite/require',
-            }),
-            init() {
-                this.loading = true
-                this.require({
-                    names: ['permissions'],
-                    doneCallback: () => {
-                        this.initSearcher()
-
-                        this.select2Ready = true
-                        this.loading = false
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                })
-            },
-            initSearcher() {
-                this.searcher.parseQuery(this.$route.query)
-
-                this.$emit('searcherInitialized')
-            },
-            onClearSearchClicked() {
-                this.searcher.clear()
-
-                this.uis.$searchPermissions.val([]).trigger('change')
-
-                this.onSubmitted()
-            },
-            onSubmitted() {
-                this.$emit('searched')
-            },
+        onSubmitted() {
+            this.$emit('searched')
         },
-    }
+    },
+}
 </script>

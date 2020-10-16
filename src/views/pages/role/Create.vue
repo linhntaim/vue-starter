@@ -31,101 +31,103 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {headTitle, localeChange} from '../../../app/utils'
-    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {TOAST_DEF} from '../../../app/config'
-    import MultipleSelect2Input from '../../components/MultipleSelect2Input'
+import {headTitle, localeChange} from '../../../app/utils'
+import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
+import {TOAST_DEF} from '../../../app/config'
+import MultipleSelect2Input from '../../components/MultipleSelect2Input'
 
-    export default {
-        name: 'Create',
-        components: {MultipleSelect2Input},
-        data() {
+export default {
+    name: 'Create',
+    components: {MultipleSelect2Input},
+    data() {
+        return {
+            loading: false,
+
+            name: '',
+            displayName: '',
+            description: '',
+
+            permissions: [],
+            permissionOptions: {
+                placeholder: this.$tc('actions.select_what', {what: this.$tc('pages.permission', 2)}),
+            },
+
+            select2Ready: false,
+
+            localeChange: localeChange.reset(),
+            localeChangeHandlerId: null,
+        }
+    },
+    computed: {
+        ...mapGetters({
+            metadata: 'prerequisite/metadata',
+            role: 'role/role',
+        }),
+    },
+    head: {
+        title() {
             return {
-                loading: false,
-
-                name: '',
-                displayName: '',
-                description: '',
-
-                permissions: [],
-                permissionOptions: {
-                    placeholder: this.$tc('actions.select_what', {what: this.$tc('pages.permission', 2)}),
-                },
-
-                select2Ready: false,
-                localeChange: localeChange.reset(),
+                inner: headTitle(this.$t('pages._role._create._')),
             }
         },
-        computed: {
-            ...mapGetters({
-                metadata: 'prerequisite/metadata',
-                role: 'role/role',
-            }),
-        },
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('pages._role._create._')),
-                }
-            },
-        },
-        destroyed() {
-            this.localeChange.off()
-        },
-        mounted() {
-            this.localeChange.on()
-            this.init()
-        },
-        methods: {
-            ...mapActions({
-                require: 'prerequisite/require',
-                roleCreate: 'role/create',
-            }),
-            init() {
-                this.loading = true
-                this.require({
-                    names: ['permissions'],
-                    doneCallback: () => {
-                        this.select2Ready = true
+    },
+    destroyed() {
+        this.localeChange.off(this.localeChangeHandlerId)
+    },
+    mounted() {
+        this.localeChangeHandlerId = this.localeChange.on()
+        this.init()
+    },
+    methods: {
+        ...mapActions({
+            require: 'prerequisite/require',
+            roleCreate: 'role/create',
+        }),
+        init() {
+            this.loading = true
+            this.require({
+                names: ['permissions'],
+                doneCallback: () => {
+                    this.select2Ready = true
 
-                        this.loading = false
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                })
-            },
-            onSubmitted() {
-                this.loading = true
-                this.roleCreate({
-                    params: {
-                        name: this.name,
-                        display_name: this.displayName,
-                        permissions: this.permissions,
-                        description: this.description,
-                    },
-                    doneCallback: () => {
-                        this.loading = false
-
-                        this.$router.push({name: 'role_index'})
-
-                        this.$bus.emit('toast', {
-                            title: this.$t('pages._role._create._'),
-                            content: this.$t('pages._role._create.succeed'),
-                            type: TOAST_DEF.success,
-                        })
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                })
-            },
+                    this.loading = false
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            })
         },
-    }
+        onSubmitted() {
+            this.loading = true
+            this.roleCreate({
+                params: {
+                    name: this.name,
+                    display_name: this.displayName,
+                    permissions: this.permissions,
+                    description: this.description,
+                },
+                doneCallback: () => {
+                    this.loading = false
+
+                    this.$router.push({name: 'role_index'})
+
+                    this.$bus.emit('toast', {
+                        title: this.$t('pages._role._create._'),
+                        content: this.$t('pages._role._create.succeed'),
+                        type: TOAST_DEF.success,
+                    })
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            })
+        },
+    },
+}
 </script>

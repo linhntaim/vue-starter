@@ -13,51 +13,51 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {mapGetters} from '@dsquare-gbu/vue-uses'
-    import {systemLogAdminService} from '../../../../app/services/default/admin-system-log'
+import {mapGetters} from '@dsquare-gbu/vue-uses'
+import {systemLogAdminService} from '../../../../app/services/default/admin-system-log'
 
-    export default {
-        name: 'SystemLog',
-        props: {
-            id: Number,
-        },
-        data() {
-            return {
-                loading: false,
+export default {
+    name: 'SystemLog',
+    props: {
+        id: Number,
+    },
+    data() {
+        return {
+            loading: false,
 
-                systemLogs: [],
-            }
+            systemLogs: [],
+        }
+    },
+    computed: {
+        ...mapGetters({
+            accountAuthorizationQueryString: 'account/authorizationQueryString',
+        }),
+    },
+    mounted() {
+        this.init()
+    },
+    methods: {
+        init() {
+            this.onSubmitted()
         },
-        computed: {
-            ...mapGetters({
-                accountAuthorizationQueryString: 'account/authorizationQueryString',
-            }),
+        onSubmitted() {
+            this.loading = true
+            systemLogAdminService().index(
+                {},
+                data => {
+                    this.loading = false
+                    this.systemLogs = data.models
+                },
+                err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            )
         },
-        mounted() {
-            this.init()
-        },
-        methods: {
-            init() {
-                this.onSubmitted()
-            },
-            onSubmitted() {
-                this.loading = true
-                systemLogAdminService().index(
-                    {},
-                    data => {
-                        this.loading = false
-                        this.systemLogs = data.models
-                    },
-                    err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                )
-            },
-        },
-    }
+    },
+}
 </script>

@@ -31,126 +31,128 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {headTitle, localeChange, ui} from '../../../app/utils'
-    import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-    import {Collection} from '@dsquare-gbu/vue-utils'
-    import {TOAST_DEF} from '../../../app/config'
-    import MultipleSelect2Input from '../../components/MultipleSelect2Input'
+import {headTitle, localeChange, ui} from '../../../app/utils'
+import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
+import {Collection} from '@dsquare-gbu/vue-utils'
+import {TOAST_DEF} from '../../../app/config'
+import MultipleSelect2Input from '../../components/MultipleSelect2Input'
 
-    export default {
-        name: 'Edit',
-        components: {MultipleSelect2Input},
-        data() {
+export default {
+    name: 'Edit',
+    components: {MultipleSelect2Input},
+    data() {
+        return {
+            loading: false,
+
+            id: parseInt(this.$route.params.id),
+            name: '',
+            displayName: '',
+            description: '',
+
+            permissions: [],
+            permissionOptions: {
+                placeholder: this.$tc('actions.select_what', {what: this.$tc('pages.permission', 2)}),
+            },
+
+            select2Ready: false,
+
+            localeChange: localeChange.reset(),
+            localeChangeHandlerId: null,
+        }
+    },
+    computed: {
+        ...mapGetters({
+            metadata: 'prerequisite/metadata',
+            role: 'role/role',
+            accountRole: 'account/role',
+        }),
+    },
+    head: {
+        title() {
             return {
-                loading: false,
-
-                id: parseInt(this.$route.params.id),
-                name: '',
-                displayName: '',
-                description: '',
-
-                permissions: [],
-                permissionOptions: {
-                    placeholder: this.$tc('actions.select_what', {what: this.$tc('pages.permission', 2)}),
-                },
-
-                select2Ready: false,
-                localeChange: localeChange.reset(),
+                inner: headTitle(this.$t('pages._role._edit._')),
             }
         },
-        computed: {
-            ...mapGetters({
-                metadata: 'prerequisite/metadata',
-                role: 'role/role',
-                accountRole: 'account/role',
-            }),
+    },
+    destroyed() {
+        this.localeChange.off(this.localeChangeHandlerId)
+    },
+    mounted() {
+        this.localeChangeHandlerId = this.localeChange.on()
+        this.init()
+    },
+    methods: {
+        ...mapActions({
+            require: 'prerequisite/require',
+            getById: 'role/getById',
+            roleEdit: 'role/edit',
+        }),
+        init() {
+            this.loading = true
+            this.require({
+                names: ['permissions'],
+                doneCallback: () => {
+                    this.initById()
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            })
         },
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('pages._role._edit._')),
-                }
-            },
-        },
-        destroyed() {
-            this.localeChange.off()
-        },
-        mounted() {
-            this.localeChange.on()
-            this.init()
-        },
-        methods: {
-            ...mapActions({
-                require: 'prerequisite/require',
-                getById: 'role/getById',
-                roleEdit: 'role/edit',
-            }),
-            init() {
-                this.loading = true
-                this.require({
-                    names: ['permissions'],
-                    doneCallback: () => {
-                        this.initById()
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                })
-            },
-            initById() {
-                this.loading = true
-                this.getById({
-                    id: this.id,
-                    doneCallback: () => {
-                        this.name = this.role.name
-                        this.displayName = this.role.display_name
-                        this.description = this.role.description
+        initById() {
+            this.loading = true
+            this.getById({
+                id: this.id,
+                doneCallback: () => {
+                    this.name = this.role.name
+                    this.displayName = this.role.display_name
+                    this.description = this.role.description
 
-                        this.permissions = (new Collection(this.role.permissions)).pluck('id')
+                    this.permissions = (new Collection(this.role.permissions)).pluck('id')
 
-                        this.select2Ready = true
-                        this.loading = false
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                })
-            },
-            onSubmitted() {
-                this.loading = true
-                this.roleEdit({
-                    id: this.role.id,
-                    params: {
-                        name: this.name,
-                        display_name: this.displayName,
-                        permissions: this.permissions,
-                        description: this.description,
-                    },
-                    doneCallback: () => {
-                        if (this.accountRole === this.name) {
-                            ui.reloadPage()
-                        }
-
-                        this.loading = false
-
-                        this.$bus.emit('toast', {
-                            title: this.$t('pages._role._edit._'),
-                            content: this.$t('pages._role._edit.succeed'),
-                            type: TOAST_DEF.success,
-                        })
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                })
-            },
+                    this.select2Ready = true
+                    this.loading = false
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            })
         },
-    }
+        onSubmitted() {
+            this.loading = true
+            this.roleEdit({
+                id: this.role.id,
+                params: {
+                    name: this.name,
+                    display_name: this.displayName,
+                    permissions: this.permissions,
+                    description: this.description,
+                },
+                doneCallback: () => {
+                    if (this.accountRole === this.name) {
+                        ui.reloadPage()
+                    }
+
+                    this.loading = false
+
+                    this.$bus.emit('toast', {
+                        title: this.$t('pages._role._edit._'),
+                        content: this.$t('pages._role._edit.succeed'),
+                        type: TOAST_DEF.success,
+                    })
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            })
+        },
+    },
+}
 </script>

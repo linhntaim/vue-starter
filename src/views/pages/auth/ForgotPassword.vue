@@ -20,61 +20,61 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {headTitle} from '../../../app/utils'
-    import {mapActions} from '@dsquare-gbu/vue-uses'
-    import {APP_ROUTE} from '../../../app/config'
+import {headTitle} from '../../../app/utils'
+import {mapActions} from '@dsquare-gbu/vue-uses'
+import {APP_ROUTE} from '../../../app/config'
 
-    export default {
-        name: 'ForgotPassword',
-        data() {
+export default {
+    name: 'ForgotPassword',
+    data() {
+        return {
+            loading: false,
+            succeed: false,
+
+            email: '',
+        }
+    },
+    computed: {
+        disabled() {
+            return !this.email
+        },
+    },
+    head: {
+        title() {
             return {
-                loading: false,
-                succeed: false,
-
-                email: '',
+                inner: headTitle(this.$t('pages._auth._forgot_password._')),
             }
         },
-        computed: {
-            disabled() {
-                return !this.email
-            },
+    },
+    created() {
+        if (!this.$server.forgot_password_enabled.admin) {
+            this.$router.push({name: APP_ROUTE.not_found})
+        }
+    },
+    methods: {
+        ...mapActions({
+            accountForgotPassword: 'account/forgotPassword',
+        }),
+        onSubmitted() {
+            this.succeed = false
+            this.loading = true
+            this.accountForgotPassword({
+                email: this.email,
+                appResetPasswordPath: this.$router.getPathByName(APP_ROUTE.reset_password),
+                doneCallback: () => {
+                    this.loading = false
+                    this.succeed = true
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            })
         },
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('pages._auth._forgot_password._')),
-                }
-            },
-        },
-        created() {
-            if (!this.$server.forgot_password_enabled.admin) {
-                this.$router.push({name: APP_ROUTE.not_found})
-            }
-        },
-        methods: {
-            ...mapActions({
-                accountForgotPassword: 'account/forgotPassword',
-            }),
-            onSubmitted() {
-                this.succeed = false
-                this.loading = true
-                this.accountForgotPassword({
-                    email: this.email,
-                    appResetPasswordPath: this.$router.getPathByName(APP_ROUTE.reset_password),
-                    doneCallback: () => {
-                        this.loading = false
-                        this.succeed = true
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                })
-            },
-        },
-    }
+    },
+}
 </script>

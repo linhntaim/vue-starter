@@ -5,42 +5,42 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {mapGetters} from '@dsquare-gbu/vue-uses'
-    import ComponentLoader from '../../ComponentLoader'
-    import {headTitle} from '../../../app/utils'
+import {mapGetters} from '@dsquare-gbu/vue-uses'
+import ComponentLoader from '../../ComponentLoader'
+import {headTitle} from '../../../app/utils'
 
-    export default {
-        name: 'Dashboard',
-        components: {ComponentLoader},
-        computed: {
-            ...mapGetters({
-                accountPermissions: 'account/permissions',
-            }),
+export default {
+    name: 'Dashboard',
+    components: {ComponentLoader},
+    computed: {
+        ...mapGetters({
+            accountPermissions: 'account/permissions',
+        }),
+    },
+    head: {
+        title() {
+            return {
+                inner: headTitle(this.$t('pages._dashboard._')),
+            }
         },
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('pages._dashboard._')),
-                }
-            },
-        },
-        mounted() {
-            this.init()
-        },
-        methods: {
-            init() {
-                if (this.accountPermissions.includes('be-super-admin')) {
-                    this.$refs.component.load('./pages/dashboard/SuperAdminDashboard')
-                    return
-                }
-                // TODO: Other dashboard
+    },
+    mounted() {
+        this.init()
+    },
+    methods: {
+        init() {
+            if (this.accountPermissions.includes('be-super-admin')) {
+                this.$refs.component.load('./pages/dashboard/SuperAdminDashboard')
+                return
+            }
+            // TODO: Other dashboard
 
-                // TODO
-            },
+            // TODO
         },
-    }
+    },
+}
 </script>

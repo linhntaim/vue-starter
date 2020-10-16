@@ -26,85 +26,85 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {commandAdminService} from '../../../../app/services/default/admin-command'
-    import {ui} from '../../../../app/utils'
-    import app from '@dsquare-gbu/vue-app'
-    import helpers from '../../../../app/utils/helpers'
+import {commandAdminService} from '../../../../app/services/default/admin-command'
+import {ui} from '../../../../app/utils'
+import app from '@dsquare-gbu/vue-app'
+import helpers from '../../../../app/utils/helpers'
 
-    export default {
-        name: 'IpLimitation',
-        props: {
-            id: Number,
-        },
-        data() {
-            return {
-                loading: false,
+export default {
+    name: 'IpLimitation',
+    props: {
+        id: Number,
+    },
+    data() {
+        return {
+            loading: false,
 
-                hasLimitation: false,
-                allowedIps: '',
-                deniedIps: '',
-                onlyAdmin: true,
+            hasLimitation: false,
+            allowedIps: '',
+            deniedIps: '',
+            onlyAdmin: true,
+        }
+    },
+    computed: {
+        params() {
+            const params = {}
+            const allowedIps = helpers.string.splitByLine(this.allowedIps)
+            if (allowedIps.length) {
+                params['--allow'] = allowedIps
             }
-        },
-        computed: {
-            params() {
-                const params = {}
-                const allowedIps = helpers.string.splitByLine(this.allowedIps)
-                if (allowedIps.length) {
-                    params['--allow'] = allowedIps
-                }
-                const deniedIps = helpers.string.splitByLine(this.deniedIps)
-                if (deniedIps.length) {
-                    params['--deny'] = deniedIps
-                }
-                if (!allowedIps.length && !deniedIps.length) {
-                    params['--u'] = 'u'
-                } else {
-                    if (this.onlyAdmin) {
-                        params['--admin'] = 'admin'
-                    }
-                }
-                return params
-            },
-        },
-        mounted() {
-            const limitation = app.limitation()
-            if (limitation) {
-                this.hasLimitation = true
-                this.allowedIps = limitation.allowed.join('\n')
-                this.deniedIps = limitation.denied.join('\n')
-                this.onlyAdmin = limitation.admin
+            const deniedIps = helpers.string.splitByLine(this.deniedIps)
+            if (deniedIps.length) {
+                params['--deny'] = deniedIps
             }
+            if (!allowedIps.length && !deniedIps.length) {
+                params['--u'] = 'u'
+            } else {
+                if (this.onlyAdmin) {
+                    params['--admin'] = 'admin'
+                }
+            }
+            return params
         },
-        methods: {
-            onSubmitted() {
-                this.loading = true
-                commandAdminService().run(
-                    {
-                        cmd: 'client:limit',
-                        params: this.params,
-                    },
-                    () => {
-                        this.loading = false
-                        ui.reloadPage()
-                    },
-                    err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                )
-            },
-            onCancelClicked() {
-                this.allowedIps = ''
-                this.deniedIps = ''
-                this.onlyAdmin = false
+    },
+    mounted() {
+        const limitation = app.limitation()
+        if (limitation) {
+            this.hasLimitation = true
+            this.allowedIps = limitation.allowed.join('\n')
+            this.deniedIps = limitation.denied.join('\n')
+            this.onlyAdmin = limitation.admin
+        }
+    },
+    methods: {
+        onSubmitted() {
+            this.loading = true
+            commandAdminService().run(
+                {
+                    cmd: 'client:limit',
+                    params: this.params,
+                },
+                () => {
+                    this.loading = false
+                    ui.reloadPage()
+                },
+                err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            )
+        },
+        onCancelClicked() {
+            this.allowedIps = ''
+            this.deniedIps = ''
+            this.onlyAdmin = false
 
-                this.onSubmitted()
-            },
+            this.onSubmitted()
         },
-    }
+    },
+}
 </script>

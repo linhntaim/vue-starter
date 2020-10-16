@@ -101,7 +101,9 @@ export default {
                 doneCallback: () => {
                     this.loading = false
 
-                    this.$bus.emit('localeChanged')
+                    this.$bus.emit('localeChanged', {
+                        locale: locale,
+                    })
                 },
             })
         },

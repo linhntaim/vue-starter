@@ -12,42 +12,42 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {headTitle} from '../../app/utils'
-    import ClearCacheButton from '../components/ClearCacheButton'
+import {headTitle} from '../../app/utils'
+import ClearCacheButton from '../components/ClearCacheButton'
 
-    export default {
-        name: 'Unauthenticated',
-        components: {ClearCacheButton},
-        data() {
-            return {
-                enabled: false,
-            }
-        },
-        watch: {
-            '$route'() {
-                this.initUi()
-            },
-        },
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('error.unauthenticated._')),
-                }
-            },
-        },
-        mounted() {
+export default {
+    name: 'Unauthenticated',
+    components: {ClearCacheButton},
+    data() {
+        return {
+            enabled: false,
+        }
+    },
+    watch: {
+        '$route'() {
             this.initUi()
         },
-        methods: {
-            initUi() {
-                if (this.$route.query.time) {
-                    this.enabled = true
-                }
-            },
+    },
+    head: {
+        title() {
+            return {
+                inner: headTitle(this.$t('error.unauthenticated._')),
+            }
         },
-    }
+    },
+    mounted() {
+        this.initUi()
+    },
+    methods: {
+        initUi() {
+            if (this.$route.query.time) {
+                this.enabled = true
+            }
+        },
+    },
+}
 </script>

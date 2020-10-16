@@ -16,67 +16,67 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {dateTimer} from '../../../app/utils'
-    import {Searcher} from '@dsquare-gbu/vue-utils'
-    import moment from 'moment'
-    import CalendarInput from '../../components/CalendarInput'
+import {dateTimer} from '../../../app/utils'
+import {Searcher} from '@dsquare-gbu/vue-utils'
+import moment from 'moment'
+import CalendarInput from '../../components/CalendarInput'
 
-    export default {
-        name: 'Search',
-        components: {CalendarInput},
-        props: {
-            disabled: Boolean,
-            searcher: Searcher,
+export default {
+    name: 'Search',
+    components: {CalendarInput},
+    props: {
+        disabled: Boolean,
+        searcher: Searcher,
+    },
+    data() {
+        return {
+            calendarInputOptions: '',
+            shortDateFormat: '',
+        }
+    },
+    computed: {
+        searching() {
+            return this.searcher.searching
         },
-        data() {
-            return {
-                calendarInputOptions: '',
-                shortDateFormat: '',
+    },
+    created() {
+        this.shortDateFormat = dateTimer.getShortDateFormat()
+        const today = moment().format(this.shortDateFormat)
+        this.searcher.setParams({
+            created_date_from: today,
+            created_date_to: today,
+        }, false)
+    },
+    methods: {
+        init() {
+            this.initSearcher()
+        },
+        initSearcher() {
+            this.searcher.parseQuery(this.$route.query)
+
+            this.initUi()
+
+            this.$emit('searcherInitialized')
+        },
+        initUi() {
+            this.calendarInputOptions = {
+                format: this.shortDateFormat,
             }
         },
-        computed: {
-            searching() {
-                return this.searcher.searching
-            },
-        },
-        created() {
-            this.shortDateFormat = dateTimer.getShortDateFormat()
-            const today = moment().format(this.shortDateFormat)
-            this.searcher.setParams({
-                created_date_from: today,
-                created_date_to: today,
-            }, false)
-        },
-        methods: {
-            init() {
-                this.initSearcher()
-            },
-            initSearcher() {
-                this.searcher.parseQuery(this.$route.query)
+        onClearSearchClicked() {
+            this.$refs.searchCreatedFrom.clear()
+            this.$refs.searchCreatedTo.clear()
 
-                this.initUi()
-
-                this.$emit('searcherInitialized')
-            },
-            initUi() {
-                this.calendarInputOptions = {
-                    format: this.shortDateFormat,
-                }
-            },
-            onClearSearchClicked() {
-                this.$refs.searchCreatedFrom.clear()
-                this.$refs.searchCreatedTo.clear()
-
-                this.searcher.clear()
-                this.onSubmitted()
-            },
-            onSubmitted() {
-                this.$emit('searched')
-            },
+            this.searcher.clear()
+            this.onSubmitted()
         },
-    }
+        onSubmitted() {
+            this.$emit('searched')
+        },
+    },
+}
 </script>

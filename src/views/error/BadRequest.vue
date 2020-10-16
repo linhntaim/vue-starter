@@ -9,20 +9,20 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {headTitle} from '../../app/utils'
+import {headTitle} from '../../app/utils'
 
-    export default {
-        name: 'BadRequest',
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('error.bad_request._')),
-                }
-            },
+export default {
+    name: 'BadRequest',
+    head: {
+        title() {
+            return {
+                inner: headTitle(this.$t('error.bad_request._')),
+            }
         },
-    }
+    },
+}
 </script>

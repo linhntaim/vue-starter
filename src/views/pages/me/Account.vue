@@ -5,22 +5,22 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {headTitle} from '../../../app/utils'
-    import EditInformationBox from './EditInformationBox'
+import {headTitle} from '../../../app/utils'
+import EditInformationBox from './EditInformationBox'
 
-    export default {
-        name: 'Account',
-        components: {EditInformationBox},
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('pages._me._')),
-                }
-            },
+export default {
+    name: 'Account',
+    components: {EditInformationBox},
+    head: {
+        title() {
+            return {
+                inner: headTitle(this.$t('pages._me._')),
+            }
         },
-    }
+    },
+}
 </script>

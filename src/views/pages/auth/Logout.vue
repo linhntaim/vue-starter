@@ -4,49 +4,49 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {headTitle} from '../../../app/utils'
-    import {mapActions} from '@dsquare-gbu/vue-uses'
-    import {session} from '@dsquare-gbu/vue-router'
-    import {APP_ROUTE} from '../../../app/config'
+import {headTitle} from '../../../app/utils'
+import {mapActions} from '@dsquare-gbu/vue-uses'
+import {session} from '@dsquare-gbu/vue-router'
+import {APP_ROUTE} from '../../../app/config'
 
-    export default {
-        name: 'Logout',
-        data() {
+export default {
+    name: 'Logout',
+    data() {
+        return {
+            loading: false,
+        }
+    },
+    head: {
+        title() {
             return {
-                loading: false,
+                inner: headTitle(this.$t('pages._auth._logout._')),
             }
         },
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('pages._auth._logout._')),
-                }
-            },
+    },
+    mounted() {
+        this.init()
+    },
+    methods: {
+        ...mapActions({
+            accountLogout: 'account/logout',
+        }),
+        init() {
+            this.loading = true
+            this.accountLogout({
+                alwaysCallback: () => {
+                    this.loading = false
+                    this.afterLogout()
+                },
+            })
         },
-        mounted() {
-            this.init()
+        afterLogout() {
+            session.restart()
+            this.$router.push({name: APP_ROUTE.redirect_path_if_unauthenticated})
         },
-        methods: {
-            ...mapActions({
-                accountLogout: 'account/logout',
-            }),
-            init() {
-                this.loading = true
-                this.accountLogout({
-                    alwaysCallback: () => {
-                        this.loading = false
-                        this.afterLogout()
-                    },
-                })
-            },
-            afterLogout() {
-                session.restart()
-                this.$router.push({name: APP_ROUTE.redirect_path_if_unauthenticated})
-            },
-        },
-    }
+    },
+}
 </script>

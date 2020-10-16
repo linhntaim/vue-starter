@@ -24,102 +24,102 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {mapActions} from '@dsquare-gbu/vue-uses'
-    import {headTitle, intervalCaller, timeoutCaller} from '../../../app/utils'
-    import {APP_ROUTE} from '../../../app/config'
+import {mapActions} from '@dsquare-gbu/vue-uses'
+import {headTitle, intervalCaller, timeoutCaller} from '../../../app/utils'
+import {APP_ROUTE} from '../../../app/config'
 
-    export default {
-        name: 'ResetPassword',
-        data() {
+export default {
+    name: 'ResetPassword',
+    data() {
+        return {
+            loading: false,
+            allowed: false,
+            succeed: false,
+
+            email: '',
+            token: this.$route.params.token,
+            password: '',
+            passwordConfirmation: '',
+
+            go: 11,
+        }
+    },
+    computed: {
+        disabled() {
+            return !this.password || !this.passwordConfirmation
+        },
+    },
+    head: {
+        title() {
             return {
-                loading: false,
-                allowed: false,
-                succeed: false,
-
-                email: '',
-                token: this.$route.params.token,
-                password: '',
-                passwordConfirmation: '',
-
-                go: 11,
+                inner: headTitle(this.$t('pages._auth._reset_password._')),
             }
         },
-        computed: {
-            disabled() {
-                return !this.password || !this.passwordConfirmation
-            },
+    },
+    created() {
+        if (!this.$server.forgot_password_enabled.admin) {
+            this.$router.push({name: APP_ROUTE.not_found})
+        }
+    },
+    mounted() {
+        this.init()
+    },
+    methods: {
+        ...mapActions({
+            accountGetResetPassword: 'account/getResetPassword',
+            accountResetPassword: 'account/resetPassword',
+        }),
+        init() {
+            // check if token existed
+            this.loading = true
+            this.allowed = false
+            this.accountGetResetPassword({
+                token: this.token,
+                doneCallback: data => {
+                    this.loading = false
+                    this.allowed = true
+                    this.email = data.model.email
+                },
+                errorCallback: () => {
+                    this.$router.push({name: APP_ROUTE.not_found})
+                },
+            })
         },
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('pages._auth._reset_password._')),
-                }
-            },
-        },
-        created() {
-            if (!this.$server.forgot_password_enabled.admin) {
-                this.$router.push({name: APP_ROUTE.not_found})
-            }
-        },
-        mounted() {
-            this.init()
-        },
-        methods: {
-            ...mapActions({
-                accountGetResetPassword: 'account/getResetPassword',
-                accountResetPassword: 'account/resetPassword',
-            }),
-            init() {
-                // check if token existed
-                this.loading = true
-                this.allowed = false
-                this.accountGetResetPassword({
-                    token: this.token,
-                    doneCallback: data => {
-                        this.loading = false
-                        this.allowed = true
-                        this.email = data.model.email
-                    },
-                    errorCallback: () => {
-                        this.$router.push({name: APP_ROUTE.not_found})
-                    },
-                })
-            },
-            onSubmitted() {
-                this.loading = true
-                this.succeed = false
-                this.accountResetPassword({
-                    email: this.email,
-                    token: this.token,
-                    password: this.password,
-                    passwordConfirmation: this.passwordConfirmation,
-                    doneCallback: () => {
-                        this.loading = false
-                        this.succeed = true
-                        this.go = 10
-                        const i = intervalCaller.register(() => {
-                            if (this.go === 1) {
-                                intervalCaller.clear(i)
+        onSubmitted() {
+            this.loading = true
+            this.succeed = false
+            this.accountResetPassword({
+                email: this.email,
+                token: this.token,
+                password: this.password,
+                passwordConfirmation: this.passwordConfirmation,
+                doneCallback: () => {
+                    this.loading = false
+                    this.succeed = true
+                    this.go = 10
+                    const i = intervalCaller.register(() => {
+                        if (this.go === 1) {
+                            intervalCaller.clear(i)
 
-                                timeoutCaller.register(() => {
-                                    this.$router.push({name: APP_ROUTE.login})
-                                    this.go = 0
-                                }, 1000)
-                                return
-                            }
-                            --this.go
-                        }, 1000)
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                })
-            },
+                            timeoutCaller.register(() => {
+                                this.$router.push({name: APP_ROUTE.login})
+                                this.go = 0
+                            }, 1000)
+                            return
+                        }
+                        --this.go
+                    }, 1000)
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            })
         },
-    }
+    },
+}
 </script>

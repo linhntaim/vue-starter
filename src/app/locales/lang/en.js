@@ -211,6 +211,7 @@ export default {
             list_of_activity_logs: 'List of activity logs',
             list_of_roles: 'List of roles',
             role_management: 'Role management',
+            sample: 'Sample',
             // TODO:
 
             // TODO
@@ -351,6 +352,12 @@ export default {
                 want_delete: 'Are you sure to delete this role?',
                 want_delete_many: 'Are you sure to delete these roles?',
             },
+        },
+        _sample: {
+            _: 'Sample',
+            // TODO:
+
+            // TODO
         },
         // TODO
         // TODO:

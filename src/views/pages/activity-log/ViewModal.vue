@@ -34,29 +34,29 @@
 </template>
 
 <script>
-    import {mapGetters} from '@dsquare-gbu/vue-uses'
-    import {ui} from '../../../app/utils'
+import {mapGetters} from '@dsquare-gbu/vue-uses'
+import {ui} from '../../../app/utils'
 
-    export default {
-        name: 'ViewModal',
-        data() {
-            return {
-                uis: {},
-                loading: false,
-            }
+export default {
+    name: 'ViewModal',
+    data() {
+        return {
+            uis: {},
+            loading: false,
+        }
+    },
+    computed: {
+        ...mapGetters({
+            activityLog: 'activityLog/activityLog',
+        }),
+    },
+    mounted() {
+        this.uis.$ = ui.query('#viewModal').get()
+    },
+    methods: {
+        open() {
+            this.uis.$.modal('show')
         },
-        computed: {
-            ...mapGetters({
-                activityLog: 'activityLog/activityLog',
-            }),
-        },
-        mounted() {
-            this.uis.$ = ui.query('#viewModal').get()
-        },
-        methods: {
-            open() {
-                this.uis.$.modal('show')
-            },
-        },
-    }
+    },
+}
 </script>

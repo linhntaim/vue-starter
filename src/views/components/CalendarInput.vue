@@ -15,84 +15,84 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {mapGetters} from '@dsquare-gbu/vue-uses'
-    import {ui} from '../../app/utils'
-    import moment from 'moment'
+import {mapGetters} from '@dsquare-gbu/vue-uses'
+import {ui} from '../../app/utils'
+import moment from 'moment'
 
-    const $uis = {}
+const $uis = {}
 
-    export default {
-        name: 'CalendarInput',
-        props: {
-            id: String,
-            placeholder: String,
-            value: String,
-            required: Boolean,
-            options: Object,
+export default {
+    name: 'CalendarInput',
+    props: {
+        id: String,
+        placeholder: String,
+        value: String,
+        required: Boolean,
+        options: Object,
+    },
+    data() {
+        return {
+            content: this.value,
+        }
+    },
+    computed: {
+        ...mapGetters({
+            currentAccount: 'account/account',
+            currentSettings: 'account/settings',
+        }),
+        htmlId() {
+            return '#' + this.id
         },
-        data() {
-            return {
-                content: this.value,
+        icon() {
+            return 'icon' in this.options ? this.options.icon : 'fa-calendar'
+        },
+    },
+    mounted() {
+        $uis._ = ui.query(this.htmlId).get()
+        this.options.locale = this.currentSettings.locale
+        if (this.content) {
+            this.options.userCurrent = false
+            if (this.options.timeOnly) {
+                this.options.date = moment().format('YYYY-MM-DD') + ' ' + this.content
+            } else {
+                this.options.date = this.content
             }
-        },
-        computed: {
-            ...mapGetters({
-                currentAccount: 'account/account',
-                currentSettings: 'account/settings',
-            }),
-            htmlId() {
-                return '#' + this.id
-            },
-            icon() {
-                return 'icon' in this.options ? this.options.icon : 'fa-calendar'
-            },
-        },
-        mounted() {
-            $uis._ = ui.query(this.htmlId).get()
-            this.options.locale = this.currentSettings.locale
-            if (this.content) {
-                this.options.userCurrent = false
-                if (this.options.timeOnly) {
-                    this.options.date = moment().format('YYYY-MM-DD') + ' ' + this.content
-                } else {
-                    this.options.date = this.content
-                }
+        }
+        this.options.icons = {
+            time: 'fa fa-clock',
+        }
+        $uis._.on('change.datetimepicker', e => {
+            if (e.date) {
+                this.update(e.date.format(this.options.format))
             }
-            this.options.icons = {
-                time: 'fa fa-clock',
+        }).datetimepicker(this.options)
+    },
+    methods: {
+        changeDateTime($event) {
+            let date = $event.target.value
+            if (date) {
+                date = this.options.timeOnly ?
+                    moment(moment().format('YYYY-MM-DD') + ' ' + date)
+                    : moment($event.target.value)
+                this.options.date = date.isValid() ? date.format(this.options.format) : moment().format(this.options.format)
+            } else {
+                this.options.date = ''
             }
-            $uis._.on('change.datetimepicker', e => {
-                if (e.date) {
-                    this.update(e.date.format(this.options.format))
-                }
-            }).datetimepicker(this.options)
+            this.update(this.options.date)
         },
-        methods: {
-            changeDateTime($event) {
-                let date = $event.target.value
-                if (date) {
-                    date = this.options.timeOnly ?
-                        moment(moment().format('YYYY-MM-DD') + ' ' + date)
-                        : moment($event.target.value)
-                    this.options.date = date.isValid() ? date.format(this.options.format) : moment().format(this.options.format)
-                } else {
-                    this.options.date = ''
-                }
-                this.update(this.options.date)
-            },
-            update(content) {
-                this.content = content
-                this.$emit('input', this.content)
-                this.$forceUpdate()
-            },
-            clear() {
-                $uis._.datetimepicker('clear')
-                this.update('')
-            },
+        update(content) {
+            this.content = content
+            this.$emit('input', this.content)
+            this.$forceUpdate()
         },
-    }
+        clear() {
+            $uis._.datetimepicker('clear')
+            this.update('')
+        },
+    },
+}
 </script>

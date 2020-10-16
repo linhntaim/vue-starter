@@ -50,140 +50,140 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {cacheHandler, headTitle, permissionChecker} from '../../../app/utils'
-    import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
-    import {Collection, DataPlot, ItemSelection, Searcher, Sorter, Paginator} from '@dsquare-gbu/vue-utils'
-    import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
-    import helpers from '../../../app/utils/helpers'
-    import PaginatorComponent from '../../components/Paginator'
-    import Search from './Search'
-    import SorterComponent from '../../components/Sorter'
-    import ViewModal from './ViewModal'
+import {cacheHandler, headTitle, permissionChecker} from '../../../app/utils'
+import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
+import {Collection, DataPlot, ItemSelection, Searcher, Sorter, Paginator} from '@dsquare-gbu/vue-utils'
+import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
+import helpers from '../../../app/utils/helpers'
+import PaginatorComponent from '../../components/Paginator'
+import Search from './Search'
+import SorterComponent from '../../components/Sorter'
+import ViewModal from './ViewModal'
 
-    const requiredPermissions = [
-        'activity-log-manage',
-    ]
+const requiredPermissions = [
+    'activity-log-manage',
+]
 
-    export default {
-        name: 'Index',
-        components: {ViewModal, Search, SorterComponent, PaginatorComponent},
-        data() {
+export default {
+    name: 'Index',
+    components: {ViewModal, Search, SorterComponent, PaginatorComponent},
+    data() {
+        return {
+            loading: false,
+
+            itemSelection: new ItemSelection(),
+
+            searcher: new Searcher(),
+            sorter: new Sorter(),
+            paginator: new Paginator(ITEMS_PER_PAGE_LIST, cacheHandler),
+            params: new DataPlot(),
+
+            requiredPermissions: {},
+        }
+    },
+    computed: {
+        ...mapGetters({
+            accountPermissions: 'account/permissions',
+            activityLogs: 'activityLog/activityLogs',
+        }),
+        searching() {
+            return this.searcher.searching
+        },
+        canView() {
+            return this.requiredPermissions['activity-log-manage']
+        },
+        canAction() {
+            return this.canView
+        },
+        colspan() {
+            let colspan = 7
+            if (!this.canAction) --colspan
+            return colspan
+        },
+    },
+    head: {
+        title() {
             return {
-                loading: false,
-
-                itemSelection: new ItemSelection(),
-
-                searcher: new Searcher(),
-                sorter: new Sorter(),
-                paginator: new Paginator(ITEMS_PER_PAGE_LIST, cacheHandler),
-                params: new DataPlot(),
-
-                requiredPermissions: {},
+                inner: headTitle(this.$t('pages._activity_log._index._')),
             }
         },
-        computed: {
-            ...mapGetters({
-                accountPermissions: 'account/permissions',
-                activityLogs: 'activityLog/activityLogs',
-            }),
-            searching() {
-                return this.searcher.searching
-            },
-            canView() {
-                return this.requiredPermissions['activity-log-manage']
-            },
-            canAction() {
-                return this.canView
-            },
-            colspan() {
-                let colspan = 7
-                if (!this.canAction) --colspan
-                return colspan
-            },
-        },
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('pages._activity_log._index._')),
-                }
-            },
-        },
-        created() {
-            this.paginator.parseQuery(this.$route.query)
-            this.sorter.parseQuery(this.$route.query, 'created_at', 'desc')
-            this.requiredPermissions = permissionChecker.checkByNames(requiredPermissions, this.accountPermissions)
-        },
-        mounted() {
-            this.init()
-        },
-        methods: {
-            ...mapMutations({
-                setActivityLog: 'activityLog/setActivityLog',
-            }),
-            ...mapActions({
-                activityLogSearch: 'activityLog/search',
-            }),
-            init() {
-                this.plotPaginator()
-                this.plotSorter()
+    },
+    created() {
+        this.paginator.parseQuery(this.$route.query)
+        this.sorter.parseQuery(this.$route.query, 'created_at', 'desc')
+        this.requiredPermissions = permissionChecker.checkByNames(requiredPermissions, this.accountPermissions)
+    },
+    mounted() {
+        this.init()
+    },
+    methods: {
+        ...mapMutations({
+            setActivityLog: 'activityLog/setActivityLog',
+        }),
+        ...mapActions({
+            activityLogSearch: 'activityLog/search',
+        }),
+        init() {
+            this.plotPaginator()
+            this.plotSorter()
 
-                this.$refs.searchModal.init()
-            },
-            plotSorter() {
-                this.params.plot('sorter', {
-                    sort_by: this.sorter.by,
-                    sort_order: this.sorter.order,
-                })
-            },
-            plotPaginator() {
-                this.params.plot('paginator', {
-                    page: this.paginator.pagination.current,
-                    items_per_page: this.paginator.pagination.itemsPerPage,
-                })
-            },
-            searchBySearcher() {
-                this.searcher.saveState()
-                this.params.plot('searcher', this.searcher.params)
-                this.search()
-            },
-            searchBySorter() {
-                this.plotSorter()
-                this.search()
-            },
-            searchByPaginator() {
-                this.plotPaginator()
-                this.search()
-            },
-            search() {
-                this.loading = true
-                const params = this.params.data()
-                this.$router.softReplace({query: helpers.object.clone(params)})
-                this.activityLogSearch({
-                    params: params,
-                    doneCallback: (pagination) => {
-                        this.paginator.parsePagination(pagination)
-                        this.itemSelection.reset().setAll((new Collection(this.activityLogs)).pluck('id'))
-                        this.loading = false
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                })
-            },
-            onSyncClicked() {
-                this.search()
-            },
-            onViewClicked(activityLog) {
-                this.setActivityLog({
-                    activityLog,
-                })
-                this.$refs.viewModel.open()
-            },
+            this.$refs.searchModal.init()
         },
-    }
+        plotSorter() {
+            this.params.plot('sorter', {
+                sort_by: this.sorter.by,
+                sort_order: this.sorter.order,
+            })
+        },
+        plotPaginator() {
+            this.params.plot('paginator', {
+                page: this.paginator.pagination.current,
+                items_per_page: this.paginator.pagination.itemsPerPage,
+            })
+        },
+        searchBySearcher() {
+            this.searcher.saveState()
+            this.params.plot('searcher', this.searcher.params)
+            this.search()
+        },
+        searchBySorter() {
+            this.plotSorter()
+            this.search()
+        },
+        searchByPaginator() {
+            this.plotPaginator()
+            this.search()
+        },
+        search() {
+            this.loading = true
+            const params = this.params.data()
+            this.$router.softReplace({query: helpers.object.clone(params)})
+            this.activityLogSearch({
+                params: params,
+                doneCallback: (pagination) => {
+                    this.paginator.parsePagination(pagination)
+                    this.itemSelection.reset().setAll((new Collection(this.activityLogs)).pluck('id'))
+                    this.loading = false
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            })
+        },
+        onSyncClicked() {
+            this.search()
+        },
+        onViewClicked(activityLog) {
+            this.setActivityLog({
+                activityLog,
+            })
+            this.$refs.viewModel.open()
+        },
+    },
+}
 </script>

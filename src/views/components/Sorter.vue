@@ -5,39 +5,39 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {Sorter} from '@dsquare-gbu/vue-utils'
+import {Sorter} from '@dsquare-gbu/vue-utils'
 
-    export default {
-        name: 'Sorter',
-        props: {
-            title: String,
-            sorter: Sorter,
-            sortBy: String,
+export default {
+    name: 'Sorter',
+    props: {
+        title: String,
+        sorter: Sorter,
+        sortBy: String,
+    },
+    computed: {
+        sorterBy() {
+            return this.sorter.by
         },
-        computed: {
-            sorterBy() {
-                return this.sorter.by
-            },
-            sorterOrder() {
-                return this.sorter.order
-            },
+        sorterOrder() {
+            return this.sorter.order
         },
-        methods: {
-            onClicked() {
-                this.sorter.setBy(this.sortBy)
+    },
+    methods: {
+        onClicked() {
+            this.sorter.setBy(this.sortBy)
 
-                this.$emit('sorted')
-            },
+            this.$emit('sorted')
         },
-    }
+    },
+}
 </script>
 
 <style scoped>
-    .sort-disabled {
-        opacity: 0.25;
-    }
+.sort-disabled {
+    opacity: 0.25;
+}
 </style>

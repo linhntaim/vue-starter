@@ -3,56 +3,56 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {headTitle} from '../../app/utils'
-    import {mapGetters} from '@dsquare-gbu/vue-uses'
-    import {APP_ROUTE} from '../../app/config'
-    import ComponentLoader from '../ComponentLoader'
+import {headTitle} from '../../app/utils'
+import {mapGetters} from '@dsquare-gbu/vue-uses'
+import {APP_ROUTE} from '../../app/config'
+import ComponentLoader from '../ComponentLoader'
 
-    export default {
-        name: 'Root',
-        components: {ComponentLoader},
-        computed: {
-            ...mapGetters({
-                accountIsLoggedIn: 'account/isLoggedIn',
-                accountMatched: 'account/accountMatched',
-                accountPermissions: 'account/permissions',
-            }),
-        },
-        head: {
-            title() {
-                return {
-                    inner: headTitle('Vue Starter'),
-                    complement: 'DSquare - GBU',
-                }
-            },
-        },
-        mounted() {
-            // TODO:
-            //  Make loading component or redirection based on condition
-            if (this.accountIsLoggedIn) {
-                if (this.accountMatched) {
-                    this.redirect('dashboard')
-                } else {
-                    this.redirect(APP_ROUTE.unauthenticated)
-                }
-            } else {
-                this.redirect(APP_ROUTE.login)
+export default {
+    name: 'Root',
+    components: {ComponentLoader},
+    computed: {
+        ...mapGetters({
+            accountIsLoggedIn: 'account/isLoggedIn',
+            accountMatched: 'account/accountMatched',
+            accountPermissions: 'account/permissions',
+        }),
+    },
+    head: {
+        title() {
+            return {
+                inner: headTitle('Vue Starter'),
+                complement: 'DSquare - GBU',
             }
-            // TODO
         },
-        methods: {
-            redirect(routeName) {
-                this.$router.push({
-                    name: routeName,
-                    query: {
-                        time: new Date().getTime(),
-                    },
-                })
-            },
+    },
+    mounted() {
+        // TODO:
+        //  Make loading component or redirection based on condition
+        if (this.accountIsLoggedIn) {
+            if (this.accountMatched) {
+                this.redirect('dashboard')
+            } else {
+                this.redirect(APP_ROUTE.unauthenticated)
+            }
+        } else {
+            this.redirect(APP_ROUTE.login)
+        }
+        // TODO
+    },
+    methods: {
+        redirect(routeName) {
+            this.$router.push({
+                name: routeName,
+                query: {
+                    time: new Date().getTime(),
+                },
+            })
         },
-    }
+    },
+}
 </script>

@@ -10,26 +10,26 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {headTitle} from '../../app/utils'
-    import {APP_ROUTE} from '../../app/config'
+import {headTitle} from '../../app/utils'
+import {APP_ROUTE} from '../../app/config'
 
-    export default {
-        name: 'ServiceUnavailable',
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('error.service_unavailable._')),
-                }
-            },
+export default {
+    name: 'ServiceUnavailable',
+    head: {
+        title() {
+            return {
+                inner: headTitle(this.$t('error.service_unavailable._')),
+            }
         },
-        methods: {
-            onRefreshClicked() {
-                this.$router.push({name: APP_ROUTE.root})
-            },
+    },
+    methods: {
+        onRefreshClicked() {
+            this.$router.push({name: APP_ROUTE.root})
         },
-    }
+    },
+}
 </script>

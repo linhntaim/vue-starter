@@ -211,6 +211,7 @@ export default {
             list_of_activity_logs: 'List of activity logs',
             list_of_roles: '役割の一覧',
             role_management: 'ユーザー管理',
+            sample: 'Sample',
             // TODO:
 
             // TODO
@@ -351,6 +352,12 @@ export default {
                 want_delete: 'この役割を削除してもよろしいですか？?',
                 want_delete_many: 'これらの役割を削除してもよろしいですか？',
             },
+        },
+        _sample: {
+            _: 'Sample',
+            // TODO:
+
+            // TODO
         },
         // TODO
         // TODO:

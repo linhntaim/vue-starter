@@ -200,6 +200,15 @@ export const routes = [
                             },
                         ],
                     },
+                    {
+                        path: 'sample',
+                        component: () => import('../../views/pages/sample/Base'),
+                        children: [
+                            // TODO:
+
+                            // TODO
+                        ],
+                    },
                     // TODO
                     // TODO:
 

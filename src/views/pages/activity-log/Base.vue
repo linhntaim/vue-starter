@@ -5,21 +5,21 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {mapActions} from '@dsquare-gbu/vue-uses'
+import {mapActions} from '@dsquare-gbu/vue-uses'
 
-    export default {
-        name: 'Base',
-        destroyed() {
-            this.activityLogDestruct()
-        },
-        methods: {
-            ...mapActions({
-                activityLogDestruct: 'activityLog/destruct',
-            }),
-        },
-    }
+export default {
+    name: 'Base',
+    destroyed() {
+        this.activityLogDestruct()
+    },
+    methods: {
+        ...mapActions({
+            activityLogDestruct: 'activityLog/destruct',
+        }),
+    },
+}
 </script>
