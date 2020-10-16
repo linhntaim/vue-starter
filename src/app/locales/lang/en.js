@@ -116,6 +116,7 @@ export default {
         search: 'Search',
         select: 'Select',
         select_what: 'Select {what}',
+        submit: 'Submit',
         sync: 'Sync',
         upload: 'Upload',
         verify: 'Verify',
