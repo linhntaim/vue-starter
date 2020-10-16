@@ -16,77 +16,77 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {headTitle} from '../../../app/utils'
-    import {mapActions} from '@dsquare-gbu/vue-uses'
-    import {session} from '@dsquare-gbu/vue-router'
-    import {APP_ROUTE} from '../../../app/config'
+import {headTitle} from '../../../app/utils'
+import {mapActions} from '@dsquare-gbu/vue-uses'
+import {session} from '@dsquare-gbu/vue-router'
+import {APP_ROUTE} from '../../../app/config'
 
-    export default {
-        name: 'Login',
-        data() {
+export default {
+    name: 'Login',
+    data() {
+        return {
+            loading: false,
+
+            impersonateToken: null,
+
+            email: '',
+            password: '',
+        }
+    },
+    computed: {
+        disabled() {
+            return !this.impersonateToken && (!this.email || !this.password)
+        },
+    },
+    head: {
+        title() {
             return {
-                loading: false,
-
-                impersonateToken: null,
-
-                email: '',
-                password: '',
+                inner: headTitle(this.$t('pages._auth._login._')),
             }
         },
-        computed: {
-            disabled() {
-                return !this.impersonateToken && (!this.email || !this.password)
-            },
-        },
-        head: {
-            title() {
-                return {
-                    inner: headTitle(this.$t('pages._auth._login._')),
-                }
-            },
-        },
-        created() {
-            if (this.$route.query.impersonate_token) {
-                this.email = this.$route.query.impersonate_token
-                this.impersonateToken = JSON.parse(this.email).impersonate_token
-            }
-        },
-        methods: {
-            ...mapActions({
-                accountLogin: 'account/login',
-            }),
-            onLoginSubmitted() {
-                this.loading = true
-                this.accountLogin({
-                    email: this.email,
-                    password: this.password,
-                    impersonateToken: this.impersonateToken,
-                    doneCallback: () => {
-                        this.loading = false
+    },
+    created() {
+        if (this.$route.query.impersonate_token) {
+            this.email = this.$route.query.impersonate_token
+            this.impersonateToken = JSON.parse(this.email).impersonate_token
+        }
+    },
+    methods: {
+        ...mapActions({
+            accountLogin: 'account/login',
+        }),
+        onLoginSubmitted() {
+            this.loading = true
+            this.accountLogin({
+                email: this.email,
+                password: this.password,
+                impersonateToken: this.impersonateToken,
+                doneCallback: () => {
+                    this.loading = false
 
-                        this.afterLogin()
-                    },
-                    errorCallback: err => {
-                        this.loading = false
-                        this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
-                    },
-                })
-            },
-            afterLogin() {
-                session.restart()
-
-                this.$router.push({name: APP_ROUTE.root})
-            },
+                    this.afterLogin()
+                },
+                errorCallback: err => {
+                    this.loading = false
+                    this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                },
+            })
         },
-    }
+        afterLogin() {
+            session.restart()
+
+            this.$router.push({name: APP_ROUTE.root})
+        },
+    },
+}
 </script>
 
 <style lang="sass" scoped>
-    form.user .form-control-user
-        height: 50px
-        padding: 1rem 1rem
+form.user .form-control-user
+    height: 50px
+    padding: 1rem 1rem
 </style>

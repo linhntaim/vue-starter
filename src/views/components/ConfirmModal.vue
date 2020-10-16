@@ -14,63 +14,63 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    import {ui} from '../../app/utils'
+import {ui} from '../../app/utils'
 
-    export default {
-        name: 'ConfirmModal',
-        data() {
-            const LABEL_TITLE = this.$t('actions.confirm')
-            const LABEL_CONFIRM = this.$t('actions.yes')
-            const LABEL_CANCEL = this.$t('actions.no')
+export default {
+    name: 'ConfirmModal',
+    data() {
+        const LABEL_TITLE = this.$t('actions.confirm')
+        const LABEL_CONFIRM = this.$t('actions.yes')
+        const LABEL_CANCEL = this.$t('actions.no')
 
-            return {
-                uis: {},
+        return {
+            uis: {},
 
-                LABEL_TITLE,
-                LABEL_CONFIRM,
-                LABEL_CANCEL,
+            LABEL_TITLE,
+            LABEL_CONFIRM,
+            LABEL_CANCEL,
 
-                title: LABEL_TITLE,
-                confirmLabel: LABEL_CONFIRM,
-                cancelLabel: LABEL_CANCEL,
-                message: '',
-                confirmCallback: null,
-                cancelCallback: null,
-            }
+            title: LABEL_TITLE,
+            confirmLabel: LABEL_CONFIRM,
+            cancelLabel: LABEL_CANCEL,
+            message: '',
+            confirmCallback: null,
+            cancelCallback: null,
+        }
+    },
+    destroyed() {
+        this.$bus.off('confirm')
+    },
+    mounted() {
+        this.uis.$ = ui.query('#confirmModal').get()
+
+        this.$bus.on('confirm', ({title, message, confirmCallback, cancelCallback, confirmLabel, cancelLabel}) => {
+            this.show(title, message, confirmCallback, cancelCallback, confirmLabel, cancelLabel)
+        })
+    },
+    methods: {
+        show(title, message, confirmCallback, cancelCallback, confirmLabel, cancelLabel) {
+            this.title = title ? title : this.LABEL_TITLE
+            this.message = message
+            this.confirmCallback = confirmCallback ? confirmCallback : null
+            this.cancelCallback = cancelCallback ? cancelCallback : null
+            this.confirmLabel = confirmLabel ? confirmLabel : this.LABEL_CONFIRM
+            this.cancelLabel = cancelLabel ? cancelLabel : this.LABEL_CANCEL
+
+            this.uis.$.modal('show')
         },
-        destroyed() {
-            this.$bus.off('confirm')
+        onCancelClicked() {
+            this.uis.$.modal('hide')
+            if (this.cancelCallback) this.cancelCallback()
         },
-        mounted() {
-            this.uis.$ = ui.query('#confirmModal').get()
-
-            this.$bus.on('confirm', ({title, message, confirmCallback, cancelCallback, confirmLabel, cancelLabel}) => {
-                this.show(title, message, confirmCallback, cancelCallback, confirmLabel, cancelLabel)
-            })
+        onConfirmClicked() {
+            this.uis.$.modal('hide')
+            if (this.confirmCallback) this.confirmCallback()
         },
-        methods: {
-            show(title, message, confirmCallback, cancelCallback, confirmLabel, cancelLabel) {
-                this.title = title ? title : this.LABEL_TITLE
-                this.message = message
-                this.confirmCallback = confirmCallback ? confirmCallback : null
-                this.cancelCallback = cancelCallback ? cancelCallback : null
-                this.confirmLabel = confirmLabel ? confirmLabel : this.LABEL_CONFIRM
-                this.cancelLabel = cancelLabel ? cancelLabel : this.LABEL_CANCEL
-
-                this.uis.$.modal('show')
-            },
-            onCancelClicked() {
-                this.uis.$.modal('hide')
-                if (this.cancelCallback) this.cancelCallback()
-            },
-            onConfirmClicked() {
-                this.uis.$.modal('hide')
-                if (this.confirmCallback) this.confirmCallback()
-            },
-        },
-    }
+    },
+}
 </script>
