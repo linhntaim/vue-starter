@@ -3,11 +3,11 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    export default {
-        name: 'BaseAuth',
-    }
+export default {
+    name: 'BaseAuth',
+}
 </script>

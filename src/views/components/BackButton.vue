@@ -4,19 +4,19 @@
 </template>
 
 <script>
-    /**
-     * Base - Any modification needs to be approved, except the space inside the block of TODO
-     */
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
 
-    export default {
-        name: 'BackButton',
-        props: {
-            disabled: Boolean,
+export default {
+    name: 'BackButton',
+    props: {
+        disabled: Boolean,
+    },
+    methods: {
+        onClicked() {
+            this.$router.back()
         },
-        methods: {
-            onClicked() {
-                this.$router.back()
-            }
-        }
-    }
+    },
+}
 </script>
