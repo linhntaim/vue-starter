@@ -8,6 +8,7 @@ export class LocaleChange {
     constructor(timeoutCaller) {
         this.timeoutCaller = timeoutCaller
         this.changed = false
+        this.handlers = {}
     }
 
     reset() {
@@ -15,16 +16,25 @@ export class LocaleChange {
         return this
     }
 
-    on() {
-        Vue.prototype.$bus.on('localeChanged', () => {
+    on(callback = null) {
+        const keys = Object.keys(this.handlers)
+        const handlerId = keys.length ? parseInt(keys.pop()) + 1 : 0
+        this.handlers[handlerId] = $event => {
             this.changed = true
+            callback && callback($event)
             this.timeoutCaller.register(() => this.changed = false)
-        })
-        return this
+        }
+        Vue.prototype.$bus.on('localeChanged', this.handlers[handlerId])
+        return handlerId
     }
 
-    off() {
-        Vue.prototype.$bus.off('localeChanged')
+    off(handlerId = null) {
+        if (handlerId) {
+            Vue.prototype.$bus.off('localeChanged', this.handlers[handlerId])
+            delete this.handlers[handlerId]
+        } else {
+            Vue.prototype.$bus.off('localeChanged')
+        }
         return this
     }
 }

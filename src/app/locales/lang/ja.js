@@ -94,6 +94,7 @@ export default {
         search: 'この条件で検索',
         select: '選択',
         select_what: '{what}を選択',
+        submit: 'Submit',
         sync: 'ページを再読み込み',
         upload: 'アップロード',
         verify: '検証',

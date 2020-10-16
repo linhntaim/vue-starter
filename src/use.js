@@ -11,6 +11,10 @@ import {APP_NAME, APP_TITLE_SEPARATOR} from './app/config'
 import VueBus from '@dsquare-gbu/vue-bus'
 import VueDefine from 'vue-define'
 import VueHead from 'vue-head'
+// TODO:
+//  Import extra plugins
+
+// TODO
 
 const appMiddleware = new AppMiddleware()
 
