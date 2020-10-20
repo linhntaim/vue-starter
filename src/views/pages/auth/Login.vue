@@ -84,9 +84,3 @@ export default {
     },
 }
 </script>
-
-<style lang="sass" scoped>
-form.user .form-control-user
-    height: 50px
-    padding: 1rem 1rem
-</style>
