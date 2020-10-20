@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "init": "npm run @assets",
-        "serve": "npm run init && vue-cli-service serve",
+        "serve": "vue-cli-service serve",
         "build": "npm run init && vue-cli-service build",
         "lint": "npm run init && vue-cli-service lint",
         "@assets": "npm run @build && npm run @setup && npm run @compile",
