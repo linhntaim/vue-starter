@@ -23,8 +23,6 @@ import {mapGetters} from '@dsquare-gbu/vue-uses'
 import {ui} from '../../app/utils'
 import moment from 'moment'
 
-const $uis = {}
-
 export default {
     name: 'CalendarInput',
     props: {
@@ -36,6 +34,8 @@ export default {
     },
     data() {
         return {
+            uis: {},
+
             content: this.value,
         }
     },
@@ -52,7 +52,7 @@ export default {
         },
     },
     mounted() {
-        $uis._ = ui.query(this.htmlId).get()
+        this.uis._ = ui.query(this.htmlId).get()
         this.options.locale = this.currentSettings.locale
         if (this.content) {
             this.options.userCurrent = false
@@ -65,7 +65,7 @@ export default {
         this.options.icons = {
             time: 'fa fa-clock',
         }
-        $uis._.on('change.datetimepicker', e => {
+        this.uis._.on('change.datetimepicker', e => {
             if (e.date) {
                 this.update(e.date.format(this.options.format))
             }
@@ -86,12 +86,17 @@ export default {
         },
         update(content) {
             this.content = content
-            this.$emit('input', this.content)
             this.$forceUpdate()
+
+            this.$emit('input', this.content)
         },
-        clear() {
-            $uis._.datetimepicker('clear')
-            this.update('')
+        clear(defaultValue = '') {
+            if (defaultValue) {
+                this.uis._.viewDate(defaultValue)
+            } else {
+                this.uis._.datetimepicker('clear')
+            }
+            this.update(defaultValue)
         },
     },
 }

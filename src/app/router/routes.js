@@ -204,6 +204,11 @@ export const routes = [
                         path: 'sample',
                         component: () => import('../../views/pages/sample/Base'),
                         children: [
+                            {
+                                path: 'calendar',
+                                name: 'sample_calendar_index',
+                                component: () => import('../../views/pages/sample/CalendarIndex'),
+                            },
                             // TODO:
 
                             // TODO

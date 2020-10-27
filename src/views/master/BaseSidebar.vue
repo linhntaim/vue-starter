@@ -54,6 +54,12 @@ const defaultMenuItems = () => [
         matches: [/^\/sample/],
         active: false,
         children: [
+            {
+                title: 'calendar_sample',
+                to: {
+                    name: 'sample_calendar_index',
+                },
+            },
             // TODO: Extra sample items
 
             // TODO

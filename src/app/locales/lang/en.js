@@ -212,6 +212,7 @@ export default {
             list_of_roles: 'List of roles',
             role_management: 'Role management',
             sample: 'Sample',
+            calendar_sample: 'Calendar',
             // TODO:
 
             // TODO
@@ -355,6 +356,9 @@ export default {
         },
         _sample: {
             _: 'Sample',
+            _calendar_index: {
+                _: 'Calendar',
+            },
             // TODO:
 
             // TODO
