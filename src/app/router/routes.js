@@ -209,6 +209,11 @@ export const routes = [
                                 name: 'sample_calendar_index',
                                 component: () => import('../../views/pages/sample/CalendarIndex'),
                             },
+                            {
+                                path: 'select2',
+                                name: 'sample_select2_index',
+                                component: () => import('../../views/pages/sample/Select2Index'),
+                            },
                             // TODO:
 
                             // TODO

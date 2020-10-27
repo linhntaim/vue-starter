@@ -32,3 +32,13 @@
         background-color: $disabledColor;
     }
 }
+
+.select2-container--bootstrap4 {
+    .select2-selection__clear {
+        width: 1.2em;
+        height: 1.2em;
+        line-height: 1.2em;
+        padding-left: .1em;
+        margin-top: .5em;
+    }
+}

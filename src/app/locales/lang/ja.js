@@ -112,6 +112,7 @@ export default {
         refresh: 'リフレッシュ',
         regenerate: '再生成',
         resend: '再送信',
+        reset: 'Reset',
         save: '保存',
         search: 'この条件で検索',
         select: '選択',
@@ -213,6 +214,7 @@ export default {
             role_management: 'ユーザー管理',
             sample: 'Sample',
             calendar_sample: 'Calendar',
+            select2_sample: 'Select2',
             // TODO:
 
             // TODO
@@ -358,6 +360,9 @@ export default {
             _: 'Sample',
             _calendar_index: {
                 _: 'Calendar',
+            },
+            _select2_index: {
+                _: 'Select2',
             },
             // TODO:
 

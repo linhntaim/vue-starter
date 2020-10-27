@@ -112,6 +112,7 @@ export default {
         refresh: 'Refresh',
         regenerate: 'Regenerate',
         resend: 'Resend',
+        reset: 'Reset',
         save: 'Save',
         search: 'Search',
         select: 'Select',
@@ -213,6 +214,7 @@ export default {
             role_management: 'Role management',
             sample: 'Sample',
             calendar_sample: 'Calendar',
+            select2_sample: 'Select2',
             // TODO:
 
             // TODO
@@ -358,6 +360,9 @@ export default {
             _: 'Sample',
             _calendar_index: {
                 _: 'Calendar',
+            },
+            _select2_index: {
+                _: 'Select2',
             },
             // TODO:
 

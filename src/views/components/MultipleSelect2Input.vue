@@ -82,8 +82,9 @@ export default {
             this.selected = selected
             this.$emit('input', this.selected)
         },
-        clear() {
-            this.update([])
+        clear(defaultValue = []) {
+            this.uis.$.val(defaultValue).trigger('change')
+            this.update(defaultValue)
         },
     },
 }

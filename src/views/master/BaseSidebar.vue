@@ -60,6 +60,12 @@ const defaultMenuItems = () => [
                     name: 'sample_calendar_index',
                 },
             },
+            {
+                title: 'select2_sample',
+                to: {
+                    name: 'sample_select2_index',
+                },
+            },
             // TODO: Extra sample items
 
             // TODO

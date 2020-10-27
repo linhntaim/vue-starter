@@ -7,6 +7,9 @@
                 .form-group
                     label.required(for="inputCalendar") Date
                     calendar-input(v-if="calendarInputOptions" ref="inputCalendar" v-model="date" :options="calendarInputOptions" :id="'inputCalendar'")
+                .form-group
+                    label.required(for="inputCalendar2") Date (with value)
+                    calendar-input(v-if="calendarInputOptions2" ref="inputCalendar" v-model="date2" :options="calendarInputOptions" :id="'inputCalendar'")
             .card-footer.clearfix
                 button.btn.btn-secondary.float-left(:disabled="loading" type="button" @click="onReset") {{ $t('actions.reset') }}
                 button.btn.btn-primary.float-right(:disabled="loading" type="submit")
@@ -21,6 +24,7 @@
 
 import {dateTimer, headTitle} from '../../../app/utils'
 import CalendarInput from '@/views/components/CalendarInput'
+import moment from 'moment'
 
 export default {
     name: 'CalendarIndex',
@@ -31,6 +35,9 @@ export default {
 
             date: '',
             calendarInputOptions: null,
+
+            date2: this.sampleShortDateToday(),
+            calendarInputOptions2: null,
         }
     },
     head: {
@@ -44,14 +51,20 @@ export default {
         this.init()
     },
     methods: {
+        sampleShortDateToday() {
+            return moment().format(dateTimer.getShortDateFormat())
+        },
         init() {
             this.initUi()
         },
         initUi() {
-            this.initCalendar()
+            this.uiCalendar()
         },
-        initCalendar() {
+        uiCalendar() {
             this.calendarInputOptions = {
+                format: dateTimer.getShortDateFormat(),
+            }
+            this.calendarInputOptions2 = {
                 format: dateTimer.getShortDateFormat(),
             }
         },
@@ -59,7 +72,10 @@ export default {
             this.$refs.inputCalendar.clear()
         },
         onSubmitted() {
+            // eslint-disable-next-line no-console
             console.log(this.date)
+            // eslint-disable-next-line no-console
+            console.log(this.date2)
         },
     },
 }
