@@ -3,7 +3,7 @@
  */
 
 import {APP_DEFAULT_SERVICE} from '../config'
-import {AxiosServiceInstance} from '@dsquare-gbu/vue-services'
+import {AxiosServiceInstance} from '@linhntaim/vue-services'
 
 export const defaultService = 'axios'
 

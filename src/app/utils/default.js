@@ -20,7 +20,7 @@ import {
     PermissionChecker,
     ServerClock,
     TimeoutCaller,
-} from '@dsquare-gbu/vue-utils'
+} from '@linhntaim/vue-utils'
 import {
     APP_COOKIE,
     APP_DEBUG,

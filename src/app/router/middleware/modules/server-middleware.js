@@ -3,9 +3,9 @@
  */
 
 import {appOptions, ip, serverClock} from '../../../utils'
-import {Middleware} from '@dsquare-gbu/vue-uses'
+import {Middleware} from '@linhntaim/vue-uses'
 import {APP_ROUTE, APP_TYPE, APP_TYPE_ADMIN} from '../../../config'
-import app from '@dsquare-gbu/vue-app'
+import app from '@linhntaim/vue-app'
 import Vue from 'vue'
 
 export default class ServerMiddleware extends Middleware {

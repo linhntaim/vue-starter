@@ -3,7 +3,7 @@
  */
 
 import {serviceFactory} from './index'
-import {AxiosService, ServiceError} from '@dsquare-gbu/vue-services'
+import {AxiosService, ServiceError} from '@linhntaim/vue-services'
 
 class DefaultServiceError extends ServiceError {
     constructor(err, extra = null) {

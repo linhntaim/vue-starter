@@ -3,7 +3,7 @@
  */
 
 import {currentScreen} from '../../../utils'
-import {Middleware} from '@dsquare-gbu/vue-uses'
+import {Middleware} from '@linhntaim/vue-uses'
 
 export default class ScreenMiddleware extends Middleware {
     handle() {

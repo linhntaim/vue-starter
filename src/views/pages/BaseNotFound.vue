@@ -8,7 +8,7 @@
  */
 
 import {headTitle} from '../../app/utils'
-import {mapGetters} from '@dsquare-gbu/vue-uses'
+import {mapGetters} from '@linhntaim/vue-uses'
 import NotFound from '../error/NotFound'
 
 export default {

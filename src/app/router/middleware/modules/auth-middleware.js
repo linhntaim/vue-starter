@@ -3,7 +3,7 @@
  */
 
 import {passportCookieStore} from '../../../utils'
-import {Middleware} from '@dsquare-gbu/vue-uses'
+import {Middleware} from '@linhntaim/vue-uses'
 import {APP_ROUTE} from '../../../config'
 
 export default class AuthMiddleware extends Middleware {
