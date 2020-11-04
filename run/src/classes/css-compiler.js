@@ -1,5 +1,5 @@
 import path from 'path'
-import fs from 'fs-extra'
+import fs from 'fs'
 import sass from 'node-sass'
 import {getEnv} from 'dotenv-packed'
 
@@ -33,8 +33,9 @@ export default class CssCompiler {
                 if (file) {
                     const contents = fs.readFileSync(file)
                     const variables = [
-                        '$publicStorageUrl: "' + getEnv('VUE_APP_PUBLIC_STORAGE_URL', '') + '"',
-                        '$adminUrl: "' + getEnv('VUE_APP_ADMIN_URL', '') + '"',
+                        '$adminUrl: "' + (getEnv('VUE_APP_ADMIN_HOST', 'sub') === 'self' ? getEnv('VUE_APP_ADMIN_URL', '') : getEnv('VUE_APP_ADMIN_HOST_SUB_PATH', '')) + '"',
+                        '$homeUrl: "' + (getEnv('VUE_APP_HOME_HOST', 'sub') === 'self' ? getEnv('VUE_APP_HOME_URL', '') : getEnv('VUE_APP_HOME_HOST_SUB_PATH', '')) + '"',
+                        '$assetsUrl: "' + (getEnv('VUE_APP_ASSETS_HOST', 'sub') === 'self' ? getEnv('VUE_APP_ASSETS_URL', '') : getEnv('VUE_APP_ASSETS_HOST_SUB_PATH', '')) + '"',
                     ]
                     return {
                         contents: variables.join(';\n') + ';\n' + contents,
