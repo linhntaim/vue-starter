@@ -3,14 +3,15 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "init": "npm run @assets",
+        "init": "npm run @run && npm run @assets",
         "serve": "vue-cli-service serve",
-        "build": "npm run init && vue-cli-service build",
+        "build": "npm run init && vue-cli-service build && npm run @build",
         "lint": "npm run init && vue-cli-service lint",
-        "@assets": "npm run @build && npm run @setup && npm run @compile",
-        "@build": "babel ./run/src --out-dir ./run/dist --config-file ./babel.run-config.js --delete-dir-on-start --minified --source-maps",
+        "@run": "babel ./run/src --out-dir ./run/dist --config-file ./babel.run-config.js --delete-dir-on-start --minified --source-maps",
+        "@assets": "npm run @setup && npm run @compile",
         "@setup": "node ./run/dist/setup.js",
-        "@compile": "node ./run/dist/compile.js"
+        "@compile": "node ./run/dist/compile.js",
+        "@build": "node ./run/dist/build.js"
     },
     "dependencies": {
         "@dsquare-gbu/vue-app": "^1.0.8",

@@ -8,7 +8,7 @@ npm install
 
 ### Init the project
 
-Setup and compile assets files to public folder:
+Build source code in `run` folder then setup and compile assets files to public folder:
 
 ```
 npm run init
@@ -19,6 +19,8 @@ npm run init
 ```
 npm run serve
 ```
+
+**Note: Make sure you have assets setup and compile before executing by running [Init the project command](#init-the-project)
 
 ### Compiles and minifies for production
 
@@ -32,7 +34,13 @@ npm run build
 npm run lint
 ```
 
-#### Build and run assets feature
+#### Build source code in `run` folder
+
+```
+npm run @run
+```
+
+#### Setup and compile asset files
 
 ```
 npm run @assets
