@@ -22,6 +22,10 @@ export const APP_HOME_HOST = process.env.VUE_APP_HOME_HOST
 export const APP_HOME_HOST_SUB_PATH = process.env.VUE_APP_HOME_HOST_SUB_PATH
 export const APP_HOME_URL = APP_HOME_HOST === APP_HOST_SUB ? window.location.origin + APP_HOME_HOST_SUB_PATH : process.env.VUE_APP_HOME_URL
 export const APP_HOME_PATH = APP_HOME_HOST === APP_HOST_SUB ? APP_HOME_HOST_SUB_PATH : ''
+export const APP_ASSETS_HOST = process.env.VUE_APP_ASSETS_HOST
+export const APP_ASSETS_HOST_SUB_PATH = process.env.VUE_APP_ASSETS_HOST_SUB_PATH
+export const APP_ASSETS_URL = APP_ASSETS_HOST === APP_HOST_SUB ? window.location.origin + APP_ASSETS_HOST_SUB_PATH : process.env.VUE_APP_ASSETS_URL
+export const APP_ASSETS_PATH = APP_ASSETS_HOST === APP_HOST_SUB ? APP_ASSETS_HOST_SUB_PATH : ''
 export const APP_SERVICE_HOST = process.env.VUE_APP_SERVICE_HOST
 export const APP_SERVICE_HOST_SUB_PATH = process.env.VUE_APP_SERVICE_HOST_SUB_PATH
 export const APP_SERVICE_URL = APP_SERVICE_HOST === APP_HOST_SUB ? window.location.origin + APP_SERVICE_HOST_SUB_PATH : process.env.VUE_APP_SERVICE_URL
