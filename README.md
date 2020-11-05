@@ -88,6 +88,11 @@ Determine which folder to build source into.
 
 Default value is `dist` folder.
 
+If the source is built with [Laravel Starter](http://git-gbu.japaneast.cloudapp.azure.com/base/laravel-starter), 
+the value should be `..\..\..\public\admin` (if you want to compose it as `standalone` part) 
+or `..\..\..\public` (if you want to mix it with other main back-end host files)
+('cause the source is usually put in `resources/themes/admin` folder of Laravel Starter).
+
 ### VUE_APP_BUILD_COMPOSE
 
 Determine which target the build should be composed.
