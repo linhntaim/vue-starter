@@ -21,10 +21,10 @@ export default class BuildCopier {
         if (fs.existsSync(this.distDirectory)) {
             console.warn('START COPYING...')
             if (!fs.existsSync(this.toDirectory)) {
-                fs.mkdirSync(this.toDirectory)
+                fs.mkdirSync(this.toDirectory, {recursive: true})
                 console.info('To directory [' + this.toDirectory + '] created@')
             }
-            const dirNames = fs.readdirSync('./dist')
+            const dirNames = fs.readdirSync(this.distDirectory)
             dirNames.forEach(dirName => {
                 if (!this.standalone) {
                     if (dirName === 'bin' || /\.example$/.test(dirName)) {
@@ -39,13 +39,14 @@ export default class BuildCopier {
                     if (fs.existsSync(to)) {
                         fsExtra.removeSync(to)
                     }
-                    fs.mkdirSync(to)
+                    fs.mkdirSync(to, {recursive: true})
                     cpx.copySync(from + '/**/*.*', to)
                 } else if (lstat.isFile()) {
                     fs.copyFileSync(from, to)
                 }
                 console.info('Copied!')
             })
+            fsExtra.removeSync(this.distDirectory)
             console.info('DONE!!!')
         } else {
             console.error('Dist directory [' + this.distDirectory + '] does not exist!')
