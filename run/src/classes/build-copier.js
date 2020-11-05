@@ -9,6 +9,7 @@ export default class BuildCopier {
         this.distDirectory = './' + this.distFolder
         this.toDirectory = getEnv('VUE_APP_BUILD_PATH', '')
         this.shouldCopy = this.toDirectory !== this.distFolder
+        this.standalone = getEnv('VUE_APP_BUILD_COMPOSE', '') === 'standalone'
     }
 
     copy() {
@@ -25,6 +26,11 @@ export default class BuildCopier {
             }
             const dirNames = fs.readdirSync('./dist')
             dirNames.forEach(dirName => {
+                if (!this.standalone) {
+                    if (dirName === 'bin' || /\.example$/.test(dirName)) {
+                        return
+                    }
+                }
                 const from = this.distDirectory + '/' + dirName
                 const to = this.toDirectory + '/' + dirName
                 const lstat = fs.lstatSync(from)
