@@ -4,11 +4,11 @@
     <!-- Default: disabled, remove comment to enable (note to make the line with // turn to comment) -->
     <!--
     <configSections>
-        <section name="httpAuthModule" type="System.Configuration.NameValueFileSectionHandler" />
+        <section name="httpAuthModule" type="System.Configuration.NameValueFileSectionHandler"/>
     </configSections>
     <httpAuthModule>
-        <add key="AuthMode" value="Basic" />
-        <add key="Realm" value="SecureZone" />
+        <add key="AuthMode" value="Basic"/>
+        <add key="Realm" value="SecureZone"/>
         // Ignore: IPs (GBU - Security Room)
         // Ignore: IPs (GBU - Office)
         // Ignore: IPs (JPN - Office)
@@ -17,7 +17,7 @@
         // Ignore: Images
         <add key="IgnorePathRegex" value="^.+\.(jpg|jpeg|png|gif|svg|ico)$"/>
         // Other must fill username and password
-        <add key="Credentials" value="hakuhodo_base:Base@190708" />
+        <add key="Credentials" value="hakuhodo_base:Base@190708"/>
     </httpAuthModule>
     -->
     <system.web>
@@ -30,10 +30,12 @@
     <system.webServer>
         <!-- If basic authentication is enabled, remove comment
         <modules>
-            <add type="HttpAuthModule.HttpAuthModule" name="HttpAuthModule" />
+            <add type="HttpAuthModule.HttpAuthModule" name="HttpAuthModule"/>
         </modules>
         -->
         <!-- Set default document -->
+        <!-- Default: disabled, 'cause App Services don't like it) -->
+        <!--
         <defaultDocument enabled="true">
             <files>
                 <add value="index.htm"/>
@@ -41,6 +43,7 @@
                 <add value="index.php"/>
             </files>
         </defaultDocument>
+        -->
         <!-- Set mime for some specific file extension -->
         <staticContent>
             <remove fileExtension=".json"/>
@@ -70,7 +73,7 @@
                 <!-- Enable cross-domain accessing -->
                 <add name="Access-Control-Allow-Origin" value="*"/>
                 <add name="Access-Control-Allow-Headers"
-                     value="Accept, Authorization, Content-Type, Device, Origin, Referer, User-Agent, X-Authorization, X-Settings, X-Requested-With"/>
+                     value="Accept, Authorization, Content-Type, Device, Origin, Referer, User-Agent, X-Authorization, X-Device, X-Requested-With, X-Settings, X-Screen"/>
                 <add name="Access-Control-Allow-Methods" value="OPTIONS, GET, POST, PUT, DELETE"/>
                 <add name="Access-Control-Max-Age" value="86400"/>
 
@@ -118,12 +121,12 @@
             <rules>
                 <!-- Handle Front -->
                 <rule name="Front" stopProcessing="true">
-                    <match url="^" ignoreCase="false" />
+                    <match url="^" ignoreCase="false"/>
                     <conditions logicalGrouping="MatchAll">
-                        <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true" />
-                        <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true" />
+                        <add input="{REQUEST_FILENAME}" matchType="IsDirectory" negate="true"/>
+                        <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="true"/>
                     </conditions>
-                    <action type="Rewrite" url="index.html" appendQueryString="true" />
+                    <action type="Rewrite" url="index.html" appendQueryString="true"/>
                 </rule>
             </rules>
         </rewrite>
