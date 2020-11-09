@@ -24,5 +24,6 @@ pnpm-debug.log*
 # Custom
 .env
 *.backup*
-public/css/style.min.css
-public/vendor
+/public/css/style.min.css
+/public/vendor
+/public/vendors

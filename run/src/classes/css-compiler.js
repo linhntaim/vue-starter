@@ -12,6 +12,10 @@ export default class CssCompiler {
     }
 
     compile(doneCallback = null, errorCallback = null) {
+        if (!fs.existsSync(this.inFile)) {
+            return
+        }
+
         if (!fs.existsSync(this.outDirectory)) {
             fs.mkdirSync(this.outDirectory, {
                 recursive: true,
