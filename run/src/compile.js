@@ -11,7 +11,7 @@ new CssBuilder().build([
     'style',
 ], [
     // TODO: Stable CSS Files
-    './public/vendor/startbootstrap-sb-admin-2/css/sb-admin-2.min.css',
+    './public/vendors/startbootstrap-sb-admin-2/css/sb-admin-2.min.css',
     // TODO
     // TODO:
 
