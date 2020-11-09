@@ -10,36 +10,36 @@ parseEnv()
 new AssetCopier().add(...[
     {
         src: 'node_modules/jquery/dist',
-        dst: 'public/vendor/jquery',
+        dst: 'public/vendors/jquery',
     },
     {
         src: 'node_modules/bootstrap/dist',
-        dst: 'public/vendor/bootstrap',
+        dst: 'public/vendors/bootstrap',
     },
     {
         src: 'node_modules/jquery.easing',
-        dst: 'public/vendor/jquery.easing',
+        dst: 'public/vendors/jquery.easing',
         notRecursive: true,
     },
     {
         src: 'node_modules/@fortawesome/fontawesome-free',
-        dst: 'public/vendor/fontawesome-free',
+        dst: 'public/vendors/fontawesome-free',
     },
     {
         src: 'node_modules/animate.css',
-        dst: 'public/vendor/animate.css',
+        dst: 'public/vendors/animate.css',
     },
     {
         src: 'node_modules/flag-icon-css/css',
-        dst: 'public/vendor/flag-icon-css/css',
+        dst: 'public/vendors/flag-icon-css/css',
     },
     {
         src: 'node_modules/flag-icon-css/flags',
-        dst: 'public/vendor/flag-icon-css/flags',
+        dst: 'public/vendors/flag-icon-css/flags',
     },
     {
         src: 'node_modules/blueimp-canvas-to-blob/js',
-        dst: 'public/vendor/blueimp-canvas-to-blob',
+        dst: 'public/vendors/blueimp-canvas-to-blob',
     },
     // TODO: Extra Assets
 
