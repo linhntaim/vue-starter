@@ -48,6 +48,7 @@
         "eslint-plugin-vue": "^6.2.2",
         "flag-icon-css": "^3.5.0",
         "fs-extra": "^9.0.1",
+        "html2pug": "^4.0.0",
         "node-sass": "^4.12.0",
         "pug": "^3.0.0",
         "pug-plain-loader": "^1.0.0",
