@@ -67,6 +67,24 @@ Compile asset files in `src/assets/css/public` folder and copy compiled files to
 npm run @compile
 ```
 
+#### Compose templates
+
+##### Pug
+
+Compose `.pug` files from HTML files in `src/assets/compose` folder.
+
+```
+npm run @compose-pug
+```
+
+##### Vue
+
+Compose `.vue` files from HTML files in `src/assets/compose` folder.
+
+```
+npm run @compose-vue
+```
+
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
