@@ -28,7 +28,7 @@ export default {
     },
     methods: {
         onRefreshClicked() {
-            this.$router.push({name: APP_ROUTE.root})
+            this.$router.push(APP_ROUTE.root)
         },
     },
 }

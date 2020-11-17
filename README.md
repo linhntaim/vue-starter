@@ -1,5 +1,13 @@
 # vue-starter
 
+---
+
+&raquo; [Commands](#project-setup)
+
+&raquo; [Configuration](#environment-variables)
+
+---
+
 ## Project setup
 
 ```
@@ -69,21 +77,33 @@ npm run @compile
 
 #### Compose templates
 
+You can compose Pug or Vue templates from HTML files by executing `@compose-*` commands.
+
+HTML files should be placed in `src/assets/compose/html` directory.
+
 ##### Pug
 
-Compose `.pug` files from HTML files in `src/assets/compose` folder.
+Compose `.pug` files from HTML files in `src/assets/compose/html` directory.
 
 ```
 npm run @compose-pug
 ```
 
+Composed files will be stored in `src/assets/compose/pug` directory.
+
 ##### Vue
 
-Compose `.vue` files from HTML files in `src/assets/compose` folder.
+Compose `.vue` files from HTML files in `src/assets/compose` directory.
 
 ```
 npm run @compose-vue
 ```
+
+Composed files will be stored in `src/assets/compose/vue` directory.
+
+Pug-composed files will also be stored in `src/assets/compose/pug` directory.
+
+** **Note**: Make sure you have a template file named `.vue.template` in `src/views/templates` directory.
 
 ### Customize configuration
 
@@ -266,9 +286,9 @@ Settings for cookies.
         - `point_space`: `1000000` will be formatted as `1 000 000.00`.
         - `comma_point`: `1000000` will be formatted as `1.000.000,00`.
         - `comma_space`: `1000000` will be formatted as `1 000 000,00`.
- 
- ### VUE_APP_MAX_CHUNK_UPLOAD_SIZE
- 
- For uploading a large file by splitting it into chunks, the size of each chunk is set as the value in `bytes` here.
- 
- If value is empty, default size of `1MB` is applied.
+
+### VUE_APP_MAX_CHUNK_UPLOAD_SIZE
+
+For uploading a large file by splitting it into chunks, the size of each chunk is set as the value in `bytes` here.
+
+If value is empty, default size of `1MB` is applied.

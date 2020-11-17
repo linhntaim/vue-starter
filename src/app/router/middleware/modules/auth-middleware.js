@@ -3,6 +3,7 @@
  */
 
 import {passportCookieStore} from '../../../utils'
+import {session} from '@dsquare-gbu/vue-router'
 import {Middleware} from '@dsquare-gbu/vue-uses'
 import {APP_ROUTE} from '../../../config'
 
@@ -48,9 +49,7 @@ export default class AuthMiddleware extends Middleware {
         store.dispatch('account/refreshToken', {
             refreshToken: storedPassport.refreshToken,
             doneCallback: () => this.handleAuth(),
-            errorCallback: () => this.redirect({
-                name: APP_ROUTE.bad_request,
-            }),
+            errorCallback: () => this.redirect(APP_ROUTE.badRequest),
         })
     }
 
@@ -60,9 +59,7 @@ export default class AuthMiddleware extends Middleware {
         if (this.replaceRoutesIfNeeded()) return
 
         if (this.to().matched.some(record => record.meta.requireNotAuth)) {
-            this.redirect({
-                name: APP_ROUTE.redirect_path_if_authenticated,
-            })
+            this.redirect(APP_ROUTE.redirectIfAuthenticated)
             return
         }
 
@@ -70,9 +67,7 @@ export default class AuthMiddleware extends Middleware {
             doneCallback: () => this.next(),
             errorCallback: () => {
                 if (this.to().matched.some(record => record.meta.requireAuth)) {
-                    this.redirect({
-                        name: APP_ROUTE.unauthenticated,
-                    })
+                    this.redirect(APP_ROUTE.unauthenticated)
                     return
                 }
 
@@ -87,9 +82,12 @@ export default class AuthMiddleware extends Middleware {
         if (this.replaceRoutesIfNeeded(false)) return
 
         if (this.to().matched.some(record => record.meta.requireAuth)) {
-            this.redirect({
-                name: APP_ROUTE.redirect_path_if_unauthenticated,
-            })
+            const rdrLocation = {
+                path: this.to().fullPath,
+            }
+            this.log(JSON.stringify(rdrLocation), 'auth.unauthenticated.redirect_after_authenticated')
+            session.flash('redirect_after_authenticated', rdrLocation)
+            this.redirect(APP_ROUTE.redirectIfUnauthenticated)
             return
         }
 
