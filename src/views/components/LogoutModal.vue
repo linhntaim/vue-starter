@@ -17,11 +17,13 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
+import {APP_ROUTE} from '@/app/config'
+
 export default {
     name: 'LogoutModal',
     methods: {
         onLogoutClicked() {
-            this.$router.push({name: 'logout'})
+            this.$router.push(APP_ROUTE.unauthenticate)
         },
     },
 }

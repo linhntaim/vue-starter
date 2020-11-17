@@ -35,23 +35,27 @@ export default {
         //  Make loading component or redirection based on condition
         if (this.accountIsLoggedIn) {
             if (this.accountMatched) {
-                this.redirect('dashboard')
+                this.redirect({
+                    name: 'dashboard',
+                })
             } else {
                 this.redirect(APP_ROUTE.unauthenticated)
             }
         } else {
-            this.redirect(APP_ROUTE.login)
+            this.redirect(APP_ROUTE.authenticate)
         }
         // TODO
     },
     methods: {
-        redirect(routeName) {
-            this.$router.push({
-                name: routeName,
-                query: {
+        redirect(location) {
+            if ('query' in location) {
+                location.query.time = new Date().getTime()
+            } else {
+                location.query = {
                     time: new Date().getTime(),
-                },
-            })
+                }
+            }
+            this.$router.push(location)
         },
     },
 }

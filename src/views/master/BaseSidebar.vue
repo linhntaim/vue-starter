@@ -1,6 +1,6 @@
 <template lang="pug">
     ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.accordion
-        router-link.sidebar-brand.d-flex.align-items-center.justify-content-center(@click.native="onRouterClicked()" :to="{name: rootName}")
+        router-link.sidebar-brand.d-flex.align-items-center.justify-content-center(@click.native="onRouterClicked()" :to="rootLocation")
             .sidebar-brand-icon.show-sm
                 | {{ appName.charAt(0).toUpperCase() }}
             .sidebar-brand-text.mx-2
@@ -110,7 +110,7 @@ export default {
             uis: {},
 
             appName: APP_NAME,
-            rootName: APP_ROUTE.home,
+            rootLocation: APP_ROUTE.root,
             filteredMenuItems: [],
         }
     },
@@ -128,7 +128,6 @@ export default {
         this.destroyUi()
     },
     mounted() {
-        this.initRootPath()
         this.initMenuItems()
     },
     methods: {
@@ -150,9 +149,6 @@ export default {
         },
         destroyUi() {
             this.uis.$body.removeClass('sidebar-toggled')
-        },
-        initRootPath() {
-            this.rootName = APP_ROUTE.root
         },
         initMenuItems() {
             this.filteredMenuItems = defaultMenuItems()

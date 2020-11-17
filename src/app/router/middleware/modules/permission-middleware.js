@@ -17,9 +17,7 @@ export default class PermissionMiddleware extends Middleware {
             const route = to.matched[i]
             if ('name' in route && route.name in routePermissions) {
                 if (!permissionChecker.checkAtLeast(routePermissions[route.name], accountPermissions)) {
-                    this.redirect({
-                        name: APP_ROUTE.unauthorized,
-                    })
+                    this.redirect(APP_ROUTE.unauthorized)
                     return
                 }
             }

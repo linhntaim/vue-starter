@@ -52,7 +52,7 @@ export default {
     },
     created() {
         if (!this.$server.forgot_password_enabled.admin) {
-            this.$router.push({name: APP_ROUTE.not_found})
+            this.$router.push(APP_ROUTE.notFound)
         }
     },
     methods: {
@@ -64,7 +64,7 @@ export default {
             this.loading = true
             this.accountForgotPassword({
                 email: this.email,
-                appResetPasswordPath: this.$router.getPathByName(APP_ROUTE.reset_password),
+                appResetPasswordPath: this.$router.getPathByName(APP_ROUTE.resetPassword),
                 doneCallback: () => {
                     this.loading = false
                     this.succeed = true

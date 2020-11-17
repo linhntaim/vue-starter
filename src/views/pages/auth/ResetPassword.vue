@@ -62,7 +62,7 @@ export default {
     },
     created() {
         if (!this.$server.forgot_password_enabled.admin) {
-            this.$router.push({name: APP_ROUTE.not_found})
+            this.$router.push(APP_ROUTE.notFound)
         }
     },
     mounted() {
@@ -85,7 +85,7 @@ export default {
                     this.email = data.model.email
                 },
                 errorCallback: () => {
-                    this.$router.push({name: APP_ROUTE.not_found})
+                    this.$router.push(APP_ROUTE.notFound)
                 },
             })
         },
@@ -106,7 +106,7 @@ export default {
                             intervalCaller.clear(i)
 
                             timeoutCaller.register(() => {
-                                this.$router.push({name: APP_ROUTE.login})
+                                this.$router.push(APP_ROUTE.authenticate)
                                 this.go = 0
                             }, 1000)
                             return

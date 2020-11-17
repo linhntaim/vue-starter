@@ -1,7 +1,7 @@
 <template lang="pug">
     .flex-center.position-ref.full-height
         .top-right.links
-            router-link(:to="{name: 'logout'}") Logout
+            router-link(:to="appRoutes.unauthenticate") Logout
         .content
             .title.m-b-md
                 | DSquare - GBU
@@ -19,7 +19,14 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
+import {APP_ROUTE} from '@/app/config'
+
 export default {
     name: 'IndexAuth',
+    data() {
+        return {
+            appRoutes: APP_ROUTE,
+        }
+    },
 }
 </script>
