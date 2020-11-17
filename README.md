@@ -2,9 +2,9 @@
 
 ---
 
-&raquo; [Commands](#project-setup)
+&raquo; [Project setup](#project-setup)
 
-&raquo; [Configuration](#environment-variables)
+&raquo; [Environment variables](#environment-variables)
 
 ---
 

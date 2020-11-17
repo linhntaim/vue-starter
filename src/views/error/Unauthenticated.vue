@@ -2,13 +2,12 @@
     .card.shadow.error-block
         .card-body
             .text-center
-                .text-center
-                    .error.mx-auto 401
-                    p.lead.text-gray-800.mb-5 {{ $t('error.unauthenticated._') }}
-                    p.text-gray-500.mb-0 {{ $t('error.unauthenticated.desc') }}
-                    div(:class="{'mb-2': enabled}")
-                        router-link(:to="{path: '/auth/login'}") ← {{ $t('actions.go', {where: $t('pages._auth._login._')}) }}
-                    clear-cache-button(:enabled="enabled")
+                .error.mx-auto 401
+                p.lead.text-gray-800.mb-5 {{ $t('error.unauthenticated._') }}
+                p.text-gray-500.mb-0 {{ $t('error.unauthenticated.desc') }}
+                div(:class="{'mb-2': enabled}")
+                    router-link(:to="appRoutes.authenticate") ← {{ $t('actions.go', {where: $t('pages._auth._login._')}) }}
+                clear-cache-button(:enabled="enabled")
 </template>
 
 <script>
@@ -18,12 +17,14 @@
 
 import {headTitle} from '../../app/utils'
 import ClearCacheButton from '../components/ClearCacheButton'
+import {APP_ROUTE} from '@/app/config'
 
 export default {
     name: 'Unauthenticated',
     components: {ClearCacheButton},
     data() {
         return {
+            appRoutes: APP_ROUTE,
             enabled: false,
         }
     },
