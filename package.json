@@ -11,7 +11,9 @@
         "@assets": "npm run @setup && npm run @compile",
         "@setup": "node ./run/dist/setup.js",
         "@compile": "node ./run/dist/compile.js",
-        "@build": "node ./run/dist/build.js"
+        "@build": "node ./run/dist/build.js",
+        "@compose-pug": "node ./run/dist/compose.js --pug ./src/assets/compose/html ./src/assets/compose/pug",
+        "@compose-vue": "node ./run/dist/compose.js --vue ./src/assets/compose/html ./src/assets/compose/pug ./src/assets/compose/vue ./src/views/templates/.vue.template"
     },
     "dependencies": {
         "@dsquare-gbu/vue-app": "^1.0.8",
