@@ -82,7 +82,11 @@ export default class AuthMiddleware extends Middleware {
         if (this.replaceRoutesIfNeeded(false)) return
 
         if (this.to().matched.some(record => record.meta.requireAuth)) {
-            session.flash('redirect_after_authenticated', this.to().path)
+            const rdrLocation = {
+                path: this.to().fullPath,
+            }
+            this.log(JSON.stringify(rdrLocation), 'auth.unauthenticated.redirect_after_authenticated')
+            session.flash('redirect_after_authenticated', rdrLocation)
             this.redirect(APP_ROUTE.redirectIfUnauthenticated)
             return
         }
