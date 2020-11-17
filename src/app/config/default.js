@@ -135,22 +135,48 @@ export const CLOCK_BLOCK_KEYS = [
     'R^dANH-e^*?h6UK@uCR_a?dSX%aj7L%!^mM=#xzFY9E*=x3aF9uaLwvHBj4VHCVH',
 ]
 export const APP_ROUTE = {
-    root: 'root',
-    login: 'login',
-    redirect_path_if_authenticated: 'root',
-    redirect_path_if_unauthenticated: 'root',
-    redirect_path_after_login: 'root',
-    redirect_path_after_logout: 'root',
-    redirect_path_after_register: 'root',
-    maintenance: 'maintenance',
-    bad_request: 'bad_request',
-    unauthenticated: 'unauthenticated',
-    unauthorized: 'unauthorized',
-    not_found: 'not_found',
-    internal_server_error: 'internal_server_error',
-    service_unavailable: 'service_unavailable',
-    reset_password: 'reset_password',
-    verify_email: 'verify_email',
+    root: {
+        name: 'root',
+    },
+    redirectIfAuthenticated: {
+        name: 'root',
+    },
+    redirectIfUnauthenticated: {
+        name: 'login',
+    },
+    redirectAfterAuthenticated: {
+        name: 'root',
+    },
+    redirectAfterUnauthenticated: {
+        name: 'root',
+    },
+    authenticate: {
+        name: 'login',
+    },
+    unauthenticate: {
+        name: 'logout',
+    },
+    maintenance: {
+        name: 'maintenance',
+    },
+    badRequest: {
+        name: 'bad_request',
+    },
+    unauthenticated: {
+        name: 'unauthenticated',
+    },
+    unauthorized: {
+        name: 'unauthorized',
+    },
+    notFound: {
+        name: 'not_found',
+    },
+    internalServerError: {
+        name: 'internal_server_error',
+    },
+    serviceUnavailable: {
+        name: 'service_unavailable',
+    },
 }
 export const APP_OPTION = {
     yes: 1,
@@ -159,10 +185,6 @@ export const APP_OPTION = {
 export const LOCALE_MAPPING_FLAG_ICON_NAME_DEF = {
     en: 'gb',
     ja: 'jp',
-}
-export const LOCALE_MAPPING_MOMENT_DEF = {
-    en: 'en-gb',
-    ja: 'ja',
 }
 const maxChunkUploadSize = parseInt(process.env.VUE_APP_MAX_CHUNK_UPLOAD_SIZE) | 0
 export const MAX_CHUNK_UPLOAD_SIZE = maxChunkUploadSize ? maxChunkUploadSize : 1024 * 1024 // 1 MB, default

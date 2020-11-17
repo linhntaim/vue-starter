@@ -26,7 +26,7 @@ export default {
         onClearCacheClicked() {
             this.accountLogout({
                 alwaysCallback: () => {
-                    this.$router.push({name: APP_ROUTE.login})
+                    this.$router.push(APP_ROUTE.root)
                 },
             })
         },

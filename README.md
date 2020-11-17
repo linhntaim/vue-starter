@@ -281,7 +281,7 @@ Settings for cookies.
         - `point_space`: `1000000` will be formatted as `1 000 000.00`.
         - `comma_point`: `1000000` will be formatted as `1.000.000,00`.
         - `comma_space`: `1000000` will be formatted as `1 000 000,00`.
- 
+
 ### VUE_APP_MAX_CHUNK_UPLOAD_SIZE
 
 For uploading a large file by splitting it into chunks, the size of each chunk is set as the value in `bytes` here.
