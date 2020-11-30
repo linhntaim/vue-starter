@@ -74,7 +74,7 @@ export default {
             accessToken: null,
             tokenType: null,
             refreshToken: null,
-            tokenEndTime: 0,
+            expiresIn: 0,
         },
         accountMatched: false,
         account: null,
@@ -105,7 +105,7 @@ export default {
                 accessToken: bearerToken.access_token,
                 tokenType: bearerToken.token_type,
                 refreshToken: bearerToken.refresh_token,
-                tokenEndTime: (new Date).getTime() + bearerToken.expires_in * 1000,
+                expiresIn: bearerToken.expires_in,
             }
 
             applyBearerToken(state.bearerToken)
@@ -124,7 +124,7 @@ export default {
                 accessToken: null,
                 tokenType: null,
                 refreshToken: null,
-                tokenEndTime: 0,
+                expiresIn: 0,
             }
 
             applyBearerToken()

@@ -22,8 +22,7 @@ export default class AuthMiddleware extends Middleware {
             if (!storedBearerToken
                 || !storedBearerToken.accessToken
                 || !storedBearerToken.tokenType
-                || !storedBearerToken.refreshToken
-                || !storedBearerToken.tokenEndTime) {
+                || !storedBearerToken.expiresIn) {
                 store.dispatch('account/storeBearerToken')
             }
 
@@ -31,26 +30,26 @@ export default class AuthMiddleware extends Middleware {
             return
         }
 
-        if (!storedBearerToken
-            || !storedBearerToken.accessToken
-            || !storedBearerToken.tokenType
-            || !storedBearerToken.refreshToken
-            || !storedBearerToken.tokenEndTime) {
-            this.handleNotAuth()
-            return
+        if (storedBearerToken) {
+            if (storedBearerToken.accessToken
+                && storedBearerToken.tokenType
+                && storedBearerToken.expiresIn) {
+                store.commit('account/setAuthFromCookie', storedBearerToken)
+                this.handleAuth()
+                return
+            }
+
+            if (storedBearerToken.refreshToken) {
+                store.dispatch('account/refreshToken', {
+                    refreshToken: storedBearerToken.refreshToken,
+                    doneCallback: () => this.handleAuth(),
+                    errorCallback: () => this.redirect(APP_ROUTE.badRequest),
+                })
+                return
+            }
         }
 
-        if ((new Date).getTime() <= storedBearerToken.tokenEndTime) {
-            store.commit('account/setAuthFromCookie', storedBearerToken)
-            this.handleAuth()
-            return
-        }
-
-        store.dispatch('account/refreshToken', {
-            refreshToken: storedBearerToken.refreshToken,
-            doneCallback: () => this.handleAuth(),
-            errorCallback: () => this.redirect(APP_ROUTE.badRequest),
-        })
+        this.handleNotAuth()
     }
 
     handleAuth() {
