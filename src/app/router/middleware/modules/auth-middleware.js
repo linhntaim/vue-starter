@@ -2,7 +2,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {passportCookieStore} from '../../../utils'
+import {bearerTokenCookieStore} from '../../../utils'
 import {session} from '@dsquare-gbu/vue-router'
 import {Middleware} from '@dsquare-gbu/vue-uses'
 import {APP_ROUTE} from '../../../config'
@@ -11,43 +11,43 @@ export default class AuthMiddleware extends Middleware {
     handle() {
         this.log('auth', 'middleware')
 
-        this.handlePassport()
+        this.handleBearerToken()
     }
 
-    handlePassport() {
+    handleBearerToken() {
         const store = this.store()
-        const storedPassport = passportCookieStore.retrieve()
+        const storedBearerToken = bearerTokenCookieStore.retrieve()
 
         if (store.getters['account/isLoggedIn']) {
-            if (!storedPassport
-                || !storedPassport.accessToken
-                || !storedPassport.tokenType
-                || !storedPassport.refreshToken
-                || !storedPassport.tokenEndTime) {
-                store.dispatch('account/storePassport')
+            if (!storedBearerToken
+                || !storedBearerToken.accessToken
+                || !storedBearerToken.tokenType
+                || !storedBearerToken.refreshToken
+                || !storedBearerToken.tokenEndTime) {
+                store.dispatch('account/storeBearerToken')
             }
 
             this.handleAuth()
             return
         }
 
-        if (!storedPassport
-            || !storedPassport.accessToken
-            || !storedPassport.tokenType
-            || !storedPassport.refreshToken
-            || !storedPassport.tokenEndTime) {
+        if (!storedBearerToken
+            || !storedBearerToken.accessToken
+            || !storedBearerToken.tokenType
+            || !storedBearerToken.refreshToken
+            || !storedBearerToken.tokenEndTime) {
             this.handleNotAuth()
             return
         }
 
-        if ((new Date).getTime() <= storedPassport.tokenEndTime) {
-            store.commit('account/setAuthFromCookie', storedPassport)
+        if ((new Date).getTime() <= storedBearerToken.tokenEndTime) {
+            store.commit('account/setAuthFromCookie', storedBearerToken)
             this.handleAuth()
             return
         }
 
         store.dispatch('account/refreshToken', {
-            refreshToken: storedPassport.refreshToken,
+            refreshToken: storedBearerToken.refreshToken,
             doneCallback: () => this.handleAuth(),
             errorCallback: () => this.redirect(APP_ROUTE.badRequest),
         })

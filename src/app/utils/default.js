@@ -4,6 +4,7 @@
 
 import {
     AppOptions,
+    BearerTokenCookieStore,
     CallbackWaiter,
     ConsoleLog,
     JsCookieHandler,
@@ -16,7 +17,6 @@ import {
     LocalCacheHandler,
     SettingsCookieStore,
     NumberFormatter,
-    PassportCookieStore,
     PermissionChecker,
     ServerClock,
     TimeoutCaller,
@@ -41,7 +41,7 @@ export const cookieHandler = new JsCookieHandler(crypto, {
     domain: APP_COOKIE.domain,
     secret: APP_COOKIE.secret,
 })
-export const passportCookieStore = new PassportCookieStore(cookieHandler, APP_COOKIE.names.default, {
+export const bearerTokenCookieStore = new BearerTokenCookieStore(cookieHandler, APP_COOKIE.names.default, {
     accessToken: null,
     tokenType: null,
     refreshToken: null,
