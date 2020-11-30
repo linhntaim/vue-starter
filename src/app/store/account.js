@@ -19,7 +19,7 @@ import {APP_DEFAULT_SERVICE} from '../config'
 const setDefaultServiceSettingsHeader = settings => {
     serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('settings', instance => {
         instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.settings] = JSON.stringify({
-            app_name: settings.appName,
+            app_id: settings.appId,
             app_url: settings.appUrl,
             locale: settings.locale,
             country: settings.country,
@@ -154,7 +154,7 @@ export default {
 
         setSettings(state, {settings, localeCallback}) {
             state.settings = {
-                appName: settings.app_name,
+                appId: settings.app_id,
                 appUrl: settings.app_url,
                 locale: settings.locale,
                 country: settings.country,
