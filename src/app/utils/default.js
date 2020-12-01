@@ -45,7 +45,7 @@ export const bearerTokenCookieStore = new BearerTokenCookieStore(cookieHandler, 
     accessToken: null,
     tokenType: null,
     refreshToken: null,
-    tokenEndTime: 0,
+    expiresIn: 0,
 })
 export const settingsCookieStore = new SettingsCookieStore(cookieHandler, APP_COOKIE.names.settings, DEFAULT_SETTINGS)
 export const deviceCookieStore = new DeviceCookieStore(cookieHandler, APP_COOKIE.names.device, DEFAULT_DEVICE)

@@ -66,7 +66,9 @@ export const APP_COOKIE = {
         settings: process.env.VUE_APP_COOKIE_DISABLE_SETTINGS,
     },
     secret: process.env.VUE_APP_COOKIE_SECRET,
-    expires: 365,
+    expires: function () {
+        return new Date(new Date().getTime() + 365 * 24 * 3600 * 1000)
+    },
     path: '/',
     domain: (process.env.VUE_APP_COOKIE_INCLUDE_SUBDOMAINS === 'true' ? '.' : '')
         + (process.env.VUE_APP_COOKIE_DOMAIN ? process.env.VUE_APP_COOKIE_DOMAIN : window.location.hostname),
