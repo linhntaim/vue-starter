@@ -43,7 +43,10 @@ export default class AuthMiddleware extends Middleware {
                 store.dispatch('account/refreshToken', {
                     refreshToken: storedBearerToken.refreshToken,
                     doneCallback: () => this.handleAuth(),
-                    errorCallback: () => this.redirect(APP_ROUTE.badRequest),
+                    errorCallback: () => {
+                        bearerTokenCookieStore.remove()
+                        this.redirect(APP_ROUTE.badRequest)
+                    },
                 })
                 return
             }
