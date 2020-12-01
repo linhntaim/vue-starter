@@ -24,6 +24,7 @@ import {
 import {
     APP_COOKIE,
     APP_DEBUG,
+    APP_KEY,
     APP_LOG_ONLY,
     CLOCK_BLOCK_KEYS,
     CLOCK_BLOCK_RANGE,
@@ -64,3 +65,17 @@ export const fileHelper = new FileHelper(numberFormatter)
 export const permissionChecker = new PermissionChecker()
 
 export const appOptions = new AppOptions()
+
+export const encrypt = function (data) {
+    return typeof data === 'object' ?
+        crypto.encryptJson(data, APP_KEY)
+        : crypto.encrypt(data, APP_KEY)
+}
+
+export const decrypt = function (encrypted) {
+    return crypto.decrypt(encrypted, APP_KEY)
+}
+
+export const decryptJson = function (encrypted) {
+    return crypto.decryptJson(encrypted, APP_KEY)
+}
