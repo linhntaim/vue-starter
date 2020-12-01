@@ -6,6 +6,7 @@ import {intervalCaller, timeoutCaller, ui} from '../../utils'
 import {CommonMiddleware} from '@dsquare-gbu/vue-uses'
 import AuthMiddleware from './modules/auth-middleware'
 import DeviceMiddleware from './modules/device-middleware'
+import LastAccessMiddleware from '@/app/router/middleware/modules/last-access-middleware'
 import LocaleMiddleware from './modules/locale-middleware'
 import PermissionMiddleware from './modules/permission-middleware'
 import ScreenMiddleware from './modules/screen-middleware'
@@ -25,6 +26,7 @@ const commonMiddleware = new CommonMiddleware(
     },
 )
 const localeMiddleware = new LocaleMiddleware()
+const lastAccessMiddleware = new LastAccessMiddleware()
 const serverMiddleware = new ServerMiddleware()
 const permissionMiddleware = new PermissionMiddleware()
 const screenMiddleware = new ScreenMiddleware()
@@ -39,6 +41,7 @@ export const all = {
         authMiddleware,
         localeMiddleware,
         permissionMiddleware,
+        lastAccessMiddleware,
     ],
     after: [
         commonMiddleware,

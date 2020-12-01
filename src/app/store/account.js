@@ -268,6 +268,19 @@ export default {
             authService().loginOther(params, done, errorCallback)
         },
 
+        updateLastAccess({state}, {doneCallback, errorCallback}) {
+            if (!state.isLoggedIn) {
+                doneCallback()
+                return
+            }
+
+            accountService().updateLastAccess(data => {
+                state.account.last_accessed_since_6_month = data.model.last_accessed_since_6_month
+                state.account.sd_st_last_accessed_at = data.model.sd_st_last_accessed_at
+                doneCallback()
+            }, errorCallback)
+        },
+
         updateLocale({commit}, {locale, doneCallback}) {
             commit('setLocale', {
                 locale: locale,

@@ -7,18 +7,19 @@ import {
     BearerTokenCookieStore,
     CallbackWaiter,
     ConsoleLog,
-    JsCookieHandler,
     Crypto,
     DateTimer,
     DeviceCookieStore,
     FileHelper,
     IntervalCaller,
     IP,
+    JsCookieHandler,
     LocalCacheHandler,
-    SettingsCookieStore,
+    LocalCookieHandler,
     NumberFormatter,
     PermissionChecker,
     ServerClock,
+    SettingsCookieStore,
     TimeoutCaller,
 } from '@dsquare-gbu/vue-utils'
 import {
@@ -37,6 +38,12 @@ export const log = new ConsoleLog(APP_DEBUG, APP_LOG_ONLY)
 export const cacheHandler = new LocalCacheHandler()
 export const crypto = new Crypto()
 export const cookieHandler = new JsCookieHandler(crypto, {
+    expires: APP_COOKIE.expires,
+    path: APP_COOKIE.path,
+    domain: APP_COOKIE.domain,
+    secret: APP_COOKIE.secret,
+})
+export const localCookieHandler = new LocalCookieHandler(crypto, {
     expires: APP_COOKIE.expires,
     path: APP_COOKIE.path,
     domain: APP_COOKIE.domain,
