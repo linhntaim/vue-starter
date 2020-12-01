@@ -5,11 +5,11 @@
 import {accountService} from '../services/default/account'
 import {authService} from '../services/default/auth'
 import {
+    bearerTokenCookieStore,
     callbackWaiter,
     dateTimer,
     log,
     numberFormatter,
-    bearerTokenCookieStore,
     settingsCookieStore,
 } from '../utils'
 import {localeManager} from '../locales'

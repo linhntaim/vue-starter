@@ -13,9 +13,7 @@ import ScreenMiddleware from './modules/screen-middleware'
 import ServerMiddleware from './modules/server-middleware'
 import SettingsMiddleware from './modules/settings-middleware'
 
-const settingsMiddleware = new SettingsMiddleware()
 const authMiddleware = new AuthMiddleware()
-const deviceMiddleware = new DeviceMiddleware()
 const commonMiddleware = new CommonMiddleware(
     () => {
         timeoutCaller.clear()
@@ -25,11 +23,13 @@ const commonMiddleware = new CommonMiddleware(
         ui.scrollToTop()
     },
 )
+const deviceMiddleware = new DeviceMiddleware()
 const localeMiddleware = new LocaleMiddleware()
 const lastAccessMiddleware = new LastAccessMiddleware()
-const serverMiddleware = new ServerMiddleware()
 const permissionMiddleware = new PermissionMiddleware()
 const screenMiddleware = new ScreenMiddleware()
+const serverMiddleware = new ServerMiddleware()
+const settingsMiddleware = new SettingsMiddleware()
 
 export const all = {
     before: [
