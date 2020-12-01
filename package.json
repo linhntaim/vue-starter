@@ -21,7 +21,7 @@
         "@dsquare-gbu/vue-router": "^1.0.7",
         "@dsquare-gbu/vue-services": "^1.0.9",
         "@dsquare-gbu/vue-uses": "^1.0.12",
-        "@dsquare-gbu/vue-utils": "^1.1.8",
+        "@dsquare-gbu/vue-utils": "^1.1.9",
         "core-js": "^3.6.5",
         "cropperjs": "^1.5.7",
         "vue": "^2.6.11",
