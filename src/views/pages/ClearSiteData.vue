@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {deviceCookieStore, passportCookieStore, settingsCookieStore} from '@/app/utils'
+import {deviceCookieStore, bearerTokenCookieStore, settingsCookieStore} from '@/app/utils'
 
 export default {
     name: 'ClearSiteData',
@@ -13,7 +13,7 @@ export default {
     },
     methods: {
         removeCookie() {
-            passportCookieStore.remove()
+            bearerTokenCookieStore.remove()
             settingsCookieStore.remove()
             deviceCookieStore.remove()
         },

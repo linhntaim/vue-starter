@@ -3,8 +3,10 @@
  */
 
 export const APP_ENV = process.env.VUE_APP_ENV
+export const APP_KEY = process.env.VUE_APP_KEY
 export const APP_DEBUG = process.env.VUE_APP_DEBUG === 'true'
 export const APP_LOG_ONLY = process.env.VUE_APP_LOG_ONLY ? process.env.VUE_APP_LOG_ONLY.split(',') : []
+export const APP_ID = process.env.VUE_APP_ID
 export const APP_NAME = process.env.VUE_APP_NAME
 export const APP_TITLE_SEPARATOR = process.env.VUE_APP_TITLE_SEPARATOR ? process.env.VUE_APP_TITLE_SEPARATOR : '|'
 export const APP_AUTHOR = process.env.VUE_APP_AUTHOR
@@ -65,14 +67,16 @@ export const APP_COOKIE = {
         settings: process.env.VUE_APP_COOKIE_DISABLE_SETTINGS,
     },
     secret: process.env.VUE_APP_COOKIE_SECRET,
-    expires: 365,
+    expires: function () {
+        return new Date(new Date().getTime() + 365 * 24 * 3600 * 1000)
+    },
     path: '/',
     domain: (process.env.VUE_APP_COOKIE_INCLUDE_SUBDOMAINS === 'true' ? '.' : '')
         + (process.env.VUE_APP_COOKIE_DOMAIN ? process.env.VUE_APP_COOKIE_DOMAIN : window.location.hostname),
 }
 export const DEFAULT_PREREQUISITE_LIFETIME = 31622400
 export const DEFAULT_SETTINGS = {
-    appName: APP_NAME,
+    appId: APP_ID,
     appUrl: APP_URL,
     locale: process.env.VUE_APP_LOCALE,
     country: process.env.VUE_APP_COUNTRY,

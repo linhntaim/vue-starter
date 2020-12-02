@@ -5,11 +5,11 @@
 import {accountService} from '../services/default/account'
 import {authService} from '../services/default/auth'
 import {
+    bearerTokenCookieStore,
     callbackWaiter,
     dateTimer,
     log,
     numberFormatter,
-    passportCookieStore,
     settingsCookieStore,
 } from '../utils'
 import {localeManager} from '../locales'
@@ -19,7 +19,7 @@ import {APP_DEFAULT_SERVICE} from '../config'
 const setDefaultServiceSettingsHeader = settings => {
     serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('settings', instance => {
         instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.settings] = JSON.stringify({
-            app_name: settings.appName,
+            app_id: settings.appId,
             app_url: settings.appUrl,
             locale: settings.locale,
             country: settings.country,
@@ -59,10 +59,10 @@ const applySettings = (settings, action = 'all', localeCallback = null) => {
     }
 }
 
-const applyPassport = (passport = null, action = 'all') => {
-    setDefaultServiceTokenAuthorizationHeader(passport ? passport.tokenType + ' ' + passport.accessToken : null)
+const applyBearerToken = (bearerToken = null, action = 'all') => {
+    setDefaultServiceTokenAuthorizationHeader(bearerToken ? bearerToken.tokenType + ' ' + bearerToken.accessToken : null)
     if (action !== 'apply_no_cookie') {
-        passport ? passportCookieStore.store(passport) : passportCookieStore.remove()
+        bearerToken ? bearerTokenCookieStore.store(bearerToken) : bearerTokenCookieStore.remove()
     }
 }
 
@@ -70,11 +70,11 @@ export default {
     namespaced: true,
     state: () => ({
         isLoggedIn: false,
-        passport: {
+        bearerToken: {
             accessToken: null,
             tokenType: null,
             refreshToken: null,
-            tokenEndTime: 0,
+            expiresIn: 0,
         },
         accountMatched: false,
         account: null,
@@ -91,43 +91,43 @@ export default {
         settings: state => state.settings,
         locale: state => state.settings.locale,
         permissions: state => state.account && state.account.permission_names ? state.account.permission_names : [],
-        passport: state => state.passport,
-        authorizationHeader: state => state.passport.tokenType + ' ' + state.passport.accessToken,
+        bearerToken: state => state.bearerToken,
+        authorizationHeader: state => state.bearerToken.tokenType + ' ' + state.bearerToken.accessToken,
         authorizationQueryString: state => [
-            APP_DEFAULT_SERVICE.requestParams.tokenType + '=' + state.passport.tokenType,
-            APP_DEFAULT_SERVICE.requestParams.accessToken + '=' + state.passport.accessToken,
+            APP_DEFAULT_SERVICE.requestParams.tokenType + '=' + state.bearerToken.tokenType,
+            APP_DEFAULT_SERVICE.requestParams.accessToken + '=' + state.bearerToken.accessToken,
         ].join('&'),
     },
     mutations: {
-        setAuth(state, passport) {
+        setAuth(state, bearerToken) {
             state.isLoggedIn = true
-            state.passport = {
-                accessToken: passport.access_token,
-                tokenType: passport.token_type,
-                refreshToken: passport.refresh_token,
-                tokenEndTime: (new Date).getTime() + passport.expires_in * 1000,
+            state.bearerToken = {
+                accessToken: bearerToken.access_token,
+                tokenType: bearerToken.token_type,
+                refreshToken: bearerToken.refresh_token,
+                expiresIn: bearerToken.expires_in,
             }
 
-            applyPassport(state.passport)
+            applyBearerToken(state.bearerToken)
         },
 
-        setAuthFromCookie(state, passport) {
+        setAuthFromCookie(state, bearerToken) {
             state.isLoggedIn = true
-            state.passport = passport
+            state.bearerToken = bearerToken
 
-            applyPassport(state.passport, 'apply_no_cookie')
+            applyBearerToken(state.bearerToken, 'apply_no_cookie')
         },
 
         unsetAuth(state) {
             state.isLoggedIn = false
-            state.passport = {
+            state.bearerToken = {
                 accessToken: null,
                 tokenType: null,
                 refreshToken: null,
-                tokenEndTime: 0,
+                expiresIn: 0,
             }
 
-            applyPassport()
+            applyBearerToken()
         },
 
         setAccount(state, {account}) {
@@ -154,7 +154,7 @@ export default {
 
         setSettings(state, {settings, localeCallback}) {
             state.settings = {
-                appName: settings.app_name,
+                appId: settings.app_id,
                 appUrl: settings.app_url,
                 locale: settings.locale,
                 country: settings.country,
@@ -184,8 +184,8 @@ export default {
         },
     },
     actions: {
-        storePassport({state}) {
-            passportCookieStore.store(state.passport)
+        storeBearerToken({state}) {
+            bearerTokenCookieStore.store(state.bearerToken)
         },
 
         reload({dispatch}, {doneCallback, errorCallback}) {
@@ -266,6 +266,19 @@ export default {
                 })
             }
             authService().loginOther(params, done, errorCallback)
+        },
+
+        updateLastAccess({state}, {doneCallback, errorCallback}) {
+            if (!state.isLoggedIn) {
+                doneCallback()
+                return
+            }
+
+            accountService().updateLastAccess(data => {
+                state.account.last_accessed_since_6_month = data.model.last_accessed_since_6_month
+                state.account.sd_st_last_accessed_at = data.model.sd_st_last_accessed_at
+                doneCallback()
+            }, errorCallback)
         },
 
         updateLocale({commit}, {locale, doneCallback}) {

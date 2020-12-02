@@ -4,26 +4,28 @@
 
 import {
     AppOptions,
+    BearerTokenCookieStore,
     CallbackWaiter,
     ConsoleLog,
-    JsCookieHandler,
     Crypto,
     DateTimer,
     DeviceCookieStore,
     FileHelper,
     IntervalCaller,
     IP,
+    JsCookieHandler,
     LocalCacheHandler,
-    SettingsCookieStore,
+    LocalCookieHandler,
     NumberFormatter,
-    PassportCookieStore,
     PermissionChecker,
     ServerClock,
+    SettingsCookieStore,
     TimeoutCaller,
 } from '@dsquare-gbu/vue-utils'
 import {
     APP_COOKIE,
     APP_DEBUG,
+    APP_KEY,
     APP_LOG_ONLY,
     CLOCK_BLOCK_KEYS,
     CLOCK_BLOCK_RANGE,
@@ -41,11 +43,17 @@ export const cookieHandler = new JsCookieHandler(crypto, {
     domain: APP_COOKIE.domain,
     secret: APP_COOKIE.secret,
 })
-export const passportCookieStore = new PassportCookieStore(cookieHandler, APP_COOKIE.names.default, {
+export const localCookieHandler = new LocalCookieHandler(crypto, {
+    expires: APP_COOKIE.expires,
+    path: APP_COOKIE.path,
+    domain: APP_COOKIE.domain,
+    secret: APP_COOKIE.secret,
+})
+export const bearerTokenCookieStore = new BearerTokenCookieStore(cookieHandler, APP_COOKIE.names.default, {
     accessToken: null,
     tokenType: null,
     refreshToken: null,
-    tokenEndTime: 0,
+    expiresIn: 0,
 })
 export const settingsCookieStore = new SettingsCookieStore(cookieHandler, APP_COOKIE.names.settings, DEFAULT_SETTINGS)
 export const deviceCookieStore = new DeviceCookieStore(cookieHandler, APP_COOKIE.names.device, DEFAULT_DEVICE)
@@ -64,3 +72,17 @@ export const fileHelper = new FileHelper(numberFormatter)
 export const permissionChecker = new PermissionChecker()
 
 export const appOptions = new AppOptions()
+
+export const encrypt = function (data) {
+    return typeof data === 'object' ?
+        crypto.encryptJson(data, APP_KEY)
+        : crypto.encrypt(data, APP_KEY)
+}
+
+export const decrypt = function (encrypted) {
+    return crypto.decrypt(encrypted, APP_KEY)
+}
+
+export const decryptJson = function (encrypted) {
+    return crypto.decryptJson(encrypted, APP_KEY)
+}
