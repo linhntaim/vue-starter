@@ -29,6 +29,17 @@ export class AccountService extends DefaultService {
         )
     }
 
+    updateLastAccess(doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        return this.update(
+            {
+                _last_access: 1,
+            },
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
+
     updateEmail(email, currentPassword, doneCallback = null, errorCallback = null, alwaysCallback = null) {
         return this.post(
             '',
