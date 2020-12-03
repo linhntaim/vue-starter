@@ -4,9 +4,18 @@ export default class LastAccessMiddleware extends Middleware {
     handle() {
         this.log('last-access', 'middleware')
 
-        this.store().dispatch('account/updateLastAccess', {
-            doneCallback: () => this.next(),
-            errorCallback: () => this.next(),
-        })
+        const store = this.store()
+        if (store.getters['account/isLoggedIn']) {
+            const account = store.getters['account/account']
+            // update last accessed at every 5 minutes
+            if (new Date().getTime() - account.ts_last_accessed_at * 1000 > 5 * 60 * 1000) {
+                this.store().dispatch('account/updateLastAccess', {
+                    doneCallback: () => this.next(),
+                    errorCallback: () => this.next(),
+                })
+                return
+            }
+        }
+        this.next()
     }
 }
