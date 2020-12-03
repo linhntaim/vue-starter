@@ -10,21 +10,25 @@ export default class PermissionMiddleware extends Middleware {
     handle() {
         this.log('permission', 'middleware')
 
-        permissionBarrier.setPermissions(this.store().getters['account/permissions'])
-        const tos = this.to().matched
-        for (let i = 0, loop = tos.length; i < loop; ++i) {
-            const route = tos[i]
-            if ('name' in route) {
-                if (!permissionBarrier.passRouteActions(this.app(), route, {
-                    notPassedCallback() {
-                        this.redirect(APP_ROUTE.unauthorized)
-                        return true
-                    },
-                })) return
-            }
-        }
+        const store = this.store()
+        if (store.getters['account/isLoggedIn']) {
+            permissionBarrier.setPermissions(store.getters['account/permissions'])
 
-        if (!permissionBarrier.passActions(this.app())) return
+            const to = this.to()
+            const tos = to.matched
+            for (let i = 0, loop = tos.length; i < loop; ++i) {
+                const route = tos[i]
+                if ('name' in route) {
+                    if (!permissionBarrier.passRouteActions(route, () => {
+                        this.redirect(APP_ROUTE.unauthorized)
+                    })) return
+                }
+            }
+
+            if (!permissionBarrier.passActions(() => {
+                this.redirect(APP_ROUTE.unauthorized)
+            })) return
+        }
 
         this.next()
     }

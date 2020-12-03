@@ -8,7 +8,9 @@ export class PermissionBarrier {
         this.actions = []
         this.permissions = []
         this.temporaryPermissions = []
+        this.temporaryActionPermissions = []
         this.restoreTemporaryPermissions()
+        this.restoreTemporaryActionPermissions()
     }
 
     importFromRoutePermissions(routePermissions = {}) {
@@ -27,8 +29,11 @@ export class PermissionBarrier {
     }
 
     addTemporaryPermission(temporaryPermission) {
-        this.temporaryPermissions.push(temporaryPermission)
-        return this.storeTemporaryPermissions()
+        if (!this.temporaryPermissions.includes(temporaryPermission)) {
+            this.temporaryPermissions.push(temporaryPermission)
+            this.storeTemporaryPermissions()
+        }
+        return this
     }
 
     removeTemporaryPermission(temporaryPermission) {
@@ -52,48 +57,76 @@ export class PermissionBarrier {
         return this
     }
 
+    addTemporaryActionPermission(temporaryActionPermissions) {
+        if (!this.temporaryActionPermissions.includes(temporaryActionPermissions)) {
+            this.temporaryActionPermissions.push(temporaryActionPermissions)
+            this.storeTemporaryActionPermissions()
+        }
+        return this
+    }
+
+    removeTemporaryActionPermission(temporaryActionPermissions) {
+        const i = this.temporaryActionPermissions.indexOf(temporaryActionPermissions)
+        if (i !== -1) {
+            this.temporaryActionPermissions.splice(i, 1)
+            this.storeTemporaryActionPermissions()
+        }
+        return this
+    }
+
+    storeTemporaryActionPermissions() {
+        this.cacheHandler.setJson('__permission_barrier_temporary_action_permission', this.temporaryActionPermissions)
+        return this
+    }
+
+    restoreTemporaryActionPermissions() {
+        (temporaryActionPermissions => {
+            temporaryActionPermissions && (this.temporaryActionPermissions = temporaryActionPermissions)
+        })(this.cacheHandler.getJson('__permission_barrier_temporary_action_permission'))
+        return this
+    }
+
     /**
      *
-     * @param {Vue} app
      * @param {Object} route
-     * @param {Object} params
+     * @param {Function|null} notPassCallback
      * @returns {boolean}
      */
-    passRouteActions(app, route, params = {}) {
+    passRouteActions(route, notPassCallback = null) {
         if (route.name in this.routeActions) {
-            params.route = route
-            return this.passAction(app, this.routeActions[route.name], params)
+            return this.passAction(this.routeActions[route.name], notPassCallback)
         }
         return true
     }
 
     /**
      *
-     * @param {Vue} app
-     * @param {Object} params
+     * @param {Function|null} notPassCallback
      * @returns {boolean}
      */
-    passActions(app, params = {}) {
+    passActions(notPassCallback = null) {
         if (this.actions.length) {
-            return this.actions.every(action => this.passAction(app, action, params))
+            return this.actions.every(action => this.passAction(action, notPassCallback))
         }
         return true
     }
 
     /**
      *
-     * @param {Vue} app
-     * @param {Object} params
      * @param {PermissionBarrierAction} action
+     * @param {Function|null} notPassCallback
      */
-    passAction(app, action, params = {}) {
-        if (this.permit.match(action.getPermissions(), [
+    passAction(action, notPassCallback = null) {
+        if (this.permit.match([
+            ...action.getPermissions(),
+            ...this.temporaryActionPermissions,
+        ], [
             ...this.permissions,
             ...this.temporaryPermissions,
         ])) {
             return true
         }
-        action.notPass(app, params)
+        notPassCallback && notPassCallback(action)
         return false
     }
 }
