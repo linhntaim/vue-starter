@@ -1,4 +1,4 @@
-import {PermissionBarrierAction} from '@/app/router/permission-barrier-action'
+import {PermissionBarrierAction} from './permission-barrier-action'
 
 export class PermissionBarrier {
     constructor(permit, cacheHandler) {
