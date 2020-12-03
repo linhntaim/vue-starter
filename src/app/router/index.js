@@ -3,8 +3,9 @@
  */
 
 import routePermissions from './route-permissions'
-import {RouteBarrier} from '@/app/router/route-barrier'
 import {cacheHandler, permit} from '@/app/utils'
+import {PermissionBarrier} from '@/app/router/permission-barrier'
 
 export {routes} from './routes'
-export const routeBarrier = new RouteBarrier(permit, cacheHandler, routePermissions)
+export const permissionBarrier = new PermissionBarrier(permit, cacheHandler)
+    .importFromRoutePermissions(routePermissions)
