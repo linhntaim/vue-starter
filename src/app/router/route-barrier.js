@@ -4,7 +4,6 @@ export class RouteBarrier {
         this.cacheHandler = cacheHandler
         this.routePermissions = {}
         this.permissions = []
-        this.temporaryRoutePermissions = []
         this.temporaryPermissions = []
         this.restoreTemporaryRoutePermissions()
         this.restoreTemporaryPermissions()
@@ -25,23 +24,9 @@ export class RouteBarrier {
         return this
     }
 
-    addTemporaryRoutePermission(temporaryRoutePermissions) {
-        this.temporaryRoutePermissions.push(temporaryRoutePermissions)
-        return this.storeTemporaryRoutePermissions()
-    }
-
     addTemporaryPermission(temporaryPermission) {
         this.temporaryPermissions.push(temporaryPermission)
         return this.storeTemporaryPermissions()
-    }
-
-    removeTemporaryRoutePermission(temporaryRoutePermissions) {
-        const i = this.temporaryRoutePermissions.indexOf(temporaryRoutePermissions)
-        if (i !== -1) {
-            this.temporaryRoutePermissions.splice(i, 1)
-            this.storeTemporaryRoutePermissions()
-        }
-        return this
     }
 
     removeTemporaryPermission(temporaryPermission) {
@@ -50,18 +35,6 @@ export class RouteBarrier {
             this.temporaryPermissions.splice(i, 1)
             this.storeTemporaryPermissions()
         }
-        return this
-    }
-
-    storeTemporaryRoutePermissions() {
-        this.cacheHandler.setJson('__route_barrier_temporary_route_permission', this.temporaryRoutePermissions)
-        return this
-    }
-
-    restoreTemporaryRoutePermissions() {
-        (temporaryRoutePermissions => {
-            temporaryRoutePermissions && (this.temporaryRoutePermissions = temporaryRoutePermissions)
-        })(this.cacheHandler.getJson('__route_barrier_temporary_route_permission'))
         return this
     }
 
@@ -83,10 +56,7 @@ export class RouteBarrier {
     }
 
     isAllowed(routeName) {
-        return this.permit.match([
-            ...this.getRoutePermissionsByRouteName(routeName),
-            ...this.temporaryRoutePermissions,
-        ], [
+        return this.permit.match(this.getRoutePermissionsByRouteName(routeName), [
             ...this.permissions,
             ...this.temporaryPermissions,
         ])
