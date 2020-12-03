@@ -17,7 +17,7 @@ import {
     LocalCacheHandler,
     LocalCookieHandler,
     NumberFormatter,
-    PermissionChecker,
+    Permit,
     ServerClock,
     SettingsCookieStore,
     TimeoutCaller,
@@ -69,7 +69,7 @@ export const dateTimer = new DateTimer(DEFAULT_SETTINGS)
 
 export const fileHelper = new FileHelper(numberFormatter)
 
-export const permissionChecker = new PermissionChecker()
+export const permit = new Permit()
 
 export const appOptions = new AppOptions()
 

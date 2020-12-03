@@ -2,21 +2,20 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {permissionChecker} from '../../../utils'
 import {Middleware} from '@dsquare-gbu/vue-uses'
 import {APP_ROUTE} from '../../../config'
-import routePermissions from '../../route-permissions'
+import {routeBarrier} from '@/app/router'
 
 export default class PermissionMiddleware extends Middleware {
     handle() {
         this.log('permission', 'middleware')
 
-        const to = this.to()
-        const accountPermissions = this.store().getters['account/permissions']
-        for (let i = 0, loop = to.matched.length; i < loop; ++i) {
-            const route = to.matched[i]
-            if ('name' in route && route.name in routePermissions) {
-                if (!permissionChecker.checkAtLeast(routePermissions[route.name], accountPermissions)) {
+        routeBarrier.setPermissions(this.store().getters['account/permissions'])
+        const tos = this.to().matched
+        for (let i = 0, loop = tos.length; i < loop; ++i) {
+            const route = tos[i]
+            if ('name' in route) {
+                if (!routeBarrier.isAllowed(route.name)) {
                     this.redirect(APP_ROUTE.unauthorized)
                     return
                 }
