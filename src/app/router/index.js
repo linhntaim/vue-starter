@@ -2,7 +2,13 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import routePermissions from './route-permissions'
+import {routePermissions} from './permissions'
+import {storeHandler, permit} from '@/app/utils'
+import {PermissionBarrier} from '@dsquare-gbu/vue-utils'
 
-export {routes} from './routes'
-export {routePermissions}
+export * from './routes'
+export {
+    routePermissions,
+}
+export const permissionBarrier = new PermissionBarrier(permit, storeHandler)
+    .importFromRoutePermissions(routePermissions)
