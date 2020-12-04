@@ -39,8 +39,8 @@ export {
 } from '@dsquare-gbu/vue-utils'
 
 export const log = new ConsoleLog(APP_DEBUG, APP_LOG_ONLY)
-export const storeHandler = new LocalStoreHandler()
 export const crypto = new Crypto(APP_KEY)
+export const storeHandler = new LocalStoreHandler(crypto)
 export const cookieStoreHandler = new JsCookieStoreHandler(APP_COOKIE.defaultSettings, crypto)
 export const bearerTokenCookieStore = new BearerTokenCookieStore(cookieStoreHandler, APP_COOKIE.names.default, {
     accessToken: null,
