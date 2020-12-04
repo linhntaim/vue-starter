@@ -120,6 +120,12 @@ Available values:
 - `production`: Run on production.
 - `local`: Run on development.
 
+### VUE_APP_KEY
+
+A secret key for application to encrypt everything.
+
+**Required** to set before running the application.
+
 ### VUE_APP_BUILD_PATH
 
 Determine which folder to build source into.
@@ -256,8 +262,6 @@ Settings for cookies.
     - Leave empty for use the current domain.
 - **`VUE_APP_COOKIE_INCLUDE_SUBDOMAINS`**:
     - Set value to `true` to make the domain set for all cookies should be available for subdomains.
-- **`VUE_APP_COOKIE_SECRET`**:
-    - A salt for cookie encryption.
     
 ### Some default localization settings
 
