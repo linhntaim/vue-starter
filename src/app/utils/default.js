@@ -40,7 +40,7 @@ export {
 
 export const log = new ConsoleLog(APP_DEBUG, APP_LOG_ONLY)
 export const crypto = new Crypto(APP_KEY)
-export const storeHandler = new LocalStoreHandler(crypto)
+export const storeHandler = new LocalStoreHandler(crypto, ['items_per_page'])
 export const cookieStoreHandler = new JsCookieStoreHandler(APP_COOKIE.defaultSettings, crypto)
 export const bearerTokenCookieStore = new BearerTokenCookieStore(cookieStoreHandler, APP_COOKIE.names.default, {
     accessToken: null,
