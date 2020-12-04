@@ -66,13 +66,14 @@ export const APP_COOKIE = {
         device: process.env.VUE_APP_COOKIE_DISABLE_DEVICE,
         settings: process.env.VUE_APP_COOKIE_DISABLE_SETTINGS,
     },
-    secret: process.env.VUE_APP_COOKIE_SECRET,
-    expires: function () {
-        return new Date(new Date().getTime() + 365 * 24 * 3600 * 1000)
+    defaultSettings: {
+        expires: function () {
+            return new Date(new Date().getTime() + 365 * 24 * 3600 * 1000)
+        },
+        path: '/',
+        domain: (process.env.VUE_APP_COOKIE_INCLUDE_SUBDOMAINS === 'true' ? '.' : '')
+            + (process.env.VUE_APP_COOKIE_DOMAIN ? process.env.VUE_APP_COOKIE_DOMAIN : window.location.hostname),
     },
-    path: '/',
-    domain: (process.env.VUE_APP_COOKIE_INCLUDE_SUBDOMAINS === 'true' ? '.' : '')
-        + (process.env.VUE_APP_COOKIE_DOMAIN ? process.env.VUE_APP_COOKIE_DOMAIN : window.location.hostname),
 }
 export const DEFAULT_PREREQUISITE_LIFETIME = 31622400
 export const DEFAULT_SETTINGS = {
