@@ -7,8 +7,6 @@ import {LocaleChange} from './locale-change'
 import {Screen} from './screen'
 import {APP_TITLE_SEPARATOR} from '../config'
 
-export * from './permission-barrier'
-
 export function headTitle(...titles) {
     return titles.join(' ' + APP_TITLE_SEPARATOR + ' ')
 }

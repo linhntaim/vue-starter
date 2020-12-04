@@ -13,9 +13,8 @@ import {
     FileHelper,
     IntervalCaller,
     IP,
-    JsCookieHandler,
-    LocalCacheHandler,
-    LocalCookieHandler,
+    JsCookieStoreHandler,
+    LocalStoreHandler,
     NumberFormatter,
     Permit,
     ServerClock,
@@ -34,29 +33,23 @@ import {
 } from '../config'
 import BootstrapUi from './bootstrap-ui'
 
+export {
+    PermissionBarrier,
+    PermissionBarrierAction,
+} from '@dsquare-gbu/vue-utils'
+
 export const log = new ConsoleLog(APP_DEBUG, APP_LOG_ONLY)
-export const cacheHandler = new LocalCacheHandler()
-export const crypto = new Crypto()
-export const cookieHandler = new JsCookieHandler(crypto, {
-    expires: APP_COOKIE.expires,
-    path: APP_COOKIE.path,
-    domain: APP_COOKIE.domain,
-    secret: APP_COOKIE.secret,
-})
-export const localCookieHandler = new LocalCookieHandler(crypto, {
-    expires: APP_COOKIE.expires,
-    path: APP_COOKIE.path,
-    domain: APP_COOKIE.domain,
-    secret: APP_COOKIE.secret,
-})
-export const bearerTokenCookieStore = new BearerTokenCookieStore(cookieHandler, APP_COOKIE.names.default, {
+export const storeHandler = new LocalStoreHandler()
+export const crypto = new Crypto(APP_KEY)
+export const cookieStoreHandler = new JsCookieStoreHandler(APP_COOKIE.defaultSettings, crypto)
+export const bearerTokenCookieStore = new BearerTokenCookieStore(cookieStoreHandler, APP_COOKIE.names.default, {
     accessToken: null,
     tokenType: null,
     refreshToken: null,
     expiresIn: 0,
 })
-export const settingsCookieStore = new SettingsCookieStore(cookieHandler, APP_COOKIE.names.settings, DEFAULT_SETTINGS)
-export const deviceCookieStore = new DeviceCookieStore(cookieHandler, APP_COOKIE.names.device, DEFAULT_DEVICE)
+export const settingsCookieStore = new SettingsCookieStore(cookieStoreHandler, APP_COOKIE.names.settings, DEFAULT_SETTINGS)
+export const deviceCookieStore = new DeviceCookieStore(cookieStoreHandler, APP_COOKIE.names.device, DEFAULT_DEVICE)
 export const ui = new BootstrapUi()
 export const callbackWaiter = new CallbackWaiter()
 export const timeoutCaller = new TimeoutCaller()
@@ -72,17 +65,3 @@ export const fileHelper = new FileHelper(numberFormatter)
 export const permit = new Permit()
 
 export const appOptions = new AppOptions()
-
-export const encrypt = function (data) {
-    return typeof data === 'object' ?
-        crypto.encryptJson(data, APP_KEY)
-        : crypto.encrypt(data, APP_KEY)
-}
-
-export const decrypt = function (encrypted) {
-    return crypto.decrypt(encrypted, APP_KEY)
-}
-
-export const decryptJson = function (encrypted) {
-    return crypto.decryptJson(encrypted, APP_KEY)
-}
