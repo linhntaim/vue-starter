@@ -50,7 +50,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {cacheHandler, headTitle, permissionChecker} from '../../../app/utils'
+import {storeHandler, headTitle, permit} from '../../../app/utils'
 import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
 import {Collection, DataPlot, ItemSelection, Searcher, Sorter, Paginator} from '@dsquare-gbu/vue-utils'
 import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
@@ -74,7 +74,7 @@ export default {
 
             searcher: new Searcher(),
             sorter: new Sorter(),
-            paginator: new Paginator(ITEMS_PER_PAGE_LIST, cacheHandler),
+            paginator: new Paginator(ITEMS_PER_PAGE_LIST, storeHandler),
             params: new DataPlot(),
 
             requiredPermissions: {},
@@ -125,7 +125,7 @@ export default {
     created() {
         this.paginator.parseQuery(this.$route.query)
         this.sorter.parseQuery(this.$route.query, 'created_at', 'desc')
-        this.requiredPermissions = permissionChecker.checkByNames(requiredPermissions, this.accountPermissions)
+        this.requiredPermissions = permit.matchWithNames(requiredPermissions, this.accountPermissions)
     },
     mounted() {
         this.init()

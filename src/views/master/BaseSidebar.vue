@@ -36,7 +36,7 @@
  */
 
 import {mapGetters} from '@dsquare-gbu/vue-uses'
-import {permissionChecker, timeoutCaller, ui} from '../../app/utils'
+import {permit, timeoutCaller, ui} from '../../app/utils'
 import {APP_NAME, APP_ROUTE} from '../../app/config'
 import {routePermissions} from '../../app/router'
 
@@ -167,7 +167,7 @@ export default {
 
                 const hasToName = 'to' in menuItem && 'name' in menuItem.to
                 if (hasToName && menuItem.to.name in routePermissions) {
-                    permitted = permissionChecker.checkAtLeast(routePermissions[menuItem.to.name], this.accountPermissions)
+                    permitted = permit.match(routePermissions[menuItem.to.name], this.accountPermissions)
                 }
 
                 if (permitted) {

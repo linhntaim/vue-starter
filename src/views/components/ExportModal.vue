@@ -59,7 +59,7 @@
  */
 
 import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-import {cacheHandler, ui} from '../../app/utils'
+import {storeHandler, ui} from '../../app/utils'
 import {DataPlot, Paginator, Sorter} from '@dsquare-gbu/vue-utils'
 import {ERROR_LEVEL_DEF, EXPORT_STATE_DEF, ITEMS_PER_PAGE_LIST} from '../../app/config'
 import ErrorBox from './ErrorBox'
@@ -83,7 +83,7 @@ export default {
             error: null,
 
             sorter: new Sorter(),
-            paginator: new Paginator(ITEMS_PER_PAGE_LIST, cacheHandler),
+            paginator: new Paginator(ITEMS_PER_PAGE_LIST, storeHandler),
             params: new DataPlot(),
 
             exportCallback: null,
