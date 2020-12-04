@@ -12,14 +12,14 @@ export default class PermissionMiddleware extends Middleware {
 
         const store = this.store()
         if (store.getters['account/isLoggedIn']) {
-            permissionBarrier.setPermissions(store.getters['account/permissions'])
+            permissionBarrier.setMatchingPermissions(store.getters['account/permissions'])
 
             const to = this.to()
             const tos = to.matched
             for (let i = 0, loop = tos.length; i < loop; ++i) {
                 const route = tos[i]
                 if ('name' in route) {
-                    if (!permissionBarrier.passRouteActions(route, () => {
+                    if (!permissionBarrier.passRoutes(route, () => {
                         this.redirect(APP_ROUTE.unauthorized)
                     })) return
                 }

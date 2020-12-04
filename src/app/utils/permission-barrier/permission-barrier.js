@@ -4,19 +4,19 @@ export class PermissionBarrier {
     constructor(permit, cacheHandler) {
         this.permit = permit
         this.cacheHandler = cacheHandler
-        this.routeActions = {}
+        this.routes = {}
         this.actions = []
-        this.permissions = []
-        this.temporaryPermissions = []
-        this.temporaryActionPermissions = []
-        this.restoreTemporaryPermissions()
-        this.restoreTemporaryActionPermissions()
+        this.matchingPermissions = []
+        this.temporaryMatchingPermissions = []
+        this.temporaryMatchedPermissions = []
+        this.restoreTemporaryMatchingPermissions()
+        this.restoreTemporaryMatchedPermissions()
     }
 
     importFromRoutePermissions(routePermissions = {}) {
         Object.keys(routePermissions).forEach(routeName => {
             const permissions = routePermissions[routeName]
-            this.routeActions[routeName] = new PermissionBarrierAction(
+            this.routes[routeName] = new PermissionBarrierAction(
                 typeof permissions === 'string' ?
                     permissions.split('|') : permissions,
             )
@@ -24,65 +24,65 @@ export class PermissionBarrier {
         return this
     }
 
-    setPermissions(permissions = []) {
-        this.permissions = permissions
+    setMatchingPermissions(matchingPermissions = []) {
+        this.matchingPermissions = matchingPermissions
     }
 
-    addTemporaryPermission(temporaryPermission) {
-        if (!this.temporaryPermissions.includes(temporaryPermission)) {
-            this.temporaryPermissions.push(temporaryPermission)
-            this.storeTemporaryPermissions()
+    addTemporaryMatchingPermission(temporaryPermission) {
+        if (!this.temporaryMatchingPermissions.includes(temporaryPermission)) {
+            this.temporaryMatchingPermissions.push(temporaryPermission)
+            this.storeTemporaryMatchingPermissions()
         }
         return this
     }
 
-    removeTemporaryPermission(temporaryPermission) {
-        const i = this.temporaryPermissions.indexOf(temporaryPermission)
+    removeTemporaryMatchingPermission(temporaryMatchingPermission) {
+        const i = this.temporaryMatchingPermissions.indexOf(temporaryMatchingPermission)
         if (i !== -1) {
-            this.temporaryPermissions.splice(i, 1)
-            this.storeTemporaryPermissions()
+            this.temporaryMatchingPermissions.splice(i, 1)
+            this.storeTemporaryMatchingPermissions()
         }
         return this
     }
 
-    storeTemporaryPermissions() {
-        this.cacheHandler.setJson('__permission_barrier_temporary_permission', this.temporaryPermissions)
+    storeTemporaryMatchingPermissions() {
+        this.cacheHandler.setJson('__permission_barrier_temporary_matching_permission', this.temporaryMatchingPermissions)
         return this
     }
 
-    restoreTemporaryPermissions() {
-        (temporaryPermissions => {
-            temporaryPermissions && (this.temporaryPermissions = temporaryPermissions)
-        })(this.cacheHandler.getJson('__permission_barrier_temporary_permission'))
+    restoreTemporaryMatchingPermissions() {
+        (temporaryMatchingPermissions => {
+            temporaryMatchingPermissions && (this.temporaryMatchingPermissions = temporaryMatchingPermissions)
+        })(this.cacheHandler.getJson('__permission_barrier_temporary_matching_permission'))
         return this
     }
 
-    addTemporaryActionPermission(temporaryActionPermissions) {
-        if (!this.temporaryActionPermissions.includes(temporaryActionPermissions)) {
-            this.temporaryActionPermissions.push(temporaryActionPermissions)
-            this.storeTemporaryActionPermissions()
+    addTemporaryMatchedPermission(temporaryMatchedPermissions) {
+        if (!this.temporaryMatchedPermissions.includes(temporaryMatchedPermissions)) {
+            this.temporaryMatchedPermissions.push(temporaryMatchedPermissions)
+            this.storeTemporaryMatchedPermissions()
         }
         return this
     }
 
-    removeTemporaryActionPermission(temporaryActionPermissions) {
-        const i = this.temporaryActionPermissions.indexOf(temporaryActionPermissions)
+    removeTemporaryMatchedPermission(temporaryMatchedPermission) {
+        const i = this.temporaryMatchedPermissions.indexOf(temporaryMatchedPermission)
         if (i !== -1) {
-            this.temporaryActionPermissions.splice(i, 1)
-            this.storeTemporaryActionPermissions()
+            this.temporaryMatchedPermissions.splice(i, 1)
+            this.storeTemporaryMatchedPermissions()
         }
         return this
     }
 
-    storeTemporaryActionPermissions() {
-        this.cacheHandler.setJson('__permission_barrier_temporary_action_permission', this.temporaryActionPermissions)
+    storeTemporaryMatchedPermissions() {
+        this.cacheHandler.setJson('__permission_barrier_temporary_matched_permission', this.temporaryMatchedPermissions)
         return this
     }
 
-    restoreTemporaryActionPermissions() {
-        (temporaryActionPermissions => {
-            temporaryActionPermissions && (this.temporaryActionPermissions = temporaryActionPermissions)
-        })(this.cacheHandler.getJson('__permission_barrier_temporary_action_permission'))
+    restoreTemporaryMatchedPermissions() {
+        (temporaryMatchedPermissions => {
+            temporaryMatchedPermissions && (this.temporaryMatchedPermissions = temporaryMatchedPermissions)
+        })(this.cacheHandler.getJson('__permission_barrier_temporary_matched_permission'))
         return this
     }
 
@@ -92,9 +92,9 @@ export class PermissionBarrier {
      * @param {Function|null} notPassCallback
      * @returns {boolean}
      */
-    passRouteActions(route, notPassCallback = null) {
-        if (route.name in this.routeActions) {
-            return this.passAction(this.routeActions[route.name], notPassCallback)
+    passRoutes(route, notPassCallback = null) {
+        if (route.name in this.routes) {
+            return this.passAction(this.routes[route.name], notPassCallback)
         }
         return true
     }
@@ -118,11 +118,11 @@ export class PermissionBarrier {
      */
     passAction(action, notPassCallback = null) {
         if (this.permit.match([
-            ...action.getPermissions(),
-            ...this.temporaryActionPermissions,
+            ...action.getMatchedPermissions(),
+            ...this.temporaryMatchedPermissions,
         ], [
-            ...this.permissions,
-            ...this.temporaryPermissions,
+            ...this.matchingPermissions,
+            ...this.temporaryMatchingPermissions,
         ])) {
             return true
         }

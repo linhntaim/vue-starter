@@ -1,13 +1,13 @@
 export class PermissionBarrierAction {
-    constructor(permissions = []) {
-        this.permissions = permissions
+    constructor(matchedPermissions = []) {
+        this.matchedPermissions = matchedPermissions
     }
 
     /**
      *
      * @returns {String[]}
      */
-    getPermissions() {
-        return this.permissions
+    getMatchedPermissions() {
+        return this.matchedPermissions
     }
 }
