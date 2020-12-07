@@ -42,19 +42,21 @@ export const APP_DEFAULT_SERVICE = {
     baseUrl: APP_SERVICE_URL,
     clientId: process.env.VUE_APP_SERVICE_CLIENT_ID,
     clientSecret: process.env.VUE_APP_SERVICE_CLIENT_SECRET,
-    headers: {
-        screen: process.env.VUE_APP_SERVICE_HEADER_SCREEN_NAME,
-        settings: process.env.VUE_APP_SERVICE_HEADER_SETTINGS_NAME,
-        device: process.env.VUE_APP_SERVICE_HEADER_DEVICE_NAME,
-        tokenAuthorization: hasBasicAuth ? process.env.VUE_APP_SERVICE_HEADER_TOKEN_AUTHORIZATION_NAME : 'Authorization',
-    },
-    basicAuth: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION,
     hasBasicAuth: hasBasicAuth,
+    basicAuth: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION,
+    headerTokenAuthorization: hasBasicAuth ? process.env.VUE_APP_SERVICE_HEADER_TOKEN_AUTHORIZATION_NAME : 'Authorization',
     requestParams: {
         tokenType: '_x_token_type',
         accessToken: '_x_access_token',
         authorization: '_x_authorization',
     },
+    headers: {
+        screen: process.env.VUE_APP_SERVICE_HEADER_SCREEN_NAME,
+        settings: process.env.VUE_APP_SERVICE_HEADER_SETTINGS_NAME,
+        device: process.env.VUE_APP_SERVICE_HEADER_DEVICE_NAME,
+    },
+    headerEncryptExcepts: process.env.VUE_APP_SERVICE_HEADER_ENCRYPT_EXCEPTS ?
+        process.env.VUE_APP_SERVICE_HEADER_ENCRYPT_EXCEPTS.split(',') : [],
 }
 export const APP_COOKIE = {
     names: {
