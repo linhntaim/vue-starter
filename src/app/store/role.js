@@ -1,4 +1,4 @@
-import {roleAdminService} from '../services/default/admin-role'
+import {adminRoleService as roleService} from '../services/default'
 
 export default {
     namespaced: true,
@@ -17,18 +17,18 @@ export default {
     },
     actions: {
         search({state}, {params, doneCallback, errorCallback, alwaysCallback}) {
-            roleAdminService().index(params, (data) => {
+            roleService().index(params, (data) => {
                 state.roles = data.models
                 doneCallback(data.pagination)
             }, errorCallback, alwaysCallback)
         },
 
         export(store, {params, doneCallback, errorCallback, alwaysCallback}) {
-            roleAdminService().export(params, doneCallback, errorCallback, alwaysCallback)
+            roleService().export(params, doneCallback, errorCallback, alwaysCallback)
         },
 
         create({state}, {params, doneCallback, errorCallback, alwaysCallback}) {
-            roleAdminService().store(params, (data) => {
+            roleService().store(params, (data) => {
                 state.role = data.model
                 doneCallback()
             }, errorCallback, alwaysCallback)
@@ -39,21 +39,21 @@ export default {
                 doneCallback()
                 return
             }
-            roleAdminService().show(id, (data) => {
+            roleService().show(id, (data) => {
                 state.role = data.model
                 doneCallback()
             }, errorCallback, alwaysCallback)
         },
 
         edit({state}, {id, params, doneCallback, errorCallback, alwaysCallback}) {
-            roleAdminService().update(id, params, (data) => {
+            roleService().update(id, params, (data) => {
                 state.role = data.model
                 doneCallback()
             }, errorCallback, alwaysCallback)
         },
 
         delete(store, {ids, doneCallback, errorCallback, alwaysCallback}) {
-            roleAdminService().bulkDestroy(ids, {}, doneCallback, errorCallback, alwaysCallback)
+            roleService().bulkDestroy(ids, {}, doneCallback, errorCallback, alwaysCallback)
         },
 
         destruct({state}) {

@@ -44,7 +44,7 @@
 
 import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
 import {timeoutCaller, ui} from '../../../app/utils'
-import {handledFileAdminService} from '../../../app/services/default/admin-handled-file'
+import {adminHandledFileService} from '../../../app/services/default'
 import {FilesUploader} from '@dsquare-gbu/vue-utils'
 import {MAX_CHUNK_UPLOAD_SIZE, TOAST_DEF} from '../../../app/config'
 import EditEmailModal from './EditEmailModal'
@@ -155,7 +155,7 @@ export default {
         },
         updateAvatarBySplittingImageIntoChunks(image) {
             this.loading = true
-            const service = handledFileAdminService(), timeoutToSendChunks = 400
+            const service = adminHandledFileService(), timeoutToSendChunks = 400
             let i = 0
             this.filesUploader.quickProcessFilesWithChunks({
                 files: [image],

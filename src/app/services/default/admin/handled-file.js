@@ -1,6 +1,6 @@
-import AdminService from './admin'
+import BaseAdminService from '../admin-base'
 
-export class HandledFileAdminService extends AdminService {
+export class HandledFileService extends BaseAdminService {
     constructor() {
         super('handled-file')
     }
@@ -53,5 +53,3 @@ export class HandledFileAdminService extends AdminService {
         )
     }
 }
-
-export const handledFileAdminService = () => new HandledFileAdminService()

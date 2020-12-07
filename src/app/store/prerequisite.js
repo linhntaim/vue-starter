@@ -2,7 +2,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {prerequisiteService} from '../services/default/prerequisite'
+import {
+    adminPrerequisiteService as prerequisiteService,
+} from '../services/default'
 import {DEFAULT_PREREQUISITE_LIFETIME} from '../config'
 
 const expiredTime = () => (new Date()).getTime() + DEFAULT_PREREQUISITE_LIFETIME

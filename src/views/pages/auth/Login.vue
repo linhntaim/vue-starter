@@ -88,9 +88,8 @@ export default {
             })
         },
         afterLogin() {
-            const redirectAfterAuthenticated = session.retrieve('redirect_after_authenticated')
-
             session.restart()
+            const redirectAfterAuthenticated = session.retrieve('redirect_after_authenticated')
             this.$router.push(redirectAfterAuthenticated ? redirectAfterAuthenticated : APP_ROUTE.redirectAfterAuthenticated)
         },
     },

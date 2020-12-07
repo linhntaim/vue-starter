@@ -31,8 +31,8 @@
  */
 
 import {app} from '@dsquare-gbu/vue-app'
-import {commandAdminService} from '../../../../app/services/default/admin-command'
-import {ui} from '../../../../app/utils'
+import {adminCommandService} from '@/app/services/default'
+import {ui} from '@/app/utils'
 import helpers from '../../../../app/utils/helpers'
 
 export default {
@@ -83,7 +83,7 @@ export default {
     methods: {
         onSubmitted() {
             this.loading = true
-            commandAdminService().run(
+            adminCommandService().run(
                 {
                     cmd: 'client:limit',
                     params: this.params,

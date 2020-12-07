@@ -1,4 +1,4 @@
-import {accountNotificationService} from '../services/default/account-notification'
+import {adminAccountNotificationService as accountNotificationService} from '../services/default'
 
 export default {
     namespaced: true,

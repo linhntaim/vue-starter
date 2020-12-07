@@ -1,4 +1,4 @@
-import {activityLogAdminService} from '../services/default/admin-activity-log'
+import {adminActivityLogService as activityLogService} from '../services/default'
 
 export default {
     namespaced: true,
@@ -17,7 +17,7 @@ export default {
     },
     actions: {
         search({state}, {params, doneCallback, errorCallback, alwaysCallback}) {
-            activityLogAdminService().index(params, (data) => {
+            activityLogService().index(params, (data) => {
                 state.activityLogs = data.models
                 doneCallback(data.pagination)
             }, errorCallback, alwaysCallback)
@@ -28,14 +28,14 @@ export default {
                 doneCallback()
                 return
             }
-            activityLogAdminService().show(id, (data) => {
+            activityLogService().show(id, (data) => {
                 state.activityLog = data.model
                 doneCallback()
             }, errorCallback, alwaysCallback)
         },
 
         delete(store, {ids, doneCallback, errorCallback, alwaysCallback}) {
-            activityLogAdminService().bulkDestroy(ids, {}, doneCallback, errorCallback, alwaysCallback)
+            activityLogService().bulkDestroy(ids, {}, doneCallback, errorCallback, alwaysCallback)
         },
 
         destruct({state}) {

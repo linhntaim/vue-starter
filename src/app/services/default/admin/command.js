@@ -1,6 +1,6 @@
-import AdminService from './admin'
+import BaseAdminService from '@/app/services/default/admin-base'
 
-export class CommandAdminService extends AdminService {
+export class CommandService extends BaseAdminService {
     constructor() {
         super('command')
     }
@@ -15,5 +15,3 @@ export class CommandAdminService extends AdminService {
         )
     }
 }
-
-export const commandAdminService = () => new CommandAdminService()

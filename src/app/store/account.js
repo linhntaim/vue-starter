@@ -2,8 +2,11 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {adminAccountService as accountService} from '../services/default/account-admin'
-import {authService} from '../services/default/auth'
+import {
+    adminAccountService as accountService,
+    adminAuthService as authService,
+    adminPasswordService as passwordService,
+} from '../services/default'
 import {
     bearerTokenCookieStore,
     callbackWaiter,
@@ -13,13 +16,12 @@ import {
     settingsCookieStore,
 } from '../utils'
 import {localeManager} from '../locales'
-import {passwordAdminService} from '../services/default/admin-password'
-import {serviceFactory} from '../services'
+import {defaultServiceModifyHeader} from '../services'
 import {APP_DEFAULT_SERVICE} from '../config'
 
-const setDefaultServiceSettingsHeader = settings => {
-    serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('settings', instance => {
-        instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.settings] = JSON.stringify({
+const applySettings = (settings, action = 'all', localeCallback = null) => {
+    if (action === 'all' || action === 'apply' || action === 'apply_with_locale') {
+        defaultServiceModifyHeader(APP_DEFAULT_SERVICE.headers.settings, {
             app_id: settings.appId,
             app_url: settings.appUrl,
             locale: settings.locale,
@@ -33,20 +35,6 @@ const setDefaultServiceSettingsHeader = settings => {
             long_time_format: settings.longTimeFormat,
             short_time_format: settings.shortTimeFormat,
         })
-        return instance
-    }))
-}
-
-const setDefaultServiceTokenAuthorizationHeader = token => {
-    serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('authorization', instance => {
-        instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.tokenAuthorization] = token
-        return instance
-    }))
-}
-
-const applySettings = (settings, action = 'all', localeCallback = null) => {
-    if (action === 'all' || action === 'apply' || action === 'apply_with_locale') {
-        setDefaultServiceSettingsHeader(settings)
         settingsCookieStore.store(settings)
     }
     if (action === 'all' || action === 'apply_with_locale') {
@@ -61,7 +49,10 @@ const applySettings = (settings, action = 'all', localeCallback = null) => {
 }
 
 const applyBearerToken = (bearerToken = null, action = 'all') => {
-    setDefaultServiceTokenAuthorizationHeader(bearerToken ? bearerToken.tokenType + ' ' + bearerToken.accessToken : null)
+    defaultServiceModifyHeader(
+        APP_DEFAULT_SERVICE.headerTokenAuthorization,
+        bearerToken ? bearerToken.tokenType + ' ' + bearerToken.accessToken : null,
+    )
     if (action !== 'apply_no_cookie') {
         bearerToken ? bearerTokenCookieStore.store(bearerToken) : bearerTokenCookieStore.remove()
     }
@@ -307,17 +298,17 @@ export default {
         // TODO:
         //  Implement extra actions
         forgotPassword(store, {email, appResetPasswordPath, doneCallback, errorCallback}) {
-            passwordAdminService().forgot(email, appResetPasswordPath, doneCallback, errorCallback)
+            passwordService().forgot(email, appResetPasswordPath, doneCallback, errorCallback)
         },
 
         getResetPassword(store, {token, doneCallback, errorCallback}) {
-            passwordAdminService().getReset({
+            passwordService().getReset({
                 token: token,
             }, doneCallback, errorCallback)
         },
 
         resetPassword(store, {email, token, password, passwordConfirmation, doneCallback, errorCallback}) {
-            passwordAdminService().reset({
+            passwordService().reset({
                 email: email,
                 token: token,
                 password: password,

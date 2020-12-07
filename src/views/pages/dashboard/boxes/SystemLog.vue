@@ -18,7 +18,7 @@
  */
 
 import {mapGetters} from '@dsquare-gbu/vue-uses'
-import {systemLogAdminService} from '../../../../app/services/default/admin-system-log'
+import {adminSystemLogService} from '@/app/services/default'
 
 export default {
     name: 'SystemLog',
@@ -46,7 +46,7 @@ export default {
         },
         onSubmitted() {
             this.loading = true
-            systemLogAdminService().index(
+            adminSystemLogService().index(
                 {},
                 data => {
                     this.loading = false

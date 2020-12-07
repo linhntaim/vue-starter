@@ -1,8 +1,8 @@
-import {AuthAdminService} from './admin-auth'
+import AdminService from '@/app/services/default/admin'
 
-export class PasswordAdminService extends AuthAdminService {
+export class PasswordService extends AdminService {
     constructor() {
-        super('password')
+        super('auth/password')
     }
 
     forgot(email, appResetPasswordPath, doneCallback = null, errorCallback = null, alwaysCallback = null) {
@@ -43,5 +43,3 @@ export class PasswordAdminService extends AuthAdminService {
         )
     }
 }
-
-export const passwordAdminService = () => new PasswordAdminService()

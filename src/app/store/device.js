@@ -2,20 +2,15 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {deviceService} from '../services/default/device'
+import {
+    adminDeviceService as deviceService,
+} from '../services/default'
 import {deviceCookieStore} from '../utils'
-import {serviceFactory} from '../services'
+import {defaultServiceModifyHeader} from '../services'
 import {APP_DEFAULT_SERVICE} from '../config'
 
-const setDefaultServiceDeviceHeader = device => {
-    serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('device', instance => {
-        instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.device] = JSON.stringify(device)
-        return instance
-    }))
-}
-
 const applyDevice = device => {
-    setDefaultServiceDeviceHeader(device)
+    defaultServiceModifyHeader(APP_DEFAULT_SERVICE.headers.device, device)
     deviceCookieStore.store(device)
 }
 

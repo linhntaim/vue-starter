@@ -1,4 +1,4 @@
-import {dataExportAdminService} from '../services/default/admin-data-export'
+import {adminDataExportService as dataExportService} from '../services/default'
 
 export default {
     namespaced: true,
@@ -17,7 +17,7 @@ export default {
     },
     actions: {
         search({state}, {params, doneCallback, errorCallback, alwaysCallback}) {
-            dataExportAdminService().index(params, (data) => {
+            dataExportService().index(params, (data) => {
                 state.dataExports = data.models
                 doneCallback(data.pagination)
             }, errorCallback, alwaysCallback)

@@ -1,6 +1,6 @@
-import AdminService from './admin'
+import BaseAdminService from '../admin-base'
 
-export class AppOptionAdminService extends AdminService {
+export class AppOptionService extends BaseAdminService {
     constructor() {
         super('app-option')
     }
@@ -21,5 +21,3 @@ export class AppOptionAdminService extends AdminService {
         )
     }
 }
-
-export const appOptionAdminService = () => new AppOptionAdminService()

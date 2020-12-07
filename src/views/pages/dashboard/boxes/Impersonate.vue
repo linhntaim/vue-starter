@@ -23,7 +23,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {commandAdminService} from '../../../../app/services/default/admin-command'
+import {adminCommandService} from '@/app/services/default'
 import {mapGetters} from '@dsquare-gbu/vue-uses'
 
 export default {
@@ -50,7 +50,7 @@ export default {
         onSubmitted() {
             this.loading = true
             this.hideOutput()
-            commandAdminService().run(
+            adminCommandService().run(
                 {
                     cmd: 'impersonate',
                     params: {
