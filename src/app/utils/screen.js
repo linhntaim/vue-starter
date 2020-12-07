@@ -2,7 +2,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {serviceFactory} from '../services'
+import {defaultServiceModifyHeader} from '../services'
 import {APP_DEFAULT_SERVICE, APP_TYPE} from '../config'
 
 export class Screen {
@@ -32,10 +32,7 @@ export class Screen {
     }
 
     setDefaultServiceScreenHeader() {
-        serviceFactory.modify(defaultServiceInstance => defaultServiceInstance.addInstanceCallback('screen', instance => {
-            instance.defaults.headers.common[APP_DEFAULT_SERVICE.headers.screen] = JSON.stringify(this.get())
-            return instance
-        }))
+        defaultServiceModifyHeader(APP_DEFAULT_SERVICE.headers.screen, this.get())
         return this
     }
 

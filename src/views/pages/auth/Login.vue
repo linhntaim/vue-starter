@@ -10,7 +10,7 @@
                             input#inputEmail.form-control(v-model="email" type="text" aria-describedby="emailHelp" :placeholder="$t('pages.email_address')" :disabled="!!impersonateToken" required)
                         .form-group
                             input#inputPassword.form-control(v-model="password" type="password" :placeholder="$t('pages.password')" :required="!impersonateToken" :disabled="!!impersonateToken")
-                        button.btn.btn-primary.btn-user.btn-block(:disabled="loading || disabled" type="submit")
+                        button.btn.btn-primary.btn-block(:disabled="loading || disabled" type="submit")
                             i.fas.fa-circle-notch.fa-spin(v-if="loading")
                             span(v-else) {{ $t('actions.login') }}
 </template>
@@ -77,9 +77,8 @@ export default {
             })
         },
         afterLogin() {
-            const redirectAfterAuthenticated = session.retrieve('redirect_after_authenticated')
-
             session.restart()
+            const redirectAfterAuthenticated = session.retrieve('redirect_after_authenticated')
             this.$router.push(redirectAfterAuthenticated ? redirectAfterAuthenticated : APP_ROUTE.redirectAfterAuthenticated)
         },
     },
