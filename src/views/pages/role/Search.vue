@@ -12,6 +12,7 @@
                     label(for="searchPermissions") {{ $tc('pages.permission', 2) }}
                     multiple-select2-input(
                         v-if="!localeChange.changed && select2Ready"
+                        ref="searchPermissions"
                         :id="'searchPermissions'"
                         v-model="searcher.params.permissions"
                         :items="metadata.permissions"
@@ -31,7 +32,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {localeChange, ui} from '../../../app/utils'
+import {localeChange} from '../../../app/utils'
 import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
 import {Searcher} from '@dsquare-gbu/vue-utils'
 import MultipleSelect2Input from '../../components/MultipleSelect2Input'
@@ -45,8 +46,6 @@ export default {
     },
     data() {
         return {
-            uis: {},
-
             loading: false,
 
             permissionOptions: {
@@ -79,7 +78,6 @@ export default {
     },
     mounted() {
         this.localeChangeHandlerId = this.localeChange.on()
-        this.uis.$searchPermissions = ui.query('#searchPermissions').get()
     },
     methods: {
         ...mapActions({
@@ -103,14 +101,14 @@ export default {
         },
         initSearcher() {
             this.searcher.parseQuery(this.$route.query)
-
             this.$emit('searcherInitialized')
         },
         onClearSearchClicked() {
+            // clear search
             this.searcher.clear()
-
-            this.uis.$searchPermissions.val([]).trigger('change')
-
+            // clear some special inputs
+            this.$refs.searchPermissions.clear()
+            // search with clear
             this.onSubmitted()
         },
         onSubmitted() {
