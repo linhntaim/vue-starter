@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {adminAccountNotificationService as accountNotificationService} from '../services/default'
 
 export default {

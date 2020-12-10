@@ -46,7 +46,7 @@
 import {storeHandler, headTitle} from '../../../../app/utils'
 import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
 import {Collection, DataPlot, ItemSelection, Sorter, Paginator} from '@dsquare-gbu/vue-utils'
-import {ITEMS_PER_PAGE_LIST} from '../../../../app/config'
+import {ITEMS_PER_PAGE_LIST} from '@/app/config'
 import helpers from '../../../../app/utils/helpers'
 import PaginatorComponent from '../../../components/Paginator'
 import SorterComponent from '../../../components/Sorter'

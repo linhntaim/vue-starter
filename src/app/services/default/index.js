@@ -1,20 +1,20 @@
 /**
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
-import {PrerequisiteService} from '@/app/services/default/admin/prerequisite'
-import {DeviceService} from '@/app/services/default/admin/device'
-import {AuthService} from '@/app/services/default/admin/auth'
-import {AccountService} from '@/app/services/default/admin/account'
-import {AccountNotificationService} from '@/app/services/default/admin/account-notification'
-import {ActivityLogService} from '@/app/services/default/admin/activity-log'
-import {AppOptionService} from '@/app/services/default/admin/app-option'
-import {DataExportService} from '@/app/services/default/admin/data-export'
-import {RoleService} from '@/app/services/default/admin/role'
-import {PasswordService} from '@/app/services/default/admin/password'
-import {CommandService} from '@/app/services/default/admin/command'
-import {SystemLogService} from '@/app/services/default/admin/system-log'
-import {HandledFileService} from '@/app/services/default/admin/handled-file'
 
+import {PrerequisiteService} from './admin/prerequisite'
+import {DeviceService} from './admin/device'
+import {AuthService} from './admin/auth'
+import {AccountService} from './admin/account'
+import {AccountNotificationService} from './admin/account-notification'
+import {ActivityLogService} from './admin/activity-log'
+import {AppOptionService} from './admin/app-option'
+import {DataExportService} from './admin/data-export'
+import {RoleService} from './admin/role'
+import {PasswordService} from './admin/password'
+import {CommandService} from './admin/command'
+import {SystemLogService} from './admin/system-log'
+import {HandledFileService} from './admin/handled-file'
 // TODO: Import
 
 // TODO

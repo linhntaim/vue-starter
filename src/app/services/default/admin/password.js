@@ -1,4 +1,8 @@
-import AdminService from '@/app/services/default/admin'
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
+import AdminService from '../admin'
 
 export class PasswordService extends AdminService {
     constructor() {

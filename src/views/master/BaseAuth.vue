@@ -20,7 +20,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {ui} from '../../app/utils'
+import {ui} from '@/app/utils'
 import BaseHeader from './BaseHeader'
 import BaseFooter from './BaseFooter'
 import BaseSidebar from './BaseSidebar'

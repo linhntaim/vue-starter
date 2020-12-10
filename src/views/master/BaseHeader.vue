@@ -41,7 +41,7 @@
  */
 
 import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-import {LOCALE_MAPPING_FLAG_ICON_NAME_DEF} from '../../app/config'
+import {LOCALE_MAPPING_FLAG_ICON_NAME_DEF} from '@/app/config'
 
 export default {
     name: 'BaseHeader',

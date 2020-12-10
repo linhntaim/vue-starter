@@ -30,8 +30,8 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {app} from '@dsquare-gbu/vue-app'
 import {adminCommandService} from '@/app/services/default'
+import {app} from '@dsquare-gbu/vue-app'
 import {ui} from '@/app/utils'
 import helpers from '../../../../app/utils/helpers'
 

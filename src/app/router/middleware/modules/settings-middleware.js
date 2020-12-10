@@ -4,7 +4,7 @@
 
 import {dateTimer, settingsCookieStore} from '../../../utils'
 import {Middleware} from '@dsquare-gbu/vue-uses'
-import {DEFAULT_SETTINGS} from '../../../config'
+import {DEFAULT_SETTINGS} from '@/app/config'
 
 export default class SettingsMiddleware extends Middleware {
     handle() {

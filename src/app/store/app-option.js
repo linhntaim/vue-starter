@@ -1,3 +1,7 @@
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
 import {adminAppOptionService as appOptionService} from '../services/default'
 
 export default {

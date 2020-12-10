@@ -28,9 +28,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {mapActions} from '@dsquare-gbu/vue-uses'
 import {headTitle, intervalCaller, timeoutCaller} from '../../../app/utils'
-import {APP_ROUTE} from '../../../app/config'
+import {mapActions} from '@dsquare-gbu/vue-uses'
+import {APP_ROUTE} from '@/app/config'
 
 export default {
     name: 'ResetPassword',

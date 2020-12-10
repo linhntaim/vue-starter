@@ -32,7 +32,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {localeChange} from '../../../app/utils'
+import {localeChange} from '@/app/utils'
 import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
 import {Searcher} from '@dsquare-gbu/vue-utils'
 import MultipleSelect2Input from '../../components/MultipleSelect2Input'

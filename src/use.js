@@ -4,8 +4,8 @@
 
 import {importLocale} from './app/locales'
 import {routes} from './app/router'
-import {store} from './app/store'
 import {settingsCookieStore} from './app/utils'
+import {store} from './app/store'
 import {use, routerUse, vuexUse, i18Use, AppMiddleware, SessionMiddleware} from '@dsquare-gbu/vue-uses'
 import {APP_NAME, APP_TITLE_SEPARATOR} from './app/config'
 import VueBus from '@dsquare-gbu/vue-bus'
