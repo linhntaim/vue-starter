@@ -2,10 +2,10 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {PrerequisiteService} from '@/app/services/default/common/prerequisite'
-import {DeviceService} from '@/app/services/default/common/device'
-import {AuthService} from '@/app/services/default/common/auth'
-import {AccountService} from '@/app/services/default/common/account'
+import {PrerequisiteService} from './common/prerequisite'
+import {DeviceService} from './common/device'
+import {AuthService} from './common/auth'
+import {AccountService} from './common/account'
 // TODO: Import
 
 // TODO

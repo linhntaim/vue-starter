@@ -2,7 +2,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {JqueryUi} from '@dsquare-gbu/vue-utils/dist/ui'
+import {JqueryUi} from '@dsquare-gbu/vue-utils'
 import {timeoutCaller} from './default'
 
 export default class BootstrapUi extends JqueryUi {

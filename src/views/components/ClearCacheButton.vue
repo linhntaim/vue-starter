@@ -8,7 +8,7 @@
  */
 
 import {mapActions, mapMutations} from '@dsquare-gbu/vue-uses'
-import {APP_ROUTE} from '../../app/config'
+import {APP_ROUTE} from '@/app/config'
 
 export default {
     name: 'ClearCacheButton',

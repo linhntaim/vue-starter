@@ -2,10 +2,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {bearerTokenCookieStore} from '../../../utils'
-import {session} from '@dsquare-gbu/vue-router'
-import {Middleware} from '@dsquare-gbu/vue-uses'
-import {APP_ROUTE} from '../../../config'
+import {bearerTokenCookieStore} from '@/app/utils'
+import {session, Middleware} from '@dsquare-gbu/vue-uses'
+import {APP_ROUTE} from '@/app/config'
 
 export default class AuthMiddleware extends Middleware {
     handle() {
