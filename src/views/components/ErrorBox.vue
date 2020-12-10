@@ -10,7 +10,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {ERROR_LEVEL_DEF, ERROR_MESSAGE_LEVEL} from '../../app/config'
+import {ERROR_LEVEL_DEF, ERROR_MESSAGE_LEVEL} from '@/app/config'
 
 export default {
     name: 'ErrorBox',

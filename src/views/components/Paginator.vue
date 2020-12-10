@@ -32,7 +32,7 @@
  */
 
 import FormattedNumber from './FormattedNumber'
-import {ITEMS_PER_PAGE_LIST} from '../../app/config'
+import {ITEMS_PER_PAGE_LIST} from '@/app/config'
 import {Paginator} from '@dsquare-gbu/vue-utils'
 
 export default {
