@@ -10,6 +10,8 @@ export default class AuthMiddleware extends Middleware {
     handle() {
         this.log('auth', 'middleware')
 
+        this.autoUnauthenticatedTimeout = null
+
         this.handleBearerToken()
     }
 
@@ -54,8 +56,31 @@ export default class AuthMiddleware extends Middleware {
         this.handleNotAuth()
     }
 
+    autoLogout() {
+        const bearerTokenExpiresAt = session.retrieve('bearer_token_expires_at')
+        const expiresIn = bearerTokenExpiresAt - new Date().getTime()
+        const logout = () => {
+            session.restart()
+            this.redirect(APP_ROUTE.redirectAfterUnauthenticated)
+            this.bus().emit('logout')
+        }
+        if (expiresIn <= 0) {
+            this.store().dispatch('account/logout', {
+                alwaysCallback: logout,
+            })
+            return true
+        }
+
+        if (!this.autoUnauthenticatedTimeout) {
+            this.autoUnauthenticatedTimeout = setTimeout(logout, expiresIn)
+        }
+        return false
+    }
+
     handleAuth() {
         this.log('authenticated', 'auth')
+
+        if (this.autoLogout()) return
 
         if (this.replaceRoutesIfNeeded()) return
 
