@@ -45,6 +45,7 @@ export default {
         afterLogout() {
             session.restart()
             this.$router.push(APP_ROUTE.redirectAfterUnauthenticated)
+            this.$bus.emit('logout')
         },
     },
 }

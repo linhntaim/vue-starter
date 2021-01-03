@@ -17,6 +17,7 @@ import {
 } from '../utils'
 import {localeManager} from '../locales'
 import {defaultServiceModifyHeader} from '../services'
+import {session} from '@dsquare-gbu/vue-uses'
 import {APP_DEFAULT_SERVICE} from '../config'
 
 const applySettings = (settings, action = 'all', localeCallback = null) => {
@@ -54,7 +55,13 @@ const applyBearerToken = (bearerToken = null, action = 'all') => {
         bearerToken ? bearerToken.tokenType + ' ' + bearerToken.accessToken : null,
     )
     if (action !== 'apply_no_cookie') {
-        bearerToken ? bearerTokenCookieStore.store(bearerToken) : bearerTokenCookieStore.remove()
+        if (bearerToken) {
+            bearerTokenCookieStore.store(bearerToken)
+            session.store('bearer_token_expires_at', new Date(new Date().getTime() + bearerToken.expiresIn).getTime())
+        } else {
+            bearerTokenCookieStore.remove()
+            session.forgot('bearer_token_expires_at')
+        }
     }
 }
 
