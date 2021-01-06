@@ -56,7 +56,7 @@ const applyBearerToken = (bearerToken = null, action = 'all') => {
     if (action !== 'apply_no_cookie') {
         if (bearerToken) {
             bearerTokenCookieStore.store(bearerToken)
-            session.store('bearer_token_expires_at', new Date(new Date().getTime() + bearerToken.expiresIn).getTime())
+            session.store('bearer_token_expires_at', new Date(new Date().getTime() + bearerToken.expiresIn * 1000).getTime())
         } else {
             bearerTokenCookieStore.remove()
             session.forgot('bearer_token_expires_at')
