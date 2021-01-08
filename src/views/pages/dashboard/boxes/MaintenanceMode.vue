@@ -29,7 +29,7 @@
 import {adminCommandService} from '@/app/services/default'
 import {app} from '@dsquare-gbu/vue-app'
 import {ui} from '@/app/utils'
-import helpers from '../../../../app/utils/helpers'
+import {StringType} from '@dsquare-gbu/vue-utils'
 
 export default {
     name: 'MaintenanceMode',
@@ -47,7 +47,7 @@ export default {
     computed: {
         appliedParams() {
             const params = {}
-            const allowedIps = helpers.string.splitByLine(this.allowedIps)
+            const allowedIps = StringType.lines(this.allowedIps)
             if (allowedIps.length) {
                 params['--allow'] = allowedIps
             }

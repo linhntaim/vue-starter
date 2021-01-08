@@ -33,7 +33,7 @@
 import {adminCommandService} from '@/app/services/default'
 import {app} from '@dsquare-gbu/vue-app'
 import {ui} from '@/app/utils'
-import helpers from '../../../../app/utils/helpers'
+import {StringType} from '@dsquare-gbu/vue-utils'
 
 export default {
     name: 'IpLimitation',
@@ -53,11 +53,11 @@ export default {
     computed: {
         params() {
             const params = {}
-            const allowedIps = helpers.string.splitByLine(this.allowedIps)
+            const allowedIps = StringType.lines(this.allowedIps)
             if (allowedIps.length) {
                 params['--allow'] = allowedIps
             }
-            const deniedIps = helpers.string.splitByLine(this.deniedIps)
+            const deniedIps = StringType.lines(this.deniedIps)
             if (deniedIps.length) {
                 params['--deny'] = deniedIps
             }

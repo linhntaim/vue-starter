@@ -45,9 +45,8 @@
 
 import {storeHandler, headTitle} from '../../../../app/utils'
 import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-import {Collection, DataPlot, ItemSelection, Sorter, Paginator} from '@dsquare-gbu/vue-utils'
+import {Collection, DataPlot, ItemSelection, ObjectType, Sorter, Paginator} from '@dsquare-gbu/vue-utils'
 import {ITEMS_PER_PAGE_LIST} from '@/app/config'
-import helpers from '../../../../app/utils/helpers'
 import PaginatorComponent from '../../../components/Paginator'
 import SorterComponent from '../../../components/Sorter'
 
@@ -119,7 +118,7 @@ export default {
         search() {
             this.loading = true
             const params = this.params.data()
-            this.$router.softReplace({query: helpers.object.clone(params)})
+            this.$router.softReplace({query: ObjectType.clone(params)})
             this.notificationSearch({
                 params: params,
                 doneCallback: (pagination) => {
