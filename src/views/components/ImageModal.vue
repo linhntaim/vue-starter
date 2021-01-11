@@ -140,7 +140,7 @@
  */
 
 import {timeoutCaller, ui} from '../../app/utils'
-import {ObjectType} from '@dsquare-gbu/vue-utils'
+import {TypeObject} from '@dsquare-gbu/vue-utils'
 import Cropper from 'cropperjs'
 import UploadDescription from './UploadDescription'
 
@@ -373,7 +373,7 @@ export default {
             this.uis.$.modal('show')
 
             if (options) {
-                this.uis.options = ObjectType.merge(this.uis.options, options)
+                this.uis.options = TypeObject.merge(this.uis.options, options)
             }
 
             if (this.imageUrl) {
