@@ -9,10 +9,12 @@
                     label(for="searchCreatedTo") {{ $t('pages.created_date_to') }}
                     calendar-input(v-if="calendarInputOptions" ref="searchCreatedTo" v-model="searcher.params.created_date_to" :options="calendarInputOptions" :id="'searchCreatedTo'" :placeholder="$t('pages.created_date_to')")
                 .col.nowrap
-                    button.btn.btn-primary.btn-item.btn-item-left(:disabled="disabled" type="submit")
-                        i.fas.fa-search
-                        | &nbsp;&nbsp;{{ $t('actions.search') }}
-                    button.btn.btn-warning.btn-item.btn-item-left(v-if="searching" :disabled="disabled" @click="onClearSearchClicked()" type="button" data-dismiss="modal") {{ $t('actions.clear_search') }}
+                    .btn-group.btn-group-item
+                        button.btn.btn-primary(:disabled="disabled" type="submit")
+                            i.fas.fa-search.mr-2
+                            | {{ $t('actions.search') }}
+                        button.btn.btn-warning(v-if="searching" :disabled="disabled" @click="onClearSearchClicked()" type="button")
+                            | ×
 </template>
 
 <script>

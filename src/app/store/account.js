@@ -323,11 +323,11 @@ export default {
             }, doneCallback, errorCallback)
         },
 
-        updateAvatar({state}, {image, doneCallback, errorCallback}) {
+        updateAvatar({state}, {image, name, doneCallback, errorCallback}) {
             accountService().updateAvatar(image, data => {
                 state.account.avatar_url = data.model.avatar_url
                 doneCallback()
-            }, errorCallback)
+            }, errorCallback, null, name)
         },
 
         updateAvatarByHandledFile({state}, {fileId, doneCallback, errorCallback}) {

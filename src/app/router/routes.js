@@ -172,6 +172,11 @@ export const routes = [
                                 component: () => import('../../views/pages/role/Index'),
                             },
                             {
+                                path: 'check',
+                                name: 'role_check_index',
+                                component: () => import('../../views/pages/role/CheckIndex'),
+                            },
+                            {
                                 path: 'create',
                                 name: 'role_create',
                                 component: () => import('../../views/pages/role/Create'),

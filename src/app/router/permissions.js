@@ -10,6 +10,7 @@ export const routePermissions = {
     //  route_name_02: 'perm-03|perm-04|...',
     activity_log_index: 'activity-log-manage',
     role_index: 'role-manage',
+    role_check_index: 'role-manage',
     role_create: 'role-manage',
     role___edit: 'role-manage',
     // TODO

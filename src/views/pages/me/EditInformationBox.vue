@@ -126,16 +126,17 @@ export default {
                 options: {
                     aspectRatio: 1,
                 },
-                uploadCallback: image => {
-                    // this.updateAvatarNormally(image)
-                    this.updateAvatarBySplittingImageIntoChunks(image)
+                uploadCallback: (image, name) => {
+                    this.updateAvatarNormally(image, name)
+                    // this.updateAvatarBySplittingImageIntoChunks(image, name)
                 },
             })
         },
-        updateAvatarNormally(image) {
+        updateAvatarNormally(image, name) {
             this.loading = true
             this.accountUpdateAvatar({
                 image: image,
+                name: name,
                 doneCallback: () => {
                     this.loading = false
 
@@ -153,7 +154,7 @@ export default {
                 },
             })
         },
-        updateAvatarBySplittingImageIntoChunks(image) {
+        updateAvatarBySplittingImageIntoChunks(image, name) {
             this.loading = true
             const service = adminHandledFileService(), timeoutToSendChunks = 400
             let i = 0
@@ -172,8 +173,11 @@ export default {
                                 if (data.model.joined) {
                                     service.chunkComplete(
                                         data.model.chunks_id,
-                                        {public: 1},
+                                        {public: 1, scan: 1},
                                         data => this.updateAvatarByHandledFile(data.model.id),
+                                        null,
+                                        null,
+                                        name,
                                     )
                                 }
                             },

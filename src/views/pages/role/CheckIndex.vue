@@ -11,6 +11,8 @@
                     table.table.table-bordered
                         thead
                             tr
+                                th.text-center
+                                    input(type="checkbox" v-model="itemSelection.allSelected" name="selected_all" @change="onItemAllChanged")
                                 th.text-center #
                                 th
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
@@ -20,6 +22,8 @@
                                 th.text-center(v-if="canAction") {{ $t('actions.actions') }}
                         tfoot
                             tr
+                                th.text-center
+                                    input(type="checkbox" v-model="itemSelection.allSelected" name="selected_all")
                                 th.text-center #
                                 th
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
@@ -33,6 +37,8 @@
                                     span(v-if="loading") {{ $t('actions.loading') }}
                                     span(v-else) {{ $t('pages.no_items') }}
                             tr(v-for="(role, index) in roles")
+                                td.text-center
+                                    input(type="checkbox" v-model="itemSelection.selected" name="selected[]" :value="role.id" @change="onItemChanged")
                                 td.text-center {{ paginator.pagination.items.from + index }}
                                 td {{ role.name }}
                                 td {{ role.display_name }}
@@ -42,6 +48,12 @@
                                     button.btn.btn-link.btn-sm(v-if="canEdit" :disabled="loading" @click.prevent="onEditClicked(role)") {{ $t('actions.edit') }}
                                     button.btn.btn-link.btn-sm(v-if="canDelete" :disabled="loading" @click.prevent="onDeleteClicked(role)") {{ $t('actions.delete') }}
                 .clearfix
+                    .btn-group.dropup.btn-group-item.btn-item-left(v-if="canActions")
+                        button.btn.btn-warning.dropdown-toggle(:disabled="loading" data-toggle="dropdown")
+                            i.fas.fa-cog.mr-2
+                            span.mr-1 {{ $t('actions.bulk_actions') }}
+                        .dropdown-menu
+                            a.dropdown-item(v-if="canDelete" :class="{disabled: loading}" @click.prevent="onBulkDeleteClicked" href="#") {{ $t('actions.delete') }}
                     paginator-component(:disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator()")
 </template>
 
@@ -52,7 +64,7 @@
 
 import {storeHandler, headTitle, permit} from '../../../app/utils'
 import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
-import {DataPlot, Paginator, Searcher, Sorter, TypeObject} from '@dsquare-gbu/vue-utils'
+import {Collection, DataPlot, ItemSelection, Paginator, Searcher, Sorter, TypeObject} from '@dsquare-gbu/vue-utils'
 import {ITEMS_PER_PAGE_LIST} from '@/app/config'
 import PaginatorComponent from '../../components/Paginator'
 import Search from './Search'
@@ -68,6 +80,8 @@ export default {
     data() {
         return {
             loading: false,
+
+            itemSelection: new ItemSelection(),
 
             searcher: new Searcher(),
             sorter: new Sorter(),
@@ -107,7 +121,7 @@ export default {
             return this.canDelete
         },
         colspan() {
-            let colspan = 5
+            let colspan = 6
             if (!this.canAction) --colspan
             return colspan
         },
@@ -191,6 +205,7 @@ export default {
                 doneCallback: (pagination) => {
                     this.paginator.parsePagination(pagination)
                     if (!this.ifPageEmpty()) {
+                        this.itemSelection.reset().setAll((new Collection(this.roles)).pluck('id'))
                         this.loading = false
                     }
                 },
@@ -202,6 +217,12 @@ export default {
         },
         onSyncClicked() {
             this.search()
+        },
+        onItemAllChanged() {
+            this.itemSelection.onAllChanged()
+        },
+        onItemChanged() {
+            this.itemSelection.onChanged()
         },
         onEditClicked(role) {
             this.setRole({
@@ -216,6 +237,24 @@ export default {
                     this.loading = true
                     this.roleDelete({
                         ids: [role.id],
+                        doneCallback: () => {
+                            this.search()
+                        },
+                        errorCallback: err => {
+                            this.loading = false
+                            this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                        },
+                    })
+                },
+            })
+        },
+        onBulkDeleteClicked() {
+            this.$bus.emit('confirm', {
+                message: this.$t('pages._role._index.want_delete_many'),
+                confirmCallback: () => {
+                    this.loading = true
+                    this.roleDelete({
+                        ids: this.itemSelection.selected,
                         doneCallback: () => {
                             this.search()
                         },

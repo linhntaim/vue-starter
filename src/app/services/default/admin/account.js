@@ -81,10 +81,13 @@ export class AccountService extends AdminService {
         )
     }
 
-    updateAvatar(imageBlob, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+    updateAvatar(imageBlob, doneCallback = null, errorCallback = null, alwaysCallback = null, name = null) {
         const formData = new FormData
         formData.append('_avatar', '1')
         formData.append('image', imageBlob)
+        if (name) {
+            formData.append('name', name)
+        }
         return this.post(
             '',
             formData,

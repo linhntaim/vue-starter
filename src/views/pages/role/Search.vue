@@ -21,10 +21,12 @@
                         :required="false"
                         :options="permissionOptions")
                 .col.nowrap
-                    button.btn.btn-primary.btn-item.btn-item-left(:disabled="disabled || loading" type="submit")
-                        i.fas.fa-search
-                        | &nbsp;&nbsp;{{ $t('actions.search') }}
-                    button.btn.btn-warning.btn-item.btn-item-left(v-if="searching" :disabled="disabled || loading" @click="onClearSearchClicked()" type="button" data-dismiss="modal") {{ $t('actions.clear_search') }}
+                    .btn-group.btn-group-item
+                        button.btn.btn-primary(:disabled="disabled || loading" type="submit")
+                            i.fas.fa-search.mr-2
+                            | {{ $t('actions.search') }}
+                        button.btn.btn-warning(v-if="searching" :disabled="disabled || loading" @click="onClearSearchClicked()" type="button")
+                            | ×
 </template>
 
 <script>
@@ -109,10 +111,10 @@ export default {
             // clear some special inputs
             this.$refs.searchPermissions.clear()
             // search with clear
-            this.onSubmitted()
+            this.onSubmitted(true)
         },
-        onSubmitted() {
-            this.$emit('searched')
+        onSubmitted(clear = false) {
+            this.$emit('searched', {clear})
         },
     },
 }
