@@ -3,7 +3,7 @@
  */
 
 export const APP_ENV = process.env.VUE_APP_ENV
-export const APP_KEY = process.env.VUE_APP_KEY
+export const APP_KEY = process.env.VUE_APP_KEY.substr(0, 7) === 'base64:' ? atob(process.env.VUE_APP_KEY.substr(7)) : process.env.VUE_APP_KEY
 export const APP_DEBUG = process.env.VUE_APP_DEBUG === 'true'
 export const APP_LOG_ONLY = process.env.VUE_APP_LOG_ONLY ? process.env.VUE_APP_LOG_ONLY.split(',') : []
 export const APP_ID = process.env.VUE_APP_ID
