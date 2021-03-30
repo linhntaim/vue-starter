@@ -22,7 +22,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {dateTimer} from '@/app/utils'
+import {dateTimer} from '../../../app/utils'
 import {Searcher} from '@dsquare-gbu/vue-utils'
 import moment from 'moment'
 import CalendarInput from '../../components/CalendarInput'

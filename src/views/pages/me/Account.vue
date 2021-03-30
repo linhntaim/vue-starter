@@ -9,7 +9,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {headTitle} from '@/app/utils'
+import {headTitle} from '../../../app/utils'
 import EditInformationBox from './EditInformationBox'
 
 export default {

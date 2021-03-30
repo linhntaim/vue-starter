@@ -23,7 +23,7 @@
  */
 
 import {dateTimer, headTitle} from '../../../app/utils'
-import CalendarInput from '@/views/components/CalendarInput'
+import CalendarInput from '../../components/CalendarInput'
 import moment from 'moment'
 
 export default {

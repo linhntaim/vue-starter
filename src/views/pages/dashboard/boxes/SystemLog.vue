@@ -18,7 +18,7 @@
  */
 
 import {mapGetters} from '@dsquare-gbu/vue-uses'
-import {adminSystemLogService} from '@/app/services/default'
+import {adminSystemLogService} from '../../../../app/services/default'
 
 export default {
     name: 'SystemLog',

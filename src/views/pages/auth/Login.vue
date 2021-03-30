@@ -25,9 +25,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {headTitle} from '@/app/utils'
+import {headTitle} from '../../../app/utils'
 import {mapActions, session} from '@dsquare-gbu/vue-uses'
-import {APP_ROUTE} from '@/app/config'
+import {APP_ROUTE} from '../../../app/config'
 
 export default {
     name: 'Login',

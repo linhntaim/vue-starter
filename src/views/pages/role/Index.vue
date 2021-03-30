@@ -53,7 +53,7 @@
 import {storeHandler, headTitle, permit} from '../../../app/utils'
 import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
 import {DataPlot, Paginator, Searcher, Sorter, TypeObject} from '@dsquare-gbu/vue-utils'
-import {ITEMS_PER_PAGE_LIST} from '@/app/config'
+import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
 import PaginatorComponent from '../../components/Paginator'
 import Search from './Search'
 import SorterComponent from '../../components/Sorter'
@@ -64,7 +64,7 @@ const requiredPermissions = [
 
 export default {
     name: 'Index',
-    components: {Search, SorterComponent, PaginatorComponent},
+    components: {PaginatorComponent, Search, SorterComponent},
     data() {
         return {
             loading: false,

@@ -43,21 +43,19 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {storeHandler, headTitle} from '../../../../app/utils'
+import {headTitle, storeHandler} from '../../../../app/utils'
 import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-import {Collection, DataPlot, ItemSelection, Paginator, Sorter, TypeObject} from '@dsquare-gbu/vue-utils'
-import {ITEMS_PER_PAGE_LIST} from '@/app/config'
+import {DataPlot, Paginator, Sorter, TypeObject} from '@dsquare-gbu/vue-utils'
+import {ITEMS_PER_PAGE_LIST} from '../../../../app/config'
 import PaginatorComponent from '../../../components/Paginator'
 import SorterComponent from '../../../components/Sorter'
 
 export default {
     name: 'Index',
-    components: {SorterComponent, PaginatorComponent},
+    components: {PaginatorComponent, SorterComponent},
     data() {
         return {
             loading: false,
-
-            itemSelection: new ItemSelection(),
 
             sorter: new Sorter(),
             paginator: new Paginator(ITEMS_PER_PAGE_LIST, storeHandler),
@@ -123,7 +121,6 @@ export default {
                 params: params,
                 doneCallback: (pagination) => {
                     this.paginator.parsePagination(pagination)
-                    this.itemSelection.reset().setAll((new Collection(this.notifications)).pluck('id'))
                     this.loading = false
                 },
                 errorCallback: err => {

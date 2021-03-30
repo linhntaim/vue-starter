@@ -7,7 +7,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {headTitle} from '@/app/utils'
+import {headTitle} from '../../app/utils'
 import {mapGetters} from '@dsquare-gbu/vue-uses'
 import NotFound from '../error/NotFound'
 

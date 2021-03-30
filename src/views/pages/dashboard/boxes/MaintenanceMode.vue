@@ -26,9 +26,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {adminCommandService} from '@/app/services/default'
+import {adminCommandService} from '../../../../app/services/default'
 import {app} from '@dsquare-gbu/vue-app'
-import {ui} from '@/app/utils'
+import {ui} from '../../../../app/utils'
 import {TypeString} from '@dsquare-gbu/vue-utils'
 
 export default {

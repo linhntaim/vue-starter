@@ -39,7 +39,7 @@
  */
 
 import {mapGetters} from '@dsquare-gbu/vue-uses'
-import {ui} from '@/app/utils'
+import {ui} from '../../../app/utils'
 
 export default {
     name: 'ViewModal',

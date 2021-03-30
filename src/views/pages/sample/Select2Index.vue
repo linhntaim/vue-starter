@@ -69,8 +69,8 @@
  */
 
 import {headTitle, localeChange} from '../../../app/utils'
-import Select2Input from '@/views/components/Select2Input'
-import MultipleSelect2Input from '@/views/components/MultipleSelect2Input'
+import Select2Input from '../../components/Select2Input'
+import MultipleSelect2Input from '../../components/MultipleSelect2Input'
 
 export default {
     name: 'CalendarIndex',

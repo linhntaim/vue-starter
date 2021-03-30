@@ -62,10 +62,10 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {storeHandler, headTitle, permit} from '../../../app/utils'
+import {headTitle, permit, storeHandler} from '../../../app/utils'
 import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
 import {Collection, DataPlot, ItemSelection, Paginator, Searcher, Sorter, TypeObject} from '@dsquare-gbu/vue-utils'
-import {ITEMS_PER_PAGE_LIST} from '@/app/config'
+import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
 import PaginatorComponent from '../../components/Paginator'
 import Search from './Search'
 import SorterComponent from '../../components/Sorter'
@@ -76,7 +76,7 @@ const requiredPermissions = [
 
 export default {
     name: 'Index',
-    components: {Search, SorterComponent, PaginatorComponent},
+    components: {PaginatorComponent, Search, SorterComponent},
     data() {
         return {
             loading: false,

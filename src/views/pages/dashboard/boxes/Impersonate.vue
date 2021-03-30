@@ -23,7 +23,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {adminCommandService} from '@/app/services/default'
+import {adminCommandService} from '../../../../app/services/default'
 import {mapGetters} from '@dsquare-gbu/vue-uses'
 
 export default {

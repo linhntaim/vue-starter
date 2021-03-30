@@ -37,7 +37,7 @@
 
 import {headTitle, localeChange} from '../../../app/utils'
 import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-import {TOAST_DEF} from '@/app/config'
+import {TOAST_DEF} from '../../../app/config'
 import MultipleSelect2Input from '../../components/MultipleSelect2Input'
 
 export default {

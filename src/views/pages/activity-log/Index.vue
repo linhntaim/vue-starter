@@ -55,9 +55,9 @@
  */
 
 import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
-import {storeHandler, headTitle, permit} from '../../../app/utils'
-import {Collection, DataPlot, ItemSelection, Paginator, Searcher, Sorter, TypeObject} from '@dsquare-gbu/vue-utils'
-import {ITEMS_PER_PAGE_LIST} from '@/app/config'
+import {headTitle, permit, storeHandler} from '../../../app/utils'
+import {DataPlot, Paginator, Searcher, Sorter, TypeObject} from '@dsquare-gbu/vue-utils'
+import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
 import PaginatorComponent from '../../components/Paginator'
 import Search from './Search'
 import SorterComponent from '../../components/Sorter'
@@ -69,12 +69,10 @@ const requiredPermissions = [
 
 export default {
     name: 'Index',
-    components: {ViewModal, Search, SorterComponent, PaginatorComponent},
+    components: {PaginatorComponent, Search, SorterComponent, ViewModal},
     data() {
         return {
             loading: false,
-
-            itemSelection: new ItemSelection(),
 
             searcher: new Searcher(),
             sorter: new Sorter(),
@@ -165,7 +163,6 @@ export default {
                 params: params,
                 doneCallback: (pagination) => {
                     this.paginator.parsePagination(pagination)
-                    this.itemSelection.reset().setAll((new Collection(this.activityLogs)).pluck('id'))
                     this.loading = false
                 },
                 errorCallback: err => {
