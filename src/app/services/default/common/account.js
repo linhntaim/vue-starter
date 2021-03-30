@@ -2,7 +2,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {CommonService} from '@/app/services/default/common'
+import {CommonService} from '../common'
 
 export class AccountService extends CommonService {
     constructor() {
