@@ -6,7 +6,7 @@
                 p.lead.mb-5 {{ $t('error.unauthorized._') }}
                 p.mb-0 {{ $t('error.unauthorized.desc') }}
                 div(:class="{'mb-2': enabled}")
-                    router-link(:to="{path: '/'}") {{ $t('error.back_to_root') }}
+                    router-link(:to="appRoutes.root") {{ $t('error.back_to_root') }}
                 clear-cache-button(:enabled="enabled")
 </template>
 
@@ -16,6 +16,7 @@
  */
 
 import {headTitle} from '../../app/utils'
+import {APP_ROUTE} from '../../app/config'
 import ClearCacheButton from '../components/ClearCacheButton'
 
 export default {
@@ -23,6 +24,7 @@ export default {
     components: {ClearCacheButton},
     data() {
         return {
+            appRoutes: APP_ROUTE,
             enabled: false,
         }
     },

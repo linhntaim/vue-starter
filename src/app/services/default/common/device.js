@@ -2,9 +2,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import DefaultService from '../default-service'
+import {CommonService} from '../common'
 
-export class DeviceService extends DefaultService {
+export class DeviceService extends CommonService {
     constructor(basePath = 'device') {
         super(basePath)
     }
@@ -22,5 +22,3 @@ export class DeviceService extends DefaultService {
         )
     }
 }
-
-export const deviceService = () => new DeviceService()

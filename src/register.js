@@ -4,11 +4,20 @@
 
 import Vue from 'vue'
 import * as utils from './app/utils'
+import {session} from '@linhntaim/vue-uses'
+import {storeHandler} from './app/utils'
 
 export default function () {
     Object.defineProperty(Vue.prototype, '$utils', {
         get() {
             return utils
+        },
+    })
+
+    session.fromStoreHandler(storeHandler)
+    Object.defineProperty(Vue.prototype, '$session', {
+        get() {
+            return session
         },
     })
     // TODO:

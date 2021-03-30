@@ -17,6 +17,8 @@ export default class CssSticker {
             compressor: cssnano,
             input: this.files,
             output: this.stickFile,
+        }).then(() => {
+            console.info('Css was stick successfully')
         })
     }
 }

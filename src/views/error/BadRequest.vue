@@ -5,7 +5,7 @@
                 h1.error.mx-auto 400
                 p.lead.mb-5 {{ $t('error.bad_request._') }}
                 p.mb-0 {{ $t('error.bad_request.desc') }}
-                router-link(:to="{path: '/'}") {{ $t('error.back_to_root') }}
+                router-link(:to="appRoutes.root") {{ $t('error.back_to_root') }}
 </template>
 
 <script>
@@ -14,9 +14,15 @@
  */
 
 import {headTitle} from '../../app/utils'
+import {APP_ROUTE} from '../../app/config'
 
 export default {
     name: 'BadRequest',
+    data() {
+        return {
+            appRoutes: APP_ROUTE,
+        }
+    },
     head: {
         title() {
             return {

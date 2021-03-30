@@ -2,11 +2,11 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import DefaultService from '../default-service'
+import {CommonService} from '../common'
 
-export class AccountService extends DefaultService {
-    constructor(basePath = null) {
-        super(basePath ? 'account/' + basePath : 'account')
+export class AccountService extends CommonService {
+    constructor() {
+        super('account')
     }
 
     current(login = false, doneCallback = null, errorCallback = null, alwaysCallback = null) {
@@ -23,6 +23,17 @@ export class AccountService extends DefaultService {
         return this.post(
             '',
             params,
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
+
+    updateLastAccess(doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        return this.update(
+            {
+                _last_access: 1,
+            },
             doneCallback,
             errorCallback,
             alwaysCallback,
@@ -58,5 +69,3 @@ export class AccountService extends DefaultService {
         )
     }
 }
-
-export const accountService = () => new AccountService()

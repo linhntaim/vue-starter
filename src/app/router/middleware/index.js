@@ -6,15 +6,14 @@ import {intervalCaller, timeoutCaller, ui} from '../../utils'
 import {CommonMiddleware} from '@linhntaim/vue-uses'
 import AuthMiddleware from './modules/auth-middleware'
 import DeviceMiddleware from './modules/device-middleware'
+import LastAccessMiddleware from './modules/last-access-middleware'
 import LocaleMiddleware from './modules/locale-middleware'
 import PermissionMiddleware from './modules/permission-middleware'
 import ScreenMiddleware from './modules/screen-middleware'
 import ServerMiddleware from './modules/server-middleware'
 import SettingsMiddleware from './modules/settings-middleware'
 
-const settingsMiddleware = new SettingsMiddleware()
 const authMiddleware = new AuthMiddleware()
-const deviceMiddleware = new DeviceMiddleware()
 const commonMiddleware = new CommonMiddleware(
     () => {
         timeoutCaller.clear()
@@ -24,10 +23,13 @@ const commonMiddleware = new CommonMiddleware(
         ui.scrollToTop()
     },
 )
+const deviceMiddleware = new DeviceMiddleware()
 const localeMiddleware = new LocaleMiddleware()
-const serverMiddleware = new ServerMiddleware()
+const lastAccessMiddleware = new LastAccessMiddleware()
 const permissionMiddleware = new PermissionMiddleware()
 const screenMiddleware = new ScreenMiddleware()
+const serverMiddleware = new ServerMiddleware()
+const settingsMiddleware = new SettingsMiddleware()
 
 export const all = {
     before: [
@@ -39,6 +41,7 @@ export const all = {
         authMiddleware,
         localeMiddleware,
         permissionMiddleware,
+        lastAccessMiddleware,
     ],
     after: [
         commonMiddleware,

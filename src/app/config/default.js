@@ -3,8 +3,10 @@
  */
 
 export const APP_ENV = process.env.VUE_APP_ENV
+export const APP_KEY = process.env.VUE_APP_KEY.substr(0, 7) === 'base64:' ? atob(process.env.VUE_APP_KEY.substr(7)) : process.env.VUE_APP_KEY
 export const APP_DEBUG = process.env.VUE_APP_DEBUG === 'true'
 export const APP_LOG_ONLY = process.env.VUE_APP_LOG_ONLY ? process.env.VUE_APP_LOG_ONLY.split(',') : []
+export const APP_ID = process.env.VUE_APP_ID
 export const APP_NAME = process.env.VUE_APP_NAME
 export const APP_TITLE_SEPARATOR = process.env.VUE_APP_TITLE_SEPARATOR ? process.env.VUE_APP_TITLE_SEPARATOR : '|'
 export const APP_AUTHOR = process.env.VUE_APP_AUTHOR
@@ -22,6 +24,10 @@ export const APP_HOME_HOST = process.env.VUE_APP_HOME_HOST
 export const APP_HOME_HOST_SUB_PATH = process.env.VUE_APP_HOME_HOST_SUB_PATH
 export const APP_HOME_URL = APP_HOME_HOST === APP_HOST_SUB ? window.location.origin + APP_HOME_HOST_SUB_PATH : process.env.VUE_APP_HOME_URL
 export const APP_HOME_PATH = APP_HOME_HOST === APP_HOST_SUB ? APP_HOME_HOST_SUB_PATH : ''
+export const APP_ASSETS_HOST = process.env.VUE_APP_ASSETS_HOST
+export const APP_ASSETS_HOST_SUB_PATH = process.env.VUE_APP_ASSETS_HOST_SUB_PATH
+export const APP_ASSETS_URL = APP_ASSETS_HOST === APP_HOST_SUB ? window.location.origin + APP_ASSETS_HOST_SUB_PATH : process.env.VUE_APP_ASSETS_URL
+export const APP_ASSETS_PATH = APP_ASSETS_HOST === APP_HOST_SUB ? APP_ASSETS_HOST_SUB_PATH : ''
 export const APP_SERVICE_HOST = process.env.VUE_APP_SERVICE_HOST
 export const APP_SERVICE_HOST_SUB_PATH = process.env.VUE_APP_SERVICE_HOST_SUB_PATH
 export const APP_SERVICE_URL = APP_SERVICE_HOST === APP_HOST_SUB ? window.location.origin + APP_SERVICE_HOST_SUB_PATH : process.env.VUE_APP_SERVICE_URL
@@ -36,19 +42,21 @@ export const APP_DEFAULT_SERVICE = {
     baseUrl: APP_SERVICE_URL,
     clientId: process.env.VUE_APP_SERVICE_CLIENT_ID,
     clientSecret: process.env.VUE_APP_SERVICE_CLIENT_SECRET,
-    headers: {
-        screen: process.env.VUE_APP_SERVICE_HEADER_SCREEN_NAME,
-        settings: process.env.VUE_APP_SERVICE_HEADER_SETTINGS_NAME,
-        device: process.env.VUE_APP_SERVICE_HEADER_DEVICE_NAME,
-        tokenAuthorization: hasBasicAuth ? process.env.VUE_APP_SERVICE_HEADER_TOKEN_AUTHORIZATION_NAME : 'Authorization',
-    },
-    basicAuth: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION,
     hasBasicAuth: hasBasicAuth,
+    basicAuth: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION,
+    headerTokenAuthorization: hasBasicAuth ? process.env.VUE_APP_SERVICE_HEADER_TOKEN_AUTHORIZATION_NAME : 'Authorization',
     requestParams: {
         tokenType: '_x_token_type',
         accessToken: '_x_access_token',
         authorization: '_x_authorization',
     },
+    headers: {
+        screen: process.env.VUE_APP_SERVICE_HEADER_SCREEN_NAME,
+        settings: process.env.VUE_APP_SERVICE_HEADER_SETTINGS_NAME,
+        device: process.env.VUE_APP_SERVICE_HEADER_DEVICE_NAME,
+    },
+    headerEncryptExcepts: process.env.VUE_APP_SERVICE_HEADER_ENCRYPT_EXCEPTS ?
+        process.env.VUE_APP_SERVICE_HEADER_ENCRYPT_EXCEPTS.split(',') : [],
 }
 export const APP_COOKIE = {
     names: {
@@ -60,15 +68,18 @@ export const APP_COOKIE = {
         device: process.env.VUE_APP_COOKIE_DISABLE_DEVICE,
         settings: process.env.VUE_APP_COOKIE_DISABLE_SETTINGS,
     },
-    secret: process.env.VUE_APP_COOKIE_SECRET,
-    expires: 365,
-    path: '/',
-    domain: (process.env.VUE_APP_COOKIE_INCLUDE_SUBDOMAINS === 'true' ? '.' : '')
-        + (process.env.VUE_APP_COOKIE_DOMAIN ? process.env.VUE_APP_COOKIE_DOMAIN : window.location.hostname),
+    defaultSettings: {
+        expires: function () {
+            return new Date(new Date().getTime() + 365 * 24 * 3600 * 1000)
+        },
+        path: '/',
+        domain: (process.env.VUE_APP_COOKIE_INCLUDE_SUBDOMAINS === 'true' ? '.' : '')
+            + (process.env.VUE_APP_COOKIE_DOMAIN ? process.env.VUE_APP_COOKIE_DOMAIN : window.location.hostname),
+    },
 }
 export const DEFAULT_PREREQUISITE_LIFETIME = 31622400
 export const DEFAULT_SETTINGS = {
-    appName: APP_NAME,
+    appId: APP_ID,
     appUrl: APP_URL,
     locale: process.env.VUE_APP_LOCALE,
     country: process.env.VUE_APP_COUNTRY,
@@ -131,22 +142,48 @@ export const CLOCK_BLOCK_KEYS = [
     'R^dANH-e^*?h6UK@uCR_a?dSX%aj7L%!^mM=#xzFY9E*=x3aF9uaLwvHBj4VHCVH',
 ]
 export const APP_ROUTE = {
-    root: 'root',
-    login: 'login',
-    redirect_path_if_authenticated: 'root',
-    redirect_path_if_unauthenticated: 'root',
-    redirect_path_after_login: 'root',
-    redirect_path_after_logout: 'root',
-    redirect_path_after_register: 'root',
-    maintenance: 'maintenance',
-    bad_request: 'bad_request',
-    unauthenticated: 'unauthenticated',
-    unauthorized: 'unauthorized',
-    not_found: 'not_found',
-    internal_server_error: 'internal_server_error',
-    service_unavailable: 'service_unavailable',
-    reset_password: 'reset_password',
-    verify_email: 'verify_email',
+    root: {
+        name: 'root',
+    },
+    redirectIfAuthenticated: {
+        name: 'root',
+    },
+    redirectIfUnauthenticated: {
+        name: 'login',
+    },
+    redirectAfterAuthenticated: {
+        name: 'root',
+    },
+    redirectAfterUnauthenticated: {
+        name: 'root',
+    },
+    authenticate: {
+        name: 'login',
+    },
+    unauthenticate: {
+        name: 'logout',
+    },
+    maintenance: {
+        name: 'maintenance',
+    },
+    badRequest: {
+        name: 'bad_request',
+    },
+    unauthenticated: {
+        name: 'unauthenticated',
+    },
+    unauthorized: {
+        name: 'unauthorized',
+    },
+    notFound: {
+        name: 'not_found',
+    },
+    internalServerError: {
+        name: 'internal_server_error',
+    },
+    serviceUnavailable: {
+        name: 'service_unavailable',
+    },
 }
 export const APP_OPTION = {
     yes: 1,
@@ -155,10 +192,6 @@ export const APP_OPTION = {
 export const LOCALE_MAPPING_FLAG_ICON_NAME_DEF = {
     en: 'gb',
     ja: 'jp',
-}
-export const LOCALE_MAPPING_MOMENT_DEF = {
-    en: 'en-gb',
-    ja: 'ja',
 }
 const maxChunkUploadSize = parseInt(process.env.VUE_APP_MAX_CHUNK_UPLOAD_SIZE) | 0
 export const MAX_CHUNK_UPLOAD_SIZE = maxChunkUploadSize ? maxChunkUploadSize : 1024 * 1024 // 1 MB, default

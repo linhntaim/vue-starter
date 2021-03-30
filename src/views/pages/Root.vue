@@ -45,13 +45,15 @@ export default {
         // TODO
     },
     methods: {
-        redirect(routeName) {
-            this.$router.push({
-                name: routeName,
-                query: {
+        redirect(location) {
+            if ('query' in location) {
+                location.query.time = new Date().getTime()
+            } else {
+                location.query = {
                     time: new Date().getTime(),
-                },
-            })
+                }
+            }
+            this.$router.push(location)
         },
     },
 }

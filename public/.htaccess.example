@@ -38,7 +38,7 @@ AddHandler server-parsed .html
 <IfModule mod_headers.c>
     ### Enable cross-domain accessing
     Header add Access-Control-Allow-Origin "*"
-    Header add Access-Control-Allow-Headers "Accept, Authorization, Content-Type, Origin, Referer, User-Agent, X-Authorization, X-Device, X-Settings, X-Requested-With"
+    Header add Access-Control-Allow-Headers "Accept, Authorization, Content-Type, Origin, Referer, User-Agent, X-Authorization, X-Device, X-Requested-With, X-Settings, X-Screen"
     Header add Access-Control-Allow-Methods "OPTIONS, GET, POST, PUT, DELETE"
     Header add Access-Control-Max-Age 86400
 
@@ -84,6 +84,10 @@ AddHandler server-parsed .html
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
     RewriteCond %{HTTP:X-Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:X-Authorization}]
+
+    ### Handle Original Host
+	#RewriteCond %{HTTP:X-Original-Host} .
+	#RewriteRule .* - [E=HTTP_X_FORWARDED_HOST:%{HTTP:X-Original-Host}]
 
     ### Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d

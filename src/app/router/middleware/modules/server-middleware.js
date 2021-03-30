@@ -5,7 +5,7 @@
 import {appOptions, ip, serverClock} from '../../../utils'
 import {Middleware} from '@linhntaim/vue-uses'
 import {APP_ROUTE, APP_TYPE, APP_TYPE_ADMIN} from '../../../config'
-import app from '@linhntaim/vue-app'
+import {app} from '@linhntaim/vue-app'
 import Vue from 'vue'
 
 export default class ServerMiddleware extends Middleware {
@@ -33,10 +33,8 @@ export default class ServerMiddleware extends Middleware {
                 this.next()
             },
             errorCallback: () => {
-                if (this.to().name !== APP_ROUTE.service_unavailable) {
-                    this.redirect({
-                        name: APP_ROUTE.service_unavailable,
-                    })
+                if (this.to().name !== APP_ROUTE.serviceUnavailable.name) {
+                    this.redirect(APP_ROUTE.serviceUnavailable)
                 } else {
                     this.next()
                 }
@@ -63,17 +61,13 @@ export default class ServerMiddleware extends Middleware {
             app.maintenance(maintenanceMode)
         }
         const to = this.to()
-        if (maintenanceMode && !to.matched.some(record => record.name === APP_ROUTE.maintenance)) {
+        if (maintenanceMode && !to.matched.some(record => record.name === APP_ROUTE.maintenance.name)) {
             if (!ip.match(app.ips(), server.m.allowed)) {
-                this.redirect({
-                    name: APP_ROUTE.maintenance,
-                })
+                this.redirect(APP_ROUTE.maintenance)
                 return true
             }
-        } else if (!maintenanceMode && to.matched.some(record => record.name === APP_ROUTE.maintenance)) {
-            this.redirect({
-                name: APP_ROUTE.root,
-            })
+        } else if (!maintenanceMode && to.matched.some(record => record.name === APP_ROUTE.maintenance.name)) {
+            this.redirect(APP_ROUTE.root)
             return true
         }
         return false
@@ -86,16 +80,14 @@ export default class ServerMiddleware extends Middleware {
             app.limitation(limitationMode)
         }
         const to = this.to()
-        if (limitationMode && !to.matched.some(record => record.name === APP_ROUTE.unauthorized)) {
+        if (limitationMode && !to.matched.some(record => record.name === APP_ROUTE.unauthorized.name)) {
             if (limitationMode.admin && APP_TYPE !== APP_TYPE_ADMIN) {
                 return false
             }
 
             if ((limitationMode.allowed.length && !ip.match(app.ips(), limitationMode.allowed))
                 || (limitationMode.denied.length && ip.match(app.ips(), limitationMode.denied))) {
-                this.redirect({
-                    name: APP_ROUTE.unauthorized,
-                })
+                this.redirect(APP_ROUTE.unauthorized)
                 return true
             }
         }

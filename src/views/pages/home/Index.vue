@@ -1,7 +1,7 @@
 <template lang="pug">
     .flex-center.position-ref.full-height
         .top-right.links
-            router-link(:to="{name: 'login'}") Login
+            router-link(:to="appRoutes.authenticate") Login
         .content
             .title.m-b-md
                 | DSquare - GBU
@@ -14,12 +14,18 @@
                 a(href='https://hub.docker.com/orgs/gbuatdsquare' target='_blank') Images on Docker
 </template>
 
-<script>
-/**
+<script>/**
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
+import {APP_ROUTE} from '../../../app/config'
+
 export default {
     name: 'Index',
+    data() {
+        return {
+            appRoutes: APP_ROUTE,
+        }
+    },
 }
 </script>

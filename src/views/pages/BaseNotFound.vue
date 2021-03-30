@@ -12,7 +12,7 @@ import {mapGetters} from '@linhntaim/vue-uses'
 import NotFound from '../error/NotFound'
 
 export default {
-    name: 'NotFoundAll',
+    name: 'BaseNotFound',
     components: {NotFound},
     computed: {
         ...mapGetters({

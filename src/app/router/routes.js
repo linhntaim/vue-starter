@@ -101,6 +101,11 @@ export const routes = [
                 name: 'root',
                 component: () => import('../../views/pages/Root'),
             },
+            {
+                path: 'clear-site-data',
+                name: 'clear_site_data',
+                component: () => import('../../views/pages/ClearSiteData'),
+            },
             // TODO:
             //  Extra Not-Authenticated Routes
 

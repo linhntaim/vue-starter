@@ -7,10 +7,10 @@
                         h1.h4.mb-4(v-html="$t('pages._auth._login.welcome_back')")
                     form(@submit.prevent="onLoginSubmitted()")
                         .form-group
-                            input#inputEmail.form-control.form-control-user(v-model="email" type="text" aria-describedby="emailHelp" :placeholder="$t('pages.email_address')" :disabled="!!impersonateToken" required)
+                            input#inputEmail.form-control(v-model="email" type="text" aria-describedby="emailHelp" :placeholder="$t('pages.email_address')" :disabled="!!impersonateToken" required)
                         .form-group
-                            input#inputPassword.form-control.form-control-user(v-model="password" type="password" :placeholder="$t('pages.password')" :required="!impersonateToken" :disabled="!!impersonateToken")
-                        button.btn.btn-primary.btn-user.btn-block(:disabled="loading || disabled" type="submit")
+                            input#inputPassword.form-control(v-model="password" type="password" :placeholder="$t('pages.password')" :required="!impersonateToken" :disabled="!!impersonateToken")
+                        button.btn.btn-primary.btn-block(:disabled="loading || disabled" type="submit")
                             i.fas.fa-circle-notch.fa-spin(v-if="loading")
                             span(v-else) {{ $t('actions.login') }}
 </template>
@@ -21,8 +21,7 @@
  */
 
 import {headTitle} from '../../../app/utils'
-import {mapActions} from '@linhntaim/vue-uses'
-import {session} from '@linhntaim/vue-router'
+import {mapActions, session} from '@linhntaim/vue-uses'
 import {APP_ROUTE} from '../../../app/config'
 
 export default {
@@ -78,8 +77,8 @@ export default {
         },
         afterLogin() {
             session.restart()
-
-            this.$router.push({name: APP_ROUTE.root})
+            const redirectAfterAuthenticated = session.retrieve('redirect_after_authenticated')
+            this.$router.push(redirectAfterAuthenticated ? redirectAfterAuthenticated : APP_ROUTE.redirectAfterAuthenticated)
         },
     },
 }

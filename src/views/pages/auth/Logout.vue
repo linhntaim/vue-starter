@@ -9,8 +9,7 @@
  */
 
 import {headTitle} from '../../../app/utils'
-import {mapActions} from '@linhntaim/vue-uses'
-import {session} from '@linhntaim/vue-router'
+import {mapActions, session} from '@linhntaim/vue-uses'
 import {APP_ROUTE} from '../../../app/config'
 
 export default {
@@ -45,7 +44,8 @@ export default {
         },
         afterLogout() {
             session.restart()
-            this.$router.push({name: APP_ROUTE.redirect_path_if_unauthenticated})
+            this.$router.push(APP_ROUTE.redirectAfterUnauthenticated)
+            this.$bus.emit('logout')
         },
     },
 }

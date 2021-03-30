@@ -2,11 +2,11 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {crypto, serverClock} from '../../utils'
-import {APP_DEFAULT_SERVICE} from '../../config'
-import DefaultService from '../default-service'
+import {crypto, serverClock} from '../../../utils'
+import {CommonService} from '../common'
+import {APP_DEFAULT_SERVICE} from '../../../config'
 
-export class AuthService extends DefaultService {
+export class AuthService extends CommonService {
     constructor() {
         super('auth')
     }
@@ -113,5 +113,3 @@ export class AuthService extends DefaultService {
         )
     }
 }
-
-export const authService = () => new AuthService()

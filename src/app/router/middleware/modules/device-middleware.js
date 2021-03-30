@@ -12,7 +12,7 @@ export default class DeviceMiddleware extends Middleware {
 
         const store = this.store()
 
-        if (store.getters['device/failed'] && this.to().name === APP_ROUTE.bad_request) {
+        if (store.getters['device/failed'] && this.to().name === APP_ROUTE.badRequest.name) {
             this.next()
             return
         }
@@ -36,9 +36,7 @@ export default class DeviceMiddleware extends Middleware {
                 },
                 errorCallback: () => {
                     store.dispatch('device/fails')
-                    this.redirect({
-                        name: APP_ROUTE.bad_request,
-                    })
+                    this.redirect(APP_ROUTE.badRequest)
                 },
             })
             return

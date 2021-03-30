@@ -2,67 +2,90 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {passportCookieStore} from '../../../utils'
-import {Middleware} from '@linhntaim/vue-uses'
+import {bearerTokenCookieStore} from '../../../utils'
+import {session, Middleware} from '@linhntaim/vue-uses'
 import {APP_ROUTE} from '../../../config'
 
 export default class AuthMiddleware extends Middleware {
     handle() {
         this.log('auth', 'middleware')
 
-        this.handlePassport()
+        this.autoUnauthenticatedTimeout = null
+
+        this.handleBearerToken()
     }
 
-    handlePassport() {
+    handleBearerToken() {
         const store = this.store()
-        const storedPassport = passportCookieStore.retrieve()
+        const storedBearerToken = bearerTokenCookieStore.retrieve()
 
         if (store.getters['account/isLoggedIn']) {
-            if (!storedPassport
-                || !storedPassport.accessToken
-                || !storedPassport.tokenType
-                || !storedPassport.refreshToken
-                || !storedPassport.tokenEndTime) {
-                store.dispatch('account/storePassport')
+            if (!storedBearerToken
+                || !storedBearerToken.accessToken
+                || !storedBearerToken.tokenType
+                || !storedBearerToken.expiresIn) {
+                store.dispatch('account/storeBearerToken')
             }
 
             this.handleAuth()
             return
         }
 
-        if (!storedPassport
-            || !storedPassport.accessToken
-            || !storedPassport.tokenType
-            || !storedPassport.refreshToken
-            || !storedPassport.tokenEndTime) {
-            this.handleNotAuth()
-            return
+        if (storedBearerToken) {
+            if (storedBearerToken.accessToken
+                && storedBearerToken.tokenType
+                && storedBearerToken.expiresIn) {
+                store.commit('account/setAuthFromCookie', storedBearerToken)
+                this.handleAuth()
+                return
+            }
+
+            if (storedBearerToken.refreshToken) {
+                store.dispatch('account/refreshToken', {
+                    refreshToken: storedBearerToken.refreshToken,
+                    doneCallback: () => this.handleAuth(),
+                    errorCallback: () => {
+                        bearerTokenCookieStore.remove()
+                        this.redirect(APP_ROUTE.badRequest)
+                    },
+                })
+                return
+            }
         }
 
-        if ((new Date).getTime() <= storedPassport.tokenEndTime) {
-            store.commit('account/setAuthFromCookie', storedPassport)
-            this.handleAuth()
-            return
+        this.handleNotAuth()
+    }
+
+    autoLogout() {
+        const bearerTokenExpiresAt = session.retrieve('bearer_token_expires_at')
+        const expiresIn = bearerTokenExpiresAt - new Date().getTime()
+        const logout = () => {
+            session.restart()
+            this.redirect(APP_ROUTE.redirectAfterUnauthenticated)
+            this.bus().emit('logout')
+        }
+        if (expiresIn <= 0) {
+            this.store().dispatch('account/logout', {
+                alwaysCallback: logout,
+            })
+            return true
         }
 
-        store.dispatch('account/refreshToken', {
-            refreshToken: storedPassport.refreshToken,
-            doneCallback: () => this.handleAuth(),
-            errorCallback: () => this.redirect({
-                name: APP_ROUTE.bad_request,
-            }),
-        })
+        if (!this.autoUnauthenticatedTimeout) {
+            this.autoUnauthenticatedTimeout = setTimeout(logout, expiresIn)
+        }
+        return false
     }
 
     handleAuth() {
         this.log('authenticated', 'auth')
 
+        if (this.autoLogout()) return
+
         if (this.replaceRoutesIfNeeded()) return
 
         if (this.to().matched.some(record => record.meta.requireNotAuth)) {
-            this.redirect({
-                name: APP_ROUTE.redirect_path_if_authenticated,
-            })
+            this.redirect(APP_ROUTE.redirectIfAuthenticated)
             return
         }
 
@@ -70,9 +93,7 @@ export default class AuthMiddleware extends Middleware {
             doneCallback: () => this.next(),
             errorCallback: () => {
                 if (this.to().matched.some(record => record.meta.requireAuth)) {
-                    this.redirect({
-                        name: APP_ROUTE.unauthenticated,
-                    })
+                    this.redirect(APP_ROUTE.unauthenticated)
                     return
                 }
 
@@ -87,9 +108,12 @@ export default class AuthMiddleware extends Middleware {
         if (this.replaceRoutesIfNeeded(false)) return
 
         if (this.to().matched.some(record => record.meta.requireAuth)) {
-            this.redirect({
-                name: APP_ROUTE.redirect_path_if_unauthenticated,
-            })
+            const rdrLocation = {
+                path: this.to().fullPath,
+            }
+            this.log(JSON.stringify(rdrLocation), 'auth.unauthenticated.redirect_after_authenticated')
+            session.flash('redirect_after_authenticated', rdrLocation)
+            this.redirect(APP_ROUTE.redirectIfUnauthenticated)
             return
         }
 

@@ -1,5 +1,13 @@
 # vue-starter
 
+---
+
+&raquo; [Project setup](#project-setup)
+
+&raquo; [Environment variables](#environment-variables)
+
+---
+
 ## Project setup
 
 ```
@@ -8,7 +16,7 @@ npm install
 
 ### Init the project
 
-Setup and compile assets files to public folder:
+Build source code in `run` folder then setup and compile assets files to public folder:
 
 ```
 npm run init
@@ -20,11 +28,18 @@ npm run init
 npm run serve
 ```
 
+** **Note**: Make sure you have assets setup and compile before executing 
+by running [Init the project](#init-the-project) command.
+
 ### Compiles and minifies for production
 
 ```
 npm run build
 ```
+
+** **Note**: Please remember to create `.env` file, and make changes to values in it, 
+especially for the [`VUE_APP_BUILD_PATH`](#vue_app_build_path) 
+and [`VUE_APP_BUILD_COMPOSE`](#vue_app_build_compose) settings before making a build.
 
 ### Lints and fixes files
 
@@ -32,7 +47,13 @@ npm run build
 npm run lint
 ```
 
-#### Build and run assets feature
+#### Build source code in `run` folder
+
+```
+npm run @run
+```
+
+#### Setup and compile asset files
 
 ```
 npm run @assets
@@ -54,6 +75,36 @@ Compile asset files in `src/assets/css/public` folder and copy compiled files to
 npm run @compile
 ```
 
+#### Compose templates
+
+You can compose Pug or Vue templates from HTML files by executing `@compose-*` commands.
+
+HTML files should be placed in `src/assets/compose/html` directory.
+
+##### Pug
+
+Compose `.pug` files from HTML files in `src/assets/compose/html` directory.
+
+```
+npm run @compose-pug
+```
+
+Composed files will be stored in `src/assets/compose/pug` directory.
+
+##### Vue
+
+Compose `.vue` files from HTML files in `src/assets/compose` directory.
+
+```
+npm run @compose-vue
+```
+
+Composed files will be stored in `src/assets/compose/vue` directory.
+
+Pug-composed files will also be stored in `src/assets/compose/pug` directory.
+
+** **Note**: Make sure you have a template file named `.vue.template` in `src/views/templates` directory.
+
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
@@ -69,15 +120,28 @@ Available values:
 - `production`: Run on production.
 - `local`: Run on development.
 
+### VUE_APP_KEY
+
+A secret key for application to encrypt everything.
+
+**Required** to set before running the application.
+
 ### VUE_APP_BUILD_PATH
 
 Determine which folder to build source into.
 
 Default value is `dist` folder.
 
-If the source is built with [Laravel Starter](http://git-gbu.japaneast.cloudapp.azure.com/base/laravel-starter), 
-the value should be `..\..\..\public` 
-('cause the source is usually put in `resources/themes/admin` folder of Laravel Starter).
+### VUE_APP_BUILD_COMPOSE
+
+Determine which target the build should be composed.
+
+The possible values are:
+
+- `standalone`: The build will include configuration files/folders. 
+Used when built files are hosted independently.
+- `<empty>`: The build will exclude configuration files/folders. 
+Used when built files are hosted with other files.
 
 ### VUE_APP_DEBUG
 
@@ -94,13 +158,13 @@ Logs in application can be grouped by namespaces.
 
 Only logs in namespaces set in value could be sent.
 
-Namespaces are separated by comma.
+Namespaces are separated by the comma.
 
 ** **Note**: Debug must be enabled. 
 
 ### VUE_APP_ID
 
-Unique name of the application.
+The unique name of the application.
 
 Value is string. Should be valid with this regular expression: `^[a-z][a-z0-9_]*$`.
 
@@ -120,8 +184,10 @@ URI setting for `admin` application.
 
 - **`VUE_APP_ADMIN_HOST`**: 
     - Value could be `sub` or `self`.
-    - If value is `sub`, **`VUE_APP_ADMIN_HOST_SUB_PATH`** should be set. It would append to current host that runs the `admin` application.
-    - If value is `self`, **`VUE_APP_ADMIN_URL`** should be set. It would be used as URI of the `admin` application.
+    - If value is `sub`, **`VUE_APP_ADMIN_HOST_SUB_PATH`** should be set. 
+    It would append to current host that runs the `admin` application.
+    - If value is `self`, **`VUE_APP_ADMIN_URL`** should be set. 
+    It would be used as URI of the `admin` application.
     
 ### VUE_APP_HOME_*
 
@@ -129,8 +195,10 @@ URI setting for `home` application.
 
 - **`VUE_APP_HOME_HOST`**: 
     - Value could be `sub` or `self`.
-    - If value is `sub`, **`VUE_APP_HOME_HOST_SUB_PATH`** should be set. It would append to current host that runs the `home` application.
-    - If value is `self`, **`VUE_APP_HOME_URL`** should be set. It would be used as URI of the `home` application.
+    - If value is `sub`, **`VUE_APP_HOME_HOST_SUB_PATH`** should be set. 
+    It would append to current host that runs the `home` application.
+    - If value is `self`, **`VUE_APP_HOME_URL`** should be set. 
+    It would be used as URI of the `home` application.
     
 ### VUE_APP_SERVICE_*
 
@@ -138,8 +206,10 @@ Setting for `service` application.
 
 - **`VUE_APP_SERVICE_HOST`**: 
     - Value could be `sub` or `self`.
-    - If value is `sub`, **`VUE_APP_SERVICE_HOST_SUB_PATH`** should be set. It would append to current host that runs the `service` application.
-    - If value is `self`, **`VUE_APP_SERVICE_URL`** should be set. It would be used as URI of the `service` application.
+    - If value is `sub`, **`VUE_APP_SERVICE_HOST_SUB_PATH`** should be set. 
+    It would append to current host that runs the `service` application.
+    - If value is `self`, **`VUE_APP_SERVICE_URL`** should be set. 
+    It would be used as URI of the `service` application.
     
 ### VUE_APP_SERVICE_CLIENT_*
 
@@ -165,18 +235,20 @@ Setting for some headers.
     - If **`VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION`** is empty, the value could be anything.
     - If **`VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION`** is set , the value should be `X-Authorization`.
 - **`VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION`**:
-    - Set when basic authentication is set on server.
+    - Set when basic authentication is set on the server.
     - Value should be `{username}:{password}`.
 - **`VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION_EXCEPTION`**:
-    - For some reasons, application can be accessed via many domains. Some of them can pass through basic authorization, some cannot.
-    - Allowed domains should be set here and they should be separated by comma.
+    - For some reasons, application can be accessed via many domains. 
+    Some of them can pass through basic authorization, some cannot.
+    - Allowed domains should be set here, and they should be separated by the comma.
 
 ### VUE_APP_COOKIE_*
 
 Settings for cookies.
 
 - **`VUE_APP_COOKIE_DEFAULT_NAME`**:
-    - Name of the default cookie of the application. This cookie is used for storing authentication, i.e access token. 
+    - Name of the default cookie of the application. This cookie is used for storing authentication, 
+    i.e access token. 
     - Default value is taken from `APP_ID`.
 - **`VUE_APP_COOKIE_DEVICE_NAME`**:
     - Name of the device cookie. On each browser accessing the application, 
@@ -187,11 +259,9 @@ Settings for cookies.
     - Default value is taken from `APP_ID` appended by `_settings`.
 - **`VUE_APP_COOKIE_DOMAIN`**:
     - The domain of all cookies.
-    - Leave empty for use current domain.
+    - Leave empty for use the current domain.
 - **`VUE_APP_COOKIE_INCLUDE_SUBDOMAINS`**:
     - Set value to `true` to make the domain set for all cookies should be available for subdomains.
-- **`VUE_APP_COOKIE_SECRET`**:
-    - A salt for cookie encryption.
     
 ### Some default localization settings
 
@@ -199,7 +269,8 @@ Settings for cookies.
     - Default locale of the application in ISO 639-1 format.
     - Value should be `ja` when deploying for Japan.
 - `VUE_APP_TIMEZONE`: 
-    - Default timezone of the application. See [supported timezones](https://www.php.net/manual/en/timezones.php)
+    - Default timezone of the application. 
+    See [supported timezones](https://www.php.net/manual/en/timezones.php)
     - Value should be `Asia/Tokyo` when deploying for Japan.
 - `VUE_APP_COUNTRY`: 
     - Default country of the application in ISO 3166-1 alpha-2 format.
@@ -214,9 +285,9 @@ Settings for cookies.
         - `point_space`: `1000000` will be formatted as `1 000 000.00`.
         - `comma_point`: `1000000` will be formatted as `1.000.000,00`.
         - `comma_space`: `1000000` will be formatted as `1 000 000,00`.
- 
- ### VUE_APP_MAX_CHUNK_UPLOAD_SIZE
- 
- For uploading a large file by splitting it into chunks, the size of each chunk is set as the value in `bytes` here.
- 
- If value is empty, default size of `1MB` is applied.
+
+### VUE_APP_MAX_CHUNK_UPLOAD_SIZE
+
+For uploading a large file by splitting it into chunks, the size of each chunk is set as the value in `bytes` here.
+
+If value is empty, default size of `1MB` is applied.
