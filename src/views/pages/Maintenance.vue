@@ -8,7 +8,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {headTitle, ui} from '@/app/utils'
+import {headTitle, ui} from '../../app/utils'
 import MaintenanceError from '../error/Maintenance'
 
 export default {

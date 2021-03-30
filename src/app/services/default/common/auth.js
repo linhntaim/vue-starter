@@ -3,7 +3,7 @@
  */
 
 import {crypto, serverClock} from '../../../utils'
-import {CommonService} from '@/app/services/default/common'
+import {CommonService} from '../common'
 import {APP_DEFAULT_SERVICE} from '../../../config'
 
 export class AuthService extends CommonService {

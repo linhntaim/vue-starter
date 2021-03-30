@@ -3,7 +3,7 @@
  */
 
 import {routePermissions} from './permissions'
-import {storeHandler, permit} from '@/app/utils'
+import {storeHandler, permit} from '../utils'
 import {PermissionBarrier} from '@dsquare-gbu/vue-utils'
 
 export * from './routes'

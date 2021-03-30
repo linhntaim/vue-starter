@@ -8,7 +8,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {log, ui} from '@/app/utils'
+import {log, ui} from '../../app/utils'
 import Loader from './Loader'
 
 export default {

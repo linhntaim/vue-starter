@@ -3,8 +3,8 @@
  */
 
 import {Middleware} from '@dsquare-gbu/vue-uses'
-import {APP_ROUTE} from '@/app/config'
-import {permissionBarrier} from '@/app/router'
+import {APP_ROUTE} from '../../../config'
+import {permissionBarrier} from '../../index'
 
 export default class PermissionMiddleware extends Middleware {
     handle() {
