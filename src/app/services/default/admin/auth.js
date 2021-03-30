@@ -2,8 +2,8 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {APP_DEFAULT_SERVICE} from '@/app/config'
-import {crypto, serverClock} from '@/app/utils'
+import {APP_DEFAULT_SERVICE} from '../../../config'
+import {crypto, serverClock} from '../../../utils'
 import AdminService from '../admin'
 
 export class AuthService extends AdminService {
