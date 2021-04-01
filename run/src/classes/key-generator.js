@@ -15,13 +15,17 @@ export default class KeyGenerator {
     generateKey() {
         const cipherKey = this.generateCipherKey()
         console.log('Cipher key: ' + cipherKey)
-        return 'base64:' + (new Crypto).encryptBase64(cipherKey)
+        return 'base64:' + (new Crypto).encodeBase64(cipherKey)
     }
 
-    generate() {
-        const key = this.generateKey()
+    generate(forced = false) {
         const contents = fs.readFileSync(this.envPath).toString('utf8')
-            .replace(/^VUE_APP_KEY=[^\r\n]*/mg, 'VUE_APP_KEY=' + key)
-        fs.writeFileSync(this.envPath, contents)
+        if (/^VUE_APP_KEY=[^\r\n]+/m.test(contents)) {
+            if (!forced) {
+                console.error('Key has existed!')
+                return
+            }
+        }
+        fs.writeFileSync(this.envPath, contents.replace(/^VUE_APP_KEY=[^\r\n]*/mg, 'VUE_APP_KEY=' + this.generateKey()))
     }
 }
