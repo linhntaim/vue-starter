@@ -2,9 +2,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {Middleware} from '@dsquare-gbu/vue-uses'
-import {APP_ROUTE} from '../../../config'
 import {permissionBarrier} from '../../index'
+import {Middleware} from '../middleware'
+import {APP_ROUTE} from '../../../config'
 
 export default class PermissionMiddleware extends Middleware {
     handle() {
@@ -20,13 +20,13 @@ export default class PermissionMiddleware extends Middleware {
                 const route = tos[i]
                 if ('name' in route) {
                     if (!permissionBarrier.passRoutes(route, () => {
-                        this.redirect(APP_ROUTE.unauthorized)
+                        this.errorRedirect(APP_ROUTE.unauthorized)
                     })) return
                 }
             }
 
             if (!permissionBarrier.passActions(() => {
-                this.redirect(APP_ROUTE.unauthorized)
+                this.errorRedirect(APP_ROUTE.unauthorized)
             })) return
         }
 

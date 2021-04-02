@@ -1,4 +1,8 @@
-import {Middleware} from '@dsquare-gbu/vue-uses'
+/**
+ * Base - Any modification needs to be approved, except the space inside the block of TODO
+ */
+
+import {Middleware} from '../middleware'
 
 export default class LastAccessMiddleware extends Middleware {
     handle() {
