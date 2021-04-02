@@ -21,7 +21,7 @@ export const defaultServiceModifyHeader = (name, value, permanent = false) => {
             }
             instance.defaults.headers.common[name] =
                 name === APP_DEFAULT_SERVICE.headerTokenAuthorization || APP_DEFAULT_SERVICE.headerEncryptExcepts.includes(name) ?
-                    value : crypto.encrypt(value)
+                    value : crypto.encryptBase64(value)
         } else {
             instance.defaults.headers.common[name] = null
             if (permanent) {
