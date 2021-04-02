@@ -14,6 +14,14 @@ export const routes = [
         },
     },
     {
+        path: '/limitation',
+        name: 'limitation',
+        component: () => import('../../views/pages/Limitation'),
+        meta: {
+            middleware: error,
+        },
+    },
+    {
         path: '/error',
         component: () => import('../../views/master/Error'),
         meta: {
