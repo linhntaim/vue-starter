@@ -18,7 +18,7 @@
     },
     "dependencies": {
         "@linhntaim/vue-app": "^1.4.2",
-        "@linhntaim/vue-bus": "^1.4.1",
+        "@linhntaim/vue-bus": "^1.4.2",
         "@linhntaim/vue-services": "^1.4.1",
         "@linhntaim/vue-uses": "^1.4.3",
         "@linhntaim/vue-utils": "^1.4.1",
