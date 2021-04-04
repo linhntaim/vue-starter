@@ -17,8 +17,8 @@
         "@compose-vue": "node ./run/dist/compose.js --vue ./src/assets/compose/html ./src/assets/compose/pug ./src/assets/compose/vue ./src/views/templates/.vue.template"
     },
     "dependencies": {
-        "@dsquare-gbu/vue-app": "^1.4.1",
-        "@dsquare-gbu/vue-bus": "^1.4.0",
+        "@dsquare-gbu/vue-app": "^1.4.2",
+        "@dsquare-gbu/vue-bus": "^1.4.1",
         "@dsquare-gbu/vue-services": "^1.4.1",
         "@dsquare-gbu/vue-uses": "^1.4.2",
         "@dsquare-gbu/vue-utils": "^1.4.1",
