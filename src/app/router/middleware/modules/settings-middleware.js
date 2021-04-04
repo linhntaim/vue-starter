@@ -3,7 +3,7 @@
  */
 
 import {dateTimer, settingsCookieStore} from '../../../utils'
-import {Middleware} from '@linhntaim/vue-uses'
+import {Middleware} from '../middleware'
 import {DEFAULT_SETTINGS} from '../../../config'
 
 export default class SettingsMiddleware extends Middleware {

@@ -166,6 +166,9 @@ export const APP_ROUTE = {
     maintenance: {
         name: 'maintenance',
     },
+    limitation: {
+        name: 'limitation',
+    },
     badRequest: {
         name: 'bad_request',
     },
@@ -185,6 +188,14 @@ export const APP_ROUTE = {
         name: 'service_unavailable',
     },
 }
+export const APP_ERROR_ROUTE_NAMES = [
+    APP_ROUTE.badRequest.name,
+    APP_ROUTE.unauthenticated.name,
+    APP_ROUTE.unauthorized.name,
+    APP_ROUTE.notFound.name,
+    APP_ROUTE.internalServerError.name,
+    APP_ROUTE.serviceUnavailable.name,
+]
 export const APP_OPTION = {
     yes: 1,
     no: 2,

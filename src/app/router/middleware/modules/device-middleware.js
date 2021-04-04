@@ -3,7 +3,7 @@
  */
 
 import {deviceCookieStore} from '../../../utils'
-import {Middleware} from '@linhntaim/vue-uses'
+import {Middleware} from '../middleware'
 import {APP_ROUTE} from '../../../config'
 
 export default class DeviceMiddleware extends Middleware {
@@ -36,7 +36,7 @@ export default class DeviceMiddleware extends Middleware {
                 },
                 errorCallback: () => {
                     store.dispatch('device/fails')
-                    this.redirect(APP_ROUTE.badRequest)
+                    this.errorRedirect(APP_ROUTE.badRequest)
                 },
             })
             return

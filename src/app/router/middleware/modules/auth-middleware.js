@@ -3,7 +3,8 @@
  */
 
 import {bearerTokenCookieStore} from '../../../utils'
-import {session, Middleware} from '@linhntaim/vue-uses'
+import {session} from '@linhntaim/vue-uses'
+import {Middleware} from '../middleware'
 import {APP_ROUTE} from '../../../config'
 
 export default class AuthMiddleware extends Middleware {
@@ -46,7 +47,7 @@ export default class AuthMiddleware extends Middleware {
                     doneCallback: () => this.handleAuth(),
                     errorCallback: () => {
                         bearerTokenCookieStore.remove()
-                        this.redirect(APP_ROUTE.badRequest)
+                        this.errorRedirect(APP_ROUTE.badRequest)
                     },
                 })
                 return
