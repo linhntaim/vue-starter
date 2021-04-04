@@ -7,9 +7,8 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {headTitle} from '../../app/utils'
 import {mapGetters} from '@linhntaim/vue-uses'
-import {APP_ROUTE} from '../../app/config'
+import {APP_NAME, APP_ROUTE} from '../../app/config'
 import ComponentLoader from '../ComponentLoader'
 
 export default {
@@ -25,8 +24,7 @@ export default {
     head: {
         title() {
             return {
-                inner: headTitle('Vue Starter'),
-                complement: 'DSquare - GBU',
+                complement: APP_NAME,
             }
         },
     },
