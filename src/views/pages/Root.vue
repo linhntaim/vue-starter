@@ -7,8 +7,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
+import {headTitle} from '../../app/utils'
 import {mapGetters} from '@linhntaim/vue-uses'
-import {APP_NAME, APP_ROUTE} from '../../app/config'
+import {APP_ID, APP_ROUTE, APP_TYPE, APP_TYPE_ADMIN} from '../../app/config'
 import ComponentLoader from '../ComponentLoader'
 
 export default {
@@ -23,8 +24,12 @@ export default {
     },
     head: {
         title() {
-            return {
-                complement: APP_NAME,
+            return APP_ID === 'base' ? {
+                inner: headTitle('Vue Starter'),
+                complement: 'DSquare - GBU',
+            } : {
+                inner: APP_TYPE === APP_TYPE_ADMIN ?
+                    'Admin' : 'Home',
             }
         },
     },
