@@ -16,7 +16,7 @@ import {
 } from '../utils'
 import {localeManager} from '../locales'
 import {defaultServiceModifyHeader} from '../services'
-import {session} from '@dsquare-gbu/vue-uses'
+import {session} from '@linhntaim/vue-uses'
 import {APP_DEFAULT_SERVICE} from '../config'
 
 const applySettings = (settings, action = 'all', localeCallback = null) => {

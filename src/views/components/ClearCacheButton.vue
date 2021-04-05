@@ -7,7 +7,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {mapActions, mapMutations} from '@dsquare-gbu/vue-uses'
+import {mapActions, mapMutations} from '@linhntaim/vue-uses'
 import {APP_ROUTE} from '../../app/config'
 
 export default {

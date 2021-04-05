@@ -3,7 +3,7 @@
  */
 
 import {intervalCaller, timeoutCaller, ui} from '../../utils'
-import {CommonMiddleware} from '@dsquare-gbu/vue-uses'
+import {CommonMiddleware} from '@linhntaim/vue-uses'
 import AuthMiddleware from './modules/auth-middleware'
 import DeviceMiddleware from './modules/device-middleware'
 import LastAccessMiddleware from './modules/last-access-middleware'

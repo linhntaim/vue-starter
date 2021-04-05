@@ -2,7 +2,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {Middleware as BaseMiddleware} from '@dsquare-gbu/vue-uses'
+import {Middleware as BaseMiddleware} from '@linhntaim/vue-uses'
 import {APP_ERROR_ROUTE_NAMES} from '../../config'
 
 export class Middleware extends BaseMiddleware {

@@ -4,7 +4,7 @@
 
 import Vue from 'vue'
 import * as utils from './app/utils'
-import {session} from '@dsquare-gbu/vue-uses'
+import {session} from '@linhntaim/vue-uses'
 import {storeHandler} from './app/utils'
 
 export default function () {

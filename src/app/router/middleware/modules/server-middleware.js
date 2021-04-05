@@ -2,7 +2,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {app} from '@dsquare-gbu/vue-app'
+import {app} from '@linhntaim/vue-app'
 import {appOptions, ip, serverClock} from '../../../utils'
 import {Middleware} from '../middleware'
 import {APP_ROUTE, APP_TYPE, APP_TYPE_ADMIN} from '../../../config'
