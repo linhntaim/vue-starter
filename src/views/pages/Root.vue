@@ -9,7 +9,7 @@
 
 import {headTitle} from '../../app/utils'
 import {mapGetters} from '@dsquare-gbu/vue-uses'
-import {APP_ROUTE} from '../../app/config'
+import {APP_ID, APP_ROUTE, APP_TYPE, APP_TYPE_ADMIN} from '../../app/config'
 import ComponentLoader from '../ComponentLoader'
 
 export default {
@@ -24,9 +24,12 @@ export default {
     },
     head: {
         title() {
-            return {
+            return APP_ID === 'base' ? {
                 inner: headTitle('Vue Starter'),
                 complement: 'DSquare - GBU',
+            } : {
+                inner: APP_TYPE === APP_TYPE_ADMIN ?
+                    'Admin' : 'Home',
             }
         },
     },
