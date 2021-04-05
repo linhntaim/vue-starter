@@ -1,17 +1,8 @@
 <template lang="pug">
-    .flex-center.position-ref.full-height
-        .top-right.links
-            router-link(:to="appRoutes.unauthenticate") Logout
-        .content
-            .title.m-b-md
-                | DSquare - GBU
-            .links
-                a(href='https://homepage-gbu.azurewebsites.net/' target='_blank') Homepage
-                a(href='https://homepage-gbu.azurewebsites.net/back-end/' target='_blank') Back-end Docs
-                a(href='http://git-gbu.japaneast.cloudapp.azure.com/' target='_blank') Gitlab
-                a(href='http://git-gbu.japaneast.cloudapp.azure.com/base/' target='_blank') Base Projects
-                a(href='https://www.npmjs.com/settings/dsquare-gbu/packages' target='_blank') Packages on NPM
-                a(href='https://hub.docker.com/orgs/gbuatdsquare' target='_blank') Images on Docker
+    div
+        #nav
+            router-link(:to="appRoutes.unauthenticate") Login
+        home
 </template>
 
 <script>
@@ -20,9 +11,11 @@
  */
 
 import {APP_ROUTE} from '../../../app/config'
+import Home from './Home'
 
 export default {
     name: 'IndexAuth',
+    components: {Home},
     data() {
         return {
             appRoutes: APP_ROUTE,
