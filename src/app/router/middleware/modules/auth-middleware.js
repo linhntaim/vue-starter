@@ -3,7 +3,7 @@
  */
 
 import {bearerTokenCookieStore} from '../../../utils'
-import {session} from '@dsquare-gbu/vue-uses'
+import {session} from '@linhntaim/vue-uses'
 import {Middleware} from '../middleware'
 import {APP_ROUTE} from '../../../config'
 

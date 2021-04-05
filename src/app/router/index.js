@@ -4,7 +4,7 @@
 
 import {routePermissions} from './permissions'
 import {storeHandler, permit} from '../utils'
-import {PermissionBarrier} from '@dsquare-gbu/vue-utils'
+import {PermissionBarrier} from '@linhntaim/vue-utils'
 
 export * from './routes'
 export {

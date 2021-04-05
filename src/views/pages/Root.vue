@@ -8,7 +8,7 @@
  */
 
 import {headTitle} from '../../app/utils'
-import {mapGetters} from '@dsquare-gbu/vue-uses'
+import {mapGetters} from '@linhntaim/vue-uses'
 import {APP_ID, APP_ROUTE, APP_TYPE, APP_TYPE_ADMIN} from '../../app/config'
 import ComponentLoader from '../ComponentLoader'
 

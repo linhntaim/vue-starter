@@ -26,7 +26,7 @@
  */
 
 import {headTitle} from '../../../app/utils'
-import {mapActions, session} from '@dsquare-gbu/vue-uses'
+import {mapActions, session} from '@linhntaim/vue-uses'
 import {APP_ROUTE} from '../../../app/config'
 
 export default {

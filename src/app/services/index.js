@@ -4,7 +4,7 @@
 
 import {crypto} from '../utils'
 import {defaultService, services} from './services'
-import {ServiceFactory} from '@dsquare-gbu/vue-services'
+import {ServiceFactory} from '@linhntaim/vue-services'
 import {APP_DEFAULT_SERVICE} from '../config'
 
 export const serviceFactory = new ServiceFactory(services, defaultService)
