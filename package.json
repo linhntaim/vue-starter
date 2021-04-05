@@ -20,7 +20,7 @@
         "@linhntaim/vue-app": "^1.4.2",
         "@linhntaim/vue-bus": "^1.4.2",
         "@linhntaim/vue-services": "^1.4.1",
-        "@linhntaim/vue-uses": "^1.4.3",
+        "@linhntaim/vue-uses": "^1.4.4",
         "@linhntaim/vue-utils": "^1.4.1",
         "core-js": "^3.10.0",
         "vue": "^2.6.12",
