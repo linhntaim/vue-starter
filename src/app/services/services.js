@@ -2,8 +2,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {APP_DEFAULT_SERVICE} from '../config'
+import {APP_CLIENT, APP_DEFAULT_SERVICE} from '../config'
 import {AxiosServiceInstance} from '@dsquare-gbu/vue-services'
+import {encryptHeader} from './functions'
 
 export const defaultService = 'axios'
 
@@ -14,6 +15,9 @@ export const services = {
             const headers = {}
             if (APP_DEFAULT_SERVICE.hasBasicAuth) {
                 headers['Authorization'] = 'Basic ' + btoa(APP_DEFAULT_SERVICE.basicAuth)
+            }
+            if (APP_DEFAULT_SERVICE.headerClientIdEnabled) {
+                headers[APP_DEFAULT_SERVICE.headers.clientId] = encryptHeader(APP_CLIENT)
             }
             return headers
         })(),
