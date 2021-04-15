@@ -3,7 +3,7 @@
  */
 
 import {
-    commonDeviceService as deviceService,
+    homeDeviceService as deviceService,
 } from '../services/default'
 import {deviceCookieStore} from '../utils'
 import {defaultServiceModifyHeader} from '../services'

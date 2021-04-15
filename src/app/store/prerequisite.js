@@ -3,7 +3,7 @@
  */
 
 import {
-    commonPrerequisiteService as prerequisiteService,
+    homePrerequisiteService as prerequisiteService,
 } from '../services/default'
 import {DEFAULT_PREREQUISITE_LIFETIME} from '../config'
 
