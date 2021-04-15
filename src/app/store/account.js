@@ -208,9 +208,11 @@ export default {
                     commit('setAccount', {
                         account: data.model,
                     })
-                    commit('setSettings', {
-                        settings: settings,
-                    })
+                    if (login) {
+                        commit('setSettings', {
+                            settings: settings,
+                        })
+                    }
                     if (data.impersonator) {
                         commit('setImpersonator', {
                             impersonator: data.impersonator,
