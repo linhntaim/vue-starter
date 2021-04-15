@@ -5,7 +5,7 @@
 import {app} from '@dsquare-gbu/vue-app'
 import {appOptions, ip, serverClock} from '../../../utils'
 import {Middleware} from '../middleware'
-import {APP_ROUTE, APP_TYPE, APP_TYPE_ADMIN} from '../../../config'
+import {APP_ROUTE, APP_CLIENT, APP_CLIENT_ADMIN} from '../../../config'
 import Vue from 'vue'
 
 export default class ServerMiddleware extends Middleware {
@@ -77,7 +77,7 @@ export default class ServerMiddleware extends Middleware {
         }
         const to = this.to()
         if (limitationMode && to.name !== APP_ROUTE.limitation.name) {
-            if (limitationMode.admin && APP_TYPE !== APP_TYPE_ADMIN) {
+            if (limitationMode.admin && APP_CLIENT !== APP_CLIENT_ADMIN) {
                 if (to.name === APP_ROUTE.limitation.name) {
                     this.redirect(APP_ROUTE.root)
                     return true
