@@ -59,7 +59,7 @@ const applyBearerToken = (bearerToken = null, action = 'all') => {
             session.store('bearer_token_expires_at', new Date(new Date().getTime() + bearerToken.expiresIn * 1000).getTime())
         } else {
             bearerTokenCookieStore.remove()
-            session.forgot('bearer_token_expires_at')
+            session.forget('bearer_token_expires_at')
         }
     }
 }
@@ -206,9 +206,11 @@ export default {
                     commit('setAccount', {
                         account: data.model,
                     })
-                    commit('setSettings', {
-                        settings: settings,
-                    })
+                    if (login) {
+                        commit('setSettings', {
+                            settings: settings,
+                        })
+                    }
                     if (data.impersonator) {
                         commit('setImpersonator', {
                             impersonator: data.impersonator,

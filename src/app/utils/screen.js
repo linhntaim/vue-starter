@@ -3,7 +3,7 @@
  */
 
 import {defaultServiceModifyHeader} from '../services'
-import {APP_DEFAULT_SERVICE, APP_TYPE} from '../config'
+import {APP_DEFAULT_SERVICE, APP_CLIENT} from '../config'
 
 export class Screen {
     constructor() {
@@ -38,7 +38,7 @@ export class Screen {
 
     get() {
         return {
-            client: APP_TYPE,
+            client: APP_CLIENT,
             name: this.name,
             path: this.path,
             original_path: this.originalPath,

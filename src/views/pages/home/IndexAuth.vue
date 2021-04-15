@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         #nav
-            router-link(:to="appRoutes.unauthenticate") Login
+            router-link(:to="appRoutes.unauthenticate") {{ $t('actions.logout') }}
         home
 </template>
 
