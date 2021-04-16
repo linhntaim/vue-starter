@@ -2,10 +2,10 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {bearerTokenCookieStore} from '../../../utils'
+import {bearerTokenCookieStore, ui} from '../../../utils'
 import {session} from '@dsquare-gbu/vue-uses'
 import {Middleware} from '../middleware'
-import {APP_ROUTE} from '../../../config'
+import {APP_DEFAULT_SERVICE, APP_ROUTE} from '../../../config'
 
 export default class AuthMiddleware extends Middleware {
     handle() {
@@ -41,34 +41,55 @@ export default class AuthMiddleware extends Middleware {
                 return
             }
 
-            if (storedBearerToken.refreshToken) {
-                store.dispatch('account/refreshToken', {
-                    refreshToken: storedBearerToken.refreshToken,
-                    doneCallback: () => this.handleAuth(),
-                    errorCallback: () => {
-                        bearerTokenCookieStore.remove()
-                        this.errorRedirect(APP_ROUTE.badRequest)
-                    },
-                })
-                return
-            }
+            if (this.tryToRefreshToken(
+                () => this.handleAuth(),
+                () => {
+                    bearerTokenCookieStore.remove()
+                    this.errorRedirect(APP_ROUTE.badRequest)
+                },
+            )) return
         }
 
         this.handleNotAuth()
     }
 
+    tryToRefreshToken(doneCallback = null, errorCallback = null, beforeRefreshCallback = null) {
+        if (APP_DEFAULT_SERVICE.tokenRefreshEnabled) {
+            const storedBearerToken = bearerTokenCookieStore.retrieve()
+            if (storedBearerToken.refreshToken) {
+                beforeRefreshCallback && beforeRefreshCallback()
+                this.store().dispatch('account/refreshToken', {
+                    refreshToken: storedBearerToken.refreshToken,
+                    doneCallback: doneCallback,
+                    errorCallback: errorCallback,
+                })
+                return true
+            }
+        }
+        return false
+    }
+
     autoLogout() {
         const bearerTokenExpiresAt = session.retrieve('bearer_token_expires_at')
-        const expiresIn = bearerTokenExpiresAt - new Date().getTime()
+        const expiresIn = bearerTokenExpiresAt - new Date().getTime() - APP_DEFAULT_SERVICE.tokenAutoRevokeBefore
         const logout = () => {
-            session.restart()
-            this.redirect(APP_ROUTE.redirectAfterUnauthenticated)
-            this.bus().emit('logout')
+            this.autoUnauthenticatedTimeout = null
+
+            if (this.tryToRefreshToken(
+                () => this.autoLogout(),
+                () => ui.reloadPage(),
+            )) return
+
+            this.store().dispatch('account/logout', {
+                alwaysCallback: () => {
+                    session.restart()
+                    this.redirect(APP_ROUTE.redirectAfterUnauthenticated)
+                    this.bus().emit('logout')
+                },
+            })
         }
         if (expiresIn <= 0) {
-            this.store().dispatch('account/logout', {
-                alwaysCallback: logout,
-            })
+            logout()
             return true
         }
 

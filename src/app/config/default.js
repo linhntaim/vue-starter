@@ -45,6 +45,8 @@ export const APP_DEFAULT_SERVICE = {
     clientSecret: process.env.VUE_APP_SERVICE_CLIENT_SECRET,
     hasBasicAuth: hasBasicAuth,
     basicAuth: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION,
+    tokenRefreshEnabled: process.env.VUE_APP_SERVICE_TOKEN_REFRESH_ENABLED === 'true',
+    tokenAutoRevokeBefore: (parseInt(process.env.VUE_APP_SERVICE_TOKEN_AUTO_REVOKE_BEFORE) | 0) * 1000,
     headerTokenAuthorization: headerTokenAuthorization,
     headerClientIdEnabled: process.env.VUE_APP_SERVICE_HEADER_CLIENT_ID_ENABLED === 'true',
     requestParams: {
