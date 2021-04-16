@@ -2,9 +2,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {APP_CLIENT, APP_DEFAULT_SERVICE} from '../config'
-import {AxiosServiceInstance} from '@dsquare-gbu/vue-services'
 import {encryptHeader} from './functions'
+import {AxiosServiceInstance} from '@dsquare-gbu/vue-services'
+import {APP_CLIENT, APP_DEFAULT_SERVICE} from '../config'
 
 export const defaultService = 'axios'
 
