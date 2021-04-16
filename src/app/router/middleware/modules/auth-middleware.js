@@ -53,10 +53,11 @@ export default class AuthMiddleware extends Middleware {
         this.handleNotAuth()
     }
 
-    tryToRefreshToken(doneCallback = null, errorCallback = null) {
+    tryToRefreshToken(doneCallback = null, errorCallback = null, beforeRefreshCallback = null) {
         if (APP_DEFAULT_SERVICE.tokenRefreshEnabled) {
             const storedBearerToken = bearerTokenCookieStore.retrieve()
             if (storedBearerToken.refreshToken) {
+                beforeRefreshCallback && beforeRefreshCallback()
                 this.store().dispatch('account/refreshToken', {
                     refreshToken: storedBearerToken.refreshToken,
                     doneCallback: doneCallback,
