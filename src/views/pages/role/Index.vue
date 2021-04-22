@@ -4,27 +4,30 @@
         .card.shadow.mb-4
             .card-body.has-control
                 .clearfix
-                    button.btn.btn-success.btn-item.btn-item-left(v-if="canExport" :disabled="loading" @click="onExportClicked()")
+                    button.btn.btn-success.btn-item.btn-item-left(v-if="canExport" :disabled="loading" @click="onExportClicked")
                         i.fas.fa-file-export.mr-2
                         | {{ $t('actions.export') }}
+                    button.btn.btn-success.btn-item.btn-item-left(v-if="canImport" :disabled="loading" @click="onImportClicked")
+                        i.fas.fa-file-import.mr-2
+                        | {{ $t('actions.import') }}
                 .table-responsive
                     table.table.table-bordered
                         thead
                             tr
                                 th.text-center #
                                 th
-                                    sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
+                                    sorter-component(@sorted="searchBySorter" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
                                 th
-                                    sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.display_name')" :sortBy="'display_name'")
+                                    sorter-component(@sorted="searchBySorter" :sorter="sorter" :title="$t('pages.display_name')" :sortBy="'display_name'")
                                 th {{ $tc('pages.permission', 2) }}
                                 th.text-center(v-if="canAction") {{ $t('actions.actions') }}
                         tfoot
                             tr
                                 th.text-center #
                                 th
-                                    sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
+                                    sorter-component(@sorted="searchBySorter" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
                                 th
-                                    sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.display_name')" :sortBy="'display_name'")
+                                    sorter-component(@sorted="searchBySorter" :sorter="sorter" :title="$t('pages.display_name')" :sortBy="'display_name'")
                                 th {{ $tc('pages.permission', 2) }}
                                 th.text-center(v-if="canAction") {{ $t('actions.actions') }}
                         tbody
@@ -42,7 +45,7 @@
                                     button.btn.btn-link.btn-sm(v-if="canEdit" :disabled="loading" @click.prevent="onEditClicked(role)") {{ $t('actions.edit') }}
                                     button.btn.btn-link.btn-sm(v-if="canDelete" :disabled="loading" @click.prevent="onDeleteClicked(role)") {{ $t('actions.delete') }}
                 .clearfix
-                    paginator-component(:disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator()")
+                    paginator-component(:disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator")
 </template>
 
 <script>
@@ -86,6 +89,9 @@ export default {
             return this.searcher.searching
         },
         canExport() {
+            return this.requiredPermissions['role-manage']
+        },
+        canImport() {
             return this.requiredPermissions['role-manage']
         },
         canView() {
@@ -135,6 +141,7 @@ export default {
             roleSearch: 'role/search',
             roleDelete: 'role/delete',
             roleExport: 'role/export',
+            roleImport: 'role/import',
         }),
         init() {
             this.plotPaginator()
@@ -217,6 +224,7 @@ export default {
                     this.roleDelete({
                         ids: [role.id],
                         doneCallback: () => {
+                            this.loading = false
                             this.search()
                         },
                         errorCallback: err => {
@@ -229,12 +237,30 @@ export default {
         },
         onExportClicked() {
             this.$bus.emit('export', {
-                name: 'role',
+                name: 'role_index',
                 exportCallback: (doneCallback, errorCallback) => this.roleExport({
                     params: this.params.data(),
                     doneCallback,
                     errorCallback,
                 }),
+            })
+        },
+        onImportClicked() {
+            this.$bus.emit('import', {
+                okCallback: file => {
+                    this.loading = true
+                    this.roleImport({
+                        file: file,
+                        doneCallback: () => {
+                            this.loading = false
+                            this.search()
+                        },
+                        errorCallback: err => {
+                            this.loading = false
+                            this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                        },
+                    })
+                },
             })
         },
     },

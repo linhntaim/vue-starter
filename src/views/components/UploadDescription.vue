@@ -1,7 +1,9 @@
 <template lang="pug">
-    .small.form-text.text-muted
-        span(v-if="!extensionsHidden") {{ $t('components.upload_description.extensions', {extensions: extensions}) }}
-        span(v-if="!sizeHidden") {{ $t('components.upload_description.size', {size: shownMaxFileSize}) }}
+    .small.form-text.text-muted(v-if="(!extensionsHidden && extensions.length) || !sizeHidden")
+        span(v-if="!extensionsHidden && extensions.length")
+            | {{ $t('components.upload_description.extensions', {extensions: shownExtensions}) }}
+        span(v-if="!sizeHidden")
+            | {{ $t('components.upload_description.size', {size: shownMaxFileSize}) }}
 </template>
 
 <script>
@@ -14,7 +16,7 @@ import {fileHelper} from '../../app/utils'
 export default {
     name: 'UploadDescription',
     props: {
-        extensions: String,
+        extensions: Array,
         extensionsHidden: {
             type: Boolean,
             default: false,
@@ -28,6 +30,11 @@ export default {
         return {
             shownMaxFileSize: fileHelper.asSize(this.$server ? this.$server.max_upload_file_size : 0),
         }
+    },
+    computed: {
+        shownExtensions() {
+            return this.extensions.map(extension => extension.startsWith('.') ? extension : '.' + extension).join(', ')
+        },
     },
     destroyed() {
         this.$bus.off('server')

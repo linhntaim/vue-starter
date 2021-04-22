@@ -12,6 +12,7 @@ export default {
             model_delete: 'Delete',
             model_edit: 'Edit',
             model_export: 'Export',
+            model_import: 'Import',
             model_list: 'List',
             // TODO:
 
@@ -102,6 +103,7 @@ export default {
         export: 'Export',
         generate: 'Generate',
         go: 'Go to {where}',
+        import: 'Import',
         live_preview: 'Live preview',
         loading: 'Loading',
         login: 'Login',
