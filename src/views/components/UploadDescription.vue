@@ -28,7 +28,7 @@ export default {
     },
     data() {
         return {
-            shownMaxFileSize: fileHelper.asSize(this.$server ? this.$server.max_upload_file_size : 0),
+            shownMaxFileSize: fileHelper.autoLocalizedDisplaySize(this.$server ? this.$server.max_upload_file_size : 0),
         }
     },
     computed: {
@@ -37,12 +37,15 @@ export default {
         },
     },
     destroyed() {
-        this.$bus.off('server')
+        this.$bus.off('server', this.updateShownMaxFileSize)
     },
     mounted() {
-        this.$bus.on('server', () => {
-            this.shownMaxFileSize = fileHelper.asSize(this.$server.max_upload_file_size)
-        })
+        this.$bus.on('server', this.updateShownMaxFileSize)
+    },
+    methods: {
+        updateShownMaxFileSize() {
+            this.shownMaxFileSize = fileHelper.autoLocalizedDisplaySize(this.$server.max_upload_file_size)
+        },
     },
 }
 </script>

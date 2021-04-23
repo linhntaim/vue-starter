@@ -18,7 +18,7 @@
                                     input#inputImageFile.sr-only(type="file" name="file" :accept="acceptedExtensions" @change="onImageFileChanged")
                                     span.img-tooltip(data-toggle="tooltip" :title="$t('components.image.upload_image')")
                                         span.fa.fa-upload
-                            upload-description.mb-3(:extensions="allowedExtensions" :sizeHidden="true")
+                            upload-description.mb-3(:extensions="extensions" :sizeHidden="true")
                             .img-actions.img-container-item.text-center
                                 .btn-group
                                     button.btn.btn-primary(@click="onActionClicked" type="button" data-method="zoom" data-option="0.1" title="Zoom In")
@@ -162,12 +162,12 @@ export default {
             cancelCallback: null,
             imageUrl: null,
 
-            allowedExtensions: ['jpg', 'jpeg', 'png'],
+            extensions: ['jpg', 'jpeg', 'png'],
         }
     },
     computed: {
         acceptedExtensions() {
-            return this.allowedExtensions.map(extension => '.' + extension).join(', ')
+            return this.extensions.map(extension => extension.startsWith('.') ? extension : '.' + extension).join(', ')
         },
     },
     destroyed() {
