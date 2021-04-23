@@ -19,6 +19,7 @@
                                     sorter-component(@sorted="searchBySorter" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
                                 th
                                     sorter-component(@sorted="searchBySorter" :sorter="sorter" :title="$t('pages.display_name')" :sortBy="'display_name'")
+                                th {{ $t('pages.description') }}
                                 th {{ $tc('pages.permission', 2) }}
                                 th.text-center(v-if="canAction") {{ $t('actions.actions') }}
                         tfoot
@@ -28,6 +29,7 @@
                                     sorter-component(@sorted="searchBySorter" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
                                 th
                                     sorter-component(@sorted="searchBySorter" :sorter="sorter" :title="$t('pages.display_name')" :sortBy="'display_name'")
+                                th {{ $t('pages.description') }}
                                 th {{ $tc('pages.permission', 2) }}
                                 th.text-center(v-if="canAction") {{ $t('actions.actions') }}
                         tbody
@@ -39,6 +41,7 @@
                                 td.text-center {{ paginator.pagination.items.from + index }}
                                 td.nowrap {{ role.name }}
                                 td.nowrap {{ role.display_name }}
+                                td(v-html="role.html_description")
                                 td
                                     .nowrap(v-for="permission in role.permissions") {{ permission.name }}
                                 td.text-center(v-if="canAction")
