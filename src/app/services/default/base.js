@@ -35,6 +35,18 @@ export default class BaseService extends DefaultService {
         )
     }
 
+    import(file, doneCallback = null, errorCallback = null, alwaysCallback = null) {
+        const params = new FormData
+        params.append('file', file)
+        params.append('_import', '1')
+        return this.store(
+            params,
+            doneCallback,
+            errorCallback,
+            alwaysCallback,
+        )
+    }
+
     store(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
         return this.post(
             '',
