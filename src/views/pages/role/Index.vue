@@ -37,13 +37,13 @@
                                     span(v-else) {{ $t('pages.no_items') }}
                             tr(v-for="(role, index) in roles")
                                 td.text-center {{ paginator.pagination.items.from + index }}
-                                td {{ role.name }}
-                                td {{ role.display_name }}
+                                td.nowrap {{ role.name }}
+                                td.nowrap {{ role.display_name }}
                                 td
-                                    div(v-for="permission in role.permissions") {{ permission.name }}
+                                    .nowrap(v-for="permission in role.permissions") {{ permission.name }}
                                 td.text-center(v-if="canAction")
-                                    button.btn.btn-link.btn-sm(v-if="canEdit" :disabled="loading" @click.prevent="onEditClicked(role)") {{ $t('actions.edit') }}
-                                    button.btn.btn-link.btn-sm(v-if="canDelete" :disabled="loading" @click.prevent="onDeleteClicked(role)") {{ $t('actions.delete') }}
+                                    button.btn.btn-link.btn-sm.nowrap(v-if="canEdit" :disabled="loading" @click.prevent="onEditClicked(role)") {{ $t('actions.edit') }}
+                                    button.btn.btn-link.btn-sm.nowrap(v-if="canDelete" :disabled="loading" @click.prevent="onDeleteClicked(role)") {{ $t('actions.delete') }}
                 .clearfix
                     paginator-component(:disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator")
 </template>
