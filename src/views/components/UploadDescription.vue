@@ -44,7 +44,6 @@ export default {
     },
     methods: {
         updateShownMaxFileSize() {
-            console.log('updateShownMaxFileSize')
             this.shownMaxFileSize = fileHelper.autoLocalizedDisplaySize(this.$server.max_upload_file_size)
         },
     },
