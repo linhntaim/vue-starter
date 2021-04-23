@@ -92,6 +92,12 @@ export default {
         permissions: state => state.account && state.account.permission_names ? state.account.permission_names : [],
         bearerToken: state => state.bearerToken,
         authorizationHeader: state => state.bearerToken.tokenType + ' ' + state.bearerToken.accessToken,
+        authorizationParams: state => {
+            const params = {}
+            params[APP_DEFAULT_SERVICE.requestParams.tokenType] = state.bearerToken.tokenType
+            params[APP_DEFAULT_SERVICE.requestParams.accessToken] = state.bearerToken.accessToken
+            return params
+        },
         authorizationQueryString: state => [
             APP_DEFAULT_SERVICE.requestParams.tokenType + '=' + state.bearerToken.tokenType,
             APP_DEFAULT_SERVICE.requestParams.accessToken + '=' + state.bearerToken.accessToken,
