@@ -3,8 +3,8 @@
  */
 
 import {
-    commonAccountService as accountService,
-    commonAuthService as authService,
+    homeAccountService as accountService,
+    homeAuthService as authService,
 } from '../services/default'
 import {
     bearerTokenCookieStore,
