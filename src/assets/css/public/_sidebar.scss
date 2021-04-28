@@ -1,0 +1,11 @@
+@media (min-width: 768px) {
+    .sidebar {
+        width: 18rem !important;
+
+        .nav-item {
+            .nav-link {
+                width: 18rem;
+            }
+        }
+    }
+}

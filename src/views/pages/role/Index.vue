@@ -3,11 +3,11 @@
         search(ref="searchModal" :searcher="searcher" :disabled="loading" @searched="searchBySearcher" @searcherInitialized="searchBySearcher")
         .card.shadow.mb-4
             .card-body.has-control
-                .clearfix
-                    button.btn.btn-success.btn-item.btn-item-left(v-if="canExport" :disabled="loading" @click="onExportClicked")
+                .btn-blocks.block-left
+                    button.btn.btn-success(v-if="canExport" :disabled="loading" @click="onExportClicked")
                         i.fas.fa-file-export.mr-2
                         | {{ $t('actions.export') }}
-                    button.btn.btn-success.btn-item.btn-item-left(v-if="canImport" :disabled="loading" @click="onImportClicked")
+                    button.btn.btn-success(v-if="canImport" :disabled="loading" @click="onImportClicked")
                         i.fas.fa-file-import.mr-2
                         | {{ $t('actions.import') }}
                 .table-responsive
@@ -48,7 +48,7 @@
                                     button.btn.btn-link.btn-sm.nowrap(v-if="canEdit" :disabled="loading" @click.prevent="onEditClicked(role)") {{ $t('actions.edit') }}
                                     button.btn.btn-link.btn-sm.nowrap(v-if="canDelete" :disabled="loading" @click.prevent="onDeleteClicked(role)") {{ $t('actions.delete') }}
                 .clearfix
-                    paginator-component(:disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator")
+                    paginator-component(v-if="roles.length" :disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator")
 </template>
 
 <script>
@@ -116,7 +116,7 @@ export default {
             return this.canDelete
         },
         colspan() {
-            let colspan = 5
+            let colspan = 6
             if (!this.canAction) --colspan
             return colspan
         },

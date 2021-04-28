@@ -4,12 +4,6 @@
     .col {
         display: flex;
         align-items: flex-end;
-
-        .btn-item-left {
-            &:last-child {
-                margin-right: 0;
-            }
-        }
     }
 }
 

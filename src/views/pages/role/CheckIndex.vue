@@ -3,10 +3,13 @@
         search(ref="searchModal" :searcher="searcher" :disabled="loading" @searched="searchBySearcher" @searcherInitialized="searchBySearcher")
         .card.shadow.mb-4
             .card-body.has-control
-                .clearfix
-                    button.btn.btn-success.btn-item.btn-item-left(v-if="canExport" :disabled="loading" @click="onExportClicked()")
+                .btn-blocks.block-left
+                    button.btn.btn-success(v-if="canExport" :disabled="loading" @click="onExportClicked()")
                         i.fas.fa-file-export.mr-2
                         | {{ $t('actions.export') }}
+                    button.btn.btn-success(v-if="canImport" :disabled="loading" @click="onImportClicked")
+                        i.fas.fa-file-import.mr-2
+                        | {{ $t('actions.import') }}
                 .table-responsive
                     table.table.table-bordered
                         thead
@@ -18,6 +21,7 @@
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
                                 th
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.display_name')" :sortBy="'display_name'")
+                                th {{ $t('pages.description') }}
                                 th {{ $tc('pages.permission', 2) }}
                                 th.text-center(v-if="canAction") {{ $t('actions.actions') }}
                         tfoot
@@ -29,6 +33,7 @@
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.name')" :sortBy="'name'")
                                 th
                                     sorter-component(@sorted="searchBySorter()" :sorter="sorter" :title="$t('pages.display_name')" :sortBy="'display_name'")
+                                th {{ $t('pages.description') }}
                                 th {{ $tc('pages.permission', 2) }}
                                 th.text-center(v-if="canAction") {{ $t('actions.actions') }}
                         tbody
@@ -40,21 +45,23 @@
                                 td.text-center
                                     input(type="checkbox" v-model="itemSelection.selected" name="selected[]" :value="role.id" @change="onItemChanged")
                                 td.text-center {{ paginator.pagination.items.from + index }}
-                                td {{ role.name }}
-                                td {{ role.display_name }}
+                                td.nowrap {{ role.name }}
+                                td.nowrap {{ role.display_name }}
+                                td(v-html="role.html_description")
                                 td
-                                    div(v-for="permission in role.permissions") {{ permission.name }}
+                                    .nowrap(v-for="permission in role.permissions") {{ permission.name }}
                                 td.text-center(v-if="canAction")
-                                    button.btn.btn-link.btn-sm(v-if="canEdit" :disabled="loading" @click.prevent="onEditClicked(role)") {{ $t('actions.edit') }}
-                                    button.btn.btn-link.btn-sm(v-if="canDelete" :disabled="loading" @click.prevent="onDeleteClicked(role)") {{ $t('actions.delete') }}
+                                    button.btn.btn-link.btn-sm.nowrap(v-if="canEdit" :disabled="loading" @click.prevent="onEditClicked(role)") {{ $t('actions.edit') }}
+                                    button.btn.btn-link.btn-sm.nowrap(v-if="canDelete" :disabled="loading" @click.prevent="onDeleteClicked(role)") {{ $t('actions.delete') }}
                 .clearfix
-                    .btn-group.dropup.btn-group-item.btn-item-left(v-if="canActions")
-                        button.btn.btn-warning.dropdown-toggle(:disabled="loading" data-toggle="dropdown")
-                            i.fas.fa-cog.mr-2
-                            span.mr-1 {{ $t('actions.bulk_actions') }}
-                        .dropdown-menu
-                            a.dropdown-item(v-if="canDelete" :class="{disabled: loading}" @click.prevent="onBulkDeleteClicked" href="#") {{ $t('actions.delete') }}
-                    paginator-component(:disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator()")
+                    .btn-blocks.block-left.float-left-sm(v-if="roles.length && canActions")
+                        .btn-group.dropup
+                            button.btn.btn-warning.dropdown-toggle(:disabled="loading" data-toggle="dropdown")
+                                i.fas.fa-cog.mr-2
+                                span.mr-1 {{ $t('actions.bulk_actions') }}
+                            .dropdown-menu
+                                a.dropdown-item(v-if="canDelete" :class="{disabled: loading}" @click.prevent="onBulkDeleteClicked" href="#") {{ $t('actions.delete') }}
+                    paginator-component(v-if="roles.length" :disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator()")
 </template>
 
 <script>
@@ -102,6 +109,9 @@ export default {
         canExport() {
             return this.requiredPermissions['role-manage']
         },
+        canImport() {
+            return this.requiredPermissions['role-manage']
+        },
         canView() {
             return this.requiredPermissions['role-manage']
         },
@@ -121,7 +131,7 @@ export default {
             return this.canDelete
         },
         colspan() {
-            let colspan = 6
+            let colspan = 7
             if (!this.canAction) --colspan
             return colspan
         },
@@ -149,6 +159,7 @@ export default {
             roleSearch: 'role/search',
             roleDelete: 'role/delete',
             roleExport: 'role/export',
+            roleImport: 'role/import',
         }),
         init() {
             this.plotPaginator()
@@ -168,13 +179,11 @@ export default {
                 items_per_page: this.paginator.pagination.itemsPerPage,
             })
         },
-        searchBySearcher($event) {
+        searchBySearcher() {
             this.searcher.saveState()
             this.params.plot('searcher', this.searcher.params)
-            if ($event && $event.clear) {
-                this.paginator.setPage(1)
-                this.plotPaginator()
-            }
+            this.paginator.setPage(1)
+            this.plotPaginator()
             this.search()
         },
         searchBySorter() {
@@ -274,6 +283,24 @@ export default {
                     doneCallback,
                     errorCallback,
                 }),
+            })
+        },
+        onImportClicked() {
+            this.$bus.emit('import', {
+                okCallback: file => {
+                    this.loading = true
+                    this.roleImport({
+                        file: file,
+                        doneCallback: () => {
+                            this.loading = false
+                            this.search()
+                        },
+                        errorCallback: err => {
+                            this.loading = false
+                            this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
+                        },
+                    })
+                },
             })
         },
     },

@@ -8,8 +8,8 @@
                 .form-group.col-md-4.col-lg-3
                     label(for="searchCreatedTo") {{ $t('pages.created_date_to') }}
                     calendar-input(v-if="calendarInputOptions" ref="searchCreatedTo" v-model="searcher.params.created_date_to" :options="calendarInputOptions" :id="'searchCreatedTo'" :placeholder="$t('pages.created_date_to')")
-                .col.nowrap
-                    .btn-group.btn-group-item
+                .form-group.col.nowrap
+                    .btn-group
                         button.btn.btn-primary(:disabled="disabled" type="submit")
                             i.fas.fa-search.mr-2
                             | {{ $t('actions.search') }}

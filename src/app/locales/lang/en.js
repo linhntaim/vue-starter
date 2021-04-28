@@ -66,7 +66,9 @@ export default {
         screen: {
             login: 'Login',
             logout: 'Logout',
+            activity_log_index: 'Activity log - List',
             role_index: 'Role - List',
+            role_check_index: 'Role - Check list',
             role_create: 'Role - Create',
             role___edit: 'Role - Edit',
             // TODO:

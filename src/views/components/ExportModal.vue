@@ -8,13 +8,13 @@
                         span(aria-hidden="true") ×
                 .modal-body.has-control
                     error-box(:error="error")
-                    .clearfix
-                        button.btn.btn-primary.btn-item.btn-item-right.btn-short.btn-short-xs(:disabled="loading" @click="onSyncClicked()")
-                            i.fas.fa-sync-alt
-                            span &nbsp;&nbsp;{{ $t('actions.sync') }}
-                        button.btn.btn-success.btn-item(:disabled="loading" @click="onExportClicked()")
-                            i.fas.fa-file-export
-                            span &nbsp;&nbsp;{{ $t('actions.export') }}
+                    .btn-blocks
+                        button.btn.btn-success.float-left-sm(:disabled="loading" @click="onExportClicked()")
+                            i.fas.fa-file-export.mr-2
+                            | {{ $t('actions.export') }}
+                        button.btn.btn-primary.float-right-sm(:disabled="loading" @click="onSyncClicked()")
+                            i.fas.fa-sync-alt.mr-2
+                            | {{ $t('actions.sync') }}
                     .table-responsive
                         table.table.table-bordered
                             thead
@@ -36,7 +36,7 @@
                                         span(v-else) {{ $t('pages.no_items') }}
                                 tr(v-for="(dataExport, index) in dataExports")
                                     td.text-center {{ paginator.pagination.items.from + index }}
-                                    td.text-center {{ dataExport.sd_st_created_at }}
+                                    td.text-center.nowrap {{ dataExport.sd_st_created_at }}
                                     td.text-center
                                         .badge.badge-warning(v-if="dataExport.state == exportStateDefs.exporting")
                                             | {{ $t('def.export_state.exporting') }}
@@ -45,10 +45,10 @@
                                         .badge.badge-danger(v-else-if="dataExport.state == exportStateDefs.failed")
                                             | {{ $t('def.export_state.failed') }}
                                     td.text-center
-                                        a.btn.btn-link.btn-sm(v-if="dataExport.state == exportStateDefs.exported" :class="{disabled: loading}" :href="authUrl(dataExport.url)" target="_blank")
+                                        a.btn.btn-link.btn-sm.nowrap(v-if="dataExport.state == exportStateDefs.exported" :class="{disabled: loading}" :href="authUrl(dataExport.url)" target="_blank")
                                             | {{ $t('actions.download') }}
                     .clearfix
-                        paginator-component(:disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator()")
+                        paginator-component(v-if="dataExports.length" :disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator()")
                 .modal-footer
                     button.btn.btn-secondary(type="button" data-dismiss="modal") {{ $t('actions.close') }}
 </template>
@@ -142,6 +142,17 @@ export default {
             this.plotPaginator()
             this.search()
         },
+        ifPageEmpty() {
+            if (this.dataExports.length <= 0) {
+                if (this.paginator.pagination.current > 1) {
+                    this.paginator.setPage(1)
+                    this.plotPaginator()
+                    this.search()
+                    return true
+                }
+            }
+            return false
+        },
         search() {
             this.loading = true
             this.error = null
@@ -150,7 +161,9 @@ export default {
                 params: params,
                 doneCallback: (pagination) => {
                     this.paginator.parsePagination(pagination)
-                    this.loading = false
+                    if (!this.ifPageEmpty()) {
+                        this.loading = false
+                    }
                 },
                 errorCallback: err => {
                     this.loading = false

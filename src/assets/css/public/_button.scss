@@ -51,38 +51,53 @@
     }
 }
 
-.btn-item, .btn-group-item {
-    margin-bottom: 1rem;
-}
+.btn-blocks {
+    clear: both;
 
-.btn-item-left {
-    float: left;
-    margin-right: 1rem;
-}
+    > {
+        .btn, .btn-group {
+            margin-bottom: 1rem;
+        }
+    }
 
-.btn-item-right {
-    float: right;
-    margin-left: 1rem;
-}
-
-@media (max-width: 575px) {
-    .btn-item {
-        width: 100%;
+    &:after {
         display: block;
+        clear: both;
+        content: "";
     }
 
-    .btn-group-item {
-        width: 100%;
+    @media (max-width: 575px) {
+        > {
+            .btn, .btn-group {
+                width: 100%;
+            }
+        }
     }
 
-    .btn-item-left {
-        float: none;
-        margin-right: 0;
+    &.block-bottom {
+        > {
+            .btn, .btn-group {
+                margin-bottom: 0;
+            }
+        }
     }
 
-    .btn-item-right {
-        float: none;
-        margin-left: 0;
+    &.block-left {
+        > {
+            .btn, .btn-group {
+                float: left;
+                margin-right: 1rem;
+            }
+        }
+    }
+
+    &.block-right {
+        > {
+            .btn, .btn-group {
+                float: right;
+                margin-left: 1rem;
+            }
+        }
     }
 }
 
