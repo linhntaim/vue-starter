@@ -12,6 +12,7 @@ export default {
             model_delete: 'Delete',
             model_edit: 'Edit',
             model_export: 'Export',
+            model_import: 'Import',
             model_list: 'List',
             // TODO:
 
@@ -102,6 +103,7 @@ export default {
         export: 'エクスポート',
         generate: '生成',
         go: '{where}に遷移',
+        import: 'Import',
         live_preview: 'ライブプレビュー',
         loading: '読み込み中',
         login: 'ログイン',

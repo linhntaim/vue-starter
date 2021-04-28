@@ -45,7 +45,7 @@
                                         .badge.badge-danger(v-else-if="dataExport.state == exportStateDefs.failed")
                                             | {{ $t('def.export_state.failed') }}
                                     td.text-center
-                                        a.btn.btn-link.btn-sm(v-if="dataExport.state == exportStateDefs.exported" :class="{disabled: loading}" :href="dataExport.url + '&' + accountAuthorizationQueryString" target="_blank")
+                                        a.btn.btn-link.btn-sm(v-if="dataExport.state == exportStateDefs.exported" :class="{disabled: loading}" :href="authUrl(dataExport.url)" target="_blank")
                                             | {{ $t('actions.download') }}
                     .clearfix
                         paginator-component(:disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator()")
@@ -59,7 +59,7 @@
  */
 
 import {mapActions, mapGetters} from '@linhntaim/vue-uses'
-import {storeHandler, ui} from '../../app/utils'
+import {AuthUrl, storeHandler, ui} from '../../app/utils'
 import {DataPlot, Paginator, Sorter} from '@linhntaim/vue-utils'
 import {ERROR_LEVEL_DEF, EXPORT_STATE_DEF, ITEMS_PER_PAGE_LIST} from '../../app/config'
 import ErrorBox from './ErrorBox'
@@ -94,7 +94,7 @@ export default {
     computed: {
         ...mapGetters({
             dataExports: 'dataExport/dataExports',
-            accountAuthorizationQueryString: 'account/authorizationQueryString',
+            accountAuthorizationParams: 'account/authorizationParams',
         }),
     },
     created() {
@@ -181,6 +181,9 @@ export default {
                     }
                 },
             )
+        },
+        authUrl(url) {
+            return new AuthUrl(url, this.accountAuthorizationParams).get()
         },
     },
 }

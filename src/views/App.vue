@@ -7,6 +7,7 @@
         prompt-modal
         image-modal
         export-modal
+        import-modal
         page-loader
 </template>
 
@@ -23,6 +24,7 @@ import ImageModal from './components/ImageModal'
 import PageLoader from './components/PageLoader'
 import PromptModal from './components/PromptModal'
 import Toasts from './components/Toasts'
+import ImportModal from './components/ImportModal'
 
 export default {
     name: 'App',
@@ -31,6 +33,7 @@ export default {
         ErrorModal,
         ExportModal,
         ImageModal,
+        ImportModal,
         PageLoader,
         PromptModal,
         Toasts,

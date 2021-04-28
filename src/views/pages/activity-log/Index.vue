@@ -36,14 +36,14 @@
                                     span(v-else) {{ $t('pages.no_items') }}
                             tr(v-for="(activityLog, index) in activityLogs")
                                 td.text-center {{ paginator.pagination.items.from + index }}
-                                td.text-center {{ activityLog.sd_st_created_at }}
-                                td {{ activityLog.admin.display_name }}
-                                td {{ $t('def.screen.' + activityLog.screen) }}
-                                td {{ $t('def.activity_action.' + activityLog.action) }}
+                                td.text-center.nowrap {{ activityLog.sd_st_created_at }}
+                                td.nowrap {{ activityLog.admin.display_name }}
+                                td.nowrap {{ $t('def.screen.' + activityLog.screen) }}
+                                td.nowrap {{ $t('def.activity_action.' + activityLog.action) }}
                                 td.text-center
-                                    .badge.badge-primary(v-for="clientIp in activityLog.device.client_ips") {{ clientIp }}
+                                    .badge.badge-primary.nowrap(v-for="clientIp in activityLog.device.client_ips") {{ clientIp }}
                                 td.text-center(v-if="canAction")
-                                    button.btn.btn-link.btn-sm(v-if="canView" :disabled="loading" @click.prevent="onViewClicked(activityLog)") {{ $t('actions.view') }}
+                                    button.btn.btn-link.btn-sm.nowrap(v-if="canView" :disabled="loading" @click.prevent="onViewClicked(activityLog)") {{ $t('actions.view') }}
                 .clearfix
                     paginator-component(:disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator()")
         view-modal(ref="viewModel")

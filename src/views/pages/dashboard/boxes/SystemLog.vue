@@ -5,7 +5,7 @@
         form(@submit.prevent="onSubmitted()")
             .card-body
                 div(v-for="systemLog in systemLogs")
-                    a(:href="systemLog.url + '?' + accountAuthorizationQueryString" target="_blank") {{ systemLog.name }}
+                    a(:href="authUrl(systemLog.url)" target="_blank") {{ systemLog.name }}
             .card-footer.text-right
                 button.btn.btn-primary(:disabled="loading" type="submit")
                     i.fas.fa-circle-notch.fa-spin(v-if="loading")
@@ -19,6 +19,7 @@
 
 import {mapGetters} from '@linhntaim/vue-uses'
 import {adminSystemLogService} from '../../../../app/services/default'
+import {AuthUrl} from '../../../../app/utils'
 
 export default {
     name: 'SystemLog',
@@ -34,7 +35,7 @@ export default {
     },
     computed: {
         ...mapGetters({
-            accountAuthorizationQueryString: 'account/authorizationQueryString',
+            accountAuthorizationParams: 'account/authorizationParams',
         }),
     },
     mounted() {
@@ -57,6 +58,9 @@ export default {
                     this.$bus.emit('error', {messages: err.getMessages(), extra: err.getExtra()})
                 },
             )
+        },
+        authUrl(url) {
+            return new AuthUrl(url, this.accountAuthorizationParams).get()
         },
     },
 }

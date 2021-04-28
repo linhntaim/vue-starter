@@ -27,6 +27,10 @@ export default {
             roleService().export(params, doneCallback, errorCallback, alwaysCallback)
         },
 
+        import(store, {file, doneCallback, errorCallback, alwaysCallback}) {
+            roleService().import(file, doneCallback, errorCallback, alwaysCallback)
+        },
+
         create({state}, {params, doneCallback, errorCallback, alwaysCallback}) {
             roleService().store(params, (data) => {
                 state.role = data.model

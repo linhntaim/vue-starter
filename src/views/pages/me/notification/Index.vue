@@ -28,12 +28,12 @@
                                 span(v-else) {{ $t('pages.no_items') }}
                         tr(v-for="(notification, index) in notifications")
                             td.text-center {{ paginator.pagination.items.from + index }}
-                            td {{ notification.sd_st_created_at }}
+                            td.nowrap {{ notification.sd_st_created_at }}
                             td {{ notification.title }}
                             td {{ notification.content }}
-                            td.text-center {{ notification.sd_st_read_at }}
+                            td.text-center.nowrap {{ notification.sd_st_read_at }}
                             td.text-center
-                                button.btn.btn-link.btn-sm(v-if="!notification.sd_st_read_at" :disabled="loading" @click.prevent="onReadClicked(notification)") {{ $t('pages._me._notification.mark_as_read') }}
+                                button.btn.btn-link.btn-sm.nowrap(v-if="!notification.sd_st_read_at" :disabled="loading" @click.prevent="onReadClicked(notification)") {{ $t('pages._me._notification.mark_as_read') }}
             .clearfix
                 paginator-component(:disabled="loading" :paginator="paginator" @pageChanged="searchByPaginator()")
 </template>
