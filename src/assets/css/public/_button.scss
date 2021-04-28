@@ -101,41 +101,6 @@
     }
 }
 
-.btn-item, .btn-group-item {
-    margin-bottom: 1rem;
-}
-
-.btn-item-left {
-    float: left;
-    margin-right: 1rem;
-}
-
-.btn-item-right {
-    float: right;
-    margin-left: 1rem;
-}
-
-@media (max-width: 575px) {
-    .btn-item {
-        width: 100%;
-        display: block;
-    }
-
-    .btn-group-item {
-        width: 100%;
-    }
-
-    .btn-item-left {
-        float: none;
-        margin-right: 0;
-    }
-
-    .btn-item-right {
-        float: none;
-        margin-left: 0;
-    }
-}
-
 .btn-short {
     span {
         display: none;

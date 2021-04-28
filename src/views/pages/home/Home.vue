@@ -4,6 +4,10 @@
         .hello
             h1 Welcome to Your Vue Starter App
             p
+                strong
+                    | Based on&nbsp;
+                    a(href="https://vuejs.org/" target="_blank") Vue.js {{ vueVersion }}
+            p
                 | For a guide and recipes on how to configure / customize this project,
                 br
                 | check out the&nbsp;
@@ -54,8 +58,15 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
+import Vue from 'vue'
+
 export default {
     name: 'Home',
+    data() {
+        return {
+            vueVersion: Vue.version,
+        }
+    },
 }
 </script>
 
