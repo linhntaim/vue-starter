@@ -179,7 +179,7 @@ Display name of the application.
 
 Value is string.
 
-### VUE_APP_TYPE
+### VUE_APP_CLIENT
 
 Value could be `admin` or `home`.
 

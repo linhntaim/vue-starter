@@ -35,7 +35,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {mapGetters} from '@dsquare-gbu/vue-uses'
+import {mapGetters} from '@linhntaim/vue-uses'
 import {permit, timeoutCaller, ui} from '../../app/utils'
 import {routePermissions} from '../../app/router'
 import {APP_NAME, APP_ROUTE} from '../../app/config'

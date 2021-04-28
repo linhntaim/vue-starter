@@ -24,7 +24,7 @@
  */
 
 import {adminCommandService} from '../../../../app/services/default'
-import {mapGetters} from '@dsquare-gbu/vue-uses'
+import {mapGetters} from '@linhntaim/vue-uses'
 
 export default {
     name: 'Impersonate',

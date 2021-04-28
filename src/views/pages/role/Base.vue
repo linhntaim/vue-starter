@@ -9,7 +9,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {mapActions} from '@dsquare-gbu/vue-uses'
+import {mapActions} from '@linhntaim/vue-uses'
 
 export default {
     name: 'Base',

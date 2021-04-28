@@ -23,7 +23,7 @@
  */
 
 import {dateTimer} from '../../../app/utils'
-import {Searcher} from '@dsquare-gbu/vue-utils'
+import {Searcher} from '@linhntaim/vue-utils'
 import moment from 'moment'
 import CalendarInput from '../../components/CalendarInput'
 

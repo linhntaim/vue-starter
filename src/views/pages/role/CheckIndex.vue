@@ -63,8 +63,8 @@
  */
 
 import {headTitle, permit, storeHandler} from '../../../app/utils'
-import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
-import {Collection, DataPlot, ItemSelection, Paginator, Searcher, Sorter, TypeObject} from '@dsquare-gbu/vue-utils'
+import {mapActions, mapGetters, mapMutations} from '@linhntaim/vue-uses'
+import {Collection, DataPlot, ItemSelection, Paginator, Searcher, Sorter, TypeObject} from '@linhntaim/vue-utils'
 import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
 import PaginatorComponent from '../../components/Paginator'
 import Search from './Search'

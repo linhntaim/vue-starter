@@ -9,7 +9,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {Sorter} from '@dsquare-gbu/vue-utils'
+import {Sorter} from '@linhntaim/vue-utils'
 
 export default {
     name: 'Sorter',

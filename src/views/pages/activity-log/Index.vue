@@ -54,9 +54,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {mapActions, mapGetters, mapMutations} from '@dsquare-gbu/vue-uses'
+import {mapActions, mapGetters, mapMutations} from '@linhntaim/vue-uses'
 import {headTitle, permit, storeHandler} from '../../../app/utils'
-import {DataPlot, Paginator, Searcher, Sorter, TypeObject} from '@dsquare-gbu/vue-utils'
+import {DataPlot, Paginator, Searcher, Sorter, TypeObject} from '@linhntaim/vue-utils'
 import {ITEMS_PER_PAGE_LIST} from '../../../app/config'
 import PaginatorComponent from '../../components/Paginator'
 import Search from './Search'

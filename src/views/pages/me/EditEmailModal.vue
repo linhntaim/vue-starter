@@ -27,7 +27,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
+import {mapActions, mapGetters} from '@linhntaim/vue-uses'
 import {ui} from '../../../app/utils'
 import {ERROR_LEVEL_DEF, TOAST_DEF} from '../../../app/config'
 import ErrorBox from '../../components/ErrorBox'

@@ -35,8 +35,8 @@
  */
 
 import {localeChange} from '../../../app/utils'
-import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
-import {Searcher} from '@dsquare-gbu/vue-utils'
+import {mapActions, mapGetters} from '@linhntaim/vue-uses'
+import {Searcher} from '@linhntaim/vue-utils'
 import MultipleSelect2Input from '../../components/MultipleSelect2Input'
 
 export default {

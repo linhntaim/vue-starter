@@ -43,9 +43,9 @@
  */
 
 import {adminHandledFileService} from '../../../app/services/default'
-import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
+import {mapActions, mapGetters} from '@linhntaim/vue-uses'
 import {timeoutCaller, ui} from '../../../app/utils'
-import {FilesUploader} from '@dsquare-gbu/vue-utils'
+import {FilesUploader} from '@linhntaim/vue-utils'
 import {MAX_CHUNK_UPLOAD_SIZE, TOAST_DEF} from '../../../app/config'
 import EditEmailModal from './EditEmailModal'
 import EditPasswordModal from './EditPasswordModal'

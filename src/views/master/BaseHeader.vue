@@ -40,7 +40,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import {mapActions, mapGetters} from '@dsquare-gbu/vue-uses'
+import {mapActions, mapGetters} from '@linhntaim/vue-uses'
 import {LOCALE_MAPPING_FLAG_ICON_NAME_DEF} from '../../app/config'
 
 export default {

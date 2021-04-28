@@ -12,8 +12,8 @@ export const APP_TITLE_SEPARATOR = process.env.VUE_APP_TITLE_SEPARATOR ? process
 export const APP_AUTHOR = process.env.VUE_APP_AUTHOR
 export const APP_DESCRIPTION = process.env.VUE_APP_DESCRIPTION
 export const APP_EMAIL = process.env.VUE_APP_EMAIL
-export const APP_TYPE_ADMIN = 'admin'
-export const APP_TYPE_HOME = 'home'
+export const APP_CLIENT_ADMIN = 'admin'
+export const APP_CLIENT_HOME = 'home'
 export const APP_HOST_SELF = 'self'
 export const APP_HOST_SUB = 'sub'
 export const APP_ADMIN_HOST = process.env.VUE_APP_ADMIN_HOST
@@ -31,32 +31,41 @@ export const APP_ASSETS_PATH = APP_ASSETS_HOST === APP_HOST_SUB ? APP_ASSETS_HOS
 export const APP_SERVICE_HOST = process.env.VUE_APP_SERVICE_HOST
 export const APP_SERVICE_HOST_SUB_PATH = process.env.VUE_APP_SERVICE_HOST_SUB_PATH
 export const APP_SERVICE_URL = APP_SERVICE_HOST === APP_HOST_SUB ? window.location.origin + APP_SERVICE_HOST_SUB_PATH : process.env.VUE_APP_SERVICE_URL
-export const APP_TYPE = process.env.VUE_APP_TYPE ? process.env.VUE_APP_TYPE : APP_TYPE_ADMIN
-export const APP_URL = APP_TYPE === APP_TYPE_ADMIN ? APP_ADMIN_URL : APP_HOME_URL
-export const APP_HOST = APP_TYPE === APP_TYPE_ADMIN ? APP_ADMIN_HOST : APP_HOME_HOST
-export const APP_HOST_SUB_PATH = APP_TYPE === APP_TYPE_ADMIN ? APP_ADMIN_HOST_SUB_PATH : APP_HOME_HOST_SUB_PATH
+export const APP_CLIENT = process.env.VUE_APP_CLIENT ? process.env.VUE_APP_CLIENT : APP_CLIENT_ADMIN
+export const APP_URL = APP_CLIENT === APP_CLIENT_ADMIN ? APP_ADMIN_URL : APP_HOME_URL
+export const APP_HOST = APP_CLIENT === APP_CLIENT_ADMIN ? APP_ADMIN_HOST : APP_HOME_HOST
+export const APP_HOST_SUB_PATH = APP_CLIENT === APP_CLIENT_ADMIN ? APP_ADMIN_HOST_SUB_PATH : APP_HOME_HOST_SUB_PATH
 const basicAuthException = process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION_EXCEPTION
 const hasBasicAuth = process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION
     && (!basicAuthException || basicAuthException.split(',').every(regex => !(new RegExp(regex)).test(window.location.hostname)))
+const headerTokenAuthorization = hasBasicAuth ? process.env.VUE_APP_SERVICE_HEADER_TOKEN_AUTHORIZATION_NAME : 'Authorization'
 export const APP_DEFAULT_SERVICE = {
     baseUrl: APP_SERVICE_URL,
     clientId: process.env.VUE_APP_SERVICE_CLIENT_ID,
     clientSecret: process.env.VUE_APP_SERVICE_CLIENT_SECRET,
     hasBasicAuth: hasBasicAuth,
     basicAuth: process.env.VUE_APP_SERVICE_HEADER_BASIC_AUTHORIZATION,
-    headerTokenAuthorization: hasBasicAuth ? process.env.VUE_APP_SERVICE_HEADER_TOKEN_AUTHORIZATION_NAME : 'Authorization',
+    tokenRefreshEnabled: process.env.VUE_APP_SERVICE_TOKEN_REFRESH_ENABLED === 'true',
+    tokenAutoRevokeBefore: (parseInt(process.env.VUE_APP_SERVICE_TOKEN_AUTO_REVOKE_BEFORE) | 0) * 1000,
+    headerTokenAuthorization: headerTokenAuthorization,
+    headerClientIdEnabled: process.env.VUE_APP_SERVICE_HEADER_CLIENT_ID_ENABLED === 'true',
     requestParams: {
         tokenType: '_x_token_type',
         accessToken: '_x_access_token',
         authorization: '_x_authorization',
     },
     headers: {
+        clientId: process.env.VUE_APP_SERVICE_HEADER_CLIENT_ID_NAME,
         screen: process.env.VUE_APP_SERVICE_HEADER_SCREEN_NAME,
         settings: process.env.VUE_APP_SERVICE_HEADER_SETTINGS_NAME,
         device: process.env.VUE_APP_SERVICE_HEADER_DEVICE_NAME,
     },
     headerEncryptExcepts: process.env.VUE_APP_SERVICE_HEADER_ENCRYPT_EXCEPTS ?
-        process.env.VUE_APP_SERVICE_HEADER_ENCRYPT_EXCEPTS.split(',') : [],
+        (excepts => {
+            excepts = excepts.filter(except => !!except)
+            excepts.push(headerTokenAuthorization)
+            return excepts
+        })(process.env.VUE_APP_SERVICE_HEADER_ENCRYPT_EXCEPTS.split(',')) : [headerTokenAuthorization],
 }
 export const APP_COOKIE = {
     names: {

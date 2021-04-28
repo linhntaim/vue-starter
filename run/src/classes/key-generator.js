@@ -1,5 +1,5 @@
 import {getEnv} from 'dotenv-packed'
-import {Crypto} from '@dsquare-gbu/vue-utils'
+import {Crypto} from '@linhntaim/vue-utils'
 import rbjs from 'random-bytes-js'
 import fs from 'fs'
 

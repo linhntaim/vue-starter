@@ -9,7 +9,7 @@
 
 import {headTitle} from '../../app/utils'
 import {mapGetters} from '@linhntaim/vue-uses'
-import {APP_ID, APP_ROUTE, APP_TYPE, APP_TYPE_ADMIN} from '../../app/config'
+import {APP_ID, APP_ROUTE, APP_CLIENT, APP_CLIENT_ADMIN} from '../../app/config'
 import ComponentLoader from '../ComponentLoader'
 
 export default {
@@ -26,9 +26,9 @@ export default {
         title() {
             return APP_ID === 'base' ? {
                 inner: headTitle('Vue Starter'),
-                complement: 'DSquare - GBU',
+                complement: 'Nguyen Tuan Linh',
             } : {
-                inner: APP_TYPE === APP_TYPE_ADMIN ?
+                inner: APP_CLIENT === APP_CLIENT_ADMIN ?
                     'Admin' : 'Home',
             }
         },

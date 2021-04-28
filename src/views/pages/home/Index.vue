@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         #nav
-            router-link(:to="appRoutes.authenticate") Login
+            router-link(:to="appRoutes.authenticate") {{ $t('actions.login') }}
         home
 </template>
 

@@ -27,9 +27,9 @@
  */
 
 import {adminCommandService} from '../../../../app/services/default'
-import {app} from '@dsquare-gbu/vue-app'
+import {app} from '@linhntaim/vue-app'
 import {ui} from '../../../../app/utils'
-import {TypeString} from '@dsquare-gbu/vue-utils'
+import {TypeString} from '@linhntaim/vue-utils'
 
 export default {
     name: 'MaintenanceMode',

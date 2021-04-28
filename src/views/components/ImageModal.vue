@@ -140,7 +140,7 @@
  */
 
 import {timeoutCaller, ui} from '../../app/utils'
-import {TypeObject} from '@dsquare-gbu/vue-utils'
+import {TypeObject} from '@linhntaim/vue-utils'
 import Cropper from 'cropperjs'
 import UploadDescription from './UploadDescription'
 
