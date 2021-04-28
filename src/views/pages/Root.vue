@@ -26,7 +26,7 @@ export default {
         title() {
             return APP_ID === 'base' ? {
                 inner: headTitle('Vue Starter'),
-                complement: 'DSquare - GBU',
+                complement: 'Nguyen Tuan Linh',
             } : {
                 inner: APP_CLIENT === APP_CLIENT_ADMIN ?
                     'Admin' : 'Home',
