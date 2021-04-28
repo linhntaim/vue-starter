@@ -59,7 +59,7 @@ const applyBearerToken = (bearerToken = null, action = 'all') => {
             session.store('bearer_token_expires_at', new Date(new Date().getTime() + bearerToken.expiresIn * 1000).getTime())
         } else {
             bearerTokenCookieStore.remove()
-            session.forgot('bearer_token_expires_at')
+            session.forget('bearer_token_expires_at')
         }
     }
 }
@@ -91,6 +91,12 @@ export default {
         permissions: state => state.account && state.account.permission_names ? state.account.permission_names : [],
         bearerToken: state => state.bearerToken,
         authorizationHeader: state => state.bearerToken.tokenType + ' ' + state.bearerToken.accessToken,
+        authorizationParams: state => {
+            const params = {}
+            params[APP_DEFAULT_SERVICE.requestParams.tokenType] = state.bearerToken.tokenType
+            params[APP_DEFAULT_SERVICE.requestParams.accessToken] = state.bearerToken.accessToken
+            return params
+        },
         authorizationQueryString: state => [
             APP_DEFAULT_SERVICE.requestParams.tokenType + '=' + state.bearerToken.tokenType,
             APP_DEFAULT_SERVICE.requestParams.accessToken + '=' + state.bearerToken.accessToken,
@@ -206,9 +212,11 @@ export default {
                     commit('setAccount', {
                         account: data.model,
                     })
-                    commit('setSettings', {
-                        settings: settings,
-                    })
+                    if (login) {
+                        commit('setSettings', {
+                            settings: settings,
+                        })
+                    }
                     if (data.impersonator) {
                         commit('setImpersonator', {
                             impersonator: data.impersonator,
