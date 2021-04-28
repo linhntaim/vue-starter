@@ -20,7 +20,7 @@ export default class DeviceMiddleware extends Middleware {
         const session = this.session()
         const storedDevice = deviceCookieStore.retrieve()
 
-        if (session.isNotFresh() && store.getters['device/existed']) {
+        if (session.isNotFreshSequence() && store.getters['device/existed']) {
             if (!storedDevice.provider || !storedDevice.secret) {
                 store.dispatch('device/device')
             }
@@ -28,7 +28,7 @@ export default class DeviceMiddleware extends Middleware {
             return
         }
 
-        if (session.isFresh() || !storedDevice.provider || !storedDevice.secret) {
+        if (session.isFreshSequence() || !storedDevice.provider || !storedDevice.secret) {
             store.dispatch('device/current', {
                 device: storedDevice,
                 doneCallback: () => {
