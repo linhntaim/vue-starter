@@ -2,6 +2,7 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
+@import "float";
 @import "button";
 @import "dropdown";
 @import "form";
@@ -19,6 +20,7 @@
 //  @import "some-css";
 @import "auth";
 @import "base";
+@import "sidebar";
 @import "select2";
 @import "toast";
 @import "dash-box";

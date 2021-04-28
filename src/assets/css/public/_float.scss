@@ -1,0 +1,37 @@
+@import "variables";
+
+@media (min-width: $sm-min-width) {
+    .float-left-sm {
+        float: left;
+    }
+    .float-right-sm {
+        float: right;
+    }
+}
+
+@media (min-width: $md-min-width) {
+    .float-left-md {
+        float: left;
+    }
+    .float-right-md {
+        float: right;
+    }
+}
+
+@media (min-width: $lg-min-width) {
+    .float-left-lg {
+        float: left;
+    }
+    .float-right-lg {
+        float: right;
+    }
+}
+
+@media (min-width: $xl-min-width) {
+    .float-left-xl {
+        float: left;
+    }
+    .float-right-xl {
+        float: right;
+    }
+}

@@ -20,8 +20,8 @@
                         :itemText="'display_name'"
                         :required="false"
                         :options="permissionOptions")
-                .col.nowrap
-                    .btn-group.btn-group-item
+                .form-group.col
+                    .btn-group
                         button.btn.btn-primary(:disabled="disabled || loading" type="submit")
                             i.fas.fa-search.mr-2
                             | {{ $t('actions.search') }}
