@@ -30,7 +30,8 @@ export default {
             if (name) {
                 delete state.metadata[name]
                 delete state.expired[name]
-            } else {
+            }
+            else {
                 state.metadata = {}
                 state.expired = {}
             }
@@ -52,8 +53,12 @@ export default {
             })
 
             if (freshNames.length <= 0) {
-                if (doneCallback) doneCallback()
-                if (alwaysCallback) alwaysCallback()
+                if (doneCallback) {
+                    doneCallback()
+                }
+                if (alwaysCallback) {
+                    alwaysCallback()
+                }
                 return
             }
 
@@ -64,7 +69,9 @@ export default {
                         data: data,
                     })
 
-                    if (doneCallback) doneCallback()
+                    if (doneCallback) {
+                        doneCallback()
+                    }
                 },
                 errorCallback,
                 alwaysCallback,

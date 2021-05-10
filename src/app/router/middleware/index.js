@@ -3,15 +3,15 @@
  */
 
 import {intervalCaller, timeoutCaller, ui} from '../../utils'
+import {AuthMiddleware} from './modules/auth-middleware'
 import {CommonMiddleware} from '@linhntaim/vue-uses'
-import AuthMiddleware from './modules/auth-middleware'
-import DeviceMiddleware from './modules/device-middleware'
-import LastAccessMiddleware from './modules/last-access-middleware'
-import LocaleMiddleware from './modules/locale-middleware'
-import PermissionMiddleware from './modules/permission-middleware'
-import ScreenMiddleware from './modules/screen-middleware'
-import ServerMiddleware from './modules/server-middleware'
-import SettingsMiddleware from './modules/settings-middleware'
+import {DeviceMiddleware} from './modules/device-middleware'
+import {LastAccessMiddleware} from './modules/last-access-middleware'
+import {LocaleMiddleware} from './modules/locale-middleware'
+import {PermissionMiddleware} from './modules/permission-middleware'
+import {ScreenMiddleware} from './modules/screen-middleware'
+import {ServerMiddleware} from './modules/server-middleware'
+import {SettingsMiddleware} from './modules/settings-middleware'
 
 const authMiddleware = new AuthMiddleware()
 const commonMiddleware = new CommonMiddleware(

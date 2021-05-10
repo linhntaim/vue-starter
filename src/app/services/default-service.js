@@ -5,7 +5,7 @@
 import {serviceFactory} from './index'
 import {AxiosService, ServiceError} from '@linhntaim/vue-services'
 
-class DefaultServiceError extends ServiceError {
+export class DefaultServiceError extends ServiceError {
     constructor(err, extra = null) {
         super(err)
 
@@ -17,7 +17,9 @@ class DefaultServiceError extends ServiceError {
             const err = this.err.e
             if (err.response) {
                 const response = err.response
-                if (response.statusText) return [response.statusText]
+                if (response.statusText) {
+                    return [response.statusText]
+                }
                 switch (response.status) {
                     case 401:
                         return [defaults['401'] ? defaults['401'] : 'Unauthenticated!']
@@ -31,7 +33,9 @@ class DefaultServiceError extends ServiceError {
                         return [defaults['503'] ? defaults['503'] : 'Service unavailable!']
                 }
             }
-            if (err.message) return [err.message]
+            if (err.message) {
+                return [err.message]
+            }
             return [defaults['0'] ? defaults['0'] : 'Something went wrong!']
         }
         return this.err.m
@@ -42,7 +46,7 @@ class DefaultServiceError extends ServiceError {
     }
 }
 
-export default class DefaultService extends AxiosService {
+export class DefaultService extends AxiosService {
     constructor(basePath = null) {
         super(serviceFactory.factory(), basePath)
     }
@@ -79,7 +83,8 @@ export default class DefaultService extends AxiosService {
                         error.response.data._extra,
                     ),
                 )
-            } else {
+            }
+            else {
                 errorCallback(new DefaultServiceError({e: error}))
             }
         }

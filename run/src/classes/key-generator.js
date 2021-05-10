@@ -3,7 +3,7 @@ import {Crypto} from '@linhntaim/vue-utils'
 import rbjs from 'random-bytes-js'
 import fs from 'fs'
 
-export default class KeyGenerator {
+export class KeyGenerator {
     constructor() {
         this.envPath = '.env'
     }
