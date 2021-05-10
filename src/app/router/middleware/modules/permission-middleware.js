@@ -6,7 +6,7 @@ import {permissionBarrier} from '../../index'
 import {Middleware} from '../middleware'
 import {APP_ROUTE} from '../../../config'
 
-export default class PermissionMiddleware extends Middleware {
+export class PermissionMiddleware extends Middleware {
     handle() {
         this.log('permission', 'middleware')
 
@@ -21,13 +21,17 @@ export default class PermissionMiddleware extends Middleware {
                 if ('name' in route) {
                     if (!permissionBarrier.passRoutes(route, () => {
                         this.errorRedirect(APP_ROUTE.unauthorized)
-                    })) return
+                    })) {
+                        return
+                    }
                 }
             }
 
             if (!permissionBarrier.passActions(() => {
                 this.errorRedirect(APP_ROUTE.unauthorized)
-            })) return
+            })) {
+                return
+            }
         }
 
         this.next()

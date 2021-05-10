@@ -12,7 +12,8 @@ export class AuthUrl {
         const authQuery = Object.keys(this.authParams).map(key => key + '=' + this.authParams[key]).join('&')
         if (parser.search) {
             parser.search += '&' + authQuery
-        } else {
+        }
+        else {
             parser.search = authQuery
         }
         return parser.toString()

@@ -21,7 +21,8 @@ export const defaultServiceModifyHeader = (name, value, permanent = false) => {
                 delete instance.defaults.headers[name]
             }
             instance.defaults.headers.common[name] = encryptHeader(name, value)
-        } else {
+        }
+        else {
             instance.defaults.headers.common[name] = null
             if (permanent) {
                 instance.defaults.headers[name] = ''
