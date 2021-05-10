@@ -215,10 +215,12 @@ export const APP_OPTION = {
 export const LOCALE_MAPPING_FLAG_ICON_NAME_DEF = {
     en: 'gb',
     ja: 'jp',
+    vi: 'vn',
 }
 export const LOCALE_MAPPING_MOMENT_DEF = {
     en: 'en-gb',
     ja: 'ja',
+    vi: 'vi',
 }
 const maxChunkUploadSize = parseInt(process.env.VUE_APP_MAX_CHUNK_UPLOAD_SIZE) | 0
 export const MAX_CHUNK_UPLOAD_SIZE = maxChunkUploadSize ? maxChunkUploadSize : 1024 * 1024 // 1 MB, default
