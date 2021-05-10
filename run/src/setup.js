@@ -3,7 +3,7 @@
  */
 
 import {parseEnv} from 'dotenv-packed'
-import AssetCopier from './classes/asset-copier'
+import {AssetCopier} from './classes/asset-copier'
 
 parseEnv()
 
