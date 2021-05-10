@@ -40,7 +40,7 @@ import {permit, timeoutCaller, ui} from '../../app/utils'
 import {routePermissions} from '../../app/router'
 import {APP_NAME, APP_ROUTE} from '../../app/config'
 
-const defaultMenuItems = () => [
+const defaultMenuItems = isLoggedIn => isLoggedIn ? [
     {
         title: 'dashboard',
         iconClass: 'fas fa-fw fa-tachometer-alt',
@@ -101,6 +101,10 @@ const defaultMenuItems = () => [
     // TODO: Extra menu items
 
     // TODO
+] : [
+    // TODO:
+
+    // TODO
 ]
 
 export default {
@@ -116,6 +120,7 @@ export default {
     },
     computed: {
         ...mapGetters({
+            isLoggedIn: 'account/isLoggedIn',
             accountPermissions: 'account/permissions',
         }),
     },
@@ -151,7 +156,7 @@ export default {
             this.uis.$body.removeClass('sidebar-toggled')
         },
         initMenuItems() {
-            this.filteredMenuItems = defaultMenuItems()
+            this.filteredMenuItems = defaultMenuItems(this.isLoggedIn)
             this.filterMenuItems(this.filteredMenuItems)
 
             timeoutCaller.register(() => {
