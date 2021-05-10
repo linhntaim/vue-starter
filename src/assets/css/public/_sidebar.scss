@@ -1,3 +1,11 @@
+.sidebar {
+    &.toggled {
+        .sidebar-brand-icon {
+            display: inherit;
+        }
+    }
+}
+
 @media (min-width: 768px) {
     .sidebar {
         width: 18rem !important;
