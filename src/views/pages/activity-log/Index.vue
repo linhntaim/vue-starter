@@ -98,7 +98,9 @@ export default {
         },
         colspan() {
             let colspan = 7
-            if (!this.canAction) --colspan
+            if (!this.canAction) {
+                --colspan
+            }
             return colspan
         },
     },

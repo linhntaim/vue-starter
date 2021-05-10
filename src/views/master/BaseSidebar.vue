@@ -179,14 +179,16 @@ export default {
                                 break
                             }
                         }
-                    } else if (hasToName && menuItem.to.name === this.$route.name) {
+                    }
+                    else if (hasToName && menuItem.to.name === this.$route.name) {
                         menuItem.active = true
                     }
 
                     if ('children' in menuItem) {
                         this.filterMenuItems(menuItem.children, level + 1)
                     }
-                } else {
+                }
+                else {
                     removingItemIndices.push(itemIndex)
                 }
 
@@ -209,7 +211,8 @@ export default {
                     if (menuItems[i].children.length === 0) {
                         menuItems.splice(i, 1)
                     }
-                } else if ('heading' in menuItems[i] && menuItems[i].heading) {
+                }
+                else if ('heading' in menuItems[i] && menuItems[i].heading) {
                     if (i + 1 === menuItems.length
                         || ('heading' in menuItems[i + 1] && menuItems[i + 1].heading)) {
                         menuItems.splice(i, 1)

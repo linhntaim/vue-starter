@@ -40,11 +40,13 @@ export default {
                     maxSizeErrorCallback: () => this.error(this.$t('components.upload_description.size', {size: this.shownMaxFileSize})),
                 })) {
                     this.change(file)
-                } else {
+                }
+                else {
                     $event.target.value = ''
                     this.change()
                 }
-            } else {
+            }
+            else {
                 this.change()
             }
         },

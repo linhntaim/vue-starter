@@ -63,7 +63,8 @@ export default {
             }
             if (!allowedIps.length && !deniedIps.length) {
                 params['--u'] = 'u'
-            } else {
+            }
+            else {
                 if (this.onlyAdmin) {
                     params['--admin'] = 'admin'
                 }

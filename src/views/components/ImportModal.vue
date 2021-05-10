@@ -69,7 +69,9 @@ export default {
         },
         onOkClicked() {
             this.uis.$.modal('hide')
-            if (this.okCallback) this.okCallback(this.file)
+            if (this.okCallback) {
+                this.okCallback(this.file)
+            }
         },
     },
 }

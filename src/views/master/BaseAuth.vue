@@ -68,7 +68,8 @@ export default {
                             $body.toggleClass('sidebar-toggled')
                             $sidebar.toggleClass('toggled')
                         }
-                    } else {
+                    }
+                    else {
                         if ($sidebar.hasClass('toggled')) {
                             $body.toggleClass('sidebar-toggled')
                             $sidebar.toggleClass('toggled')
@@ -103,7 +104,8 @@ export default {
                 if (scrollDistance > 100) {
                     $scrollToTop.fadeIn()
                     $scrollToBack.addClass('has-top')
-                } else {
+                }
+                else {
                     $scrollToTop.fadeOut()
                     $scrollToBack.removeClass('has-top')
                 }
