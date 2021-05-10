@@ -3,7 +3,7 @@ import fs from 'fs'
 import fsExtra from 'fs-extra'
 import {getEnv} from 'dotenv-packed'
 
-export default class BuildCopier {
+export class BuildCopier {
     constructor() {
         this.distFolder = 'dist'
         this.distDirectory = './' + this.distFolder
@@ -41,14 +41,16 @@ export default class BuildCopier {
                     }
                     fs.mkdirSync(to, {recursive: true})
                     cpx.copySync(from + '/**/*.*', to)
-                } else if (lstat.isFile()) {
+                }
+                else if (lstat.isFile()) {
                     fs.copyFileSync(from, to)
                 }
                 console.info('Copied!')
             })
             fsExtra.removeSync(this.distDirectory)
             console.info('DONE!!!')
-        } else {
+        }
+        else {
             console.error('Dist directory [' + this.distDirectory + '] does not exist!')
         }
     }

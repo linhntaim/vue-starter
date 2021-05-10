@@ -1,7 +1,7 @@
 import cpx from 'cpx'
 import fs from 'fs-extra'
 
-export default class AssetCopier {
+export class AssetCopier {
     constructor(extensions = ['js', 'css', 'map', 'jpg', 'jpeg', 'png', 'gif', 'svg', 'eot', 'ttf', 'woff', 'woff2']) {
         this.assets = []
         this.extensions = extensions
@@ -32,7 +32,8 @@ export default class AssetCopier {
             removeBefore && fs.removeSync(dst)
             if (exact) {
                 cpx.copy(src, dst)
-            } else {
+            }
+            else {
                 cpx.copy(src + matchedExtensions, dst)
                 if (!notRecursive) {
                     cpx.copy(src + matchedExtensionsHierarchically, dst)

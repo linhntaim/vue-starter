@@ -1,7 +1,7 @@
 import CssSticker from './css-sticker'
 import CssCompiler from './css-compiler'
 
-export default class CssBuilder {
+export class CssBuilder {
     constructor() {
     }
 
