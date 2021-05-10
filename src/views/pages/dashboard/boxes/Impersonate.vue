@@ -89,7 +89,7 @@ pre {
     word-break: break-all;
     word-wrap: break-word;
     background-color: #f5f5f5;
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc;
 
     code {
         white-space: pre-wrap;

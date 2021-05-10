@@ -8,9 +8,9 @@ import prerequisite from './prerequisite'
 // TODO:
 //  Import modules
 import accountNotification from './account-notification'
+import activityLog from './activity-log'
 import appOption from './app-option'
 import dataExport from './data-export'
-import activityLog from './activity-log'
 import role from './role'
 // TODO
 // TODO:

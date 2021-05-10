@@ -289,7 +289,8 @@ export default {
                     if (!target.hasAttribute('data-option') && data.target && input) {
                         try {
                             data.option = JSON.parse(input.value)
-                        } catch (e) {
+                        }
+                        catch (e) {
                             // eslint-disable-next-line no-console
                             console.log(e.message)
                         }
@@ -350,7 +351,8 @@ export default {
                 if (typeof result === 'object' && result !== this.uis.cropper && input) {
                     try {
                         input.value = JSON.stringify(result)
-                    } catch (e) {
+                    }
+                    catch (e) {
                         // eslint-disable-next-line no-console
                         console.log(e.message)
                     }
@@ -385,7 +387,9 @@ export default {
         },
         onCancelClicked() {
             this.uis.$.modal('hide')
-            if (this.cancelCallback) this.cancelCallback()
+            if (this.cancelCallback) {
+                this.cancelCallback()
+            }
         },
         onUploadClicked() {
             if (this.uploadCallback && this.uis.cropper) {

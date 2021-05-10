@@ -58,7 +58,8 @@ export default {
             this.options.userCurrent = false
             if (this.options.timeOnly) {
                 this.options.date = moment().format('YYYY-MM-DD') + ' ' + this.content
-            } else {
+            }
+            else {
                 this.options.date = this.content
             }
         }
@@ -79,7 +80,8 @@ export default {
                     moment(moment().format('YYYY-MM-DD') + ' ' + date)
                     : moment($event.target.value)
                 this.options.date = date.isValid() ? date.format(this.options.format) : moment().format(this.options.format)
-            } else {
+            }
+            else {
                 this.options.date = ''
             }
             this.update(this.options.date)
@@ -93,7 +95,8 @@ export default {
         clear(defaultValue = '') {
             if (defaultValue) {
                 this.uis.$.viewDate(defaultValue)
-            } else {
+            }
+            else {
                 this.uis.$.datetimepicker('clear')
             }
             this.update(defaultValue)

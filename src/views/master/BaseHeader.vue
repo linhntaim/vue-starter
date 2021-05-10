@@ -93,7 +93,9 @@ export default {
             })
         },
         onLocaleClicked(locale) {
-            if (locale.code === this.currentSettings.locale) return
+            if (locale.code === this.currentSettings.locale) {
+                return
+            }
 
             this.loading = true
             this.accountUpdateLocale({
