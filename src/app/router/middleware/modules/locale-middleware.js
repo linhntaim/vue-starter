@@ -4,7 +4,7 @@
 
 import {Middleware} from '../middleware'
 
-export default class LocaleMiddleware extends Middleware {
+export class LocaleMiddleware extends Middleware {
     handle() {
         this.log('locale', 'middleware')
 
@@ -15,7 +15,8 @@ export default class LocaleMiddleware extends Middleware {
                 locale: locale,
                 doneCallback: () => this.next(),
             })
-        } else {
+        }
+        else {
             this.next()
         }
     }

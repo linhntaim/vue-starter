@@ -8,7 +8,7 @@ import {Middleware} from '../middleware'
 import {APP_ROUTE, APP_CLIENT, APP_CLIENT_ADMIN} from '../../../config'
 import Vue from 'vue'
 
-export default class ServerMiddleware extends Middleware {
+export class ServerMiddleware extends Middleware {
     handle() {
         this.log('server', 'middleware')
 
@@ -27,8 +27,12 @@ export default class ServerMiddleware extends Middleware {
 
                 this.handleIp()
                 this.handleOthers()
-                if (this.handleMaintenance()) return
-                if (this.handleLimitation()) return
+                if (this.handleMaintenance()) {
+                    return
+                }
+                if (this.handleLimitation()) {
+                    return
+                }
 
                 this.next()
             },
@@ -62,7 +66,8 @@ export default class ServerMiddleware extends Middleware {
                 this.errorRedirect(APP_ROUTE.maintenance)
                 return true
             }
-        } else if (!maintenanceMode && to.name === APP_ROUTE.maintenance.name) {
+        }
+        else if (!maintenanceMode && to.name === APP_ROUTE.maintenance.name) {
             this.redirect(APP_ROUTE.root)
             return true
         }
@@ -90,7 +95,8 @@ export default class ServerMiddleware extends Middleware {
                 this.errorRedirect(APP_ROUTE.limitation)
                 return true
             }
-        } else if (!limitationMode && to.name === APP_ROUTE.limitation.name) {
+        }
+        else if (!limitationMode && to.name === APP_ROUTE.limitation.name) {
             this.redirect(APP_ROUTE.root)
             return true
         }

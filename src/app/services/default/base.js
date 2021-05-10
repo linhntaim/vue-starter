@@ -2,9 +2,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import DefaultService from '../default-service'
+import {DefaultService} from '../default-service'
 
-export default class BaseService extends DefaultService {
+export class BaseService extends DefaultService {
     index(params = {}, doneCallback = null, errorCallback = null, alwaysCallback = null) {
         return this.get(
             '',

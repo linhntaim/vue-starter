@@ -6,7 +6,7 @@ import {dateTimer, settingsCookieStore} from '../../../utils'
 import {Middleware} from '../middleware'
 import {DEFAULT_SETTINGS} from '../../../config'
 
-export default class SettingsMiddleware extends Middleware {
+export class SettingsMiddleware extends Middleware {
     handle() {
         this.log('settings', 'middleware')
 
@@ -29,7 +29,8 @@ export default class SettingsMiddleware extends Middleware {
                     settings: storedSettings ? storedSettings : DEFAULT_SETTINGS,
                     localeCallback: () => this.next(),
                 })
-            } else {
+            }
+            else {
                 this.wait(++called)
             }
         }, 200)

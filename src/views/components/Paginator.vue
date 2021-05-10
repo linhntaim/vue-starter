@@ -88,12 +88,16 @@ export default {
     },
     methods: {
         onPageClicked(page) {
-            if (this.disabled) return
+            if (this.disabled) {
+                return
+            }
             this.paginator.setPage(page)
             this.pageChanged()
         },
         onItemsPerPageChanged() {
-            if (this.disabled) return
+            if (this.disabled) {
+                return
+            }
             this.paginator.setItemsPerPage(this.itemsPerPage)
             this.pageChanged()
         },

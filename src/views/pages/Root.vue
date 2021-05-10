@@ -39,10 +39,12 @@ export default {
         if (this.accountIsLoggedIn) {
             if (this.accountMatched) {
                 this.$refs.component.load('./pages/home/IndexAuth')
-            } else {
+            }
+            else {
                 this.redirect(APP_ROUTE.unauthenticated)
             }
-        } else {
+        }
+        else {
             this.$refs.component.load('./pages/home/Index')
         }
         // TODO
@@ -51,7 +53,8 @@ export default {
         redirect(location) {
             if ('query' in location) {
                 location.query.time = new Date().getTime()
-            } else {
+            }
+            else {
                 location.query = {
                     time: new Date().getTime(),
                 }
