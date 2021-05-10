@@ -2,9 +2,9 @@
  * Base - Any modification needs to be approved, except the space inside the block of TODO
  */
 
-import prerequisite from './prerequisite'
-import device from './device'
 import account from './account'
+import device from './device'
+import prerequisite from './prerequisite'
 // TODO:
 //  Import modules
 import accountNotification from './account-notification'

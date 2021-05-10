@@ -5,7 +5,7 @@
 import {currentScreen} from '../../../utils'
 import {Middleware} from '../middleware'
 
-export default class ScreenMiddleware extends Middleware {
+export class ScreenMiddleware extends Middleware {
     handle() {
         this.log('screen', 'middleware')
 

@@ -58,7 +58,8 @@ const applyBearerToken = (bearerToken = null, action = 'all') => {
         if (bearerToken) {
             bearerTokenCookieStore.store(bearerToken)
             session.store('bearer_token_expires_at', new Date(new Date().getTime() + bearerToken.expiresIn * 1000).getTime())
-        } else {
+        }
+        else {
             bearerTokenCookieStore.remove()
             session.forget('bearer_token_expires_at')
         }
@@ -259,7 +260,8 @@ export default {
             }
             if (impersonateToken) {
                 authService().loginWithImpersonate(email, impersonateToken, done, errorCallback)
-            } else {
+            }
+            else {
                 authService().login(email, password, done, errorCallback)
             }
         },

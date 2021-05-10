@@ -31,7 +31,7 @@ import {
     DEFAULT_DEVICE,
     DEFAULT_SETTINGS,
 } from '../config'
-import BootstrapUi from './bootstrap-ui'
+import {BootstrapUi} from './bootstrap-ui'
 
 export const log = new ConsoleLog(APP_DEBUG, APP_LOG_ONLY)
 export const crypto = new Crypto(APP_KEY)

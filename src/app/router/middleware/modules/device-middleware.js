@@ -6,7 +6,7 @@ import {deviceCookieStore} from '../../../utils'
 import {Middleware} from '../middleware'
 import {APP_ROUTE} from '../../../config'
 
-export default class DeviceMiddleware extends Middleware {
+export class DeviceMiddleware extends Middleware {
     handle() {
         this.log('device', 'middleware')
 
