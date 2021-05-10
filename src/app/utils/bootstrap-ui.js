@@ -5,7 +5,7 @@
 import {JqueryUi} from '@linhntaim/vue-utils'
 import {timeoutCaller} from './default'
 
-export default class BootstrapUi extends JqueryUi {
+export class BootstrapUi extends JqueryUi {
     onMounted() {
         const $body = this.query('body').get()
 

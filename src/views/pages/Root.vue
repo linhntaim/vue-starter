@@ -41,10 +41,12 @@ export default {
                 this.redirect({
                     name: 'dashboard',
                 })
-            } else {
+            }
+            else {
                 this.redirect(APP_ROUTE.unauthenticated)
             }
-        } else {
+        }
+        else {
             this.redirect(APP_ROUTE.authenticate)
         }
         // TODO
@@ -53,7 +55,8 @@ export default {
         redirect(location) {
             if ('query' in location) {
                 location.query.time = new Date().getTime()
-            } else {
+            }
+            else {
                 location.query = {
                     time: new Date().getTime(),
                 }

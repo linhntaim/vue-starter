@@ -3,7 +3,7 @@
  */
 
 import {parseEnv} from 'dotenv-packed'
-import CssBuilder from './classes/css-builder'
+import {CssBuilder} from './classes/css-builder'
 
 parseEnv()
 

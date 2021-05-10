@@ -65,11 +65,15 @@ export default {
         },
         onCancelClicked() {
             this.uis.$.modal('hide')
-            if (this.cancelCallback) this.cancelCallback()
+            if (this.cancelCallback) {
+                this.cancelCallback()
+            }
         },
         onConfirmClicked() {
             this.uis.$.modal('hide')
-            if (this.confirmCallback) this.confirmCallback()
+            if (this.confirmCallback) {
+                this.confirmCallback()
+            }
         },
     },
 }

@@ -32,7 +32,8 @@ export class LocaleChange {
         if (handlerId) {
             Vue.prototype.$bus.off('localeChanged', this.handlers[handlerId])
             delete this.handlers[handlerId]
-        } else {
+        }
+        else {
             Vue.prototype.$bus.off('localeChanged')
         }
         return this

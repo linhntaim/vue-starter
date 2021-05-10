@@ -7,7 +7,7 @@ import {session} from '@linhntaim/vue-uses'
 import {Middleware} from '../middleware'
 import {APP_DEFAULT_SERVICE, APP_ROUTE} from '../../../config'
 
-export default class AuthMiddleware extends Middleware {
+export class AuthMiddleware extends Middleware {
     handle() {
         this.log('auth', 'middleware')
 
@@ -47,7 +47,9 @@ export default class AuthMiddleware extends Middleware {
                     bearerTokenCookieStore.remove()
                     this.errorRedirect(APP_ROUTE.badRequest)
                 },
-            )) return
+            )) {
+                return
+            }
         }
 
         this.handleNotAuth()
@@ -78,7 +80,9 @@ export default class AuthMiddleware extends Middleware {
             if (this.tryToRefreshToken(
                 () => this.autoLogout(),
                 () => ui.reloadPage(),
-            )) return
+            )) {
+                return
+            }
 
             this.store().dispatch('account/logout', {
                 alwaysCallback: () => {
@@ -102,9 +106,13 @@ export default class AuthMiddleware extends Middleware {
     handleAuth() {
         this.log('authenticated', 'auth')
 
-        if (this.autoLogout()) return
+        if (this.autoLogout()) {
+            return
+        }
 
-        if (this.replaceRoutesIfNeeded()) return
+        if (this.replaceRoutesIfNeeded()) {
+            return
+        }
 
         if (this.to().matched.some(record => record.meta.requireNotAuth)) {
             this.redirect(APP_ROUTE.redirectIfAuthenticated)
@@ -127,7 +135,9 @@ export default class AuthMiddleware extends Middleware {
     handleNotAuth() {
         this.log('unauthenticated', 'auth')
 
-        if (this.replaceRoutesIfNeeded(false)) return
+        if (this.replaceRoutesIfNeeded(false)) {
+            return
+        }
 
         if (this.to().matched.some(record => record.meta.requireAuth)) {
             const rdrLocation = {
