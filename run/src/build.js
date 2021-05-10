@@ -3,7 +3,7 @@
  */
 
 import {parseEnv} from 'dotenv-packed'
-import BuildCopier from './classes/build-copier'
+import {BuildCopier} from './classes/build-copier'
 
 parseEnv()
 

@@ -1,7 +1,7 @@
 import minify from '@node-minify/core'
 import cssnano from '@node-minify/cssnano'
 
-export default class CssSticker {
+export class CssSticker {
     constructor() {
         this.files = []
         this.stickFile = './public/css/style.min.css'
