@@ -65,11 +65,15 @@ export default {
         },
         onCancelClicked() {
             this.uis.$.modal('hide')
-            if (this.cancelCallback) this.cancelCallback()
+            if (this.cancelCallback) {
+                this.cancelCallback()
+            }
         },
         onOkClicked() {
             this.uis.$.modal('hide')
-            if (this.okCallback) this.okCallback(this.value)
+            if (this.okCallback) {
+                this.okCallback(this.value)
+            }
         },
     },
 }

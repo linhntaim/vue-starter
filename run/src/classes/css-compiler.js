@@ -3,7 +3,7 @@ import fs from 'fs'
 import sass from 'node-sass'
 import {getEnv} from 'dotenv-packed'
 
-export default class CssCompiler {
+export class CssCompiler {
     constructor(compiledName) {
         this.inFile = './src/assets/css/public/__' + compiledName + '.scss'
         this.inDirectory = path.dirname(this.inFile)

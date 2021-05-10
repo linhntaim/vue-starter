@@ -9,7 +9,6 @@ import {store} from './app/store'
 import {use, routerUse, vuexUse, i18Use, AppMiddleware, SessionMiddleware} from '@linhntaim/vue-uses'
 import {APP_NAME, APP_TITLE_SEPARATOR} from './app/config'
 import VueBus from '@linhntaim/vue-bus'
-import VueDefine from 'vue-define'
 import VueHead from 'vue-head'
 // TODO:
 //  Import extra plugins
@@ -19,7 +18,6 @@ import VueHead from 'vue-head'
 const appMiddleware = new AppMiddleware()
 
 export default {
-    define: use(VueDefine),
     bus: use(VueBus),
     head: use(VueHead, {
         separator: APP_TITLE_SEPARATOR,

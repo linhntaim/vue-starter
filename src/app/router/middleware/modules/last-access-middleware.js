@@ -4,7 +4,7 @@
 
 import {Middleware} from '../middleware'
 
-export default class LastAccessMiddleware extends Middleware {
+export class LastAccessMiddleware extends Middleware {
     handle() {
         this.log('last-access', 'middleware')
 
