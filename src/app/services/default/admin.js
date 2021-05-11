@@ -4,7 +4,7 @@
 
 import {DefaultService} from '../default-service'
 
-export default class AdminService extends DefaultService {
+export class AdminService extends DefaultService {
     constructor(basePath) {
         super('admin/' + basePath)
     }
