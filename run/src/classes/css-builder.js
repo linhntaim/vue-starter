@@ -1,5 +1,5 @@
-import CssSticker from './css-sticker'
-import CssCompiler from './css-compiler'
+import {CssSticker} from './css-sticker'
+import {CssCompiler} from './css-compiler'
 
 export class CssBuilder {
     constructor() {
